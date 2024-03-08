@@ -245,40 +245,9 @@ if res.carrier_account is not None:
 ```
 <!-- End Error Handling [errors] -->
 
-<!-- Start Server Selection [server] -->
 ## Server Selection
 
-### Select Server by Index
-
-You can override the default server globally by passing a server index to the `server_idx: int` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the indexes associated with the available servers:
-
-| # | Server | Variables |
-| - | ------ | --------- |
-| 0 | `https://api.goshippo.com` | None |
-
-#### Example
-
-```python
-import shippo
-
-s = shippo.Shippo(
-    server_idx=0,
-    api_key_header="<YOUR_API_KEY_HERE>",
-)
-
-
-res = s.addresses.list_addresses(page=1, results=25, shippo_api_version='<value>')
-
-if res.address_list_wrapper is not None:
-    # handle response
-    pass
-
-```
-
-
-### Override Server URL Per-Client
-
-The default server can also be overridden globally by passing a URL to the `server_url: str` optional parameter when initializing the SDK client instance. For example:
+You can override the default server globally by passing a URL to the `server_url: str` optional parameter when initializing the SDK client instance. For example:
 ```python
 import shippo
 
@@ -295,7 +264,7 @@ if res.address_list_wrapper is not None:
     pass
 
 ```
-<!-- End Server Selection [server] -->
+<!-- No Server Selection [server] -->
 
 <!-- Start Custom HTTP Client [http-client] -->
 ## Custom HTTP Client
