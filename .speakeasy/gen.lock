@@ -5,8 +5,10 @@ management:
   docVersion: "2018-02-08"
   speakeasyVersion: 1.205.0
   generationVersion: 2.279.1
-  releaseVersion: 0.0.1
-  configChecksum: 65bdc131362d71fea76750679c9d8510
+  releaseVersion: 0.0.2
+  configChecksum: 4539cace4c6339cd8af44bf7d3bcb403
+  repoURL: https://github.com/goshippo/shippo-python-sdk.git
+  installationURL: https://github.com/goshippo/shippo-python-sdk.git
 features:
   python:
     constsAndDefaults: 0.1.3
