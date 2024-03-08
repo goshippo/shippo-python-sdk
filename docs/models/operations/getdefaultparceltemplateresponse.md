@@ -1,0 +1,9 @@
+# GetDefaultParcelTemplateResponse
+
+
+## Fields
+
+| Field                                                                                          | Type                                                                                           | Required                                                                                       | Description                                                                                    |
+| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `http_meta`                                                                                    | [components.HTTPMetadata](../../models/components/httpmetadata.md)                             | :heavy_check_mark:                                                                             | N/A                                                                                            |
+| `default_parcel_template`                                                                      | [Optional[components.DefaultParcelTemplate]](../../models/components/defaultparceltemplate.md) | :heavy_minus_sign:                                                                             | N/A                                                                                            |

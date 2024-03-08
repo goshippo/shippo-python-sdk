@@ -1,0 +1,9 @@
+workflowVersion: 1.0.0
+sources:
+    openapi:
+        inputs:
+            - location: https://docs.goshippo.com/spec/shippoapi/public-api.yaml
+targets:
+    first-target:
+        target: python
+        source: openapi

@@ -1,0 +1,12 @@
+# AddressValidationResults
+
+Object that contains information regarding if an address had been validated or not. Also contains any messages 
+generated during validation. Children keys are <code>is_valid</code>(boolean) and <code>messages</code>(array).
+
+
+## Fields
+
+| Field                                                                                                          | Type                                                                                                           | Required                                                                                                       | Description                                                                                                    | Example                                                                                                        |
+| -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `is_valid`                                                                                                     | *Optional[bool]*                                                                                               | :heavy_minus_sign:                                                                                             | N/A                                                                                                            | false                                                                                                          |
+| `messages`                                                                                                     | List[[components.AddressValidationResultsMessage](../../models/components/addressvalidationresultsmessage.md)] | :heavy_minus_sign:                                                                                             | N/A                                                                                                            |                                                                                                                |

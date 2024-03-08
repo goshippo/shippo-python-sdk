@@ -1,0 +1,11 @@
+# AddressValidationResultsMessage
+
+
+## Fields
+
+| Field                                                                  | Type                                                                   | Required                                                               | Description                                                            | Example                                                                |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `code`                                                                 | [Optional[components.Code]](../../models/components/code.md)           | :heavy_minus_sign:                                                     | N/A                                                                    | Unknown Street                                                         |
+| `source`                                                               | [Optional[components.Source]](../../models/components/source.md)       | :heavy_minus_sign:                                                     | N/A                                                                    | Shippo Address Validator                                               |
+| `text`                                                                 | *Optional[str]*                                                        | :heavy_minus_sign:                                                     | N/A                                                                    | City, State and ZIP Code are valid, but street address is not a match. |
+| `type`                                                                 | *Optional[str]*                                                        | :heavy_minus_sign:                                                     | N/A                                                                    | address_warning                                                        |

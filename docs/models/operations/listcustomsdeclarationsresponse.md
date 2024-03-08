@@ -1,0 +1,9 @@
+# ListCustomsDeclarationsResponse
+
+
+## Fields
+
+| Field                                                                                                          | Type                                                                                                           | Required                                                                                                       | Description                                                                                                    |
+| -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `http_meta`                                                                                                    | [components.HTTPMetadata](../../models/components/httpmetadata.md)                                             | :heavy_check_mark:                                                                                             | N/A                                                                                                            |
+| `customs_declaration_list_wrapper`                                                                             | [Optional[components.CustomsDeclarationListWrapper]](../../models/components/customsdeclarationlistwrapper.md) | :heavy_minus_sign:                                                                                             | N/A                                                                                                            |

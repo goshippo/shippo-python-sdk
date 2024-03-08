@@ -1,0 +1,9 @@
+# ListShippoAccountsResponse
+
+
+## Fields
+
+| Field                                                                                                            | Type                                                                                                             | Required                                                                                                         | Description                                                                                                      |
+| ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `http_meta`                                                                                                      | [components.HTTPMetadata](../../models/components/httpmetadata.md)                                               | :heavy_check_mark:                                                                                               | N/A                                                                                                              |
+| `paginated_shippo_account_response`                                                                              | [Optional[components.PaginatedShippoAccountResponse]](../../models/components/paginatedshippoaccountresponse.md) | :heavy_minus_sign:                                                                                               | N/A                                                                                                              |

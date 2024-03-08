@@ -1,0 +1,81 @@
+# Pickups
+(*pickups*)
+
+## Overview
+
+A pickup is when you schedule a carrier to collect a package for delivery.
+Use Shippo’s pickups endpoint to schedule pickups with USPS and DHL Express for eligible shipments that you have already created.
+<SchemaDefinition schemaRef="#/components/schemas/Pickup"/>
+
+### Available Operations
+
+* [create_pickup](#create_pickup) - Create a pickup
+
+## create_pickup
+
+Creates a pickup object. This request is for a carrier to come to a specified location to take a package for shipping.
+
+### Example Usage
+
+```python
+import dateutil.parser
+import shippo
+from shippo.models import components
+
+s = shippo.Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+)
+
+
+res = s.pickups.create_pickup(shippo_api_version='<value>', pickup_base=components.PickupBase(
+    carrier_account='adcfdddf8ec64b84ad22772bce3ea37a',
+    location=components.Location(
+        address=components.AddressCompleteCreateRequest(
+            name='Shwan Ippotle',
+            street1='215 Clayton St.',
+            city='San Francisco',
+            state='CA',
+            zip='94117',
+            country='US',
+            company='Shippo',
+            street3='',
+            street_no='',
+            phone='+1 555 341 9393',
+            email='shippotle@shippo.com',
+            is_residential=True,
+            metadata='Customer ID 123456',
+            validate=True,
+        ),
+        building_location_type=components.BuildingLocationType.FRONT_DOOR,
+        building_type=components.BuildingType.APARTMENT,
+        instructions='Behind screen door',
+    ),
+    requested_end_time=dateutil.parser.isoparse('2023-09-23T16:36:32.020Z'),
+    requested_start_time=dateutil.parser.isoparse('2024-07-18T11:35:18.535Z'),
+    transactions=[
+        'adcfdddf8ec64b84ad22772bce3ea37a',
+    ],
+))
+
+if res.pickup is not None:
+    # handle response
+    pass
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                | Type                                                                                                                                     | Required                                                                                                                                 | Description                                                                                                                              |
+| ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `shippo_api_version`                                                                                                                     | *Optional[str]*                                                                                                                          | :heavy_minus_sign:                                                                                                                       | String used to pick a non-default API version to use                                                                                     |
+| `pickup_base`                                                                                                                            | [Optional[components.PickupBase]](../../models/components/pickupbase.md)                                                                 | :heavy_minus_sign:                                                                                                                       | Shippo’s pickups endpoint allows you to schedule pickups with USPS and DHL Express for eligible shipments that you have already created. |
+
+
+### Response
+
+**[operations.CreatePickupResponse](../../models/operations/createpickupresponse.md)**
+### Errors
+
+| Error Object    | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| errors.SDKError | 4x-5xx          | */*             |

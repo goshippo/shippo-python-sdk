@@ -1,0 +1,12 @@
+# CarrierAccountRegistrationStatus
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          | Example                                                              |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `carrier_account`                                                    | *Optional[str]*                                                      | :heavy_minus_sign:                                                   | N/A                                                                  | 99dc410d295b4a168993cc38809cb123                                     |
+| `object_created`                                                     | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_minus_sign:                                                   | N/A                                                                  |                                                                      |
+| `object_owner`                                                       | *Optional[str]*                                                      | :heavy_minus_sign:                                                   | N/A                                                                  | tom@gmail.com                                                        |
+| `object_updated`                                                     | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_minus_sign:                                                   | N/A                                                                  |                                                                      |
+| `status`                                                             | *Optional[str]*                                                      | :heavy_minus_sign:                                                   | N/A                                                                  | PENDING_TERMS                                                        |

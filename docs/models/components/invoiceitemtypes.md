@@ -1,0 +1,34 @@
+# InvoiceItemTypes
+
+The type of the Invoice Item.
+|Type| Description|
+|:---|:---|
+| LABEL_PAYMENT | Invoice Item for the payment of a label. |
+| LABEL_SURCHARGE | Invoice Item for a surcharge of a label. See <a href="https://support.goshippo.com/hc/en-us/articles/115004734443-Understanding-Postal-Surcharges-in-Shippo"> here </a> for more information. |
+| LABEL_REFUND | Invoice Item for a refund of a label. |
+| ONE_OFF_CREDIT | Invoice Item for credit given by Shippo. |
+| TRACK_FEE | Invoice Item for fees associated with tracking services. |
+| ADDRESS_VALIDATION_FEE | Invoice Item for fees associated with global address validation services. |
+| SUBSCRIPTION_PLAN_FEE | Invoice Item for subscription plan fees. |
+| PROMO_CODE_CREDIT | Invoice Item for promotional code related credits. |
+| PREAUTH_CAPTURE | Invoice Item for preauthorization capture. Represents a credit. See <a href="https://support.goshippo.com/hc/en-us/articles/4407966198171-Pre-Authorization-Charges-for-New-Accounts-in-Shippo"> here </a> for more information. |
+| LABEL_PAYMENT_ADJUSTMENT | Invoice Item for adjustments on label purchases. |
+| LABEL_REFUND_ADJUSTMENT | Invoice Item for adjustments on label refunds. |
+
+
+
+## Values
+
+| Name                       | Value                      |
+| -------------------------- | -------------------------- |
+| `LABEL_PAYMENT`            | LABEL_PAYMENT              |
+| `LABEL_SURCHARGE`          | LABEL_SURCHARGE            |
+| `LABEL_REFUND`             | LABEL_REFUND               |
+| `ONE_OFF_CREDIT`           | ONE_OFF_CREDIT             |
+| `TRACK_FEE`                | TRACK_FEE                  |
+| `ADDRESS_VALIDATION_FEE`   | ADDRESS_VALIDATION_FEE     |
+| `SUBSCRIPTION_PLAN_FEE`    | SUBSCRIPTION_PLAN_FEE      |
+| `PROMO_CODE_CREDIT`        | PROMO_CODE_CREDIT          |
+| `PREAUTH_CAPTURE`          | PREAUTH_CAPTURE            |
+| `LABEL_PAYMENT_ADJUSTMENT` | LABEL_PAYMENT_ADJUSTMENT   |
+| `LABEL_REFUND_ADJUSTMENT`  | LABEL_REFUND_ADJUSTMENT    |

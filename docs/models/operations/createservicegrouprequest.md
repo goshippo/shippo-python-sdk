@@ -1,0 +1,9 @@
+# CreateServiceGroupRequest
+
+
+## Fields
+
+| Field                                                                                                  | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `shippo_api_version`                                                                                   | *Optional[str]*                                                                                        | :heavy_minus_sign:                                                                                     | String used to pick a non-default API version to use                                                   |
+| `service_group_create_request`                                                                         | [Optional[components.ServiceGroupCreateRequest]](../../models/components/servicegroupcreaterequest.md) | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |

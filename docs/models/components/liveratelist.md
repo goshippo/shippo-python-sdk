@@ -1,0 +1,11 @@
+# LiveRateList
+
+
+## Fields
+
+| Field                                                            | Type                                                             | Required                                                         | Description                                                      | Example                                                          |
+| ---------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `count`                                                          | *Optional[int]*                                                  | :heavy_minus_sign:                                               | N/A                                                              | 123                                                              |
+| `next`                                                           | *Optional[str]*                                                  | :heavy_minus_sign:                                               | N/A                                                              | https://api.goshippo.com/live-rates?page=2                       |
+| `previous`                                                       | *Optional[str]*                                                  | :heavy_minus_sign:                                               | N/A                                                              | null                                                             |
+| `results`                                                        | List[[components.LiveRate](../../models/components/liverate.md)] | :heavy_minus_sign:                                               | N/A                                                              |                                                                  |

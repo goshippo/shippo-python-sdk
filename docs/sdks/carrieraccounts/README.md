@@ -1,0 +1,301 @@
+# CarrierAccounts
+(*carrier_accounts*)
+
+## Overview
+
+Carriers are the companies who deliver your package. Shippo uses Carrier account objects as credentials to retrieve shipping rates and purchase labels from shipping Carriers.
+
+<SchemaDefinition schemaRef="#/components/schemas/CarrierAccount"/>
+
+### Available Operations
+
+* [list_carrier_accounts](#list_carrier_accounts) - List all carrier accounts
+* [create_carrier_account](#create_carrier_account) - Create a new carrier account
+* [get_carrier_account](#get_carrier_account) - Retrieve a carrier account
+* [update_carrier_account](#update_carrier_account) - Update a carrier account
+* [register_carrier_account](#register_carrier_account) - Add a Shippo master carrier account
+* [get_carrier_registration_status](#get_carrier_registration_status) - Get Carrier Registration status
+
+## list_carrier_accounts
+
+Returns a list of all carrier accounts connected to your Shippo account. These carrier accounts include both Shippo carrier accounts and your own carrier accounts that you have connected to your Shippo account.
+
+Additionally, you can get information about the service levels associated with each carrier account by passing in the `?service_levels=true` query parameter. <br>
+Using it appends the property `service_levels` to each carrier account. <br>
+By default, if the query parameter is omitted, the `service_levels` property will not be included in the response.
+
+### Example Usage
+
+```python
+import shippo
+from shippo.models import operations
+
+s = shippo.Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+)
+
+req = operations.ListCarrierAccountsRequest()
+
+res = s.carrier_accounts.list_carrier_accounts(req)
+
+if res.carrier_account_list_wrapper is not None:
+    # handle response
+    pass
+
+```
+
+### Parameters
+
+| Parameter                                                                                      | Type                                                                                           | Required                                                                                       | Description                                                                                    |
+| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `request`                                                                                      | [operations.ListCarrierAccountsRequest](../../models/operations/listcarrieraccountsrequest.md) | :heavy_check_mark:                                                                             | The request object to use for the request.                                                     |
+
+
+### Response
+
+**[operations.ListCarrierAccountsResponse](../../models/operations/listcarrieraccountsresponse.md)**
+### Errors
+
+| Error Object    | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| errors.SDKError | 4x-5xx          | */*             |
+
+## create_carrier_account
+
+Creates a new carrier account or connects an existing carrier account to the Shippo account.
+
+### Example Usage
+
+```python
+import shippo
+from shippo.models import components
+
+s = shippo.Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+)
+
+
+res = s.carrier_accounts.create_carrier_account(shippo_api_version='<value>', connect_existing_own_ups_account_request=components.ConnectExistingOwnUPSAccountRequest(
+    account_id='<value>',
+    active=False,
+    parameters=components.UPSConnectExistingOwnAccountParameters(
+        account_number='94567e',
+        billing_address_city='San Francisco',
+        billing_address_country_iso2='US',
+        billing_address_state='CA',
+        billing_address_street1='731 Market St',
+        billing_address_zip='94103',
+        collec_country_iso2='US',
+        collec_zip='94103',
+        company='Shippo',
+        email='hippo@shippo.com',
+        full_name='Shippo Meister',
+        has_invoice=False,
+        phone='1112223333',
+        title='Manager',
+        ups_agreements=False,
+        aia_country_iso2='US',
+        billing_address_street2='STE 200',
+        currency_code='USD',
+        invoice_controlid='1234',
+        invoice_date='20210529',
+        invoice_number='1112234',
+        invoice_value='11.23',
+    ),
+    carrier='ups',
+    metadata='UPS Account',
+    test=False,
+))
+
+if res.carrier_account is not None:
+    # handle response
+    pass
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                  | Type                                                                                                                       | Required                                                                                                                   | Description                                                                                                                |
+| -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `shippo_api_version`                                                                                                       | *Optional[str]*                                                                                                            | :heavy_minus_sign:                                                                                                         | String used to pick a non-default API version to use                                                                       |
+| `connect_existing_own_ups_account_request`                                                                                 | [Optional[components.ConnectExistingOwnUPSAccountRequest]](../../models/components/connectexistingownupsaccountrequest.md) | :heavy_minus_sign:                                                                                                         | Examples.                                                                                                                  |
+
+
+### Response
+
+**[operations.CreateCarrierAccountResponse](../../models/operations/createcarrieraccountresponse.md)**
+### Errors
+
+| Error Object                                        | Status Code                                         | Content Type                                        |
+| --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- |
+| errors.PlatformCarrierOwnAccountCreation400Response | 400                                                 | application/json                                    |
+| errors.SDKError                                     | 4x-5xx                                              | */*                                                 |
+
+## get_carrier_account
+
+Returns an existing carrier account using an object ID.
+
+### Example Usage
+
+```python
+import shippo
+
+s = shippo.Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+)
+
+
+res = s.carrier_accounts.get_carrier_account(carrier_account_id='<value>', shippo_api_version='<value>')
+
+if res.carrier_account is not None:
+    # handle response
+    pass
+
+```
+
+### Parameters
+
+| Parameter                                            | Type                                                 | Required                                             | Description                                          |
+| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
+| `carrier_account_id`                                 | *str*                                                | :heavy_check_mark:                                   | Object ID of the carrier account                     |
+| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use |
+
+
+### Response
+
+**[operations.GetCarrierAccountResponse](../../models/operations/getcarrieraccountresponse.md)**
+### Errors
+
+| Error Object    | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| errors.SDKError | 4x-5xx          | */*             |
+
+## update_carrier_account
+
+Updates an existing carrier account object. The account_id and carrier can't be updated. This is because they form the unique identifier together.
+
+### Example Usage
+
+```python
+import shippo
+from shippo.models import components
+
+s = shippo.Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+)
+
+
+res = s.carrier_accounts.update_carrier_account(carrier_account_id='<value>', shippo_api_version='<value>', carrier_account_base=components.CarrierAccountBase(
+    account_id='****',
+    carrier='usps',
+))
+
+if res.carrier_account is not None:
+    # handle response
+    pass
+
+```
+
+### Parameters
+
+| Parameter                                                                                | Type                                                                                     | Required                                                                                 | Description                                                                              |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `carrier_account_id`                                                                     | *str*                                                                                    | :heavy_check_mark:                                                                       | Object ID of the carrier account                                                         |
+| `shippo_api_version`                                                                     | *Optional[str]*                                                                          | :heavy_minus_sign:                                                                       | String used to pick a non-default API version to use                                     |
+| `carrier_account_base`                                                                   | [Optional[components.CarrierAccountBase]](../../models/components/carrieraccountbase.md) | :heavy_minus_sign:                                                                       | Examples.                                                                                |
+
+
+### Response
+
+**[operations.UpdateCarrierAccountResponse](../../models/operations/updatecarrieraccountresponse.md)**
+### Errors
+
+| Error Object    | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| errors.SDKError | 4x-5xx          | */*             |
+
+## register_carrier_account
+
+Adds a Shippo master carrier account
+
+### Example Usage
+
+```python
+import shippo
+from shippo.models import components
+
+s = shippo.Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+)
+
+
+res = s.carrier_accounts.register_carrier_account(shippo_api_version='<value>', request_body=components.CarrierAccountDHLExpressCreateRequest(
+    carrier='dhl_express',
+    parameters=components.CarrierAccountDHLExpressCreateRequestParameters(
+        user_accepted_terms_and_conditions=False,
+    ),
+))
+
+if res.carrier_account is not None:
+    # handle response
+    pass
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Required                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `shippo_api_version`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | *Optional[str]*                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | String used to pick a non-default API version to use                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `request_body`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | [Optional[Union[components.CarrierAccountCanadaPostCreateRequest, components.CarrierAccountChronopostCreateRequest, components.CarrierAccountColissimoCreateRequest, components.CarrierAccountCorreosCreateRequest, components.CarrierAccountDeutschePostCreateRequest, components.CarrierAccountDHLExpressCreateRequest, components.CarrierAccountDpdDeCreateRequest, components.CarrierAccountDPDUKCreateRequest, components.CarrierAccountHermesUKCreateRequest, components.CarrierAccountPosteItalianeCreateRequest, components.CarrierAccountUPSCreateRequest, components.CarrierAccountUSPSCreateRequest]]](../../models/operations/registercarrieraccountrequestbody.md) | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | Examples.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+
+
+### Response
+
+**[operations.RegisterCarrierAccountResponse](../../models/operations/registercarrieraccountresponse.md)**
+### Errors
+
+| Error Object                                       | Status Code                                        | Content Type                                       |
+| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |
+| errors.CarrierAccountRegistrationStatus400Response | 400                                                | application/json                                   |
+| errors.SDKError                                    | 4x-5xx                                             | */*                                                |
+
+## get_carrier_registration_status
+
+Returns the registration status for the given account for the given carrier
+
+### Example Usage
+
+```python
+import shippo
+from shippo.models import operations
+
+s = shippo.Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+)
+
+
+res = s.carrier_accounts.get_carrier_registration_status(carrier=operations.Carrier.CANADA_POST, shippo_api_version='<value>')
+
+if res.carrier_account_registration_status is not None:
+    # handle response
+    pass
+
+```
+
+### Parameters
+
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `carrier`                                                | [operations.Carrier](../../models/operations/carrier.md) | :heavy_check_mark:                                       | filter by specific carrier                               |
+| `shippo_api_version`                                     | *Optional[str]*                                          | :heavy_minus_sign:                                       | String used to pick a non-default API version to use     |
+
+
+### Response
+
+**[operations.GetCarrierRegistrationStatusResponse](../../models/operations/getcarrierregistrationstatusresponse.md)**
+### Errors
+
+| Error Object    | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| errors.SDKError | 4x-5xx          | */*             |

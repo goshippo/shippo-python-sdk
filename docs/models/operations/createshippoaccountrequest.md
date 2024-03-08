@@ -1,0 +1,9 @@
+# CreateShippoAccountRequest
+
+
+## Fields
+
+| Field                                                                                              | Type                                                                                               | Required                                                                                           | Description                                                                                        |
+| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `shippo_api_version`                                                                               | *Optional[str]*                                                                                    | :heavy_minus_sign:                                                                                 | String used to pick a non-default API version to use                                               |
+| `base_shippo_account_struct`                                                                       | [Optional[components.BaseShippoAccountStruct]](../../models/components/baseshippoaccountstruct.md) | :heavy_minus_sign:                                                                                 | Shippo Account details and contact info.                                                           |

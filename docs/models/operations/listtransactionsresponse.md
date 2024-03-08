@@ -1,0 +1,9 @@
+# ListTransactionsResponse
+
+
+## Fields
+
+| Field                                                                                            | Type                                                                                             | Required                                                                                         | Description                                                                                      |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `http_meta`                                                                                      | [components.HTTPMetadata](../../models/components/httpmetadata.md)                               | :heavy_check_mark:                                                                               | N/A                                                                                              |
+| `transaction_list_wrapper`                                                                       | [Optional[components.TransactionListWrapper]](../../models/components/transactionlistwrapper.md) | :heavy_minus_sign:                                                                               | N/A                                                                                              |

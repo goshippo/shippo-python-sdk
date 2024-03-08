@@ -1,0 +1,9 @@
+# ListCustomsItemsResponse
+
+
+## Fields
+
+| Field                                                                                            | Type                                                                                             | Required                                                                                         | Description                                                                                      |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `http_meta`                                                                                      | [components.HTTPMetadata](../../models/components/httpmetadata.md)                               | :heavy_check_mark:                                                                               | N/A                                                                                              |
+| `customs_item_list_wrapper`                                                                      | [Optional[components.CustomsItemListWrapper]](../../models/components/customsitemlistwrapper.md) | :heavy_minus_sign:                                                                               | N/A                                                                                              |

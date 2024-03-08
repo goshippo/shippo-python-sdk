@@ -1,0 +1,93 @@
+# CarrierParcelTemplates
+(*carrier_parcel_templates*)
+
+## Overview
+
+A carrier parcel template represents a package used for shipping that has preset dimensions defined by a carrier. Some examples of a carrier parcel template include USPS Flat Rate Box and Fedex Small Pak. When using a carrier parcel template, the rates returned may be limited to the carrier that provides the box. You can create user parcel templates using a carrier parcel template. Shippo takes the dimensions of the carrier parcel template but you must configure the weight.
+
+<SchemaDefinition schemaRef="#/components/schemas/CarrierParcelTemplateStruct"/>
+
+### Available Operations
+
+* [list_carrier_parcel_templates](#list_carrier_parcel_templates) - List all carrier parcel templates
+* [get_carrier_parcel_template](#get_carrier_parcel_template) - Retrieve a carrier parcel templates
+
+## list_carrier_parcel_templates
+
+List all carrier parcel template objects. <br> Use the following query string params to filter the results as needed. <br> <ul> <li>`include=all` (the default). Includes templates from all carriers </li> <li>`include=user`. Includes templates only from carriers which the user has added (whether or not they're currently enabled) </li> <li>`include=enabled`. includes templates only for carriers which the user has added and enabled </li> <li>`carrier=*token*`. filter by specific carrier, e.g. fedex, usps </li> </ul>
+
+### Example Usage
+
+```python
+import shippo
+from shippo.models import operations
+
+s = shippo.Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+)
+
+
+res = s.carrier_parcel_templates.list_carrier_parcel_templates(include=operations.Include.ALL, carrier='<value>', shippo_api_version='<value>')
+
+if res.carrier_parcel_template_struct_list_wrapper is not None:
+    # handle response
+    pass
+
+```
+
+### Parameters
+
+| Parameter                                                          | Type                                                               | Required                                                           | Description                                                        |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| `include`                                                          | [Optional[operations.Include]](../../models/operations/include.md) | :heavy_minus_sign:                                                 | filter by user or enabled                                          |
+| `carrier`                                                          | *Optional[str]*                                                    | :heavy_minus_sign:                                                 | filter by specific carrier                                         |
+| `shippo_api_version`                                               | *Optional[str]*                                                    | :heavy_minus_sign:                                                 | String used to pick a non-default API version to use               |
+
+
+### Response
+
+**[operations.ListCarrierParcelTemplatesResponse](../../models/operations/listcarrierparceltemplatesresponse.md)**
+### Errors
+
+| Error Object    | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| errors.SDKError | 4x-5xx          | */*             |
+
+## get_carrier_parcel_template
+
+Fetches the parcel template information for a specific carrier parcel template, identified by the token.
+
+### Example Usage
+
+```python
+import shippo
+
+s = shippo.Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+)
+
+
+res = s.carrier_parcel_templates.get_carrier_parcel_template(carrier_parcel_template_token='<value>', shippo_api_version='<value>')
+
+if res.carrier_parcel_template_struct is not None:
+    # handle response
+    pass
+
+```
+
+### Parameters
+
+| Parameter                                                       | Type                                                            | Required                                                        | Description                                                     |
+| --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
+| `carrier_parcel_template_token`                                 | *str*                                                           | :heavy_check_mark:                                              | The unique string representation of the carrier parcel template |
+| `shippo_api_version`                                            | *Optional[str]*                                                 | :heavy_minus_sign:                                              | String used to pick a non-default API version to use            |
+
+
+### Response
+
+**[operations.GetCarrierParcelTemplateResponse](../../models/operations/getcarrierparceltemplateresponse.md)**
+### Errors
+
+| Error Object    | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| errors.SDKError | 4x-5xx          | */*             |
