@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: 9bbd4639d2b339980ea7981666c74782
+  docChecksum: 672c5e6fc3d2f6ff9be085b08b52b4d0
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.205.0
+  speakeasyVersion: 1.205.2
   generationVersion: 2.279.1
-  releaseVersion: 0.0.2
-  configChecksum: 4539cace4c6339cd8af44bf7d3bcb403
+  releaseVersion: 0.0.3
+  configChecksum: d46fb9017ec7d5eacb33ec9de36b949e
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
 features:

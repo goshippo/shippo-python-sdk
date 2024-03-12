@@ -89,6 +89,10 @@ res = s.batches.create_batch(shippo_api_version='<value>', batch_create_request=
                 customs_declaration='adcfdddf8ec64b84ad22772bce3ea37a',
                 metadata='Customer ID 123456',
                 shipment_date='2021-03-22T12:00:00Z',
+                carrier_accounts=[
+                    '065a4a8c10d24a34ab932163a1b87f52',
+                    '73f706f4bdb94b54a337563840ce52b0',
+                ],
             ),
             carrier_account='a4391cd4ab974f478f55dc08b5c8e3b3',
             metadata='SHIPMENT #1',
@@ -225,6 +229,10 @@ res = s.batches.add_shipments_to_batch(batch_id='<value>', shippo_api_version='<
             customs_declaration='adcfdddf8ec64b84ad22772bce3ea37a',
             metadata='Customer ID 123456',
             shipment_date='2021-03-22T12:00:00Z',
+            carrier_accounts=[
+                '065a4a8c10d24a34ab932163a1b87f52',
+                '73f706f4bdb94b54a337563840ce52b0',
+            ],
         ),
         carrier_account='a4391cd4ab974f478f55dc08b5c8e3b3',
         metadata='SHIPMENT #1',

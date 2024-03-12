@@ -29,5 +29,9 @@ class ShipmentCreateRequest:
     """
     address_return: Optional[AddressCreateRequest] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_return'), 'exclude': lambda f: f is None }})
     async_: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('async'), 'exclude': lambda f: f is None }})
+    carrier_accounts: Optional[List[str]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('carrier_accounts'), 'exclude': lambda f: f is None }})
+    r"""List of <a href=\\"#tag/Carrier-Account\\">Carrier Account</a> `object_id`s used to filter
+    the returned rates.  If set, only rates from these carriers will be returned.
+    """
     
 

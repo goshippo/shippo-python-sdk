@@ -135,6 +135,10 @@ res = s.shipments.create_shipment(shippo_api_version='<value>', shipment_create_
     customs_declaration='adcfdddf8ec64b84ad22772bce3ea37a',
     metadata='Customer ID 123456',
     shipment_date='2021-03-22T12:00:00Z',
+    carrier_accounts=[
+        '065a4a8c10d24a34ab932163a1b87f52',
+        '73f706f4bdb94b54a337563840ce52b0',
+    ],
 ))
 
 if res.shipment is not None:
