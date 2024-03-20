@@ -20,7 +20,7 @@ It has been generated successfully based on your OpenAPI spec. However, it is no
 ## SDK Installation
 
 ```bash
-pip install git+<UNSET>.git
+pip install shippo
 ```
 <!-- End SDK Installation [installation] -->
 

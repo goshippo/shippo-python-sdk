@@ -25,7 +25,7 @@ from .user_parcel_templates import UserParcelTemplates
 from shippo import utils
 from shippo._hooks import SDKHooks
 from shippo.models import components
-from typing import Callable, Dict, Union
+from typing import Callable, Dict, Optional, Union
 
 class Shippo:
     r"""Shippo external API.: Use this API to integrate with the Shippo service"""
@@ -185,14 +185,14 @@ class Shippo:
 
     def __init__(self,
                  api_key_header: Union[str, Callable[[], str]],
-                 server_idx: int = None,
-                 server_url: str = None,
-                 url_params: Dict[str, str] = None,
-                 client: requests_http.Session = None,
-                 retry_config: utils.RetryConfig = None
+                 server_idx: Optional[int] = None,
+                 server_url: Optional[str] = None,
+                 url_params: Optional[Dict[str, str]] = None,
+                 client: Optional[requests_http.Session] = None,
+                 retry_config: Optional[utils.RetryConfig] = None
                  ) -> None:
         """Instantiates the SDK configuring it with the provided parameters.
-        
+
         :param api_key_header: The api_key_header required for authentication
         :type api_key_header: Union[str, Callable[[], str]]
         :param server_idx: The index of the server to use for all operations
@@ -208,18 +208,24 @@ class Shippo:
         """
         if client is None:
             client = requests_http.Session()
-        
+
         if callable(api_key_header):
             def security():
                 return components.Security(api_key_header = api_key_header())
         else:
             security = components.Security(api_key_header = api_key_header)
-        
+
         if server_url is not None:
             if url_params is not None:
                 server_url = utils.template_url(server_url, url_params)
 
-        self.sdk_configuration = SDKConfiguration(client, security, server_url, server_idx, retry_config=retry_config)
+        self.sdk_configuration = SDKConfiguration(
+            client,
+            security,
+            server_url,
+            server_idx,
+            retry_config=retry_config
+        )
 
         hooks = SDKHooks()
 
@@ -229,10 +235,11 @@ class Shippo:
             self.sdk_configuration.server_url = server_url
 
         # pylint: disable=protected-access
-        self.sdk_configuration._hooks=hooks
-       
+        self.sdk_configuration._hooks = hooks
+
         self._init_sdks()
-    
+
+
     def _init_sdks(self):
         self.addresses = Addresses(self.sdk_configuration)
         self.batches = Batches(self.sdk_configuration)
@@ -254,4 +261,3 @@ class Shippo:
         self.transactions = Transactions(self.sdk_configuration)
         self.user_parcel_templates = UserParcelTemplates(self.sdk_configuration)
         self.shippo_accounts = ShippoAccounts(self.sdk_configuration)
-    
