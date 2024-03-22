@@ -23,7 +23,7 @@ class PickupStatus(str, Enum):
 class Pickup:
     carrier_account: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('carrier_account') }})
     r"""The object ID of your USPS or DHL Express carrier account.
-    You can retrieve this from your Rate requests or our <a href=\"#tag/Carrier-Accounts\">carrier_accounts</a> endpoint.
+    You can retrieve this from your Rate requests or our <a href=\"#tag/Carrier-Accounts/\">Carrier Accounts</a> endpoint.
     """
     location: Location = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('location') }})
     r"""Location where the parcel(s) will be picked up."""

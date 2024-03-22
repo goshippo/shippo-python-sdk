@@ -7,7 +7,6 @@ from .carrier_accounts import CarrierAccounts
 from .carrier_parcel_templates import CarrierParcelTemplates
 from .customs_declarations import CustomsDeclarations
 from .customs_items import CustomsItems
-from .invoices import Invoices
 from .manifests import Manifests
 from .orders import Orders
 from .parcels import Parcels
@@ -58,20 +57,6 @@ class Shippo:
     customs_items: CustomsItems
     r"""Customs declarations are relevant information, including one or multiple customs items, you need to provide for customs clearance for your international shipments.
     <SchemaDefinition schemaRef=\"#/components/schemas/CustomsItem\"/>
-    """
-    invoices: Invoices
-    r"""<b> Please note that the following endpoints are in beta and API contract is subject to change. </b>
-    <br>
-    <br>
-    An invoice is a request for payment for Shippo services. It is a collection of invoice items. 
-    You can query your invoice at any time to see your current charges. 
-    Shippo sends invoices weekly or when your bill has exceeded $100.
-    <a href=\"https://support.goshippo.com/hc/en-us/articles/360024703991-Shippo-Billing-FAQs\" target=\"blank\">Shippo Billing FAQs</a>.
-    <SchemaDefinition schemaRef=\"#/components/schemas/Invoice\"/>
-
-    # Invoice Item
-    Invoice items are the individual amounts owed to Shippo. They can represent a purchased label or a charge for a service. Invoice items also represent refunds. They are the line items in an invoice.
-    <SchemaDefinition schemaRef=\"#/components/schemas/InvoiceItem\"/>
     """
     rates_at_checkout: RatesAtCheckout
     r"""Rates at checkout is a tool for merchants to display up-to-date shipping estimates based on what's in their customers cart and where they’re shipping to.
@@ -246,7 +231,6 @@ class Shippo:
         self.carrier_accounts = CarrierAccounts(self.sdk_configuration)
         self.customs_declarations = CustomsDeclarations(self.sdk_configuration)
         self.customs_items = CustomsItems(self.sdk_configuration)
-        self.invoices = Invoices(self.sdk_configuration)
         self.rates_at_checkout = RatesAtCheckout(self.sdk_configuration)
         self.manifests = Manifests(self.sdk_configuration)
         self.orders = Orders(self.sdk_configuration)

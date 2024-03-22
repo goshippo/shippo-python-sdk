@@ -4,6 +4,7 @@ from __future__ import annotations
 import dataclasses
 from ...models.components import httpmetadata as components_httpmetadata
 from ...models.components import servicegroup as components_servicegroup
+from ...models.components import servicegroupupdaterequest as components_servicegroupupdaterequest
 from typing import Optional
 
 
@@ -11,7 +12,7 @@ from typing import Optional
 class UpdateServiceGroupRequest:
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""
-    service_group: Optional[components_servicegroup.ServiceGroup] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
+    service_group_update_request: Optional[components_servicegroupupdaterequest.ServiceGroupUpdateRequest] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     
 
 

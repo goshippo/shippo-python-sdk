@@ -11,13 +11,17 @@ from typing import List, Optional
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
-class ServiceGroupCreateRequest:
+class ServiceGroupUpdateRequest:
     description: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('description') }})
     r"""Description for the service group"""
     name: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('name') }})
     r"""Name for the service group that will be shown to customers in the response"""
     type: ServiceGroupType = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('type') }})
     r"""The type of the service group.<br> `LIVE_RATE` - Shippo will make a rating request and return real-time rates for the shipping group, only falling back to the specified flat rate amount if no rates match a service level in the service group.<br> `FLAT_RATE` - Returns a shipping option with the specified flat rate amount.<br> `FREE_SHIPPING` - Returns a shipping option with a price of $0 only if the total cost of items exceeds the amount defined by `free_shipping_threshold_min`"""
+    object_id: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_id') }})
+    r"""The unique identifier of the given Service Group object."""
+    is_active: bool = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('is_active') }})
+    r"""True if the service group is enabled, false otherwise."""
     service_levels: List[ServiceGroupAccountAndServiceLevel] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('service_levels') }})
     flat_rate: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('flat_rate'), 'exclude': lambda f: f is None }})
     r"""String representation of an amount to be returned as the flat rate

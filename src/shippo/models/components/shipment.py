@@ -4,7 +4,7 @@ from __future__ import annotations
 import dataclasses
 import dateutil.parser
 from .address import Address
-from .parceltemplate import ParcelTemplate
+from .parcel import Parcel
 from .rate import Rate
 from .shipmentextra import ShipmentExtra
 from dataclasses_json import Undefined, dataclass_json
@@ -62,8 +62,8 @@ class Shipment:
     r"""Username of the user who created the Shipment object."""
     object_updated: datetime = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_updated'), 'encoder': utils.datetimeisoformat(False), 'decoder': dateutil.parser.isoparse }})
     r"""Date and time of last Shipment update."""
-    parcels: List[ParcelTemplate] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parcels') }})
-    r"""Array of IDs of the Parcel objects to be shipped."""
+    parcels: List[Parcel] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parcels') }})
+    r"""List of Parcel objects to be shipped."""
     rates: List[Rate] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('rates') }})
     r"""An array with all available rates. If <code>async</code> has been set to <code>false</code> in the request,
     this will be populated with all available rates in the response. Otherwise rates will be created
