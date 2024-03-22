@@ -8,8 +8,6 @@ from .addresslistwrapper import *
 from .addressvalidationresults import *
 from .addressvalidationresultsmessage import *
 from .alcohol import *
-from .amountandcurrencycharged import *
-from .amountandcurrencyinvoiced import *
 from .baseshippoaccountstruct import *
 from .batch import *
 from .batchcreaterequest import *
@@ -42,7 +40,6 @@ from .carrierparceltemplatestructlistwrapper import *
 from .carriers import *
 from .cod import *
 from .connectexistingownupsaccountrequest import *
-from .conversionamount import *
 from .customerreference import *
 from .customsdeclaration import *
 from .customsdeclarationcreaterequest import *
@@ -67,13 +64,7 @@ from .errormessage import *
 from .httpmetadata import *
 from .instanttransactionrequestbody import *
 from .insurance import *
-from .invoice import *
-from .invoiceitem import *
-from .invoiceitemlistwrapper import *
-from .invoiceitemtypes import *
-from .invoicelistwrapper import *
 from .invoicenumber import *
-from .invoicestatus import *
 from .labelfiletype import *
 from .lineitem import *
 from .lineitembase import *
@@ -95,7 +86,6 @@ from .parcelextra import *
 from .parcelinsurance import *
 from .parcellistwrapper import *
 from .parcelrequest import *
-from .parceltemplate import *
 from .parceltemplatearamexaustralia import *
 from .parceltemplatecouriersplease import *
 from .parceltemplatedhlecommerce import *
@@ -115,7 +105,10 @@ from .refundrequestbody import *
 from .rmanumber import *
 from .security import *
 from .servicegroup import *
+from .servicegroupaccountandservicelevel import *
 from .servicegroupcreaterequest import *
+from .servicegrouptype import *
+from .servicegroupupdaterequest import *
 from .servicelevel import *
 from .shipment import *
 from .shipmentcreaterequest import *
@@ -138,4 +131,4 @@ from .userparceltemplatewithcarriertemplatecreaterequest import *
 from .userparceltemplatewithoutcarriertemplatecreaterequest import *
 from .weightunit import *
 
-__all__ = ["Address","AddressCompleteCreateRequest","AddressCreateRequest","AddressImporter","AddressListWrapper","AddressValidationResults","AddressValidationResultsMessage","Alcohol","AmountAndCurrencyCharged","AmountAndCurrencyInvoiced","AncillaryEndorsement","Attributes","B13aFilingOption","BaseShippoAccountStruct","Batch","BatchCreateRequest","BatchShipment","BatchShipmentBase","BatchShipmentListWrapper","BatchStatus","Billing","BuildingLocationType","BuildingType","CarrierAccount","CarrierAccountBase","CarrierAccountCanadaPostCreateParameters","CarrierAccountCanadaPostCreateRequest","CarrierAccountChronopostCreateRequest","CarrierAccountColissimoCreateRequest","CarrierAccountColissimoCreateRequestParameters","CarrierAccountCorreosCreateRequest","CarrierAccountCorreosCreateRequestParameters","CarrierAccountDHLExpressCreateRequest","CarrierAccountDHLExpressCreateRequestParameters","CarrierAccountDPDUKCreateRequest","CarrierAccountDPDUKCreateRequestParameters","CarrierAccountDeutschePostCreateRequest","CarrierAccountDeutschePostCreateRequestParameters","CarrierAccountDpdDeCreateRequest","CarrierAccountDpdDeCreateRequestParameters","CarrierAccountHermesUKCreateRequest","CarrierAccountHermesUKCreateRequestParameters","CarrierAccountListWrapper","CarrierAccountPosteItalianeCreateRequest","CarrierAccountPosteItalianeCreateRequestParameters","CarrierAccountRegistrationStatus","CarrierAccountServiceLevel","CarrierAccountUPSCreateRequest","CarrierAccountUPSCreateRequestParameters","CarrierAccountUSPSCreateRequest","CarrierAccountUSPSCreateRequestParameters","CarrierParcelTemplateStruct","CarrierParcelTemplateStructListWrapper","Carriers","Cod","Code","ConnectExistingOwnUPSAccountRequest","ContentsType","ConversionAmount","CustomerReference","CustomsDeclaration","CustomsDeclarationAddressImporter","CustomsDeclarationCreateRequest","CustomsDeclarationCreateRequestB13aFilingOption","CustomsDeclarationCreateRequestContentsType","CustomsDeclarationCreateRequestEelPfc","CustomsDeclarationCreateRequestIncoterm","CustomsDeclarationCreateRequestNonDeliveryOption","CustomsDeclarationListWrapper","CustomsExporterIdentification","CustomsInvoicedCharges","CustomsItem","CustomsItemBase","CustomsItemListWrapper","CustomsTaxIdentification","CustomsTaxIdentificationType","DangerousGoodsBiologicalMaterial","DangerousGoodsCode","DangerousGoodsLithiumBatteries","DangerousGoodsObject","DefaultParcelTemplate","DefaultParcelTemplateUpdateRequest","DepartmentNumber","DistanceUnit","DistanceUnitTemplate","DistanceUnitUserTemplate","DryIce","EelPfc","ErrorMessage","HTTPMetadata","Incoterm","InstantTransactionRequestBody","InstantTransactionRequestBodyLabelFileType","Insurance","Invoice","InvoiceItem","InvoiceItemListWrapper","InvoiceItemTypes","InvoiceListWrapper","InvoiceNumber","InvoiceStatus","LabelFileType","LasershipAttrs","LineItem","LineItemBase","LiveRate","LiveRateCreateRequest","LiveRateList","Location","Manifest","ManifestCreateRequest","ManifestListWrapper","ManifestStatus","Messages","NonDeliveryOption","ObjectResults","ObjectState","Order","OrderCreateRequest","OrderCreateRequestOrderStatus","OrderListWrapper","OrderStatus","PaginatedShippoAccountResponse","Parameters","Parcel","ParcelCreateRequest","ParcelExtra","ParcelInsurance","ParcelInsuranceProvider","ParcelListWrapper","ParcelObjectState","ParcelRequest","ParcelTemplate","ParcelTemplateAramexAustralia","ParcelTemplateCouriersPlease","ParcelTemplateDHLeCommerce","ParcelTemplateDPDUK","ParcelTemplateFedEx","ParcelTemplateUPS","ParcelTemplateUSPS","PaymentMethod","Pickup","PickupBase","PickupStatus","PoNumber","PreferredDeliveryTimeframe","Provider","Rate","RateListWrapper","RateMessage","RecipientType","Refund","RefundListWrapper","RefundRequestBody","RefundStatus","ReturnServiceType","RmaNumber","Security","ServiceGroup","ServiceGroupCreateRequest","ServiceGroupCreateRequestType","ServiceGroupType","ServiceLevel","Shipment","ShipmentCreateRequest","ShipmentExtra","ShipmentListWrapper","ShipmentStatus","ShippoAccount","ShopApp","SignatureConfirmation","Source","Status","Track","TrackingStatus","TrackingStatusLocationBase","TrackingStatusStatus","TrackingStatusSubstatus","TracksRequest","Transaction","TransactionCreateRequest","TransactionListWrapper","TransactionMessages","TransactionStatus","Type","UPSConnectExistingOwnAccountParameters","UserParcelTemplate","UserParcelTemplateList","UserParcelTemplateUpdateRequest","UserParcelTemplateWithCarrierTemplateCreateRequest","UserParcelTemplateWithoutCarrierTemplateCreateRequest","WeightUnit"]
+__all__ = ["Address","AddressCompleteCreateRequest","AddressCreateRequest","AddressImporter","AddressListWrapper","AddressValidationResults","AddressValidationResultsMessage","Alcohol","AncillaryEndorsement","Attributes","B13aFilingOption","BaseShippoAccountStruct","Batch","BatchCreateRequest","BatchShipment","BatchShipmentBase","BatchShipmentListWrapper","BatchStatus","Billing","BuildingLocationType","BuildingType","CarrierAccount","CarrierAccountBase","CarrierAccountCanadaPostCreateParameters","CarrierAccountCanadaPostCreateRequest","CarrierAccountChronopostCreateRequest","CarrierAccountColissimoCreateRequest","CarrierAccountColissimoCreateRequestParameters","CarrierAccountCorreosCreateRequest","CarrierAccountCorreosCreateRequestParameters","CarrierAccountDHLExpressCreateRequest","CarrierAccountDHLExpressCreateRequestParameters","CarrierAccountDPDUKCreateRequest","CarrierAccountDPDUKCreateRequestParameters","CarrierAccountDeutschePostCreateRequest","CarrierAccountDeutschePostCreateRequestParameters","CarrierAccountDpdDeCreateRequest","CarrierAccountDpdDeCreateRequestParameters","CarrierAccountHermesUKCreateRequest","CarrierAccountHermesUKCreateRequestParameters","CarrierAccountListWrapper","CarrierAccountPosteItalianeCreateRequest","CarrierAccountPosteItalianeCreateRequestParameters","CarrierAccountRegistrationStatus","CarrierAccountServiceLevel","CarrierAccountUPSCreateRequest","CarrierAccountUPSCreateRequestParameters","CarrierAccountUSPSCreateRequest","CarrierAccountUSPSCreateRequestParameters","CarrierParcelTemplateStruct","CarrierParcelTemplateStructListWrapper","Carriers","Cod","Code","ConnectExistingOwnUPSAccountRequest","ContentsType","CustomerReference","CustomsDeclaration","CustomsDeclarationAddressImporter","CustomsDeclarationCreateRequest","CustomsDeclarationCreateRequestB13aFilingOption","CustomsDeclarationCreateRequestContentsType","CustomsDeclarationCreateRequestEelPfc","CustomsDeclarationCreateRequestIncoterm","CustomsDeclarationCreateRequestNonDeliveryOption","CustomsDeclarationListWrapper","CustomsExporterIdentification","CustomsInvoicedCharges","CustomsItem","CustomsItemBase","CustomsItemListWrapper","CustomsTaxIdentification","CustomsTaxIdentificationType","DangerousGoodsBiologicalMaterial","DangerousGoodsCode","DangerousGoodsLithiumBatteries","DangerousGoodsObject","DefaultParcelTemplate","DefaultParcelTemplateUpdateRequest","DepartmentNumber","DistanceUnit","DistanceUnitTemplate","DistanceUnitUserTemplate","DryIce","EelPfc","ErrorMessage","HTTPMetadata","Incoterm","InstantTransactionRequestBody","InstantTransactionRequestBodyLabelFileType","Insurance","InvoiceNumber","LabelFileType","LasershipAttrs","LineItem","LineItemBase","LiveRate","LiveRateCreateRequest","LiveRateList","Location","Manifest","ManifestCreateRequest","ManifestListWrapper","ManifestStatus","Messages","NonDeliveryOption","ObjectResults","ObjectState","Order","OrderCreateRequest","OrderCreateRequestOrderStatus","OrderListWrapper","OrderStatus","PaginatedShippoAccountResponse","Parameters","Parcel","ParcelCreateRequest","ParcelExtra","ParcelInsurance","ParcelInsuranceProvider","ParcelListWrapper","ParcelObjectState","ParcelRequest","ParcelTemplateAramexAustralia","ParcelTemplateCouriersPlease","ParcelTemplateDHLeCommerce","ParcelTemplateDPDUK","ParcelTemplateFedEx","ParcelTemplateUPS","ParcelTemplateUSPS","PaymentMethod","Pickup","PickupBase","PickupStatus","PoNumber","PreferredDeliveryTimeframe","Provider","Rate","RateListWrapper","RateMessage","RecipientType","Refund","RefundListWrapper","RefundRequestBody","RefundStatus","ReturnServiceType","RmaNumber","Security","ServiceGroup","ServiceGroupAccountAndServiceLevel","ServiceGroupCreateRequest","ServiceGroupType","ServiceGroupUpdateRequest","ServiceLevel","Shipment","ShipmentCreateRequest","ShipmentExtra","ShipmentListWrapper","ShipmentStatus","ShippoAccount","ShopApp","SignatureConfirmation","Source","Status","Track","TrackingStatus","TrackingStatusLocationBase","TrackingStatusStatus","TrackingStatusSubstatus","TracksRequest","Transaction","TransactionCreateRequest","TransactionListWrapper","TransactionMessages","TransactionStatus","Type","UPSConnectExistingOwnAccountParameters","UserParcelTemplate","UserParcelTemplateList","UserParcelTemplateUpdateRequest","UserParcelTemplateWithCarrierTemplateCreateRequest","UserParcelTemplateWithoutCarrierTemplateCreateRequest","WeightUnit"]

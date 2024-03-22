@@ -147,14 +147,14 @@ class ServiceGroups:
 
     
     
-    def update_service_group(self, shippo_api_version: Optional[str] = None, service_group: Optional[components.ServiceGroup] = None) -> operations.UpdateServiceGroupResponse:
+    def update_service_group(self, shippo_api_version: Optional[str] = None, service_group_update_request: Optional[components.ServiceGroupUpdateRequest] = None) -> operations.UpdateServiceGroupResponse:
         r"""Update an existing service group
         Updates an existing service group object. <br>The object_id cannot be updated as it is the unique identifier for the object.
         """
         hook_ctx = HookContext(operation_id='UpdateServiceGroup', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.UpdateServiceGroupRequest(
             shippo_api_version=shippo_api_version,
-            service_group=service_group,
+            service_group_update_request=service_group_update_request,
         )
         
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
@@ -167,7 +167,7 @@ class ServiceGroups:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.UpdateServiceGroupRequest, "service_group", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, operations.UpdateServiceGroupRequest, "service_group_update_request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         headers['Accept'] = 'application/json'

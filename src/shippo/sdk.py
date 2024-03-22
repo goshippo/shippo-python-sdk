@@ -7,7 +7,6 @@ from .carrier_accounts import CarrierAccounts
 from .carrier_parcel_templates import CarrierParcelTemplates
 from .customs_declarations import CustomsDeclarations
 from .customs_items import CustomsItems
-from .invoices import Invoices
 from .manifests import Manifests
 from .orders import Orders
 from .parcels import Parcels
@@ -25,7 +24,7 @@ from .user_parcel_templates import UserParcelTemplates
 from shippo import utils
 from shippo._hooks import SDKHooks
 from shippo.models import components
-from typing import Callable, Dict, Union
+from typing import Callable, Dict, Optional, Union
 
 class Shippo:
     r"""Shippo external API.: Use this API to integrate with the Shippo service"""
@@ -58,20 +57,6 @@ class Shippo:
     customs_items: CustomsItems
     r"""Customs declarations are relevant information, including one or multiple customs items, you need to provide for customs clearance for your international shipments.
     <SchemaDefinition schemaRef=\"#/components/schemas/CustomsItem\"/>
-    """
-    invoices: Invoices
-    r"""<b> Please note that the following endpoints are in beta and API contract is subject to change. </b>
-    <br>
-    <br>
-    An invoice is a request for payment for Shippo services. It is a collection of invoice items. 
-    You can query your invoice at any time to see your current charges. 
-    Shippo sends invoices weekly or when your bill has exceeded $100.
-    <a href=\"https://support.goshippo.com/hc/en-us/articles/360024703991-Shippo-Billing-FAQs\" target=\"blank\">Shippo Billing FAQs</a>.
-    <SchemaDefinition schemaRef=\"#/components/schemas/Invoice\"/>
-
-    # Invoice Item
-    Invoice items are the individual amounts owed to Shippo. They can represent a purchased label or a charge for a service. Invoice items also represent refunds. They are the line items in an invoice.
-    <SchemaDefinition schemaRef=\"#/components/schemas/InvoiceItem\"/>
     """
     rates_at_checkout: RatesAtCheckout
     r"""Rates at checkout is a tool for merchants to display up-to-date shipping estimates based on what's in their customers cart and where they’re shipping to.
@@ -185,14 +170,14 @@ class Shippo:
 
     def __init__(self,
                  api_key_header: Union[str, Callable[[], str]],
-                 server_idx: int = None,
-                 server_url: str = None,
-                 url_params: Dict[str, str] = None,
-                 client: requests_http.Session = None,
-                 retry_config: utils.RetryConfig = None
+                 server_idx: Optional[int] = None,
+                 server_url: Optional[str] = None,
+                 url_params: Optional[Dict[str, str]] = None,
+                 client: Optional[requests_http.Session] = None,
+                 retry_config: Optional[utils.RetryConfig] = None
                  ) -> None:
         """Instantiates the SDK configuring it with the provided parameters.
-        
+
         :param api_key_header: The api_key_header required for authentication
         :type api_key_header: Union[str, Callable[[], str]]
         :param server_idx: The index of the server to use for all operations
@@ -208,18 +193,24 @@ class Shippo:
         """
         if client is None:
             client = requests_http.Session()
-        
+
         if callable(api_key_header):
             def security():
                 return components.Security(api_key_header = api_key_header())
         else:
             security = components.Security(api_key_header = api_key_header)
-        
+
         if server_url is not None:
             if url_params is not None:
                 server_url = utils.template_url(server_url, url_params)
 
-        self.sdk_configuration = SDKConfiguration(client, security, server_url, server_idx, retry_config=retry_config)
+        self.sdk_configuration = SDKConfiguration(
+            client,
+            security,
+            server_url,
+            server_idx,
+            retry_config=retry_config
+        )
 
         hooks = SDKHooks()
 
@@ -229,17 +220,17 @@ class Shippo:
             self.sdk_configuration.server_url = server_url
 
         # pylint: disable=protected-access
-        self.sdk_configuration._hooks=hooks
-       
+        self.sdk_configuration._hooks = hooks
+
         self._init_sdks()
-    
+
+
     def _init_sdks(self):
         self.addresses = Addresses(self.sdk_configuration)
         self.batches = Batches(self.sdk_configuration)
         self.carrier_accounts = CarrierAccounts(self.sdk_configuration)
         self.customs_declarations = CustomsDeclarations(self.sdk_configuration)
         self.customs_items = CustomsItems(self.sdk_configuration)
-        self.invoices = Invoices(self.sdk_configuration)
         self.rates_at_checkout = RatesAtCheckout(self.sdk_configuration)
         self.manifests = Manifests(self.sdk_configuration)
         self.orders = Orders(self.sdk_configuration)
@@ -254,4 +245,3 @@ class Shippo:
         self.transactions = Transactions(self.sdk_configuration)
         self.user_parcel_templates = UserParcelTemplates(self.sdk_configuration)
         self.shippo_accounts = ShippoAccounts(self.sdk_configuration)
-    

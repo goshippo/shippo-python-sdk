@@ -89,22 +89,7 @@ s = shippo.Shippo(
 
 
 res = s.shipments.create_shipment(shippo_api_version='<value>', shipment_create_request=components.ShipmentCreateRequest(
-    address_from=components.AddressCreateRequest(
-        country='US',
-        name='Shwan Ippotle',
-        company='Shippo',
-        street1='215 Clayton St.',
-        street3='',
-        street_no='',
-        city='San Francisco',
-        state='CA',
-        zip='94117',
-        phone='+1 555 341 9393',
-        email='shippotle@shippo.com',
-        is_residential=True,
-        metadata='Customer ID 123456',
-        validate=True,
-    ),
+    address_from='<value>',
     address_to=components.AddressCreateRequest(
         country='US',
         name='Shwan Ippotle',
@@ -121,20 +106,22 @@ res = s.shipments.create_shipment(shippo_api_version='<value>', shipment_create_
         metadata='Customer ID 123456',
         validate=True,
     ),
-    parcels=[
-        components.ParcelCreateRequest(
-            distance_unit=components.DistanceUnitTemplate.IN,
-            height='1',
-            length='1',
-            mass_unit=components.WeightUnit.LB,
-            weight='1',
-            width='1',
-            metadata='Customer ID 123456',
-        ),
-    ],
+    parcels=components.ParcelCreateRequest(
+        distance_unit=components.DistanceUnitTemplate.IN,
+        height='1',
+        length='1',
+        mass_unit=components.WeightUnit.LB,
+        weight='1',
+        width='1',
+        metadata='Customer ID 123456',
+    ),
     customs_declaration='adcfdddf8ec64b84ad22772bce3ea37a',
     metadata='Customer ID 123456',
     shipment_date='2021-03-22T12:00:00Z',
+    carrier_accounts=[
+        '065a4a8c10d24a34ab932163a1b87f52',
+        '73f706f4bdb94b54a337563840ce52b0',
+    ],
 ))
 
 if res.shipment is not None:

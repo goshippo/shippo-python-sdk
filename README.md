@@ -20,7 +20,7 @@ It has been generated successfully based on your OpenAPI spec. However, it is no
 ## SDK Installation
 
 ```bash
-pip install git+<UNSET>.git
+pip install shippo
 ```
 <!-- End SDK Installation [installation] -->
 
@@ -84,12 +84,6 @@ if res.address_list_wrapper is not None:
 * [list_customs_items](docs/sdks/customsitems/README.md#list_customs_items) - List all customs items
 * [create_customs_item](docs/sdks/customsitems/README.md#create_customs_item) - Create a new customs item
 * [get_customs_item](docs/sdks/customsitems/README.md#get_customs_item) - Retrieve a customs item
-
-### [invoices](docs/sdks/invoices/README.md)
-
-* [get_invoice](docs/sdks/invoices/README.md#get_invoice) - Retrieve an invoice
-* [list_invoices](docs/sdks/invoices/README.md#list_invoices) - List all invoices
-* [list_invoice_items_template](docs/sdks/invoices/README.md#list_invoice_items_template) - List all invoice items
 
 ### [rates_at_checkout](docs/sdks/ratesatcheckout/README.md)
 

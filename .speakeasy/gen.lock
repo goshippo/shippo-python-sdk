@@ -1,19 +1,22 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: 9bbd4639d2b339980ea7981666c74782
+  docChecksum: 188580bb4b45d516cbc4e1cfc581efa4
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.205.0
-  generationVersion: 2.279.1
-  releaseVersion: 0.0.1
-  configChecksum: 65bdc131362d71fea76750679c9d8510
+  speakeasyVersion: 1.220.0
+  generationVersion: 2.286.7
+  releaseVersion: 0.0.3
+  configChecksum: d46fb9017ec7d5eacb33ec9de36b949e
+  repoURL: https://github.com/goshippo/shippo-python-sdk.git
+  installationURL: https://github.com/goshippo/shippo-python-sdk.git
+  published: true
 features:
   python:
     constsAndDefaults: 0.1.3
     core: 4.5.1
     flattening: 2.81.1
-    globalSecurity: 2.83.4
-    globalServerURLs: 2.82.1
+    globalSecurity: 2.83.5
+    globalServerURLs: 2.82.2
     responseFormat: 0.1.0
     unions: 2.82.6
 generatedFiles:
@@ -23,7 +26,6 @@ generatedFiles:
   - src/shippo/carrier_accounts.py
   - src/shippo/customs_declarations.py
   - src/shippo/customs_items.py
-  - src/shippo/invoices.py
   - src/shippo/rates_at_checkout.py
   - src/shippo/manifests.py
   - src/shippo/orders.py
@@ -69,9 +71,6 @@ generatedFiles:
   - src/shippo/models/operations/listcustomsitems.py
   - src/shippo/models/operations/createcustomsitem.py
   - src/shippo/models/operations/getcustomsitem.py
-  - src/shippo/models/operations/getinvoice.py
-  - src/shippo/models/operations/listinvoices.py
-  - src/shippo/models/operations/listinvoiceitemstemplate.py
   - src/shippo/models/operations/createliverate.py
   - src/shippo/models/operations/getdefaultparceltemplate.py
   - src/shippo/models/operations/updatedefaultparceltemplate.py
@@ -187,15 +186,6 @@ generatedFiles:
   - src/shippo/models/components/addressimporter.py
   - src/shippo/models/components/customsitemlistwrapper.py
   - src/shippo/models/components/customsitem.py
-  - src/shippo/models/components/invoice.py
-  - src/shippo/models/components/amountandcurrencycharged.py
-  - src/shippo/models/components/amountandcurrencyinvoiced.py
-  - src/shippo/models/components/invoicestatus.py
-  - src/shippo/models/components/invoicelistwrapper.py
-  - src/shippo/models/components/invoiceitemlistwrapper.py
-  - src/shippo/models/components/invoiceitem.py
-  - src/shippo/models/components/conversionamount.py
-  - src/shippo/models/components/invoiceitemtypes.py
   - src/shippo/models/components/liveratelist.py
   - src/shippo/models/components/liverate.py
   - src/shippo/models/components/liveratecreaterequest.py
@@ -231,10 +221,12 @@ generatedFiles:
   - src/shippo/models/components/refundrequestbody.py
   - src/shippo/models/components/refundlistwrapper.py
   - src/shippo/models/components/servicegroup.py
+  - src/shippo/models/components/servicegrouptype.py
   - src/shippo/models/components/servicegroupcreaterequest.py
+  - src/shippo/models/components/servicegroupaccountandservicelevel.py
+  - src/shippo/models/components/servicegroupupdaterequest.py
   - src/shippo/models/components/shipmentlistwrapper.py
   - src/shippo/models/components/shipment.py
-  - src/shippo/models/components/parceltemplate.py
   - src/shippo/models/components/track.py
   - src/shippo/models/components/trackingstatus.py
   - src/shippo/models/components/trackingstatussubstatus.py
@@ -303,12 +295,6 @@ generatedFiles:
   - docs/models/operations/createcustomsitemresponse.md
   - docs/models/operations/getcustomsitemrequest.md
   - docs/models/operations/getcustomsitemresponse.md
-  - docs/models/operations/getinvoicerequest.md
-  - docs/models/operations/getinvoiceresponse.md
-  - docs/models/operations/listinvoicesrequest.md
-  - docs/models/operations/listinvoicesresponse.md
-  - docs/models/operations/listinvoiceitemstemplaterequest.md
-  - docs/models/operations/listinvoiceitemstemplateresponse.md
   - docs/models/operations/createliveraterequest.md
   - docs/models/operations/createliverateresponse.md
   - docs/models/operations/getdefaultparceltemplaterequest.md
@@ -412,6 +398,10 @@ generatedFiles:
   - docs/models/components/status.md
   - docs/models/components/batchshipment.md
   - docs/models/components/errormessage.md
+  - docs/models/components/addressfrom.md
+  - docs/models/components/addressreturn.md
+  - docs/models/components/addressto.md
+  - docs/models/components/parcels.md
   - docs/models/components/shipmentcreaterequest.md
   - docs/models/components/parcelcreaterequest.md
   - docs/models/components/parceltemplateenumset.md
@@ -506,19 +496,10 @@ generatedFiles:
   - docs/models/components/addressimporter.md
   - docs/models/components/customsitemlistwrapper.md
   - docs/models/components/customsitem.md
-  - docs/models/components/invoice.md
-  - docs/models/components/amountandcurrencycharged.md
-  - docs/models/components/amountandcurrencyinvoiced.md
-  - docs/models/components/invoicestatus.md
-  - docs/models/components/invoicelistwrapper.md
-  - docs/models/components/invoiceitemlistwrapper.md
-  - docs/models/components/invoiceitem.md
-  - docs/models/components/conversionamount.md
-  - docs/models/components/invoiceitemtypes.md
   - docs/models/components/liveratelist.md
   - docs/models/components/liverate.md
-  - docs/models/components/addressfrom.md
-  - docs/models/components/addressto.md
+  - docs/models/components/liveratecreaterequestaddressfrom.md
+  - docs/models/components/liveratecreaterequestaddressto.md
   - docs/models/components/liveratecreaterequestparcel.md
   - docs/models/components/liveratecreaterequest.md
   - docs/models/components/parcelobjectstate.md
@@ -564,15 +545,15 @@ generatedFiles:
   - docs/models/components/refund.md
   - docs/models/components/refundrequestbody.md
   - docs/models/components/refundlistwrapper.md
-  - docs/models/components/servicegrouptype.md
   - docs/models/components/servicegroup.md
-  - docs/models/components/servicegroupcreaterequesttype.md
+  - docs/models/components/servicegrouptype.md
   - docs/models/components/servicegroupcreaterequest.md
+  - docs/models/components/servicegroupaccountandservicelevel.md
+  - docs/models/components/servicegroupupdaterequest.md
   - docs/models/components/shipmentlistwrapper.md
   - docs/models/components/messages.md
   - docs/models/components/shipmentstatus.md
   - docs/models/components/shipment.md
-  - docs/models/components/parceltemplate.md
   - docs/models/components/track.md
   - docs/models/components/trackingstatusstatus.md
   - docs/models/components/trackingstatus.md
@@ -604,7 +585,6 @@ generatedFiles:
   - docs/sdks/carrieraccounts/README.md
   - docs/sdks/customsdeclarations/README.md
   - docs/sdks/customsitems/README.md
-  - docs/sdks/invoices/README.md
   - docs/sdks/ratesatcheckout/README.md
   - docs/sdks/manifests/README.md
   - docs/sdks/orders/README.md

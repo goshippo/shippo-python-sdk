@@ -70,13 +70,13 @@ s = shippo.Shippo(
 res = s.service_groups.create_service_group(shippo_api_version='<value>', service_group_create_request=components.ServiceGroupCreateRequest(
     description='USPS shipping options',
     name='USPS Shipping',
+    type=components.ServiceGroupType.FLAT_RATE,
     service_levels=[
-        components.ServiceLevel(
-            name='Priority Mail Express',
-            service_level_token='usps_priority_express',
+        components.ServiceGroupAccountAndServiceLevel(
+            account_object_id='80feb1633d4a43c898f0058506cfd82d',
+            service_level_token='ups_next_day_air_saver',
         ),
     ],
-    type=components.ServiceGroupCreateRequestType.FLAT_RATE,
     flat_rate='5',
     flat_rate_currency='USD',
     free_shipping_threshold_currency='USD',
@@ -122,23 +122,23 @@ s = shippo.Shippo(
 )
 
 
-res = s.service_groups.update_service_group(shippo_api_version='<value>', service_group=components.ServiceGroup(
+res = s.service_groups.update_service_group(shippo_api_version='<value>', service_group_update_request=components.ServiceGroupUpdateRequest(
     description='USPS shipping options',
     name='USPS Shipping',
-    service_levels=[
-        components.ServiceLevel(
-            name='Priority Mail Express',
-            service_level_token='usps_priority_express',
-        ),
-    ],
     type=components.ServiceGroupType.FLAT_RATE,
     object_id='80feb1633d4a43c898f005850',
+    is_active=True,
+    service_levels=[
+        components.ServiceGroupAccountAndServiceLevel(
+            account_object_id='80feb1633d4a43c898f0058506cfd82d',
+            service_level_token='ups_next_day_air_saver',
+        ),
+    ],
     flat_rate='5',
     flat_rate_currency='USD',
     free_shipping_threshold_currency='USD',
     free_shipping_threshold_min='5',
     rate_adjustment=15,
-    is_active=True,
 ))
 
 if res.service_group is not None:
@@ -149,10 +149,10 @@ if res.service_group is not None:
 
 ### Parameters
 
-| Parameter                                                                    | Type                                                                         | Required                                                                     | Description                                                                  |
-| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `shippo_api_version`                                                         | *Optional[str]*                                                              | :heavy_minus_sign:                                                           | String used to pick a non-default API version to use                         |
-| `service_group`                                                              | [Optional[components.ServiceGroup]](../../models/components/servicegroup.md) | :heavy_minus_sign:                                                           | N/A                                                                          |
+| Parameter                                                                                              | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `shippo_api_version`                                                                                   | *Optional[str]*                                                                                        | :heavy_minus_sign:                                                                                     | String used to pick a non-default API version to use                                                   |
+| `service_group_update_request`                                                                         | [Optional[components.ServiceGroupUpdateRequest]](../../models/components/servicegroupupdaterequest.md) | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |
 
 
 ### Response
