@@ -35,6 +35,7 @@ setuptools.setup(
     extras_require={
         "dev": [
             "pylint==2.16.2",
+            "pytest==8.1.1",
         ],
     },
     package_dir={'': 'src'},
