@@ -15,7 +15,7 @@ from typing import List, Optional, Union
 class ShipmentCreateRequest:
     address_from: Union[AddressCreateRequest, str] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_from') }})
     address_to: Union[AddressCreateRequest, str] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_to') }})
-    parcels: Union[ParcelCreateRequest, str] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parcels') }})
+    parcels: List[Union[ParcelCreateRequest, str]] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parcels') }})
     customs_declaration: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('customs_declaration'), 'exclude': lambda f: f is None }})
     r"""ID of the Customs Declarations object for an international shipment."""
     extra: Optional[ShipmentExtra] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('extra'), 'exclude': lambda f: f is None }})
