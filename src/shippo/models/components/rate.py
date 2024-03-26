@@ -63,7 +63,7 @@ class Rate:
     included_insurance_price: Optional[float] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('included_insurance_price'), 'exclude': lambda f: f is None }})
     r"""Cost to the user to insure the Rate for the requested amount of coverage, if insurance coverage was requested.
     Expressed in the currency used in the sender's country. Will be null if no insurance coverage was requested, or if insurance is requested from a non-standard insurance provider. 
-    Please note this is price is already included in the `amount` and `amount_local` fields on the Rate- do not add this field to them.
+    Please note this price is already included in the `amount` and `amount_local` fields on the Rate. Do not add this field to them.
     """
     messages: Optional[List[RateMessage]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('messages'), 'exclude': lambda f: f is None }})
     r"""An array containing elements of the following schema: <br>
