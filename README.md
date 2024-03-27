@@ -1,33 +1,24 @@
-# shippo
+# Shippo Python SDK
 
-<div align="left">
-    <a href="https://speakeasyapi.dev/"><img src="https://custom-icon-badges.demolab.com/badge/-Built%20By%20Speakeasy-212015?style=for-the-badge&logoColor=FBE331&logo=speakeasy&labelColor=545454" /></a>
-    <a href="https://opensource.org/licenses/MIT">
-        <img src="https://img.shields.io/badge/License-MIT-blue.svg" style="width: 100px; height: 28px;" />
-    </a>
-</div>
+Shippo is a shipping API that connects you with [multiple shipping carriers](https://goshippo.com/carriers) (such as USPS, UPS, DHL, Canada Post, Australia Post, and many others) through one interface.
+
+You must register for a [Shippo account](https://apps.goshippo.com/join) to use our API. It's free to sign up. Only pay to print a live label, test labels are free.
 
 
-## 🏗 **Welcome to your new SDK!** 🏗
-
-It has been generated successfully based on your OpenAPI spec. However, it is not yet ready for production use. Here are some next steps:
-- [ ] 🛠 Make your SDK feel handcrafted by [customizing it](https://www.speakeasyapi.dev/docs/customize-sdks)
-- [ ] ♻️ Refine your SDK quickly by iterating locally with the [Speakeasy CLI](https://github.com/speakeasy-api/speakeasy)
-- [ ] 🎁 Publish your SDK to package managers by [configuring automatic publishing](https://www.speakeasyapi.dev/docs/productionize-sdks/publish-sdks)
-- [ ] ✨ When ready to productionize, delete this section from the README
-
-<!-- Start SDK Installation [installation] -->
-## SDK Installation
+## Install the Shippo Python SDK
 
 ```bash
 pip install shippo
 ```
-<!-- End SDK Installation [installation] -->
 
-<!-- Start SDK Example Usage [usage] -->
-## SDK Example Usage
+## Authentication
+To use the API, you must generate an [API Token](https://docs.goshippo.com/docs/guides_general/authentication/). In the following examples, replace `<YOUR_API_KEY_HERE>` with your own token.
 
-### Example
+```
+api_key_header="ShippoToken shippo_test_595d9cb0c0e14497bf07e75ecfec6c6d"
+```
+
+## Shippo Python SDK example usage
 
 ```python
 import shippo
@@ -44,9 +35,10 @@ if res.address_list_wrapper is not None:
     pass
 
 ```
-<!-- End SDK Example Usage [usage] -->
 
-<!-- Start Available Resources and Operations [operations] -->
+## Documentation
+Review our full guides and references at [https://docs.goshippo.com/](https://docs.goshippo.com/).
+
 ## Available Resources and Operations
 
 ### [addresses](docs/sdks/addresses/README.md)
@@ -169,155 +161,6 @@ if res.address_list_wrapper is not None:
 * [create_shippo_account](docs/sdks/shippoaccounts/README.md#create_shippo_account) - Create a Shippo Account
 * [get_shippo_account](docs/sdks/shippoaccounts/README.md#get_shippo_account) - Retrieve a Shippo Account
 * [update_shippo_account](docs/sdks/shippoaccounts/README.md#update_shippo_account) - Update a Shippo Account
-<!-- End Available Resources and Operations [operations] -->
 
-<!-- Start Error Handling [errors] -->
-## Error Handling
-
-Handling errors in this SDK should largely match your expectations.  All operations return a response object or raise an error.  If Error objects are specified in your OpenAPI Spec, the SDK will raise the appropriate Error type.
-
-| Error Object                                        | Status Code                                         | Content Type                                        |
-| --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- |
-| errors.PlatformCarrierOwnAccountCreation400Response | 400                                                 | application/json                                    |
-| errors.SDKError                                     | 4x-5xx                                              | */*                                                 |
-
-### Example
-
-```python
-import shippo
-from shippo.models import components, errors
-
-s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
-)
-
-
-res = None
-try:
-    res = s.carrier_accounts.create_carrier_account(shippo_api_version='<value>', connect_existing_own_ups_account_request=components.ConnectExistingOwnUPSAccountRequest(
-    account_id='<value>',
-    active=False,
-    parameters=components.UPSConnectExistingOwnAccountParameters(
-        account_number='94567e',
-        billing_address_city='San Francisco',
-        billing_address_country_iso2='US',
-        billing_address_state='CA',
-        billing_address_street1='731 Market St',
-        billing_address_zip='94103',
-        collec_country_iso2='US',
-        collec_zip='94103',
-        company='Shippo',
-        email='hippo@shippo.com',
-        full_name='Shippo Meister',
-        has_invoice=False,
-        phone='1112223333',
-        title='Manager',
-        ups_agreements=False,
-        aia_country_iso2='US',
-        billing_address_street2='STE 200',
-        currency_code='USD',
-        invoice_controlid='1234',
-        invoice_date='20210529',
-        invoice_number='1112234',
-        invoice_value='11.23',
-    ),
-    carrier='ups',
-    metadata='UPS Account',
-    test=False,
-))
-except errors.PlatformCarrierOwnAccountCreation400Response as e:
-    # handle exception
-    raise(e)
-except errors.SDKError as e:
-    # handle exception
-    raise(e)
-
-if res.carrier_account is not None:
-    # handle response
-    pass
-
-```
-<!-- End Error Handling [errors] -->
-
-## Server Selection
-
-You can override the default server globally by passing a URL to the `server_url: str` optional parameter when initializing the SDK client instance. For example:
-```python
-import shippo
-
-s = shippo.Shippo(
-    server_url="https://api.goshippo.com",
-    api_key_header="<YOUR_API_KEY_HERE>",
-)
-
-
-res = s.addresses.list_addresses(page=1, results=25, shippo_api_version='<value>')
-
-if res.address_list_wrapper is not None:
-    # handle response
-    pass
-
-```
-<!-- No Server Selection [server] -->
-
-<!-- Start Custom HTTP Client [http-client] -->
-## Custom HTTP Client
-
-The Python SDK makes API calls using the [requests](https://pypi.org/project/requests/) HTTP library.  In order to provide a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration, you can initialize the SDK client with a custom `requests.Session` object.
-
-For example, you could specify a header for every request that this sdk makes as follows:
-```python
-import shippo
-import requests
-
-http_client = requests.Session()
-http_client.headers.update({'x-custom-header': 'someValue'})
-s = shippo.Shippo(client: http_client)
-```
-<!-- End Custom HTTP Client [http-client] -->
-
-<!-- Start Authentication [security] -->
-## Authentication
-
-### Per-Client Security Schemes
-
-This SDK supports the following security scheme globally:
-
-| Name             | Type             | Scheme           |
-| ---------------- | ---------------- | ---------------- |
-| `api_key_header` | apiKey           | API key          |
-
-To authenticate with the API the `api_key_header` parameter must be set when initializing the SDK client instance. For example:
-```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
-)
-
-
-res = s.addresses.list_addresses(page=1, results=25, shippo_api_version='<value>')
-
-if res.address_list_wrapper is not None:
-    # handle response
-    pass
-
-```
-<!-- End Authentication [security] -->
-
-<!-- Placeholder for Future Speakeasy SDK Sections -->
-
-# Development
-
-## Maturity
-
-This SDK is in beta, and there may be breaking changes between versions without a major version update. Therefore, we recommend pinning usage
-to a specific package version. This way, you can install the same version each time without breaking changes unless you are intentionally
-looking for the latest version.
-
-## Contributions
-
-While we value open-source contributions to this SDK, this library is generated programmatically.
-Feel free to open a PR or a Github issue as a proof of concept and we'll do our best to include it in a future release!
-
-### SDK Created by [Speakeasy](https://docs.speakeasyapi.dev/docs/using-speakeasy/client-sdks)
+## About Shippo
+Connect with multiple different carriers, get discounted shipping labels, track parcels, and much more with just one integration. You can use your own carrier accounts or take advantage of our discounted rates with the Shippo carrier accounts. Using Shippo makes it easy to deal with multiple carrier integrations, rate shopping, tracking and other parts of the shipping workflow. We provide the API and web app for all your shipping needs.
