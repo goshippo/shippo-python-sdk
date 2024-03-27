@@ -1,24 +1,33 @@
-# Shippo Python SDK
+# <img src="https://docs.goshippo.com/images/Logo.png" width="30" alt="Shippo logo"> Shippo Python SDK 
+
+
+
 
 Shippo is a shipping API that connects you with [multiple shipping carriers](https://goshippo.com/carriers) (such as USPS, UPS, DHL, Canada Post, Australia Post, and many others) through one interface.
 
 You must register for a [Shippo account](https://apps.goshippo.com/join) to use our API. It's free to sign up. Only pay to print a live label, test labels are free.
 
-
-## Install the Shippo Python SDK
-
-```bash
-pip install shippo
-```
-
-## Authentication
 To use the API, you must generate an [API Token](https://docs.goshippo.com/docs/guides_general/authentication/). In the following examples, replace `<YOUR_API_KEY_HERE>` with your own token.
 
+For example.
 ```
 api_key_header="ShippoToken shippo_test_595d9cb0c0e14497bf07e75ecfec6c6d"
 ```
 
-## Shippo Python SDK example usage
+
+<!-- Start SDK Installation [installation] -->
+## SDK Installation
+
+```bash
+pip install shippo
+```
+<!-- End SDK Installation [installation] -->
+
+
+<!-- Start SDK Example Usage [usage] -->
+## SDK Example Usage
+
+### Example
 
 ```python
 import shippo
@@ -35,10 +44,13 @@ if res.address_list_wrapper is not None:
     pass
 
 ```
+<!-- End SDK Example Usage [usage] -->
 
 ## Documentation
 Review our full guides and references at [https://docs.goshippo.com/](https://docs.goshippo.com/).
 
+
+<!-- Start Available Resources and Operations [operations] -->
 ## Available Resources and Operations
 
 ### [addresses](docs/sdks/addresses/README.md)
@@ -161,6 +173,64 @@ Review our full guides and references at [https://docs.goshippo.com/](https://do
 * [create_shippo_account](docs/sdks/shippoaccounts/README.md#create_shippo_account) - Create a Shippo Account
 * [get_shippo_account](docs/sdks/shippoaccounts/README.md#get_shippo_account) - Retrieve a Shippo Account
 * [update_shippo_account](docs/sdks/shippoaccounts/README.md#update_shippo_account) - Update a Shippo Account
+<!-- End Available Resources and Operations [operations] -->
+
+<!-- Start Authentication [security] -->
+## Authentication
+
+### Per-Client Security Schemes
+
+This SDK supports the following security scheme globally:
+
+| Name             | Type             | Scheme           |
+| ---------------- | ---------------- | ---------------- |
+| `api_key_header` | apiKey           | API key          |
+
+To authenticate with the API the `api_key_header` parameter must be set when initializing the SDK client instance. For example:
+```python
+import shippo
+
+s = shippo.Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+)
+
+
+res = s.addresses.list_addresses(page=1, results=25, shippo_api_version='<value>')
+
+if res.address_list_wrapper is not None:
+    # handle response
+    pass
+
+```
+<!-- End Authentication [security] -->
+
+<!-- No Server Selection [server] -->
+<!-- Start Custom HTTP Client [http-client] -->
+## Custom HTTP Client
+
+The Python SDK makes API calls using the [requests](https://pypi.org/project/requests/) HTTP library.  In order to provide a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration, you can initialize the SDK client with a custom `requests.Session` object.
+
+For example, you could specify a header for every request that this sdk makes as follows:
+```python
+import shippo
+import requests
+
+http_client = requests.Session()
+http_client.headers.update({'x-custom-header': 'someValue'})
+s = shippo.Shippo(client: http_client)
+```
+<!-- End Custom HTTP Client [http-client] -->
+## Maturity
+
+This SDK is in beta, and there may be breaking changes between versions without a major version update. Therefore, we recommend pinning usage
+to a specific package version. This way, you can install the same version each time without breaking changes unless you are intentionally
+looking for the latest version.
+
+## Contributions
+
+While we value open-source contributions to this SDK, this library is generated programmatically.
+Feel free to open a PR or a Github issue as a proof of concept and we'll do our best to include it in a future release.
+
 
 ## About Shippo
 Connect with multiple different carriers, get discounted shipping labels, track parcels, and much more with just one integration. You can use your own carrier accounts or take advantage of our discounted rates with the Shippo carrier accounts. Using Shippo makes it easy to deal with multiple carrier integrations, rate shopping, tracking and other parts of the shipping workflow. We provide the API and web app for all your shipping needs.
