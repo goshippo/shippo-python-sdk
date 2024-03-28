@@ -8,3 +8,18 @@ test:
 	source .venv/bin/activate; python3 -m pytest --junitxml=build/test_results/report.xml
 
 check: test
+
+speakeasy-install: # dev task, locally install the speakeasy CLI
+	brew install speakeasy-api/homebrew-tap/speakeasy
+	speakeasy auth login
+
+LOCAL_SPEC_FILE=./build/public-api.yaml
+speakeasy-generate: # dev task, run the generator on a local spec.  useful for testing out changes to the spec or gen.yaml - but DO NOT commit the results of manual generation
+	if [ ! -f "${LOCAL_SPEC_FILE}" ]; then \
+	  echo "Error: The file '${LOCAL_SPEC_FILE}' does not exist, copy the public spec into the build directory prior to running this task"; \
+	  exit 1; \
+	fi
+	SPEAKEASY_FORCE_GENERATION=true speakeasy generate sdk -s ${LOCAL_SPEC_FILE} -o . -l python
+
+speakeasy-run: # dev task, locally run the complete speakeasy workflow.  useful if the generator workflow ever fails, to replicate locally
+	SPEAKEASY_FORCE_GENERATION=true speakeasy run
