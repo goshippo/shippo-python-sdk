@@ -4,5 +4,7 @@ init-venv:
 install: init-venv
 	source .venv/bin/activate; python3 -m pip install .[dev]
 
-test: install
-	source .venv/bin/activate; python3 -m pytest
+test:
+	source .venv/bin/activate; python3 -m pytest --junitxml=build/test_results/report.xml
+
+check: test

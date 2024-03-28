@@ -1,0 +1,43 @@
+name: Validate
+
+on:
+  workflow_call:
+  pull_request:
+    types: [ opened, reopened, synchronize ]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SHIPPO_TOKEN: ${{ secrets.SHIPPO_TOKEN }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        id: setup_python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.8
+      - name: cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ./.venv
+          key: python-${{ steps.setup_python.outputs.python-version }}-${{ hashFiles('setup.py') }}
+      - name: Install dependencies
+        run: |
+          make install
+      - name: Check
+        run: make check
+      - name: Test Reports
+        if: always()
+        uses: xportation/junit-coverage-report@main
+        with:
+          junit-path: build/test_results/report.xml
+      - name: Archive test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            build/test_results
