@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 import dataclasses
-from .batchshipmentlistwrapper import BatchShipmentListWrapper
+from .batchshipmentpaginatedlist import BatchShipmentPaginatedList
 from .labelfiletype import LabelFileType
 from dataclasses_json import Undefined, dataclass_json
 from enum import Enum
@@ -48,7 +48,7 @@ class Batch:
     The servicelevel can be changed on a per-shipment basis by changing the servicelevel_token in the 
     corresponding BatchShipment object. <a href=\"#tag/Service-Levels\">Servicelevel tokens can be found here.</a>
     """
-    batch_shipments: BatchShipmentListWrapper = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('batch_shipments') }})
+    batch_shipments: BatchShipmentPaginatedList = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('batch_shipments') }})
     label_url: List[str] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('label_url') }})
     r"""An array of URLs each pointing to a merged file of 100 labels each"""
     object_created: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_created') }})

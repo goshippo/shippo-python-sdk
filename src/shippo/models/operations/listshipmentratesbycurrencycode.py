@@ -3,7 +3,7 @@
 from __future__ import annotations
 import dataclasses
 from ...models.components import httpmetadata as components_httpmetadata
-from ...models.components import ratelistwrapper as components_ratelistwrapper
+from ...models.components import ratepaginatedlist as components_ratepaginatedlist
 from typing import Optional
 
 
@@ -26,6 +26,6 @@ class ListShipmentRatesByCurrencyCodeRequest:
 @dataclasses.dataclass
 class ListShipmentRatesByCurrencyCodeResponse:
     http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    rate_list_wrapper: Optional[components_ratelistwrapper.RateListWrapper] = dataclasses.field(default=None)
+    rate_paginated_list: Optional[components_ratepaginatedlist.RatePaginatedList] = dataclasses.field(default=None)
     
 

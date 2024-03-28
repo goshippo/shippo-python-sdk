@@ -3,7 +3,7 @@
 from __future__ import annotations
 import dataclasses
 from ...models.components import httpmetadata as components_httpmetadata
-from ...models.components import orderlistwrapper as components_orderlistwrapper
+from ...models.components import orderpaginatedlist as components_orderpaginatedlist
 from typing import Optional
 
 
@@ -22,6 +22,6 @@ class ListOrdersRequest:
 @dataclasses.dataclass
 class ListOrdersResponse:
     http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    order_list_wrapper: Optional[components_orderlistwrapper.OrderListWrapper] = dataclasses.field(default=None)
+    order_paginated_list: Optional[components_orderpaginatedlist.OrderPaginatedList] = dataclasses.field(default=None)
     
 

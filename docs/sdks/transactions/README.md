@@ -28,7 +28,7 @@ s = shippo.Shippo(
 
 res = s.transactions.list_transactions(page=1, results=25, shippo_api_version='<value>')
 
-if res.transaction_list_wrapper is not None:
+if res.transaction_paginated_list is not None:
     # handle response
     pass
 

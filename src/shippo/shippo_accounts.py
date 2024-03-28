@@ -71,8 +71,8 @@ class ShippoAccounts:
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
-                out = utils.unmarshal_json(http_res.text, Optional[components.PaginatedShippoAccountResponse])
-                res.paginated_shippo_account_response = out
+                out = utils.unmarshal_json(http_res.text, Optional[components.ShippoAccountPaginatedList])
+                res.shippo_account_paginated_list = out
             else:
                 content_type = http_res.headers.get('Content-Type')
                 raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
@@ -85,14 +85,14 @@ class ShippoAccounts:
 
     
     
-    def create_shippo_account(self, shippo_api_version: Optional[str] = None, base_shippo_account_struct: Optional[components.BaseShippoAccountStruct] = None) -> operations.CreateShippoAccountResponse:
+    def create_shippo_account(self, shippo_api_version: Optional[str] = None, shippo_account_update_request: Optional[components.ShippoAccountUpdateRequest] = None) -> operations.CreateShippoAccountResponse:
         r"""Create a Shippo Account
         Creates a Shippo Account object
         """
         hook_ctx = HookContext(operation_id='CreateShippoAccount', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.CreateShippoAccountRequest(
             shippo_api_version=shippo_api_version,
-            base_shippo_account_struct=base_shippo_account_struct,
+            shippo_account_update_request=shippo_account_update_request,
         )
         
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
@@ -105,7 +105,7 @@ class ShippoAccounts:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateShippoAccountRequest, "base_shippo_account_struct", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateShippoAccountRequest, "shippo_account_update_request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         headers['Accept'] = 'application/json'
@@ -214,7 +214,7 @@ class ShippoAccounts:
 
     
     
-    def update_shippo_account(self, shippo_account_id: str, shippo_api_version: Optional[str] = None, base_shippo_account_struct: Optional[components.BaseShippoAccountStruct] = None) -> operations.UpdateShippoAccountResponse:
+    def update_shippo_account(self, shippo_account_id: str, shippo_api_version: Optional[str] = None, shippo_account_update_request: Optional[components.ShippoAccountUpdateRequest] = None) -> operations.UpdateShippoAccountResponse:
         r"""Update a Shippo Account
         Updates a Shippo Account object
         """
@@ -222,7 +222,7 @@ class ShippoAccounts:
         request = operations.UpdateShippoAccountRequest(
             shippo_account_id=shippo_account_id,
             shippo_api_version=shippo_api_version,
-            base_shippo_account_struct=base_shippo_account_struct,
+            shippo_account_update_request=shippo_account_update_request,
         )
         
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
@@ -235,7 +235,7 @@ class ShippoAccounts:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.UpdateShippoAccountRequest, "base_shippo_account_struct", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, operations.UpdateShippoAccountRequest, "shippo_account_update_request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         headers['Accept'] = 'application/json'

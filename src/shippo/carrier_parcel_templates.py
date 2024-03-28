@@ -5,12 +5,12 @@ from .sdkconfiguration import SDKConfiguration
 from shippo import utils
 from shippo._hooks import HookContext
 from shippo.models import components, errors, operations
-from typing import Optional
+from typing import List, Optional
 
 class CarrierParcelTemplates:
     r"""A carrier parcel template represents a package used for shipping that has preset dimensions defined by a carrier. Some examples of a carrier parcel template include USPS Flat Rate Box and Fedex Small Pak. When using a carrier parcel template, the rates returned may be limited to the carrier that provides the box. You can create user parcel templates using a carrier parcel template. Shippo takes the dimensions of the carrier parcel template but you must configure the weight.
 
-    <SchemaDefinition schemaRef=\"#/components/schemas/CarrierParcelTemplateStruct\"/>
+    <SchemaDefinition schemaRef=\"#/components/schemas/CarrierParcelTemplate\"/>
     """
     sdk_configuration: SDKConfiguration
 
@@ -70,8 +70,8 @@ class CarrierParcelTemplates:
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
-                out = utils.unmarshal_json(http_res.text, Optional[components.CarrierParcelTemplateStructListWrapper])
-                res.carrier_parcel_template_struct_list_wrapper = out
+                out = utils.unmarshal_json(http_res.text, Optional[List[components.CarrierParcelTemplate]])
+                res.carrier_parcel_template_list_response = out
             else:
                 content_type = http_res.headers.get('Content-Type')
                 raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
@@ -133,8 +133,8 @@ class CarrierParcelTemplates:
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
-                out = utils.unmarshal_json(http_res.text, Optional[components.CarrierParcelTemplateStruct])
-                res.carrier_parcel_template_struct = out
+                out = utils.unmarshal_json(http_res.text, Optional[components.CarrierParcelTemplate])
+                res.carrier_parcel_template = out
             else:
                 content_type = http_res.headers.get('Content-Type')
                 raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)

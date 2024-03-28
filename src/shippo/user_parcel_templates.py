@@ -5,7 +5,7 @@ from .sdkconfiguration import SDKConfiguration
 from shippo import utils
 from shippo._hooks import HookContext
 from shippo.models import components, errors, operations
-from typing import Optional, Union
+from typing import List, Optional, Union
 
 class UserParcelTemplates:
     r"""A user parcel template represents a package used for shipping that has preset dimensions and attributes defined
@@ -71,8 +71,8 @@ class UserParcelTemplates:
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
-                out = utils.unmarshal_json(http_res.text, Optional[components.UserParcelTemplateList])
-                res.user_parcel_template_list = out
+                out = utils.unmarshal_json(http_res.text, Optional[List[components.UserParcelTemplate]])
+                res.user_parcel_template_list_response = out
             else:
                 content_type = http_res.headers.get('Content-Type')
                 raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)

@@ -35,7 +35,7 @@ s = shippo.Shippo(
 
 res = s.user_parcel_templates.list_user_parcel_templates(shippo_api_version='<value>')
 
-if res.user_parcel_template_list is not None:
+if res.user_parcel_template_list_response is not None:
     # handle response
     pass
 

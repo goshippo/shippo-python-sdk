@@ -39,7 +39,7 @@ s = shippo.Shippo(
 
 res = s.orders.list_orders(page=1, results=25, shippo_api_version='<value>')
 
-if res.order_list_wrapper is not None:
+if res.order_paginated_list is not None:
     # handle response
     pass
 

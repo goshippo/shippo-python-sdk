@@ -34,7 +34,7 @@ s = shippo.Shippo(
 
 res = s.manifests.list_manifests(page=1, results=25, shippo_api_version='<value>')
 
-if res.manifest_list_wrapper is not None:
+if res.manifest_paginated_list is not None:
     # handle response
     pass
 

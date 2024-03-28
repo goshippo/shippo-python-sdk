@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import carrierparceltemplatestructlistwrapper as components_carrierparceltemplatestructlistwrapper
+from ...models.components import carrierparceltemplate as components_carrierparceltemplate
 from ...models.components import httpmetadata as components_httpmetadata
 from enum import Enum
-from typing import Optional
+from typing import List, Optional
 
 class Include(str, Enum):
     r"""filter by user or enabled"""
@@ -29,6 +29,6 @@ class ListCarrierParcelTemplatesRequest:
 @dataclasses.dataclass
 class ListCarrierParcelTemplatesResponse:
     http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    carrier_parcel_template_struct_list_wrapper: Optional[components_carrierparceltemplatestructlistwrapper.CarrierParcelTemplateStructListWrapper] = dataclasses.field(default=None)
+    carrier_parcel_template_list_response: Optional[List[components_carrierparceltemplate.CarrierParcelTemplate]] = dataclasses.field(default=None)
     
 

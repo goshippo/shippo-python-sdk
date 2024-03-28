@@ -71,7 +71,7 @@ s = shippo.Shippo(
 
 res = s.refunds.list_refund(shippo_api_version='<value>')
 
-if res.refund_list_wrapper is not None:
+if res.refund_paginated_list is not None:
     # handle response
     pass
 

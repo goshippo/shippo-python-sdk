@@ -3,7 +3,7 @@
 from __future__ import annotations
 import dataclasses
 from ...models.components import httpmetadata as components_httpmetadata
-from ...models.components import parcellistwrapper as components_parcellistwrapper
+from ...models.components import parcelpaginatedlist as components_parcelpaginatedlist
 from typing import Optional
 
 
@@ -22,6 +22,6 @@ class ListParcelsRequest:
 @dataclasses.dataclass
 class ListParcelsResponse:
     http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    parcel_list_wrapper: Optional[components_parcellistwrapper.ParcelListWrapper] = dataclasses.field(default=None)
+    parcel_paginated_list: Optional[components_parcelpaginatedlist.ParcelPaginatedList] = dataclasses.field(default=None)
     
 

@@ -31,7 +31,7 @@ s = shippo.Shippo(
 
 res = s.shippo_accounts.list_shippo_accounts(page=1, results=25, shippo_api_version='<value>')
 
-if res.paginated_shippo_account_response is not None:
+if res.shippo_account_paginated_list is not None:
     # handle response
     pass
 
@@ -70,7 +70,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.shippo_accounts.create_shippo_account(shippo_api_version='<value>', base_shippo_account_struct=components.BaseShippoAccountStruct(
+res = s.shippo_accounts.create_shippo_account(shippo_api_version='<value>', shippo_account_update_request=components.ShippoAccountUpdateRequest(
     email='hippo@shippo.com',
     first_name='Shippo',
     last_name='Meister',
@@ -85,10 +85,10 @@ if res.shippo_account is not None:
 
 ### Parameters
 
-| Parameter                                                                                          | Type                                                                                               | Required                                                                                           | Description                                                                                        |
-| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| `shippo_api_version`                                                                               | *Optional[str]*                                                                                    | :heavy_minus_sign:                                                                                 | String used to pick a non-default API version to use                                               |
-| `base_shippo_account_struct`                                                                       | [Optional[components.BaseShippoAccountStruct]](../../models/components/baseshippoaccountstruct.md) | :heavy_minus_sign:                                                                                 | Shippo Account details and contact info.                                                           |
+| Parameter                                                                                                | Type                                                                                                     | Required                                                                                                 | Description                                                                                              |
+| -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `shippo_api_version`                                                                                     | *Optional[str]*                                                                                          | :heavy_minus_sign:                                                                                       | String used to pick a non-default API version to use                                                     |
+| `shippo_account_update_request`                                                                          | [Optional[components.ShippoAccountUpdateRequest]](../../models/components/shippoaccountupdaterequest.md) | :heavy_minus_sign:                                                                                       | N/A                                                                                                      |
 
 
 ### Response
@@ -154,7 +154,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.shippo_accounts.update_shippo_account(shippo_account_id='<value>', shippo_api_version='<value>', base_shippo_account_struct=components.BaseShippoAccountStruct(
+res = s.shippo_accounts.update_shippo_account(shippo_account_id='<value>', shippo_api_version='<value>', shippo_account_update_request=components.ShippoAccountUpdateRequest(
     email='hippo@shippo.com',
     first_name='Shippo',
     last_name='Meister',
@@ -169,11 +169,11 @@ if res.shippo_account is not None:
 
 ### Parameters
 
-| Parameter                                                                                          | Type                                                                                               | Required                                                                                           | Description                                                                                        |
-| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| `shippo_account_id`                                                                                | *str*                                                                                              | :heavy_check_mark:                                                                                 | Object ID of the ShippoAccount                                                                     |
-| `shippo_api_version`                                                                               | *Optional[str]*                                                                                    | :heavy_minus_sign:                                                                                 | String used to pick a non-default API version to use                                               |
-| `base_shippo_account_struct`                                                                       | [Optional[components.BaseShippoAccountStruct]](../../models/components/baseshippoaccountstruct.md) | :heavy_minus_sign:                                                                                 | Shippo Account details and contact info.                                                           |
+| Parameter                                                                                                | Type                                                                                                     | Required                                                                                                 | Description                                                                                              |
+| -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `shippo_account_id`                                                                                      | *str*                                                                                                    | :heavy_check_mark:                                                                                       | Object ID of the ShippoAccount                                                                           |
+| `shippo_api_version`                                                                                     | *Optional[str]*                                                                                          | :heavy_minus_sign:                                                                                       | String used to pick a non-default API version to use                                                     |
+| `shippo_account_update_request`                                                                          | [Optional[components.ShippoAccountUpdateRequest]](../../models/components/shippoaccountupdaterequest.md) | :heavy_minus_sign:                                                                                       | N/A                                                                                                      |
 
 
 ### Response
