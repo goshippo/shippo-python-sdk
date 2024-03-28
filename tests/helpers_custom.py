@@ -14,4 +14,4 @@ def get_carrier_accounts(api: shippo.Shippo, carrier: Carriers) -> List[CarrierA
     carrier_accounts = api.carrier_accounts.list_carrier_accounts(request=ListCarrierAccountsRequest(
         carrier=carrier
     ))
-    return carrier_accounts.carrier_account_list_wrapper.results
+    return carrier_accounts.carrier_account_paginated_list.results

@@ -84,6 +84,6 @@ class TestRatesAtCheckout:
                     mass_unit=WeightUnit.LB
                 )
             ))
-        assert len(response.live_rate_list.results) > 0
-        for live_rate in response.live_rate_list.results:
+        assert len(response.live_rate_paginated_list.results) > 0
+        for live_rate in response.live_rate_paginated_list.results:
             assert live_rate.title == create_service_group_response.service_group.name
