@@ -5,6 +5,7 @@ from shippo.models.components import Carriers, DistanceUnitTemplate, WeightUnit,
 from tests.helpers_custom import get_carrier_account
 
 
+# https://docs.goshippo.com/docs/guides_general/single_call/
 class TestInstalabel:
 
     def test_instalabel(self, api: shippo.Shippo):

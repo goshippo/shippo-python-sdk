@@ -4,6 +4,7 @@ from shippo.models.components import Carriers, ParcelRequest, DistanceUnitTempla
 from tests.helpers_custom import get_carrier_accounts
 
 
+# https://docs.goshippo.com/docs/stories/single_rating_guide/
 class TestPurchaseLabel:
 
     def test_purchase_label(self, api: shippo.Shippo):

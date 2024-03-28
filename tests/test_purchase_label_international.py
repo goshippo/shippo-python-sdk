@@ -5,6 +5,7 @@ from shippo.models.components import AddressCreateRequest, CustomsDeclarationCre
     ShipmentExtra, Insurance
 
 
+# https://docs.goshippo.com/docs/stories/intl_rating_guide/
 class TestPurchaseLabelInternational:
 
     def test_purchase_label_international(self, api: shippo.Shippo):

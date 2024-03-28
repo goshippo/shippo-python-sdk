@@ -18,7 +18,7 @@ class TestRatesAtCheckout:
         for sg in response.service_group_list_response:
             api.service_groups.delete_service_group(sg.object_id)
 
-    def test_create_service_group(self, api: shippo.Shippo):
+    def test_rates_at_checkout(self, api: shippo.Shippo):
         carrier_account = get_carrier_account(api, Carriers.USPS)
         ups_account_id = carrier_account.object_id
 
