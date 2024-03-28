@@ -3,7 +3,7 @@
 from __future__ import annotations
 import dataclasses
 from ...models.components import httpmetadata as components_httpmetadata
-from ...models.components import manifestlistwrapper as components_manifestlistwrapper
+from ...models.components import manifestpaginatedlist as components_manifestpaginatedlist
 from typing import Optional
 
 
@@ -22,6 +22,6 @@ class ListManifestsRequest:
 @dataclasses.dataclass
 class ListManifestsResponse:
     http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    manifest_list_wrapper: Optional[components_manifestlistwrapper.ManifestListWrapper] = dataclasses.field(default=None)
+    manifest_paginated_list: Optional[components_manifestpaginatedlist.ManifestPaginatedList] = dataclasses.field(default=None)
     
 

@@ -3,7 +3,7 @@
 from __future__ import annotations
 import dataclasses
 from ...models.components import httpmetadata as components_httpmetadata
-from ...models.components import refundlistwrapper as components_refundlistwrapper
+from ...models.components import refundpaginatedlist as components_refundpaginatedlist
 from typing import Optional
 
 
@@ -18,6 +18,6 @@ class ListRefundRequest:
 @dataclasses.dataclass
 class ListRefundResponse:
     http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    refund_list_wrapper: Optional[components_refundlistwrapper.RefundListWrapper] = dataclasses.field(default=None)
+    refund_paginated_list: Optional[components_refundpaginatedlist.RefundPaginatedList] = dataclasses.field(default=None)
     
 

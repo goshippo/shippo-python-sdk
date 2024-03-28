@@ -39,7 +39,7 @@ s = shippo.Shippo(
 
 res = s.addresses.list_addresses(page=1, results=25, shippo_api_version='<value>')
 
-if res.address_list_wrapper is not None:
+if res.address_paginated_list is not None:
     # handle response
     pass
 
@@ -70,7 +70,7 @@ if res.address_list_wrapper is not None:
 * [create_carrier_account](docs/sdks/carrieraccounts/README.md#create_carrier_account) - Create a new carrier account
 * [get_carrier_account](docs/sdks/carrieraccounts/README.md#get_carrier_account) - Retrieve a carrier account
 * [update_carrier_account](docs/sdks/carrieraccounts/README.md#update_carrier_account) - Update a carrier account
-* [register_carrier_account](docs/sdks/carrieraccounts/README.md#register_carrier_account) - Add a Shippo master carrier account
+* [register_carrier_account](docs/sdks/carrieraccounts/README.md#register_carrier_account) - Add a Shippo carrier account
 * [get_carrier_registration_status](docs/sdks/carrieraccounts/README.md#get_carrier_registration_status) - Get Carrier Registration status
 
 ### [customs_declarations](docs/sdks/customsdeclarations/README.md)
@@ -176,10 +176,10 @@ if res.address_list_wrapper is not None:
 
 Handling errors in this SDK should largely match your expectations.  All operations return a response object or raise an error.  If Error objects are specified in your OpenAPI Spec, the SDK will raise the appropriate Error type.
 
-| Error Object                                        | Status Code                                         | Content Type                                        |
-| --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- |
-| errors.PlatformCarrierOwnAccountCreation400Response | 400                                                 | application/json                                    |
-| errors.SDKError                                     | 4x-5xx                                              | */*                                                 |
+| Error Object                | Status Code                 | Content Type                |
+| --------------------------- | --------------------------- | --------------------------- |
+| errors.BadRequestWithDetail | 400                         | application/json            |
+| errors.SDKError             | 4x-5xx                      | */*                         |
 
 ### Example
 
@@ -225,7 +225,7 @@ try:
     metadata='UPS Account',
     test=False,
 ))
-except errors.PlatformCarrierOwnAccountCreation400Response as e:
+except errors.BadRequestWithDetail as e:
     # handle exception
     raise(e)
 except errors.SDKError as e:
@@ -298,7 +298,7 @@ s = shippo.Shippo(
 
 res = s.addresses.list_addresses(page=1, results=25, shippo_api_version='<value>')
 
-if res.address_list_wrapper is not None:
+if res.address_paginated_list is not None:
     # handle response
     pass
 

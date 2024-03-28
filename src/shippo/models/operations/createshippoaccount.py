@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import baseshippoaccountstruct as components_baseshippoaccountstruct
 from ...models.components import httpmetadata as components_httpmetadata
 from ...models.components import shippoaccount as components_shippoaccount
+from ...models.components import shippoaccountupdaterequest as components_shippoaccountupdaterequest
 from typing import Optional
 
 
@@ -12,8 +12,7 @@ from typing import Optional
 class CreateShippoAccountRequest:
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""
-    base_shippo_account_struct: Optional[components_baseshippoaccountstruct.BaseShippoAccountStruct] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
-    r"""Shippo Account details and contact info."""
+    shippo_account_update_request: Optional[components_shippoaccountupdaterequest.ShippoAccountUpdateRequest] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     
 
 

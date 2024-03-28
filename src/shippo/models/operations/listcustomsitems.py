@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import customsitemlistwrapper as components_customsitemlistwrapper
+from ...models.components import customsitempaginatedlist as components_customsitempaginatedlist
 from ...models.components import httpmetadata as components_httpmetadata
 from typing import Optional
 
@@ -22,6 +22,6 @@ class ListCustomsItemsRequest:
 @dataclasses.dataclass
 class ListCustomsItemsResponse:
     http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    customs_item_list_wrapper: Optional[components_customsitemlistwrapper.CustomsItemListWrapper] = dataclasses.field(default=None)
+    customs_item_paginated_list: Optional[components_customsitempaginatedlist.CustomsItemPaginatedList] = dataclasses.field(default=None)
     
 

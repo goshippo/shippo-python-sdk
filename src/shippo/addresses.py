@@ -69,8 +69,8 @@ class Addresses:
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
-                out = utils.unmarshal_json(http_res.text, Optional[components.AddressListWrapper])
-                res.address_list_wrapper = out
+                out = utils.unmarshal_json(http_res.text, Optional[components.AddressPaginatedList])
+                res.address_paginated_list = out
             else:
                 content_type = http_res.headers.get('Content-Type')
                 raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)

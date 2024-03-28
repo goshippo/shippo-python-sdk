@@ -67,7 +67,7 @@ s = shippo.Shippo(
 
 res = s.rates.list_shipment_rates(shipment_id='<value>', page=1, results=25, shippo_api_version='<value>')
 
-if res.rate_list_wrapper is not None:
+if res.rate_paginated_list is not None:
     # handle response
     pass
 
@@ -119,7 +119,7 @@ req = operations.ListShipmentRatesByCurrencyCodeRequest(
 
 res = s.rates.list_shipment_rates_by_currency_code(req)
 
-if res.rate_list_wrapper is not None:
+if res.rate_paginated_list is not None:
     # handle response
     pass
 
