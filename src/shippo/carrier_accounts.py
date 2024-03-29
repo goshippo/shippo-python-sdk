@@ -19,7 +19,7 @@ class CarrierAccounts:
         
     
     
-    def list_carrier_accounts(self, request: operations.ListCarrierAccountsRequest) -> operations.ListCarrierAccountsResponse:
+    def list(self, request: operations.ListCarrierAccountsRequest) -> operations.ListCarrierAccountsResponse:
         r"""List all carrier accounts
         Returns a list of all carrier accounts connected to your Shippo account. These carrier accounts include both Shippo carrier accounts and your own carrier accounts that you have connected to your Shippo account.
 
@@ -82,7 +82,7 @@ class CarrierAccounts:
 
     
     
-    def create_carrier_account(self, shippo_api_version: Optional[str] = None, connect_existing_own_ups_account_request: Optional[components.ConnectExistingOwnUPSAccountRequest] = None) -> operations.CreateCarrierAccountResponse:
+    def create(self, shippo_api_version: Optional[str] = None, connect_existing_own_ups_account_request: Optional[components.ConnectExistingOwnUPSAccountRequest] = None) -> operations.CreateCarrierAccountResponse:
         r"""Create a new carrier account
         Creates a new carrier account or connects an existing carrier account to the Shippo account.
         """
@@ -155,7 +155,7 @@ class CarrierAccounts:
 
     
     
-    def get_carrier_account(self, carrier_account_id: str, shippo_api_version: Optional[str] = None) -> operations.GetCarrierAccountResponse:
+    def get(self, carrier_account_id: str, shippo_api_version: Optional[str] = None) -> operations.GetCarrierAccountResponse:
         r"""Retrieve a carrier account
         Returns an existing carrier account using an object ID.
         """
@@ -218,7 +218,7 @@ class CarrierAccounts:
 
     
     
-    def update_carrier_account(self, carrier_account_id: str, shippo_api_version: Optional[str] = None, carrier_account_base: Optional[components.CarrierAccountBase] = None) -> operations.UpdateCarrierAccountResponse:
+    def update(self, carrier_account_id: str, shippo_api_version: Optional[str] = None, carrier_account_base: Optional[components.CarrierAccountBase] = None) -> operations.UpdateCarrierAccountResponse:
         r"""Update a carrier account
         Updates an existing carrier account object. The account_id and carrier can't be updated. This is because they form the unique identifier together.
         """
@@ -285,7 +285,7 @@ class CarrierAccounts:
 
     
     
-    def register_carrier_account(self, shippo_api_version: Optional[str] = None, request_body: Optional[Union[components.CarrierAccountCanadaPostCreateRequest, components.CarrierAccountChronopostCreateRequest, components.CarrierAccountColissimoCreateRequest, components.CarrierAccountCorreosCreateRequest, components.CarrierAccountDeutschePostCreateRequest, components.CarrierAccountDHLExpressCreateRequest, components.CarrierAccountDpdDeCreateRequest, components.CarrierAccountDPDUKCreateRequest, components.CarrierAccountHermesUKCreateRequest, components.CarrierAccountPosteItalianeCreateRequest, components.CarrierAccountUPSCreateRequest, components.CarrierAccountUSPSCreateRequest]] = None) -> operations.RegisterCarrierAccountResponse:
+    def register(self, shippo_api_version: Optional[str] = None, request_body: Optional[Union[components.CarrierAccountCanadaPostCreateRequest, components.CarrierAccountChronopostCreateRequest, components.CarrierAccountColissimoCreateRequest, components.CarrierAccountCorreosCreateRequest, components.CarrierAccountDeutschePostCreateRequest, components.CarrierAccountDHLExpressCreateRequest, components.CarrierAccountDpdDeCreateRequest, components.CarrierAccountDPDUKCreateRequest, components.CarrierAccountHermesUKCreateRequest, components.CarrierAccountPosteItalianeCreateRequest, components.CarrierAccountUPSCreateRequest, components.CarrierAccountUSPSCreateRequest]] = None) -> operations.RegisterCarrierAccountResponse:
         r"""Add a Shippo carrier account
         Adds a Shippo carrier account
         """
@@ -358,7 +358,7 @@ class CarrierAccounts:
 
     
     
-    def get_carrier_registration_status(self, carrier: operations.Carrier, shippo_api_version: Optional[str] = None) -> operations.GetCarrierRegistrationStatusResponse:
+    def get_registration_status(self, carrier: operations.Carrier, shippo_api_version: Optional[str] = None) -> operations.GetCarrierRegistrationStatusResponse:
         r"""Get Carrier Registration status
         Returns the registration status for the given account for the given carrier
         """

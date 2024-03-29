@@ -19,7 +19,7 @@ class CustomsDeclarations:
         
     
     
-    def list_customs_declarations(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListCustomsDeclarationsResponse:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListCustomsDeclarationsResponse:
         r"""List all customs declarations
         Returns a a list of all customs declaration objects
         """
@@ -84,7 +84,7 @@ class CustomsDeclarations:
 
     
     
-    def create_customs_declaration(self, shippo_api_version: Optional[str] = None, customs_declaration_create_request: Optional[components.CustomsDeclarationCreateRequest] = None) -> operations.CreateCustomsDeclarationResponse:
+    def create(self, shippo_api_version: Optional[str] = None, customs_declaration_create_request: Optional[components.CustomsDeclarationCreateRequest] = None) -> operations.CreateCustomsDeclarationResponse:
         r"""Create a new customs declaration
         Creates a new customs declaration object
         """
@@ -150,7 +150,7 @@ class CustomsDeclarations:
 
     
     
-    def get_customs_declaration(self, customs_declaration_id: str, page: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.GetCustomsDeclarationResponse:
+    def get(self, customs_declaration_id: str, page: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.GetCustomsDeclarationResponse:
         r"""Retrieve a customs declaration
         Returns an existing customs declaration using an object ID
         """

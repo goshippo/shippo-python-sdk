@@ -19,11 +19,11 @@ You can also retrieve shipping rates, purchase labels, and track shipments for e
 
 ### Available Operations
 
-* [list_orders](#list_orders) - List all orders
-* [create_order](#create_order) - Create a new order
-* [get_order](#get_order) - Retrieve an order
+* [list](#list) - List all orders
+* [create](#create) - Create a new order
+* [get](#get) - Retrieve an order
 
-## list_orders
+## list
 
 Returns a list of all order objects.
 
@@ -37,7 +37,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.orders.list_orders(page=1, results=25, shippo_api_version='<value>')
+res = s.orders.list(page=1, results=25, shippo_api_version='<value>')
 
 if res.order_paginated_list is not None:
     # handle response
@@ -63,7 +63,7 @@ if res.order_paginated_list is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## create_order
+## create
 
 Creates a new order object.
 
@@ -78,7 +78,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.orders.create_order(shippo_api_version='<value>', order_create_request=components.OrderCreateRequest(
+res = s.orders.create(shippo_api_version='<value>', order_create_request=components.OrderCreateRequest(
     placed_at='2016-09-23T01:28:12Z',
     to_address=components.AddressCreateRequest(
         country='US',
@@ -133,7 +133,7 @@ if res.order is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## get_order
+## get
 
 Retrieves an existing order using an object ID.
 
@@ -147,7 +147,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.orders.get_order(order_id='<value>', shippo_api_version='<value>')
+res = s.orders.get(order_id='<value>', shippo_api_version='<value>')
 
 if res.order is not None:
     # handle response

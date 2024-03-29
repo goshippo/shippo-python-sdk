@@ -19,7 +19,7 @@ class ServiceGroups:
         
     
     
-    def list_service_groups(self, shippo_api_version: Optional[str] = None) -> operations.ListServiceGroupsResponse:
+    def list(self, shippo_api_version: Optional[str] = None) -> operations.ListServiceGroupsResponse:
         r"""List all service groups
         Returns a list of service group objects.
         """
@@ -81,7 +81,7 @@ class ServiceGroups:
 
     
     
-    def create_service_group(self, shippo_api_version: Optional[str] = None, service_group_create_request: Optional[components.ServiceGroupCreateRequest] = None) -> operations.CreateServiceGroupResponse:
+    def create(self, shippo_api_version: Optional[str] = None, service_group_create_request: Optional[components.ServiceGroupCreateRequest] = None) -> operations.CreateServiceGroupResponse:
         r"""Create a new service group
         Creates a new service group.
         """
@@ -147,7 +147,7 @@ class ServiceGroups:
 
     
     
-    def update_service_group(self, shippo_api_version: Optional[str] = None, service_group_update_request: Optional[components.ServiceGroupUpdateRequest] = None) -> operations.UpdateServiceGroupResponse:
+    def update(self, shippo_api_version: Optional[str] = None, service_group_update_request: Optional[components.ServiceGroupUpdateRequest] = None) -> operations.UpdateServiceGroupResponse:
         r"""Update an existing service group
         Updates an existing service group object. <br>The object_id cannot be updated as it is the unique identifier for the object.
         """
@@ -213,7 +213,7 @@ class ServiceGroups:
 
     
     
-    def delete_service_group(self, service_group_id: str, shippo_api_version: Optional[str] = None) -> operations.DeleteServiceGroupResponse:
+    def delete(self, service_group_id: str, shippo_api_version: Optional[str] = None) -> operations.DeleteServiceGroupResponse:
         r"""Delete a service group
         Deletes an existing service group using an object ID.
         """

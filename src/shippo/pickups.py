@@ -19,7 +19,7 @@ class Pickups:
         
     
     
-    def create_pickup(self, shippo_api_version: Optional[str] = None, pickup_base: Optional[components.PickupBase] = None) -> operations.CreatePickupResponse:
+    def create(self, shippo_api_version: Optional[str] = None, pickup_base: Optional[components.PickupBase] = None) -> operations.CreatePickupResponse:
         r"""Create a pickup
         Creates a pickup object. This request is for a carrier to come to a specified location to take a package for shipping.
         """

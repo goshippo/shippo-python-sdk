@@ -9,12 +9,12 @@ Rates at checkout uses services groups to present available shipping options to 
 
 ### Available Operations
 
-* [list_service_groups](#list_service_groups) - List all service groups
-* [create_service_group](#create_service_group) - Create a new service group
-* [update_service_group](#update_service_group) - Update an existing service group
-* [delete_service_group](#delete_service_group) - Delete a service group
+* [list](#list) - List all service groups
+* [create](#create) - Create a new service group
+* [update](#update) - Update an existing service group
+* [delete](#delete) - Delete a service group
 
-## list_service_groups
+## list
 
 Returns a list of service group objects.
 
@@ -28,7 +28,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.service_groups.list_service_groups(shippo_api_version='<value>')
+res = s.service_groups.list(shippo_api_version='<value>')
 
 if res.service_group_list_response is not None:
     # handle response
@@ -52,7 +52,7 @@ if res.service_group_list_response is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## create_service_group
+## create
 
 Creates a new service group.
 
@@ -67,7 +67,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.service_groups.create_service_group(shippo_api_version='<value>', service_group_create_request=components.ServiceGroupCreateRequest(
+res = s.service_groups.create(shippo_api_version='<value>', service_group_create_request=components.ServiceGroupCreateRequest(
     description='USPS shipping options',
     name='USPS Shipping',
     type=components.ServiceGroupType.FLAT_RATE,
@@ -107,7 +107,7 @@ if res.service_group is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## update_service_group
+## update
 
 Updates an existing service group object. <br>The object_id cannot be updated as it is the unique identifier for the object.
 
@@ -122,7 +122,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.service_groups.update_service_group(shippo_api_version='<value>', service_group_update_request=components.ServiceGroupUpdateRequest(
+res = s.service_groups.update(shippo_api_version='<value>', service_group_update_request=components.ServiceGroupUpdateRequest(
     description='USPS shipping options',
     name='USPS Shipping',
     type=components.ServiceGroupType.FLAT_RATE,
@@ -164,7 +164,7 @@ if res.service_group is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## delete_service_group
+## delete
 
 Deletes an existing service group using an object ID.
 
@@ -178,7 +178,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.service_groups.delete_service_group(service_group_id='<value>', shippo_api_version='<value>')
+res = s.service_groups.delete(service_group_id='<value>', shippo_api_version='<value>')
 
 if res is not None:
     # handle response
