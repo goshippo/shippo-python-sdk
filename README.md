@@ -252,6 +252,8 @@ if res.address_paginated_list is not None:
 ```
 <!-- End Authentication [security] -->
 
+<!-- Placeholder for Future Speakeasy SDK Sections -->
+
 ## Maturity
 
 This SDK is in beta, and there may be breaking changes between versions without a major version update. Therefore, we recommend pinning usage
@@ -269,4 +271,4 @@ Connect with multiple different carriers, get discounted shipping labels, track 
 
 
 
-<!-- Placeholder for Future Speakeasy SDK Sections -->
+
