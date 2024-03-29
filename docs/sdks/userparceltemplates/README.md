@@ -13,13 +13,13 @@ the carrier presets, but the weight can be configured by you.
 
 ### Available Operations
 
-* [list_user_parcel_templates](#list_user_parcel_templates) - List all user parcel templates
-* [create_user_parcel_template](#create_user_parcel_template) - Create a new user parcel template
-* [delete_user_parcel_template](#delete_user_parcel_template) - Delete a user parcel template
-* [get_user_parcel_template](#get_user_parcel_template) - Retrieves a user parcel template
-* [update_user_parcel_template](#update_user_parcel_template) - Update an existing user parcel template
+* [list](#list) - List all user parcel templates
+* [create](#create) - Create a new user parcel template
+* [delete](#delete) - Delete a user parcel template
+* [get](#get) - Retrieves a user parcel template
+* [update](#update) - Update an existing user parcel template
 
-## list_user_parcel_templates
+## list
 
 Returns a list all of all user parcel template objects.
 
@@ -33,7 +33,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.user_parcel_templates.list_user_parcel_templates(shippo_api_version='<value>')
+res = s.user_parcel_templates.list(shippo_api_version='<value>')
 
 if res.user_parcel_template_list_response is not None:
     # handle response
@@ -57,7 +57,7 @@ if res.user_parcel_template_list_response is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## create_user_parcel_template
+## create
 
 Creates a new user parcel template. <br>You can choose to create a
 parcel template using a preset carrier template as a starting point, or
@@ -78,12 +78,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.user_parcel_templates.create_user_parcel_template(shippo_api_version='<value>', user_parcel_template_create_request=components.UserParcelTemplateWithoutCarrierTemplateCreateRequest(
-    distance_unit=components.DistanceUnitUserTemplate.IN,
-    height='6',
-    length='10',
-    name='My Custom Template',
-    width='8',
+res = s.user_parcel_templates.create(shippo_api_version='<value>', user_parcel_template_create_request=components.UserParcelTemplateWithCarrierTemplateCreateRequest(
     weight='12',
     weight_unit=components.WeightUnit.LB,
 ))
@@ -111,7 +106,7 @@ if res.user_parcel_template is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## delete_user_parcel_template
+## delete
 
 Deletes a user parcel template using an object ID.
 
@@ -125,7 +120,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.user_parcel_templates.delete_user_parcel_template(user_parcel_template_object_id='<value>', shippo_api_version='<value>')
+res = s.user_parcel_templates.delete(user_parcel_template_object_id='<value>', shippo_api_version='<value>')
 
 if res is not None:
     # handle response
@@ -150,7 +145,7 @@ if res is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## get_user_parcel_template
+## get
 
 Returns the parcel template information for a specific user parcel
 template, identified by the object ID.
@@ -165,7 +160,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.user_parcel_templates.get_user_parcel_template(user_parcel_template_object_id='<value>', shippo_api_version='<value>')
+res = s.user_parcel_templates.get(user_parcel_template_object_id='<value>', shippo_api_version='<value>')
 
 if res.user_parcel_template is not None:
     # handle response
@@ -190,7 +185,7 @@ if res.user_parcel_template is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## update_user_parcel_template
+## update
 
 Updates an existing user parcel template.
 
@@ -205,7 +200,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.user_parcel_templates.update_user_parcel_template(user_parcel_template_object_id='<value>', shippo_api_version='<value>', user_parcel_template_update_request=components.UserParcelTemplateUpdateRequest(
+res = s.user_parcel_templates.update(user_parcel_template_object_id='<value>', shippo_api_version='<value>', user_parcel_template_update_request=components.UserParcelTemplateUpdateRequest(
     distance_unit=components.DistanceUnitUserTemplate.IN,
     height='6',
     length='10',

@@ -9,10 +9,10 @@ A carrier parcel template represents a package used for shipping that has preset
 
 ### Available Operations
 
-* [list_carrier_parcel_templates](#list_carrier_parcel_templates) - List all carrier parcel templates
-* [get_carrier_parcel_template](#get_carrier_parcel_template) - Retrieve a carrier parcel templates
+* [list](#list) - List all carrier parcel templates
+* [get](#get) - Retrieve a carrier parcel templates
 
-## list_carrier_parcel_templates
+## list
 
 List all carrier parcel template objects. <br> Use the following query string params to filter the results as needed. <br> <ul> <li>`include=all` (the default). Includes templates from all carriers </li> <li>`include=user`. Includes templates only from carriers which the user has added (whether or not they're currently enabled) </li> <li>`include=enabled`. includes templates only for carriers which the user has added and enabled </li> <li>`carrier=*token*`. filter by specific carrier, e.g. fedex, usps </li> </ul>
 
@@ -27,7 +27,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.carrier_parcel_templates.list_carrier_parcel_templates(include=operations.Include.ALL, carrier='<value>', shippo_api_version='<value>')
+res = s.carrier_parcel_templates.list(include=operations.Include.ENABLED, carrier='<value>', shippo_api_version='<value>')
 
 if res.carrier_parcel_template_list_response is not None:
     # handle response
@@ -53,7 +53,7 @@ if res.carrier_parcel_template_list_response is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## get_carrier_parcel_template
+## get
 
 Fetches the parcel template information for a specific carrier parcel template, identified by the token.
 
@@ -67,7 +67,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.carrier_parcel_templates.get_carrier_parcel_template(carrier_parcel_template_token='<value>', shippo_api_version='<value>')
+res = s.carrier_parcel_templates.get(carrier_parcel_template_token='<value>', shippo_api_version='<value>')
 
 if res.carrier_parcel_template is not None:
     # handle response

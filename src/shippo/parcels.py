@@ -22,7 +22,7 @@ class Parcels:
         
     
     
-    def list_parcels(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListParcelsResponse:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListParcelsResponse:
         r"""List all parcels
         Returns a list of all parcel objects.
         """
@@ -87,7 +87,7 @@ class Parcels:
 
     
     
-    def create_parcel(self, shippo_api_version: Optional[str] = None, parcel_request: Optional[components.ParcelRequest] = None) -> operations.CreateParcelResponse:
+    def create(self, shippo_api_version: Optional[str] = None, parcel_request: Optional[components.ParcelRequest] = None) -> operations.CreateParcelResponse:
         r"""Create a new parcel
         Creates a new parcel object.
         """
@@ -153,7 +153,7 @@ class Parcels:
 
     
     
-    def get_parcel(self, parcel_id: str, shippo_api_version: Optional[str] = None) -> operations.GetParcelResponse:
+    def get(self, parcel_id: str, shippo_api_version: Optional[str] = None) -> operations.GetParcelResponse:
         r"""Retrieve an existing parcel
         Returns parcel details using an existing parcel object ID (this will not return parcel details associated with un-purchased shipment/rate parcel object IDs).
         """

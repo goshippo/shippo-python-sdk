@@ -20,7 +20,7 @@ class ShippoAccounts:
         
     
     
-    def list_shippo_accounts(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListShippoAccountsResponse:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListShippoAccountsResponse:
         r"""List all Shippo Accounts
         Returns a list of Shippo Accounts objects
         """
@@ -85,7 +85,7 @@ class ShippoAccounts:
 
     
     
-    def create_shippo_account(self, shippo_api_version: Optional[str] = None, shippo_account_update_request: Optional[components.ShippoAccountUpdateRequest] = None) -> operations.CreateShippoAccountResponse:
+    def create(self, shippo_api_version: Optional[str] = None, shippo_account_update_request: Optional[components.ShippoAccountUpdateRequest] = None) -> operations.CreateShippoAccountResponse:
         r"""Create a Shippo Account
         Creates a Shippo Account object
         """
@@ -151,7 +151,7 @@ class ShippoAccounts:
 
     
     
-    def get_shippo_account(self, shippo_account_id: str, shippo_api_version: Optional[str] = None) -> operations.GetShippoAccountResponse:
+    def get(self, shippo_account_id: str, shippo_api_version: Optional[str] = None) -> operations.GetShippoAccountResponse:
         r"""Retrieve a Shippo Account
         Returns a Shippo Account using an object ID
         """
@@ -214,7 +214,7 @@ class ShippoAccounts:
 
     
     
-    def update_shippo_account(self, shippo_account_id: str, shippo_api_version: Optional[str] = None, shippo_account_update_request: Optional[components.ShippoAccountUpdateRequest] = None) -> operations.UpdateShippoAccountResponse:
+    def update(self, shippo_account_id: str, shippo_api_version: Optional[str] = None, shippo_account_update_request: Optional[components.ShippoAccountUpdateRequest] = None) -> operations.UpdateShippoAccountResponse:
         r"""Update a Shippo Account
         Updates a Shippo Account object
         """

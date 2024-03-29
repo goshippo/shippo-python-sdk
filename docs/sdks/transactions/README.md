@@ -8,11 +8,11 @@ A transaction is the purchase of a shipping label from a shipping provider for a
 
 ### Available Operations
 
-* [list_transactions](#list_transactions) - List all shipping labels
-* [create_transaction](#create_transaction) - Create a shipping label
-* [get_transaction](#get_transaction) - Retrieve a shipping label
+* [list](#list) - List all shipping labels
+* [create](#create) - Create a shipping label
+* [get](#get) - Retrieve a shipping label
 
-## list_transactions
+## list
 
 Returns a list of all transaction objects.
 
@@ -26,7 +26,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.transactions.list_transactions(page=1, results=25, shippo_api_version='<value>')
+res = s.transactions.list(page=1, results=25, shippo_api_version='<value>')
 
 if res.transaction_paginated_list is not None:
     # handle response
@@ -52,7 +52,7 @@ if res.transaction_paginated_list is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## create_transaction
+## create
 
 Creates a new transaction object and purchases the shipping label using a rate object that has previously been created. <br> OR <br> Creates a new transaction object and purchases the shipping label instantly using shipment details, an existing carrier account, and an existing service level token.
 
@@ -67,7 +67,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.transactions.create_transaction(shippo_api_version='<value>', request_body=components.TransactionCreateRequest(
+res = s.transactions.create(shippo_api_version='<value>', request_body=components.TransactionCreateRequest(
     rate='ec9f0d3adc9441449c85d315f0997fd5',
     async_=False,
     label_file_type=components.LabelFileType.PDF_4X6,
@@ -97,7 +97,7 @@ if res.transaction is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## get_transaction
+## get
 
 Returns an existing transaction using an object ID.
 
@@ -111,7 +111,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.transactions.get_transaction(transaction_id='<value>', shippo_api_version='<value>')
+res = s.transactions.get(transaction_id='<value>', shippo_api_version='<value>')
 
 if res.transaction is not None:
     # handle response

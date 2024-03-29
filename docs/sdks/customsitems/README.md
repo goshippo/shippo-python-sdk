@@ -8,11 +8,11 @@ Customs declarations are relevant information, including one or multiple customs
 
 ### Available Operations
 
-* [list_customs_items](#list_customs_items) - List all customs items
-* [create_customs_item](#create_customs_item) - Create a new customs item
-* [get_customs_item](#get_customs_item) - Retrieve a customs item
+* [list](#list) - List all customs items
+* [create](#create) - Create a new customs item
+* [get](#get) - Retrieve a customs item
 
-## list_customs_items
+## list
 
 Returns a list all customs items objects.
 
@@ -26,7 +26,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_items.list_customs_items(page=1, results=25, shippo_api_version='<value>')
+res = s.customs_items.list(page=1, results=25, shippo_api_version='<value>')
 
 if res.customs_item_paginated_list is not None:
     # handle response
@@ -52,7 +52,7 @@ if res.customs_item_paginated_list is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## create_customs_item
+## create
 
 Creates a new customs item object.
 
@@ -67,7 +67,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_items.create_customs_item(shippo_api_version='<value>', customs_item_base=components.CustomsItemBase(
+res = s.customs_items.create(shippo_api_version='<value>', customs_item_base=components.CustomsItemBase(
     description='T-Shirt',
     mass_unit=components.WeightUnit.LB,
     net_weight='5',
@@ -102,7 +102,7 @@ if res.customs_item is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## get_customs_item
+## get
 
 Returns an existing customs item using an object ID
 
@@ -116,7 +116,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_items.get_customs_item(customs_item_id='<value>', page=1, shippo_api_version='<value>')
+res = s.customs_items.get(customs_item_id='<value>', page=1, shippo_api_version='<value>')
 
 if res.customs_item is not None:
     # handle response

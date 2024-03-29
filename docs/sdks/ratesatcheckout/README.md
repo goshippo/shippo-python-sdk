@@ -15,12 +15,12 @@ Assign one of your user parcel templates to be the default used when generating 
 
 ### Available Operations
 
-* [create_live_rate](#create_live_rate) - Generate a live rates request
+* [create](#create) - Generate a live rates request
 * [get_default_parcel_template](#get_default_parcel_template) - Show current default parcel template
 * [update_default_parcel_template](#update_default_parcel_template) - Update default parcel template
 * [delete_default_parcel_template](#delete_default_parcel_template) - Clear current default parcel template
 
-## create_live_rate
+## create
 
 Initiates a live rates request. Include either the object ID for
 an existing address record or a fully formed address object when entering
@@ -39,23 +39,8 @@ s = shippo.Shippo(
 )
 
 
-res = s.rates_at_checkout.create_live_rate(shippo_api_version='<value>', live_rate_create_request=components.LiveRateCreateRequest(
-    address_to=components.AddressCompleteCreateRequest(
-        name='Shwan Ippotle',
-        street1='215 Clayton St.',
-        city='San Francisco',
-        state='CA',
-        zip='94117',
-        country='US',
-        company='Shippo',
-        street3='',
-        street_no='',
-        phone='+1 555 341 9393',
-        email='shippotle@shippo.com',
-        is_residential=True,
-        metadata='Customer ID 123456',
-        validate=True,
-    ),
+res = s.rates_at_checkout.create(shippo_api_version='<value>', live_rate_create_request=components.LiveRateCreateRequest(
+    address_to='<value>',
     line_items=[
         components.LineItem(
             currency='USD',

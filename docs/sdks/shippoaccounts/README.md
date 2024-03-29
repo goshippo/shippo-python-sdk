@@ -10,12 +10,12 @@ They can be used by marketplaces, e-commerce platforms, and third-party logistic
 
 ### Available Operations
 
-* [list_shippo_accounts](#list_shippo_accounts) - List all Shippo Accounts
-* [create_shippo_account](#create_shippo_account) - Create a Shippo Account
-* [get_shippo_account](#get_shippo_account) - Retrieve a Shippo Account
-* [update_shippo_account](#update_shippo_account) - Update a Shippo Account
+* [list](#list) - List all Shippo Accounts
+* [create](#create) - Create a Shippo Account
+* [get](#get) - Retrieve a Shippo Account
+* [update](#update) - Update a Shippo Account
 
-## list_shippo_accounts
+## list
 
 Returns a list of Shippo Accounts objects
 
@@ -29,7 +29,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.shippo_accounts.list_shippo_accounts(page=1, results=25, shippo_api_version='<value>')
+res = s.shippo_accounts.list(page=1, results=25, shippo_api_version='<value>')
 
 if res.shippo_account_paginated_list is not None:
     # handle response
@@ -55,7 +55,7 @@ if res.shippo_account_paginated_list is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## create_shippo_account
+## create
 
 Creates a Shippo Account object
 
@@ -70,7 +70,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.shippo_accounts.create_shippo_account(shippo_api_version='<value>', shippo_account_update_request=components.ShippoAccountUpdateRequest(
+res = s.shippo_accounts.create(shippo_api_version='<value>', shippo_account_update_request=components.ShippoAccountUpdateRequest(
     email='hippo@shippo.com',
     first_name='Shippo',
     last_name='Meister',
@@ -100,7 +100,7 @@ if res.shippo_account is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## get_shippo_account
+## get
 
 Returns a Shippo Account using an object ID
 
@@ -114,7 +114,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.shippo_accounts.get_shippo_account(shippo_account_id='<value>', shippo_api_version='<value>')
+res = s.shippo_accounts.get(shippo_account_id='<value>', shippo_api_version='<value>')
 
 if res.shippo_account is not None:
     # handle response
@@ -139,7 +139,7 @@ if res.shippo_account is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## update_shippo_account
+## update
 
 Updates a Shippo Account object
 
@@ -154,7 +154,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.shippo_accounts.update_shippo_account(shippo_account_id='<value>', shippo_api_version='<value>', shippo_account_update_request=components.ShippoAccountUpdateRequest(
+res = s.shippo_accounts.update(shippo_account_id='<value>', shippo_api_version='<value>', shippo_account_update_request=components.ShippoAccountUpdateRequest(
     email='hippo@shippo.com',
     first_name='Shippo',
     last_name='Meister',

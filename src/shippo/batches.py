@@ -26,7 +26,7 @@ class Batches:
         
     
     
-    def create_batch(self, shippo_api_version: Optional[str] = None, batch_create_request: Optional[components.BatchCreateRequest] = None) -> operations.CreateBatchResponse:
+    def create(self, shippo_api_version: Optional[str] = None, batch_create_request: Optional[components.BatchCreateRequest] = None) -> operations.CreateBatchResponse:
         r"""Create a batch
         Creates a new batch object for purchasing shipping labels for many shipments at once. Batches are created asynchronously. This means that the API response won't include your batch shipments yet. You need to retrieve the batch later to verify that all batch shipments are valid.
         """
@@ -92,9 +92,12 @@ class Batches:
 
     
     
-    def get_batch(self, batch_id: str, shippo_api_version: Optional[str] = None) -> operations.GetBatchResponse:
+    def get(self, batch_id: str, shippo_api_version: Optional[str] = None) -> operations.GetBatchResponse:
         r"""Retrieve a batch
-        Returns a batch using an object ID. <br> Batch shipments are displayed 100 at a time. You can iterate through each `page` using the `?page= query` parameter. You can also filter based on batch shipment status, for example, by passing a query param like `?object_results=creation_failed`. <br> For more details on filtering results,  see our guide on <a href=\"https://docs.goshippo.com/docs/api_concepts/filtering/\" target=\"blank\"> filtering</a>.
+        Returns a batch using an object ID. <br> Batch shipments are displayed 100 at a time.  You can iterate 
+        through each `page` using the `?page= query` parameter.  You can also filter based on batch shipment 
+        status, for example, by passing a query param like `?object_results=creation_failed`. <br> 
+        For more details on filtering results, see our guide on <a href=\"https://docs.goshippo.com/docs/api_concepts/filtering/\" target=\"blank\"> filtering</a>.
         """
         hook_ctx = HookContext(operation_id='GetBatch', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.GetBatchRequest(
@@ -155,7 +158,7 @@ class Batches:
 
     
     
-    def add_shipments_to_batch(self, batch_id: str, shippo_api_version: Optional[str] = None, request_body: Optional[List[components.BatchShipmentBase]] = None) -> operations.AddShipmentsToBatchResponse:
+    def add_shipments(self, batch_id: str, shippo_api_version: Optional[str] = None, request_body: Optional[List[components.BatchShipmentBase]] = None) -> operations.AddShipmentsToBatchResponse:
         r"""Add shipments to a batch
         Adds batch shipments to an existing batch.
         """
@@ -222,7 +225,7 @@ class Batches:
 
     
     
-    def purchase_batch(self, batch_id: str, shippo_api_version: Optional[str] = None) -> operations.PurchaseBatchResponse:
+    def purchase(self, batch_id: str, shippo_api_version: Optional[str] = None) -> operations.PurchaseBatchResponse:
         r"""Purchase a batch
         Purchases an existing batch with a status of `VALID`. 
         Once you send a POST request to the purchase endpoint the batch status will change to `PURCHASING`. 
@@ -288,7 +291,7 @@ class Batches:
 
     
     
-    def remove_shipments_from_batch(self, batch_id: str, shippo_api_version: Optional[str] = None, request_body: Optional[List[str]] = None) -> operations.RemoveShipmentsFromBatchResponse:
+    def remove_shipments(self, batch_id: str, shippo_api_version: Optional[str] = None, request_body: Optional[List[str]] = None) -> operations.RemoveShipmentsFromBatchResponse:
         r"""Remove shipments from a batch
         Removes shipments from an existing batch shipment.
         """

@@ -18,7 +18,7 @@ class Rates:
         
     
     
-    def get_rate(self, rate_id: str, shippo_api_version: Optional[str] = None) -> operations.GetRateResponse:
+    def get(self, rate_id: str, shippo_api_version: Optional[str] = None) -> operations.GetRateResponse:
         r"""Retrieve a rate
         Returns an existing rate using a rate object ID.
         """
