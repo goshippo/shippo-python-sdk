@@ -37,7 +37,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.addresses.list_addresses(page=1, results=25, shippo_api_version='<value>')
+res = s.addresses.list_addresses(page=1, results=25)
 
 if res.address_list_wrapper is not None:
     # handle response
@@ -174,6 +174,7 @@ Review our full guides and references at [https://docs.goshippo.com/](https://do
 * [get_shippo_account](docs/sdks/shippoaccounts/README.md#get_shippo_account) - Retrieve a Shippo Account
 * [update_shippo_account](docs/sdks/shippoaccounts/README.md#update_shippo_account) - Update a Shippo Account
 <!-- End Available Resources and Operations [operations] -->
+<!-- No Error Handling [errors] -->
 
 <!-- Start Authentication [security] -->
 ## Authentication
@@ -234,3 +235,7 @@ Feel free to open a PR or a Github issue as a proof of concept and we'll do our 
 
 ## About Shippo
 Connect with multiple different carriers, get discounted shipping labels, track parcels, and much more with just one integration. You can use your own carrier accounts or take advantage of our discounted rates with the Shippo carrier accounts. Using Shippo makes it easy to deal with multiple carrier integrations, rate shopping, tracking and other parts of the shipping workflow. We provide the API and web app for all your shipping needs.
+
+
+
+<!-- Placeholder for Future Speakeasy SDK Sections -->
