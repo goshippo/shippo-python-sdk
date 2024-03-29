@@ -1,8 +1,5 @@
 # <img src="https://docs.goshippo.com/images/Logo.png" width="30" alt="Shippo logo"> Shippo Python SDK 
 
-
-
-
 Shippo is a shipping API that connects you with [multiple shipping carriers](https://goshippo.com/carriers) (such as USPS, UPS, DHL, Canada Post, Australia Post, and many others) through one interface.
 
 You must register for a [Shippo account](https://apps.goshippo.com/join) to use our API. It's free to sign up. Only pay to print a live label, test labels are free.
@@ -45,10 +42,54 @@ if res.address_paginated_list is not None:
 
 ```
 <!-- No SDK Example Usage [usage] -->
+<!-- No Error Handling [errors] -->
+<!-- No Server Selection [server] -->
+
+<!-- Start Authentication [security] -->
+## Authentication
+
+This SDK supports the following security scheme globally:
+
+| Name             | Type             | Scheme           |
+| ---------------- | ---------------- | ---------------- |
+| `api_key_header` | apiKey           | API key          |
+
+To authenticate with the API the `api_key_header` parameter must be set when initializing the SDK client instance. For example:
+```python
+import shippo
+
+s = shippo.Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+)
+
+
+res = s.addresses.list_addresses(page=1, results=25)
+
+if res.address_paginated_list is not None:
+    # handle response
+    pass
+
+```
+<!-- No Authentication [security] -->
+
+<!-- Start Custom HTTP Client [http-client] -->
+## Custom HTTP Client
+
+The Python SDK makes API calls using the [requests](https://pypi.org/project/requests/) HTTP library.  In order to provide a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration, you can initialize the SDK client with a custom `requests.Session` object.
+
+For example, you could specify a header for every request that this sdk makes as follows:
+```python
+import shippo
+import requests
+
+http_client = requests.Session()
+http_client.headers.update({'x-custom-header': 'someValue'})
+s = shippo.Shippo(client: http_client)
+```
+<!-- End Custom HTTP Client [http-client] -->
 
 ## Documentation
 Review our full guides and references at [https://docs.goshippo.com/](https://docs.goshippo.com/).
-
 
 <!-- Start Available Resources and Operations [operations] -->
 ## Available Resources and Operations
@@ -174,51 +215,6 @@ Review our full guides and references at [https://docs.goshippo.com/](https://do
 * [get_shippo_account](docs/sdks/shippoaccounts/README.md#get_shippo_account) - Retrieve a Shippo Account
 * [update_shippo_account](docs/sdks/shippoaccounts/README.md#update_shippo_account) - Update a Shippo Account
 <!-- End Available Resources and Operations [operations] -->
-<!-- No Error Handling [errors] -->
-<!-- No Server Selection [server] -->
-
-<!-- Start Authentication [security] -->
-## Authentication
-
-This SDK supports the following security scheme globally:
-
-| Name             | Type             | Scheme           |
-| ---------------- | ---------------- | ---------------- |
-| `api_key_header` | apiKey           | API key          |
-
-To authenticate with the API the `api_key_header` parameter must be set when initializing the SDK client instance. For example:
-```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
-)
-
-
-res = s.addresses.list_addresses(page=1, results=25)
-
-if res.address_paginated_list is not None:
-    # handle response
-    pass
-
-```
-<!-- No Authentication [security] -->
-
-<!-- Start Custom HTTP Client [http-client] -->
-## Custom HTTP Client
-
-The Python SDK makes API calls using the [requests](https://pypi.org/project/requests/) HTTP library.  In order to provide a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration, you can initialize the SDK client with a custom `requests.Session` object.
-
-For example, you could specify a header for every request that this sdk makes as follows:
-```python
-import shippo
-import requests
-
-http_client = requests.Session()
-http_client.headers.update({'x-custom-header': 'someValue'})
-s = shippo.Shippo(client: http_client)
-```
-<!-- End Custom HTTP Client [http-client] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 
@@ -236,7 +232,3 @@ Feel free to open a PR or a Github issue as a proof of concept and we'll do our 
 
 ## About Shippo
 Connect with multiple different carriers, get discounted shipping labels, track parcels, and much more with just one integration. You can use your own carrier accounts or take advantage of our discounted rates with the Shippo carrier accounts. Using Shippo makes it easy to deal with multiple carrier integrations, rate shopping, tracking and other parts of the shipping workflow. We provide the API and web app for all your shipping needs.
-
-
-
-
