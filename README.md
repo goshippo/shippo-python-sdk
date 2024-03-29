@@ -44,7 +44,7 @@ if res.address_paginated_list is not None:
     pass
 
 ```
-<!-- End SDK Example Usage [usage] -->
+<!-- No SDK Example Usage [usage] -->
 
 ## Documentation
 Review our full guides and references at [https://docs.goshippo.com/](https://docs.goshippo.com/).
@@ -175,11 +175,10 @@ Review our full guides and references at [https://docs.goshippo.com/](https://do
 * [update_shippo_account](docs/sdks/shippoaccounts/README.md#update_shippo_account) - Update a Shippo Account
 <!-- End Available Resources and Operations [operations] -->
 <!-- No Error Handling [errors] -->
+<!-- No Server Selection [server] -->
 
 <!-- Start Authentication [security] -->
 ## Authentication
-
-### Per-Client Security Schemes
 
 This SDK supports the following security scheme globally:
 
@@ -196,16 +195,15 @@ s = shippo.Shippo(
 )
 
 
-res = s.addresses.list_addresses(page=1, results=25, shippo_api_version='<value>')
+res = s.addresses.list_addresses(page=1, results=25)
 
-if res.address_list_wrapper is not None:
+if res.address_paginated_list is not None:
     # handle response
     pass
 
 ```
-<!-- End Authentication [security] -->
+<!-- No Authentication [security] -->
 
-<!-- No Server Selection [server] -->
 <!-- Start Custom HTTP Client [http-client] -->
 ## Custom HTTP Client
 
@@ -221,36 +219,6 @@ http_client.headers.update({'x-custom-header': 'someValue'})
 s = shippo.Shippo(client: http_client)
 ```
 <!-- End Custom HTTP Client [http-client] -->
-
-
-<!-- Start Authentication [security] -->
-## Authentication
-
-### Per-Client Security Schemes
-
-This SDK supports the following security scheme globally:
-
-| Name             | Type             | Scheme           |
-| ---------------- | ---------------- | ---------------- |
-| `api_key_header` | apiKey           | API key          |
-
-To authenticate with the API the `api_key_header` parameter must be set when initializing the SDK client instance. For example:
-```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
-)
-
-
-res = s.addresses.list_addresses(page=1, results=25, shippo_api_version='<value>')
-
-if res.address_paginated_list is not None:
-    # handle response
-    pass
-
-```
-<!-- End Authentication [security] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 
