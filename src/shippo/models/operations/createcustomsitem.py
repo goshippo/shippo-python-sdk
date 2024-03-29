@@ -2,9 +2,7 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import customsitem as components_customsitem
 from ...models.components import customsitembase as components_customsitembase
-from ...models.components import httpmetadata as components_httpmetadata
 from typing import Optional
 
 
@@ -14,13 +12,5 @@ class CreateCustomsItemRequest:
     r"""String used to pick a non-default API version to use"""
     customs_item_base: Optional[components_customsitembase.CustomsItemBase] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     r"""CustomsItem details."""
-    
-
-
-
-@dataclasses.dataclass
-class CreateCustomsItemResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    customs_item: Optional[components_customsitem.CustomsItem] = dataclasses.field(default=None)
     
 

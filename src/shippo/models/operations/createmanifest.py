@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import httpmetadata as components_httpmetadata
-from ...models.components import manifest as components_manifest
 from ...models.components import manifestcreaterequest as components_manifestcreaterequest
 from typing import Optional
 
@@ -14,13 +12,5 @@ class CreateManifestRequest:
     r"""String used to pick a non-default API version to use"""
     manifest_create_request: Optional[components_manifestcreaterequest.ManifestCreateRequest] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     r"""Manifest details and contact info."""
-    
-
-
-
-@dataclasses.dataclass
-class CreateManifestResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    manifest: Optional[components_manifest.Manifest] = dataclasses.field(default=None)
     
 

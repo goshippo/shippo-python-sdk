@@ -29,7 +29,7 @@ class Orders:
         
     
     
-    def list_orders(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListOrdersResponse:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> components.OrderPaginatedList:
         r"""List all orders
         Returns a list of all order objects.
         """
@@ -76,25 +76,22 @@ class Orders:
             http_res = result
         
         
-        res = operations.ListOrdersResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.OrderPaginatedList])
-                res.order_paginated_list = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def create_order(self, shippo_api_version: Optional[str] = None, order_create_request: Optional[components.OrderCreateRequest] = None) -> operations.CreateOrderResponse:
+    def create(self, shippo_api_version: Optional[str] = None, order_create_request: Optional[components.OrderCreateRequest] = None) -> components.Order:
         r"""Create a new order
         Creates a new order object.
         """
@@ -142,25 +139,22 @@ class Orders:
             http_res = result
         
         
-        res = operations.CreateOrderResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 201:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Order])
-                res.order = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def get_order(self, order_id: str, shippo_api_version: Optional[str] = None) -> operations.GetOrderResponse:
+    def get(self, order_id: str, shippo_api_version: Optional[str] = None) -> components.Order:
         r"""Retrieve an order
         Retrieves an existing order using an object ID.
         """
@@ -205,20 +199,17 @@ class Orders:
             http_res = result
         
         
-        res = operations.GetOrderResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Order])
-                res.order = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
-
-        return res
 
     

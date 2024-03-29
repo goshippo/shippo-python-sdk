@@ -27,7 +27,7 @@ class TrackingStatus:
         
     
     
-    def create_track(self, shippo_api_version: Optional[str] = None, tracks_request: Optional[components.TracksRequest] = None) -> operations.CreateTrackResponse:
+    def create(self, shippo_api_version: Optional[str] = None, tracks_request: Optional[components.TracksRequest] = None) -> components.Track:
         r"""Register a tracking webhook
         Registers a webhook that will send HTTP notifications to you when the status of your tracked package changes. For more details on creating a webhook, see our guides on <a href=\"https://docs.goshippo.com/docs/tracking/webhooks/\">Webhooks</a> and <a href=\"https://docs.goshippo.com/docs/tracking/tracking/\">Tracking</a>.
         """
@@ -75,32 +75,29 @@ class TrackingStatus:
             http_res = result
         
         
-        res = operations.CreateTrackResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 201:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Track])
-                res.track = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code == 400:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
-                out = utils.unmarshal_json(http_res.text, errors.Tracks400Response)
+                out = utils.unmarshal_json(http_res.text, errors.BadRequestWithDetail)
                 raise out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def get_track(self, tracking_number: str, carrier: str, shippo_api_version: Optional[str] = None) -> operations.GetTrackResponse:
+    def get(self, tracking_number: str, carrier: str, shippo_api_version: Optional[str] = None) -> components.Track:
         r"""Get a tracking status
         Returns the tracking status of a shipment using a carrier name and a tracking number.
         """
@@ -146,27 +143,24 @@ class TrackingStatus:
             http_res = result
         
         
-        res = operations.GetTrackResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Track])
-                res.track = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code == 400:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
-                out = utils.unmarshal_json(http_res.text, errors.Tracks400Response)
+                out = utils.unmarshal_json(http_res.text, errors.BadRequestWithDetail)
                 raise out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
-
-        return res
 
     

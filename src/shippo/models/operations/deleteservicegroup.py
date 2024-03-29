@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import httpmetadata as components_httpmetadata
 from typing import Optional
 
 
@@ -18,6 +17,4 @@ class DeleteServiceGroupRequest:
 
 @dataclasses.dataclass
 class DeleteServiceGroupResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    
-
+    pass

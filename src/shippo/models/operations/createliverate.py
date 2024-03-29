@@ -2,9 +2,7 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import httpmetadata as components_httpmetadata
 from ...models.components import liveratecreaterequest as components_liveratecreaterequest
-from ...models.components import liveratepaginatedlist as components_liveratepaginatedlist
 from typing import Optional
 
 
@@ -14,13 +12,5 @@ class CreateLiveRateRequest:
     r"""String used to pick a non-default API version to use"""
     live_rate_create_request: Optional[components_liveratecreaterequest.LiveRateCreateRequest] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     r"""Generate rates at checkout"""
-    
-
-
-
-@dataclasses.dataclass
-class CreateLiveRateResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    live_rate_paginated_list: Optional[components_liveratepaginatedlist.LiveRatePaginatedList] = dataclasses.field(default=None)
     
 

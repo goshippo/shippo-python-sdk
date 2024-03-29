@@ -12,11 +12,11 @@ The following values are supported for the `extra` field of the shipment object.
 
 ### Available Operations
 
-* [list_shipments](#list_shipments) - List all shipments
-* [create_shipment](#create_shipment) - Create a new shipment
-* [get_shipment](#get_shipment) - Retrieve a shipment
+* [list](#list) - List all shipments
+* [create](#create) - Create a new shipment
+* [get](#get) - Retrieve a shipment
 
-## list_shipments
+## list
 
 Returns a list of all shipment objects.<br><br>
 In order to filter results, you must use the below path parameters. 
@@ -47,9 +47,9 @@ s = shippo.Shippo(
 )
 
 
-res = s.shipments.list_shipments(page=1, results=25, shippo_api_version='<value>')
+res = s.shipments.list(page=1, results=25, shippo_api_version='<value>')
 
-if res.shipment_paginated_list is not None:
+if res is not None:
     # handle response
     pass
 
@@ -66,14 +66,14 @@ if res.shipment_paginated_list is not None:
 
 ### Response
 
-**[operations.ListShipmentsResponse](../../models/operations/listshipmentsresponse.md)**
+**[components.ShipmentPaginatedList](../../models/components/shipmentpaginatedlist.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## create_shipment
+## create
 
 Creates a new shipment object.
 
@@ -88,8 +88,23 @@ s = shippo.Shippo(
 )
 
 
-res = s.shipments.create_shipment(shippo_api_version='<value>', shipment_create_request=components.ShipmentCreateRequest(
-    address_from='<value>',
+res = s.shipments.create(shippo_api_version='<value>', shipment_create_request=components.ShipmentCreateRequest(
+    address_from=components.AddressCreateRequest(
+        country='US',
+        name='Shwan Ippotle',
+        company='Shippo',
+        street1='215 Clayton St.',
+        street3='',
+        street_no='',
+        city='San Francisco',
+        state='CA',
+        zip='94117',
+        phone='+1 555 341 9393',
+        email='shippotle@shippo.com',
+        is_residential=True,
+        metadata='Customer ID 123456',
+        validate=True,
+    ),
     address_to=components.AddressCreateRequest(
         country='US',
         name='Shwan Ippotle',
@@ -107,15 +122,7 @@ res = s.shipments.create_shipment(shippo_api_version='<value>', shipment_create_
         validate=True,
     ),
     parcels=[
-        components.ParcelCreateRequest(
-            distance_unit=components.DistanceUnitTemplate.IN,
-            height='1',
-            length='1',
-            mass_unit=components.WeightUnit.LB,
-            weight='1',
-            width='1',
-            metadata='Customer ID 123456',
-        ),
+        '<value>',
     ],
     customs_declaration='adcfdddf8ec64b84ad22772bce3ea37a',
     metadata='Customer ID 123456',
@@ -126,7 +133,7 @@ res = s.shipments.create_shipment(shippo_api_version='<value>', shipment_create_
     ],
 ))
 
-if res.shipment is not None:
+if res is not None:
     # handle response
     pass
 
@@ -142,14 +149,14 @@ if res.shipment is not None:
 
 ### Response
 
-**[operations.CreateShipmentResponse](../../models/operations/createshipmentresponse.md)**
+**[components.Shipment](../../models/components/shipment.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## get_shipment
+## get
 
 Returns an existing shipment using an object ID
 
@@ -163,9 +170,9 @@ s = shippo.Shippo(
 )
 
 
-res = s.shipments.get_shipment(shipment_id='<value>', shippo_api_version='<value>')
+res = s.shipments.get(shipment_id='<value>', shippo_api_version='<value>')
 
-if res.shipment is not None:
+if res is not None:
     # handle response
     pass
 
@@ -181,7 +188,7 @@ if res.shipment is not None:
 
 ### Response
 
-**[operations.GetShipmentResponse](../../models/operations/getshipmentresponse.md)**
+**[components.Shipment](../../models/components/shipment.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

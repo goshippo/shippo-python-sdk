@@ -5,13 +5,7 @@ import dataclasses
 import dateutil.parser
 from .distanceunittemplate import DistanceUnitTemplate
 from .parcelextra import ParcelExtra
-from .parceltemplatearamexaustralia import ParcelTemplateAramexAustralia
-from .parceltemplatecouriersplease import ParcelTemplateCouriersPlease
-from .parceltemplatedhlecommerce import ParcelTemplateDHLeCommerce
-from .parceltemplatedpduk import ParcelTemplateDPDUK
-from .parceltemplatefedex import ParcelTemplateFedEx
-from .parceltemplateups import ParcelTemplateUPS
-from .parceltemplateusps import ParcelTemplateUSPS
+from .parceltemplateenumset import ParcelTemplateAramexAustralia, ParcelTemplateCouriersPlease, ParcelTemplateDHLeCommerce, ParcelTemplateDPDUK, ParcelTemplateFedEx, ParcelTemplateUPS, ParcelTemplateUSPS
 from .weightunit import WeightUnit
 from dataclasses_json import Undefined, dataclass_json
 from datetime import datetime

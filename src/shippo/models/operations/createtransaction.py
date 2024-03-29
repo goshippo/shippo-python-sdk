@@ -2,9 +2,7 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import httpmetadata as components_httpmetadata
 from ...models.components import instanttransactionrequestbody as components_instanttransactionrequestbody
-from ...models.components import transaction as components_transaction
 from ...models.components import transactioncreaterequest as components_transactioncreaterequest
 from typing import Optional, Union
 
@@ -15,13 +13,5 @@ class CreateTransactionRequest:
     r"""String used to pick a non-default API version to use"""
     request_body: Optional[Union[components_transactioncreaterequest.TransactionCreateRequest, components_instanttransactionrequestbody.InstantTransactionRequestBody]] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     r"""Examples."""
-    
-
-
-
-@dataclasses.dataclass
-class CreateTransactionResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    transaction: Optional[components_transaction.Transaction] = dataclasses.field(default=None)
     
 

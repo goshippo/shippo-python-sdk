@@ -18,7 +18,7 @@ class Refunds:
         
     
     
-    def create_refund(self, shippo_api_version: Optional[str] = None, refund_request_body: Optional[components.RefundRequestBody] = None) -> operations.CreateRefundResponse:
+    def create(self, shippo_api_version: Optional[str] = None, refund_request_body: Optional[components.RefundRequestBody] = None) -> components.Refund:
         r"""Create a refund
         Creates a new refund object.
         """
@@ -66,30 +66,27 @@ class Refunds:
             http_res = result
         
         
-        res = operations.CreateRefundResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 201:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Refund])
-                res.refund = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def list_refund(self, shippo_api_version: Optional[str] = None) -> operations.ListRefundResponse:
+    def list(self, shippo_api_version: Optional[str] = None) -> components.RefundPaginatedList:
         r"""List all refunds
         Returns a list all refund objects.
         """
-        hook_ctx = HookContext(operation_id='ListRefund', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.ListRefundRequest(
+        hook_ctx = HookContext(operation_id='ListRefunds', oauth2_scopes=[], security_source=self.sdk_configuration.security)
+        request = operations.ListRefundsRequest(
             shippo_api_version=shippo_api_version,
         )
         
@@ -128,25 +125,22 @@ class Refunds:
             http_res = result
         
         
-        res = operations.ListRefundResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.RefundPaginatedList])
-                res.refund_paginated_list = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def get_refund(self, refund_id: str, shippo_api_version: Optional[str] = None) -> operations.GetRefundResponse:
+    def get(self, refund_id: str, shippo_api_version: Optional[str] = None) -> components.Refund:
         r"""Retrieve a refund
         Returns an existing rate using a rate object ID.
         """
@@ -191,20 +185,17 @@ class Refunds:
             http_res = result
         
         
-        res = operations.GetRefundResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Refund])
-                res.refund = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
-
-        return res
 
     

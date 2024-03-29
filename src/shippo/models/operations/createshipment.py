@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import httpmetadata as components_httpmetadata
-from ...models.components import shipment as components_shipment
 from ...models.components import shipmentcreaterequest as components_shipmentcreaterequest
 from typing import Optional
 
@@ -14,13 +12,5 @@ class CreateShipmentRequest:
     r"""String used to pick a non-default API version to use"""
     shipment_create_request: Optional[components_shipmentcreaterequest.ShipmentCreateRequest] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     r"""Shipment details and contact info."""
-    
-
-
-
-@dataclasses.dataclass
-class CreateShipmentResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    shipment: Optional[components_shipment.Shipment] = dataclasses.field(default=None)
     
 

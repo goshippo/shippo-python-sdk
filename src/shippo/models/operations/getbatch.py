@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import batch as components_batch
-from ...models.components import httpmetadata as components_httpmetadata
 from typing import Optional
 
 
@@ -13,13 +11,5 @@ class GetBatchRequest:
     r"""Object ID of the batch"""
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""
-    
-
-
-
-@dataclasses.dataclass
-class GetBatchResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    batch: Optional[components_batch.Batch] = dataclasses.field(default=None)
     
 

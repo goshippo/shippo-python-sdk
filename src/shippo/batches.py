@@ -26,7 +26,7 @@ class Batches:
         
     
     
-    def create_batch(self, shippo_api_version: Optional[str] = None, batch_create_request: Optional[components.BatchCreateRequest] = None) -> operations.CreateBatchResponse:
+    def create(self, shippo_api_version: Optional[str] = None, batch_create_request: Optional[components.BatchCreateRequest] = None) -> components.Batch:
         r"""Create a batch
         Creates a new batch object for purchasing shipping labels for many shipments at once. Batches are created asynchronously. This means that the API response won't include your batch shipments yet. You need to retrieve the batch later to verify that all batch shipments are valid.
         """
@@ -74,27 +74,27 @@ class Batches:
             http_res = result
         
         
-        res = operations.CreateBatchResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Batch])
-                res.batch = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def get_batch(self, batch_id: str, shippo_api_version: Optional[str] = None) -> operations.GetBatchResponse:
+    def get(self, batch_id: str, shippo_api_version: Optional[str] = None) -> components.Batch:
         r"""Retrieve a batch
-        Returns a batch using an object ID. <br> Batch shipments are displayed 100 at a time. You can iterate through each `page` using the `?page= query` parameter. You can also filter based on batch shipment status, for example, by passing a query param like `?object_results=creation_failed`. <br> For more details on filtering results,  see our guide on <a href=\"https://docs.goshippo.com/docs/api_concepts/filtering/\" target=\"blank\"> filtering</a>.
+        Returns a batch using an object ID. <br> Batch shipments are displayed 100 at a time.  You can iterate 
+        through each `page` using the `?page= query` parameter.  You can also filter based on batch shipment 
+        status, for example, by passing a query param like `?object_results=creation_failed`. <br> 
+        For more details on filtering results, see our guide on <a href=\"https://docs.goshippo.com/docs/api_concepts/filtering/\" target=\"blank\"> filtering</a>.
         """
         hook_ctx = HookContext(operation_id='GetBatch', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.GetBatchRequest(
@@ -137,25 +137,22 @@ class Batches:
             http_res = result
         
         
-        res = operations.GetBatchResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Batch])
-                res.batch = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def add_shipments_to_batch(self, batch_id: str, shippo_api_version: Optional[str] = None, request_body: Optional[List[components.BatchShipmentBase]] = None) -> operations.AddShipmentsToBatchResponse:
+    def add_shipments(self, batch_id: str, shippo_api_version: Optional[str] = None, request_body: Optional[List[components.BatchShipmentBase]] = None) -> components.Batch:
         r"""Add shipments to a batch
         Adds batch shipments to an existing batch.
         """
@@ -204,25 +201,22 @@ class Batches:
             http_res = result
         
         
-        res = operations.AddShipmentsToBatchResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Batch])
-                res.batch = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def purchase_batch(self, batch_id: str, shippo_api_version: Optional[str] = None) -> operations.PurchaseBatchResponse:
+    def purchase(self, batch_id: str, shippo_api_version: Optional[str] = None) -> components.Batch:
         r"""Purchase a batch
         Purchases an existing batch with a status of `VALID`. 
         Once you send a POST request to the purchase endpoint the batch status will change to `PURCHASING`. 
@@ -270,25 +264,22 @@ class Batches:
             http_res = result
         
         
-        res = operations.PurchaseBatchResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Batch])
-                res.batch = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def remove_shipments_from_batch(self, batch_id: str, shippo_api_version: Optional[str] = None, request_body: Optional[List[str]] = None) -> operations.RemoveShipmentsFromBatchResponse:
+    def remove_shipments(self, batch_id: str, shippo_api_version: Optional[str] = None, request_body: Optional[List[str]] = None) -> components.Batch:
         r"""Remove shipments from a batch
         Removes shipments from an existing batch shipment.
         """
@@ -337,20 +328,17 @@ class Batches:
             http_res = result
         
         
-        res = operations.RemoveShipmentsFromBatchResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Batch])
-                res.batch = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
-
-        return res
 
     

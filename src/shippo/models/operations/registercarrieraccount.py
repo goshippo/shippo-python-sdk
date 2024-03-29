@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import carrieraccount as components_carrieraccount
 from ...models.components import carrieraccountcanadapostcreaterequest as components_carrieraccountcanadapostcreaterequest
 from ...models.components import carrieraccountchronopostcreaterequest as components_carrieraccountchronopostcreaterequest
 from ...models.components import carrieraccountcolissimocreaterequest as components_carrieraccountcolissimocreaterequest
@@ -15,7 +14,6 @@ from ...models.components import carrieraccounthermesukcreaterequest as componen
 from ...models.components import carrieraccountposteitalianecreaterequest as components_carrieraccountposteitalianecreaterequest
 from ...models.components import carrieraccountupscreaterequest as components_carrieraccountupscreaterequest
 from ...models.components import carrieraccountuspscreaterequest as components_carrieraccountuspscreaterequest
-from ...models.components import httpmetadata as components_httpmetadata
 from typing import Optional, Union
 
 
@@ -25,13 +23,5 @@ class RegisterCarrierAccountRequest:
     r"""String used to pick a non-default API version to use"""
     request_body: Optional[Union[components_carrieraccountcanadapostcreaterequest.CarrierAccountCanadaPostCreateRequest, components_carrieraccountchronopostcreaterequest.CarrierAccountChronopostCreateRequest, components_carrieraccountcolissimocreaterequest.CarrierAccountColissimoCreateRequest, components_carrieraccountcorreoscreaterequest.CarrierAccountCorreosCreateRequest, components_carrieraccountdeutschepostcreaterequest.CarrierAccountDeutschePostCreateRequest, components_carrieraccountdhlexpresscreaterequest.CarrierAccountDHLExpressCreateRequest, components_carrieraccountdpddecreaterequest.CarrierAccountDpdDeCreateRequest, components_carrieraccountdpdukcreaterequest.CarrierAccountDPDUKCreateRequest, components_carrieraccounthermesukcreaterequest.CarrierAccountHermesUKCreateRequest, components_carrieraccountposteitalianecreaterequest.CarrierAccountPosteItalianeCreateRequest, components_carrieraccountupscreaterequest.CarrierAccountUPSCreateRequest, components_carrieraccountuspscreaterequest.CarrierAccountUSPSCreateRequest]] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     r"""Examples."""
-    
-
-
-
-@dataclasses.dataclass
-class RegisterCarrierAccountResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    carrier_account: Optional[components_carrieraccount.CarrierAccount] = dataclasses.field(default=None)
     
 

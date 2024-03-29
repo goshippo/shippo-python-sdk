@@ -9,11 +9,11 @@ customs clearance for your international shipments.
 
 ### Available Operations
 
-* [list_customs_declarations](#list_customs_declarations) - List all customs declarations
-* [create_customs_declaration](#create_customs_declaration) - Create a new customs declaration
-* [get_customs_declaration](#get_customs_declaration) - Retrieve a customs declaration
+* [list](#list) - List all customs declarations
+* [create](#create) - Create a new customs declaration
+* [get](#get) - Retrieve a customs declaration
 
-## list_customs_declarations
+## list
 
 Returns a a list of all customs declaration objects
 
@@ -27,9 +27,9 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_declarations.list_customs_declarations(page=1, results=25, shippo_api_version='<value>')
+res = s.customs_declarations.list(page=1, results=25, shippo_api_version='<value>')
 
-if res.customs_declaration_paginated_list is not None:
+if res is not None:
     # handle response
     pass
 
@@ -46,14 +46,14 @@ if res.customs_declaration_paginated_list is not None:
 
 ### Response
 
-**[operations.ListCustomsDeclarationsResponse](../../models/operations/listcustomsdeclarationsresponse.md)**
+**[components.CustomsDeclarationPaginatedList](../../models/components/customsdeclarationpaginatedlist.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## create_customs_declaration
+## create
 
 Creates a new customs declaration object
 
@@ -68,7 +68,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_declarations.create_customs_declaration(shippo_api_version='<value>', customs_declaration_create_request=components.CustomsDeclarationCreateRequest(
+res = s.customs_declarations.create(shippo_api_version='<value>', customs_declaration_create_request=components.CustomsDeclarationCreateRequest(
     certify=True,
     certify_signer='Shawn Ippotle',
     contents_type=components.CustomsDeclarationCreateRequestContentsType.MERCHANDISE,
@@ -94,7 +94,7 @@ res = s.customs_declarations.create_customs_declaration(shippo_api_version='<val
     test=True,
 ))
 
-if res.customs_declaration is not None:
+if res is not None:
     # handle response
     pass
 
@@ -110,14 +110,14 @@ if res.customs_declaration is not None:
 
 ### Response
 
-**[operations.CreateCustomsDeclarationResponse](../../models/operations/createcustomsdeclarationresponse.md)**
+**[components.CustomsDeclaration](../../models/components/customsdeclaration.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## get_customs_declaration
+## get
 
 Returns an existing customs declaration using an object ID
 
@@ -131,9 +131,9 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_declarations.get_customs_declaration(customs_declaration_id='<value>', page=1, shippo_api_version='<value>')
+res = s.customs_declarations.get(customs_declaration_id='<value>', page=1, shippo_api_version='<value>')
 
-if res.customs_declaration is not None:
+if res is not None:
     # handle response
     pass
 
@@ -150,7 +150,7 @@ if res.customs_declaration is not None:
 
 ### Response
 
-**[operations.GetCustomsDeclarationResponse](../../models/operations/getcustomsdeclarationresponse.md)**
+**[components.CustomsDeclaration](../../models/components/customsdeclaration.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

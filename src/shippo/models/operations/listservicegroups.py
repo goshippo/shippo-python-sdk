@@ -2,22 +2,12 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import httpmetadata as components_httpmetadata
-from ...models.components import servicegroup as components_servicegroup
-from typing import List, Optional
+from typing import Optional
 
 
 @dataclasses.dataclass
 class ListServiceGroupsRequest:
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""
-    
-
-
-
-@dataclasses.dataclass
-class ListServiceGroupsResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    service_group_list_response: Optional[List[components_servicegroup.ServiceGroup]] = dataclasses.field(default=None)
     
 

@@ -25,7 +25,7 @@ class RatesAtCheckout:
         
     
     
-    def create_live_rate(self, shippo_api_version: Optional[str] = None, live_rate_create_request: Optional[components.LiveRateCreateRequest] = None) -> operations.CreateLiveRateResponse:
+    def create(self, shippo_api_version: Optional[str] = None, live_rate_create_request: Optional[components.LiveRateCreateRequest] = None) -> components.LiveRatePaginatedList:
         r"""Generate a live rates request
         Initiates a live rates request. Include either the object ID for
         an existing address record or a fully formed address object when entering
@@ -76,25 +76,22 @@ class RatesAtCheckout:
             http_res = result
         
         
-        res = operations.CreateLiveRateResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.LiveRatePaginatedList])
-                res.live_rate_paginated_list = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def get_default_parcel_template(self, shippo_api_version: Optional[str] = None) -> operations.GetDefaultParcelTemplateResponse:
+    def get_default_parcel_template(self, shippo_api_version: Optional[str] = None) -> components.DefaultParcelTemplate:
         r"""Show current default parcel template
         Retrieve and display the currently configured default parcel template for live rates.
         """
@@ -138,25 +135,22 @@ class RatesAtCheckout:
             http_res = result
         
         
-        res = operations.GetDefaultParcelTemplateResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.DefaultParcelTemplate])
-                res.default_parcel_template = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def update_default_parcel_template(self, shippo_api_version: Optional[str] = None, default_parcel_template_update_request: Optional[components.DefaultParcelTemplateUpdateRequest] = None) -> operations.UpdateDefaultParcelTemplateResponse:
+    def update_default_parcel_template(self, shippo_api_version: Optional[str] = None, default_parcel_template_update_request: Optional[components.DefaultParcelTemplateUpdateRequest] = None) -> components.DefaultParcelTemplate:
         r"""Update default parcel template
         Update the currently configured default parcel template for live rates. The object_id in the request payload should identify the user parcel template to be the new default.
         """
@@ -204,21 +198,18 @@ class RatesAtCheckout:
             http_res = result
         
         
-        res = operations.UpdateDefaultParcelTemplateResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.DefaultParcelTemplate])
-                res.default_parcel_template = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
-
-        return res
 
     
     
@@ -266,7 +257,7 @@ class RatesAtCheckout:
             http_res = result
         
         
-        res = operations.DeleteDefaultParcelTemplateResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
+        res = operations.DeleteDefaultParcelTemplateResponse()
         
         if http_res.status_code == 204:
             pass

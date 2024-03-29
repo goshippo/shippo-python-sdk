@@ -2,9 +2,7 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import batch as components_batch
 from ...models.components import batchcreaterequest as components_batchcreaterequest
-from ...models.components import httpmetadata as components_httpmetadata
 from typing import Optional
 
 
@@ -14,13 +12,5 @@ class CreateBatchRequest:
     r"""String used to pick a non-default API version to use"""
     batch_create_request: Optional[components_batchcreaterequest.BatchCreateRequest] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     r"""Batch details."""
-    
-
-
-
-@dataclasses.dataclass
-class CreateBatchResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    batch: Optional[components_batch.Batch] = dataclasses.field(default=None)
     
 

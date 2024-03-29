@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import httpmetadata as components_httpmetadata
-from ...models.components import refund as components_refund
 from ...models.components import refundrequestbody as components_refundrequestbody
 from typing import Optional
 
@@ -14,13 +12,5 @@ class CreateRefundRequest:
     r"""String used to pick a non-default API version to use"""
     refund_request_body: Optional[components_refundrequestbody.RefundRequestBody] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     r"""Refund details"""
-    
-
-
-
-@dataclasses.dataclass
-class CreateRefundResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    refund: Optional[components_refund.Refund] = dataclasses.field(default=None)
     
 

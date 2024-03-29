@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import httpmetadata as components_httpmetadata
-from ...models.components import track as components_track
 from ...models.components import tracksrequest as components_tracksrequest
 from typing import Optional
 
@@ -13,13 +11,5 @@ class CreateTrackRequest:
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""
     tracks_request: Optional[components_tracksrequest.TracksRequest] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
-    
-
-
-
-@dataclasses.dataclass
-class CreateTrackResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    track: Optional[components_track.Track] = dataclasses.field(default=None)
     
 

@@ -9,9 +9,9 @@ Use Shippo’s pickups endpoint to schedule pickups with USPS and DHL Express fo
 
 ### Available Operations
 
-* [create_pickup](#create_pickup) - Create a pickup
+* [create](#create) - Create a pickup
 
-## create_pickup
+## create
 
 Creates a pickup object. This request is for a carrier to come to a specified location to take a package for shipping.
 
@@ -27,7 +27,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.pickups.create_pickup(shippo_api_version='<value>', pickup_base=components.PickupBase(
+res = s.pickups.create(shippo_api_version='<value>', pickup_base=components.PickupBase(
     carrier_account='adcfdddf8ec64b84ad22772bce3ea37a',
     location=components.Location(
         address=components.AddressCompleteCreateRequest(
@@ -50,14 +50,14 @@ res = s.pickups.create_pickup(shippo_api_version='<value>', pickup_base=componen
         building_type=components.BuildingType.APARTMENT,
         instructions='Behind screen door',
     ),
-    requested_end_time=dateutil.parser.isoparse('2023-09-23T16:36:32.020Z'),
-    requested_start_time=dateutil.parser.isoparse('2024-07-18T11:35:18.535Z'),
+    requested_end_time=dateutil.parser.isoparse('2023-06-18T07:14:55.676Z'),
+    requested_start_time=dateutil.parser.isoparse('2023-06-21T08:42:38.998Z'),
     transactions=[
         'adcfdddf8ec64b84ad22772bce3ea37a',
     ],
 ))
 
-if res.pickup is not None:
+if res is not None:
     # handle response
     pass
 
@@ -73,7 +73,7 @@ if res.pickup is not None:
 
 ### Response
 
-**[operations.CreatePickupResponse](../../models/operations/createpickupresponse.md)**
+**[components.Pickup](../../models/components/pickup.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

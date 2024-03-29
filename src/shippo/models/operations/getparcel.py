@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import httpmetadata as components_httpmetadata
-from ...models.components import parcel as components_parcel
 from typing import Optional
 
 
@@ -13,13 +11,5 @@ class GetParcelRequest:
     r"""Object ID of the parcel"""
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""
-    
-
-
-
-@dataclasses.dataclass
-class GetParcelResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    parcel: Optional[components_parcel.Parcel] = dataclasses.field(default=None)
     
 

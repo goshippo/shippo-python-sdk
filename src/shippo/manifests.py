@@ -24,7 +24,7 @@ class Manifests:
         
     
     
-    def list_manifests(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListManifestsResponse:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> components.ManifestPaginatedList:
         r"""List all manifests
         Returns a list of all manifest objects.
         """
@@ -71,25 +71,22 @@ class Manifests:
             http_res = result
         
         
-        res = operations.ListManifestsResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.ManifestPaginatedList])
-                res.manifest_paginated_list = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def create_manifest(self, shippo_api_version: Optional[str] = None, manifest_create_request: Optional[components.ManifestCreateRequest] = None) -> operations.CreateManifestResponse:
+    def create(self, shippo_api_version: Optional[str] = None, manifest_create_request: Optional[components.ManifestCreateRequest] = None) -> components.Manifest:
         r"""Create a new manifest
         Creates a new manifest object.
         """
@@ -137,25 +134,22 @@ class Manifests:
             http_res = result
         
         
-        res = operations.CreateManifestResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 201:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Manifest])
-                res.manifest = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def get_manifest(self, manifest_id: str, shippo_api_version: Optional[str] = None) -> operations.GetManifestResponse:
+    def get(self, manifest_id: str, shippo_api_version: Optional[str] = None) -> components.Manifest:
         r"""Retrieve a manifest
         Returns an existing manifest using an object ID.
         """
@@ -200,20 +194,17 @@ class Manifests:
             http_res = result
         
         
-        res = operations.GetManifestResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Manifest])
-                res.manifest = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
-
-        return res
 
     

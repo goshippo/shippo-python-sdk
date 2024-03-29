@@ -16,13 +16,13 @@ the `/batches/{BATCH_OBJECT_ID}/add_shipments` endpoint
 
 ### Available Operations
 
-* [create_batch](#create_batch) - Create a batch
-* [get_batch](#get_batch) - Retrieve a batch
-* [add_shipments_to_batch](#add_shipments_to_batch) - Add shipments to a batch
-* [purchase_batch](#purchase_batch) - Purchase a batch
-* [remove_shipments_from_batch](#remove_shipments_from_batch) - Remove shipments from a batch
+* [create](#create) - Create a batch
+* [get](#get) - Retrieve a batch
+* [add_shipments](#add_shipments) - Add shipments to a batch
+* [purchase](#purchase) - Purchase a batch
+* [remove_shipments](#remove_shipments) - Remove shipments from a batch
 
-## create_batch
+## create
 
 Creates a new batch object for purchasing shipping labels for many shipments at once. Batches are created asynchronously. This means that the API response won't include your batch shipments yet. You need to retrieve the batch later to verify that all batch shipments are valid.
 
@@ -37,24 +37,46 @@ s = shippo.Shippo(
 )
 
 
-res = s.batches.create_batch(shippo_api_version='<value>', batch_create_request=components.BatchCreateRequest(
+res = s.batches.create(shippo_api_version='<value>', batch_create_request=components.BatchCreateRequest(
     default_carrier_account='078870331023437cb917f5187429b093',
     default_servicelevel_token='usps_priority',
     batch_shipments=[
         components.BatchShipmentBase(
             shipment=components.ShipmentCreateRequest(
-                address_from='<value>',
-                address_to='<value>',
+                address_from=components.AddressCreateRequest(
+                    country='US',
+                    name='Shwan Ippotle',
+                    company='Shippo',
+                    street1='215 Clayton St.',
+                    street3='',
+                    street_no='',
+                    city='San Francisco',
+                    state='CA',
+                    zip='94117',
+                    phone='+1 555 341 9393',
+                    email='shippotle@shippo.com',
+                    is_residential=True,
+                    metadata='Customer ID 123456',
+                    validate=True,
+                ),
+                address_to=components.AddressCreateRequest(
+                    country='US',
+                    name='Shwan Ippotle',
+                    company='Shippo',
+                    street1='215 Clayton St.',
+                    street3='',
+                    street_no='',
+                    city='San Francisco',
+                    state='CA',
+                    zip='94117',
+                    phone='+1 555 341 9393',
+                    email='shippotle@shippo.com',
+                    is_residential=True,
+                    metadata='Customer ID 123456',
+                    validate=True,
+                ),
                 parcels=[
-                    components.ParcelCreateRequest(
-                        distance_unit=components.DistanceUnitTemplate.IN,
-                        height='1',
-                        length='1',
-                        mass_unit=components.WeightUnit.LB,
-                        weight='1',
-                        width='1',
-                        metadata='Customer ID 123456',
-                    ),
+                    '<value>',
                 ],
                 customs_declaration='adcfdddf8ec64b84ad22772bce3ea37a',
                 metadata='Customer ID 123456',
@@ -73,7 +95,7 @@ res = s.batches.create_batch(shippo_api_version='<value>', batch_create_request=
     metadata='BATCH #1',
 ))
 
-if res.batch is not None:
+if res is not None:
     # handle response
     pass
 
@@ -89,16 +111,19 @@ if res.batch is not None:
 
 ### Response
 
-**[operations.CreateBatchResponse](../../models/operations/createbatchresponse.md)**
+**[components.Batch](../../models/components/batch.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## get_batch
+## get
 
-Returns a batch using an object ID. <br> Batch shipments are displayed 100 at a time. You can iterate through each `page` using the `?page= query` parameter. You can also filter based on batch shipment status, for example, by passing a query param like `?object_results=creation_failed`. <br> For more details on filtering results,  see our guide on <a href="https://docs.goshippo.com/docs/api_concepts/filtering/" target="blank"> filtering</a>.
+Returns a batch using an object ID. <br> Batch shipments are displayed 100 at a time.  You can iterate 
+through each `page` using the `?page= query` parameter.  You can also filter based on batch shipment 
+status, for example, by passing a query param like `?object_results=creation_failed`. <br> 
+For more details on filtering results, see our guide on <a href="https://docs.goshippo.com/docs/api_concepts/filtering/" target="blank"> filtering</a>.
 
 ### Example Usage
 
@@ -110,9 +135,9 @@ s = shippo.Shippo(
 )
 
 
-res = s.batches.get_batch(batch_id='<value>', shippo_api_version='<value>')
+res = s.batches.get(batch_id='<value>', shippo_api_version='<value>')
 
-if res.batch is not None:
+if res is not None:
     # handle response
     pass
 
@@ -128,14 +153,14 @@ if res.batch is not None:
 
 ### Response
 
-**[operations.GetBatchResponse](../../models/operations/getbatchresponse.md)**
+**[components.Batch](../../models/components/batch.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## add_shipments_to_batch
+## add_shipments
 
 Adds batch shipments to an existing batch.
 
@@ -150,26 +175,11 @@ s = shippo.Shippo(
 )
 
 
-res = s.batches.add_shipments_to_batch(batch_id='<value>', shippo_api_version='<value>', request_body=[
+res = s.batches.add_shipments(batch_id='<value>', shippo_api_version='<value>', request_body=[
     components.BatchShipmentBase(
         shipment=components.ShipmentCreateRequest(
             address_from='<value>',
-            address_to=components.AddressCreateRequest(
-                country='US',
-                name='Shwan Ippotle',
-                company='Shippo',
-                street1='215 Clayton St.',
-                street3='',
-                street_no='',
-                city='San Francisco',
-                state='CA',
-                zip='94117',
-                phone='+1 555 341 9393',
-                email='shippotle@shippo.com',
-                is_residential=True,
-                metadata='Customer ID 123456',
-                validate=True,
-            ),
+            address_to='<value>',
             parcels=[
                 components.ParcelCreateRequest(
                     distance_unit=components.DistanceUnitTemplate.IN,
@@ -195,7 +205,7 @@ res = s.batches.add_shipments_to_batch(batch_id='<value>', shippo_api_version='<
     ),
 ])
 
-if res.batch is not None:
+if res is not None:
     # handle response
     pass
 
@@ -212,14 +222,14 @@ if res.batch is not None:
 
 ### Response
 
-**[operations.AddShipmentsToBatchResponse](../../models/operations/addshipmentstobatchresponse.md)**
+**[components.Batch](../../models/components/batch.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## purchase_batch
+## purchase
 
 Purchases an existing batch with a status of `VALID`. 
 Once you send a POST request to the purchase endpoint the batch status will change to `PURCHASING`. 
@@ -236,9 +246,9 @@ s = shippo.Shippo(
 )
 
 
-res = s.batches.purchase_batch(batch_id='<value>', shippo_api_version='<value>')
+res = s.batches.purchase(batch_id='<value>', shippo_api_version='<value>')
 
-if res.batch is not None:
+if res is not None:
     # handle response
     pass
 
@@ -254,14 +264,14 @@ if res.batch is not None:
 
 ### Response
 
-**[operations.PurchaseBatchResponse](../../models/operations/purchasebatchresponse.md)**
+**[components.Batch](../../models/components/batch.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## remove_shipments_from_batch
+## remove_shipments
 
 Removes shipments from an existing batch shipment.
 
@@ -275,11 +285,11 @@ s = shippo.Shippo(
 )
 
 
-res = s.batches.remove_shipments_from_batch(batch_id='<value>', shippo_api_version='<value>', request_body=[
+res = s.batches.remove_shipments(batch_id='<value>', shippo_api_version='<value>', request_body=[
     '<value>',
 ])
 
-if res.batch is not None:
+if res is not None:
     # handle response
     pass
 
@@ -296,7 +306,7 @@ if res.batch is not None:
 
 ### Response
 
-**[operations.RemoveShipmentsFromBatchResponse](../../models/operations/removeshipmentsfrombatchresponse.md)**
+**[components.Batch](../../models/components/batch.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

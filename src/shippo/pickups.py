@@ -19,7 +19,7 @@ class Pickups:
         
     
     
-    def create_pickup(self, shippo_api_version: Optional[str] = None, pickup_base: Optional[components.PickupBase] = None) -> operations.CreatePickupResponse:
+    def create(self, shippo_api_version: Optional[str] = None, pickup_base: Optional[components.PickupBase] = None) -> components.Pickup:
         r"""Create a pickup
         Creates a pickup object. This request is for a carrier to come to a specified location to take a package for shipping.
         """
@@ -67,20 +67,17 @@ class Pickups:
             http_res = result
         
         
-        res = operations.CreatePickupResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 201:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Pickup])
-                res.pickup = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
-
-        return res
 
     

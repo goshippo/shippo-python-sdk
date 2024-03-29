@@ -19,7 +19,7 @@ class CustomsDeclarations:
         
     
     
-    def list_customs_declarations(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListCustomsDeclarationsResponse:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> components.CustomsDeclarationPaginatedList:
         r"""List all customs declarations
         Returns a a list of all customs declaration objects
         """
@@ -66,25 +66,22 @@ class CustomsDeclarations:
             http_res = result
         
         
-        res = operations.ListCustomsDeclarationsResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.CustomsDeclarationPaginatedList])
-                res.customs_declaration_paginated_list = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def create_customs_declaration(self, shippo_api_version: Optional[str] = None, customs_declaration_create_request: Optional[components.CustomsDeclarationCreateRequest] = None) -> operations.CreateCustomsDeclarationResponse:
+    def create(self, shippo_api_version: Optional[str] = None, customs_declaration_create_request: Optional[components.CustomsDeclarationCreateRequest] = None) -> components.CustomsDeclaration:
         r"""Create a new customs declaration
         Creates a new customs declaration object
         """
@@ -132,25 +129,22 @@ class CustomsDeclarations:
             http_res = result
         
         
-        res = operations.CreateCustomsDeclarationResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 201:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.CustomsDeclaration])
-                res.customs_declaration = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def get_customs_declaration(self, customs_declaration_id: str, page: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.GetCustomsDeclarationResponse:
+    def get(self, customs_declaration_id: str, page: Optional[int] = None, shippo_api_version: Optional[str] = None) -> components.CustomsDeclaration:
         r"""Retrieve a customs declaration
         Returns an existing customs declaration using an object ID
         """
@@ -197,20 +191,17 @@ class CustomsDeclarations:
             http_res = result
         
         
-        res = operations.GetCustomsDeclarationResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.CustomsDeclaration])
-                res.customs_declaration = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
-
-        return res
 
     

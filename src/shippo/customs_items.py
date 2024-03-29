@@ -18,7 +18,7 @@ class CustomsItems:
         
     
     
-    def list_customs_items(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListCustomsItemsResponse:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> components.CustomsItemPaginatedList:
         r"""List all customs items
         Returns a list all customs items objects.
         """
@@ -65,25 +65,22 @@ class CustomsItems:
             http_res = result
         
         
-        res = operations.ListCustomsItemsResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.CustomsItemPaginatedList])
-                res.customs_item_paginated_list = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def create_customs_item(self, shippo_api_version: Optional[str] = None, customs_item_base: Optional[components.CustomsItemBase] = None) -> operations.CreateCustomsItemResponse:
+    def create(self, shippo_api_version: Optional[str] = None, customs_item_base: Optional[components.CustomsItemBase] = None) -> components.CustomsItem:
         r"""Create a new customs item
         Creates a new customs item object.
         """
@@ -131,25 +128,22 @@ class CustomsItems:
             http_res = result
         
         
-        res = operations.CreateCustomsItemResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 201:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.CustomsItem])
-                res.customs_item = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def get_customs_item(self, customs_item_id: str, page: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.GetCustomsItemResponse:
+    def get(self, customs_item_id: str, page: Optional[int] = None, shippo_api_version: Optional[str] = None) -> components.CustomsItem:
         r"""Retrieve a customs item
         Returns an existing customs item using an object ID
         """
@@ -196,20 +190,17 @@ class CustomsItems:
             http_res = result
         
         
-        res = operations.GetCustomsItemResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.CustomsItem])
-                res.customs_item = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
-
-        return res
 
     

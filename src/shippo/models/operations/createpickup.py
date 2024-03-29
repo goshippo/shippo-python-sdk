@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import httpmetadata as components_httpmetadata
-from ...models.components import pickup as components_pickup
 from ...models.components import pickupbase as components_pickupbase
 from typing import Optional
 
@@ -14,13 +12,5 @@ class CreatePickupRequest:
     r"""String used to pick a non-default API version to use"""
     pickup_base: Optional[components_pickupbase.PickupBase] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     r"""Shippo’s pickups endpoint allows you to schedule pickups with USPS and DHL Express for eligible shipments that you have already created."""
-    
-
-
-
-@dataclasses.dataclass
-class CreatePickupResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    pickup: Optional[components_pickup.Pickup] = dataclasses.field(default=None)
     
 

@@ -1,22 +1,24 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: 0bf2dad708604fc3509f94befece514c
+  docChecksum: aca3a63b6749e3b713cb0c95f1e09457
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.228.1
-  generationVersion: 2.292.0
-  releaseVersion: 0.0.6
-  configChecksum: 789171a6b0ac7ab636f75e58458bed6f
+  speakeasyVersion: 1.219.1
+  generationVersion: 2.286.7
+  releaseVersion: 0.1.0
+  configChecksum: 5e0b14d3afcbfb02861cb3dc88f426fd
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
 features:
   python:
     constsAndDefaults: 0.1.3
-    core: 4.5.2
+    core: 4.5.1
     flattening: 2.81.1
     globalSecurity: 2.83.5
     globalServerURLs: 2.82.2
+    includes: 2.81.1
+    nameOverrides: 2.81.1
     responseFormat: 0.1.0
     unions: 2.82.6
 generatedFiles:
@@ -50,75 +52,10 @@ generatedFiles:
   - src/shippo/utils/utils.py
   - src/shippo/models/errors/sdkerror.py
   - tests/helpers.py
-  - src/shippo/models/operations/listaddresses.py
-  - src/shippo/models/operations/createaddress.py
-  - src/shippo/models/operations/getaddress.py
-  - src/shippo/models/operations/validateaddress.py
-  - src/shippo/models/operations/createbatch.py
-  - src/shippo/models/operations/getbatch.py
-  - src/shippo/models/operations/addshipmentstobatch.py
-  - src/shippo/models/operations/purchasebatch.py
-  - src/shippo/models/operations/removeshipmentsfrombatch.py
-  - src/shippo/models/operations/listcarrieraccounts.py
-  - src/shippo/models/operations/createcarrieraccount.py
-  - src/shippo/models/operations/getcarrieraccount.py
-  - src/shippo/models/operations/updatecarrieraccount.py
-  - src/shippo/models/operations/registercarrieraccount.py
-  - src/shippo/models/operations/getcarrierregistrationstatus.py
-  - src/shippo/models/operations/listcustomsdeclarations.py
-  - src/shippo/models/operations/createcustomsdeclaration.py
-  - src/shippo/models/operations/getcustomsdeclaration.py
-  - src/shippo/models/operations/listcustomsitems.py
-  - src/shippo/models/operations/createcustomsitem.py
-  - src/shippo/models/operations/getcustomsitem.py
-  - src/shippo/models/operations/createliverate.py
-  - src/shippo/models/operations/getdefaultparceltemplate.py
-  - src/shippo/models/operations/updatedefaultparceltemplate.py
-  - src/shippo/models/operations/deletedefaultparceltemplate.py
-  - src/shippo/models/operations/listmanifests.py
-  - src/shippo/models/operations/createmanifest.py
-  - src/shippo/models/operations/getmanifest.py
-  - src/shippo/models/operations/listorders.py
-  - src/shippo/models/operations/createorder.py
-  - src/shippo/models/operations/getorder.py
-  - src/shippo/models/operations/listcarrierparceltemplates.py
-  - src/shippo/models/operations/getcarrierparceltemplate.py
-  - src/shippo/models/operations/listparcels.py
-  - src/shippo/models/operations/createparcel.py
-  - src/shippo/models/operations/getparcel.py
-  - src/shippo/models/operations/createpickup.py
-  - src/shippo/models/operations/getrate.py
-  - src/shippo/models/operations/listshipmentrates.py
-  - src/shippo/models/operations/listshipmentratesbycurrencycode.py
-  - src/shippo/models/operations/createrefund.py
-  - src/shippo/models/operations/listrefund.py
-  - src/shippo/models/operations/getrefund.py
-  - src/shippo/models/operations/listservicegroups.py
-  - src/shippo/models/operations/createservicegroup.py
-  - src/shippo/models/operations/updateservicegroup.py
-  - src/shippo/models/operations/deleteservicegroup.py
-  - src/shippo/models/operations/listshipments.py
-  - src/shippo/models/operations/createshipment.py
-  - src/shippo/models/operations/getshipment.py
-  - src/shippo/models/operations/createtrack.py
-  - src/shippo/models/operations/gettrack.py
-  - src/shippo/models/operations/listtransactions.py
-  - src/shippo/models/operations/createtransaction.py
-  - src/shippo/models/operations/gettransaction.py
-  - src/shippo/models/operations/listuserparceltemplates.py
-  - src/shippo/models/operations/createuserparceltemplate.py
-  - src/shippo/models/operations/deleteuserparceltemplate.py
-  - src/shippo/models/operations/getuserparceltemplate.py
-  - src/shippo/models/operations/updateuserparceltemplate.py
-  - src/shippo/models/operations/listshippoaccounts.py
-  - src/shippo/models/operations/createshippoaccount.py
-  - src/shippo/models/operations/getshippoaccount.py
-  - src/shippo/models/operations/updateshippoaccount.py
   - src/shippo/models/components/addresspaginatedlist.py
   - src/shippo/models/components/address.py
   - src/shippo/models/components/addressvalidationresults.py
   - src/shippo/models/components/addressvalidationresultsmessage.py
-  - src/shippo/models/components/httpmetadata.py
   - src/shippo/models/components/addresscreaterequest.py
   - src/shippo/models/components/batch.py
   - src/shippo/models/components/batchshipmentpaginatedlist.py
@@ -126,13 +63,7 @@ generatedFiles:
   - src/shippo/models/components/errormessage.py
   - src/shippo/models/components/shipmentcreaterequest.py
   - src/shippo/models/components/parcelcreaterequest.py
-  - src/shippo/models/components/parceltemplatefedex.py
-  - src/shippo/models/components/parceltemplateups.py
-  - src/shippo/models/components/parceltemplateusps.py
-  - src/shippo/models/components/parceltemplatedhlecommerce.py
-  - src/shippo/models/components/parceltemplatedpduk.py
-  - src/shippo/models/components/parceltemplatecouriersplease.py
-  - src/shippo/models/components/parceltemplatearamexaustralia.py
+  - src/shippo/models/components/parceltemplateenumset.py
   - src/shippo/models/components/weightunit.py
   - src/shippo/models/components/distanceunittemplate.py
   - src/shippo/models/components/shipmentextra.py
@@ -242,152 +173,83 @@ generatedFiles:
   - src/shippo/models/components/shippoaccount.py
   - src/shippo/models/components/shippoaccountupdaterequest.py
   - src/shippo/models/components/security.py
+  - src/shippo/models/components/servicelevelenumset.py
+  - src/shippo/models/operations/listaddresses.py
+  - src/shippo/models/operations/createaddress.py
+  - src/shippo/models/operations/getaddress.py
+  - src/shippo/models/operations/validateaddress.py
+  - src/shippo/models/operations/createbatch.py
+  - src/shippo/models/operations/getbatch.py
+  - src/shippo/models/operations/addshipmentstobatch.py
+  - src/shippo/models/operations/purchasebatch.py
+  - src/shippo/models/operations/removeshipmentsfrombatch.py
+  - src/shippo/models/operations/listcarrieraccounts.py
+  - src/shippo/models/operations/createcarrieraccount.py
+  - src/shippo/models/operations/getcarrieraccount.py
+  - src/shippo/models/operations/updatecarrieraccount.py
+  - src/shippo/models/operations/registercarrieraccount.py
+  - src/shippo/models/operations/getcarrierregistrationstatus.py
+  - src/shippo/models/operations/listcustomsdeclarations.py
+  - src/shippo/models/operations/createcustomsdeclaration.py
+  - src/shippo/models/operations/getcustomsdeclaration.py
+  - src/shippo/models/operations/listcustomsitems.py
+  - src/shippo/models/operations/createcustomsitem.py
+  - src/shippo/models/operations/getcustomsitem.py
+  - src/shippo/models/operations/createliverate.py
+  - src/shippo/models/operations/getdefaultparceltemplate.py
+  - src/shippo/models/operations/updatedefaultparceltemplate.py
+  - src/shippo/models/operations/deletedefaultparceltemplate.py
+  - src/shippo/models/operations/listmanifests.py
+  - src/shippo/models/operations/createmanifest.py
+  - src/shippo/models/operations/getmanifest.py
+  - src/shippo/models/operations/listorders.py
+  - src/shippo/models/operations/createorder.py
+  - src/shippo/models/operations/getorder.py
+  - src/shippo/models/operations/listcarrierparceltemplates.py
+  - src/shippo/models/operations/getcarrierparceltemplate.py
+  - src/shippo/models/operations/listparcels.py
+  - src/shippo/models/operations/createparcel.py
+  - src/shippo/models/operations/getparcel.py
+  - src/shippo/models/operations/createpickup.py
+  - src/shippo/models/operations/getrate.py
+  - src/shippo/models/operations/listshipmentrates.py
+  - src/shippo/models/operations/listshipmentratesbycurrencycode.py
+  - src/shippo/models/operations/createrefund.py
+  - src/shippo/models/operations/listrefunds.py
+  - src/shippo/models/operations/getrefund.py
+  - src/shippo/models/operations/listservicegroups.py
+  - src/shippo/models/operations/createservicegroup.py
+  - src/shippo/models/operations/updateservicegroup.py
+  - src/shippo/models/operations/deleteservicegroup.py
+  - src/shippo/models/operations/listshipments.py
+  - src/shippo/models/operations/createshipment.py
+  - src/shippo/models/operations/getshipment.py
+  - src/shippo/models/operations/createtrack.py
+  - src/shippo/models/operations/gettrack.py
+  - src/shippo/models/operations/listtransactions.py
+  - src/shippo/models/operations/createtransaction.py
+  - src/shippo/models/operations/gettransaction.py
+  - src/shippo/models/operations/listuserparceltemplates.py
+  - src/shippo/models/operations/createuserparceltemplate.py
+  - src/shippo/models/operations/deleteuserparceltemplate.py
+  - src/shippo/models/operations/getuserparceltemplate.py
+  - src/shippo/models/operations/updateuserparceltemplate.py
+  - src/shippo/models/operations/listshippoaccounts.py
+  - src/shippo/models/operations/createshippoaccount.py
+  - src/shippo/models/operations/getshippoaccount.py
+  - src/shippo/models/operations/updateshippoaccount.py
   - src/shippo/models/errors/badrequestwithdetail.py
   - src/shippo/models/errors/badrequestwitherror.py
-  - src/shippo/models/errors/tracks400response.py
   - src/shippo/models/__init__.py
   - src/shippo/models/errors/__init__.py
-  - src/shippo/models/operations/__init__.py
   - src/shippo/models/components/__init__.py
-  - docs/models/operations/listaddressesrequest.md
-  - docs/models/operations/listaddressesresponse.md
-  - docs/models/operations/createaddressrequest.md
-  - docs/models/operations/createaddressresponse.md
-  - docs/models/operations/getaddressrequest.md
-  - docs/models/operations/getaddressresponse.md
-  - docs/models/operations/validateaddressrequest.md
-  - docs/models/operations/validateaddressresponse.md
-  - docs/models/operations/createbatchrequest.md
-  - docs/models/operations/createbatchresponse.md
-  - docs/models/operations/getbatchrequest.md
-  - docs/models/operations/getbatchresponse.md
-  - docs/models/operations/addshipmentstobatchrequest.md
-  - docs/models/operations/addshipmentstobatchresponse.md
-  - docs/models/operations/purchasebatchrequest.md
-  - docs/models/operations/purchasebatchresponse.md
-  - docs/models/operations/removeshipmentsfrombatchrequest.md
-  - docs/models/operations/removeshipmentsfrombatchresponse.md
-  - docs/models/operations/listcarrieraccountsrequest.md
-  - docs/models/operations/listcarrieraccountsresponse.md
-  - docs/models/operations/createcarrieraccountrequest.md
-  - docs/models/operations/createcarrieraccountresponse.md
-  - docs/models/operations/getcarrieraccountrequest.md
-  - docs/models/operations/getcarrieraccountresponse.md
-  - docs/models/operations/updatecarrieraccountrequest.md
-  - docs/models/operations/updatecarrieraccountresponse.md
-  - docs/models/operations/registercarrieraccountrequestbody.md
-  - docs/models/operations/registercarrieraccountrequest.md
-  - docs/models/operations/registercarrieraccountresponse.md
-  - docs/models/operations/carrier.md
-  - docs/models/operations/getcarrierregistrationstatusrequest.md
-  - docs/models/operations/getcarrierregistrationstatusresponse.md
-  - docs/models/operations/listcustomsdeclarationsrequest.md
-  - docs/models/operations/listcustomsdeclarationsresponse.md
-  - docs/models/operations/createcustomsdeclarationrequest.md
-  - docs/models/operations/createcustomsdeclarationresponse.md
-  - docs/models/operations/getcustomsdeclarationrequest.md
-  - docs/models/operations/getcustomsdeclarationresponse.md
-  - docs/models/operations/listcustomsitemsrequest.md
-  - docs/models/operations/listcustomsitemsresponse.md
-  - docs/models/operations/createcustomsitemrequest.md
-  - docs/models/operations/createcustomsitemresponse.md
-  - docs/models/operations/getcustomsitemrequest.md
-  - docs/models/operations/getcustomsitemresponse.md
-  - docs/models/operations/createliveraterequest.md
-  - docs/models/operations/createliverateresponse.md
-  - docs/models/operations/getdefaultparceltemplaterequest.md
-  - docs/models/operations/getdefaultparceltemplateresponse.md
-  - docs/models/operations/updatedefaultparceltemplaterequest.md
-  - docs/models/operations/updatedefaultparceltemplateresponse.md
-  - docs/models/operations/deletedefaultparceltemplaterequest.md
-  - docs/models/operations/deletedefaultparceltemplateresponse.md
-  - docs/models/operations/listmanifestsrequest.md
-  - docs/models/operations/listmanifestsresponse.md
-  - docs/models/operations/createmanifestrequest.md
-  - docs/models/operations/createmanifestresponse.md
-  - docs/models/operations/getmanifestrequest.md
-  - docs/models/operations/getmanifestresponse.md
-  - docs/models/operations/listordersrequest.md
-  - docs/models/operations/listordersresponse.md
-  - docs/models/operations/createorderrequest.md
-  - docs/models/operations/createorderresponse.md
-  - docs/models/operations/getorderrequest.md
-  - docs/models/operations/getorderresponse.md
-  - docs/models/operations/include.md
-  - docs/models/operations/listcarrierparceltemplatesrequest.md
-  - docs/models/operations/listcarrierparceltemplatesresponse.md
-  - docs/models/operations/getcarrierparceltemplaterequest.md
-  - docs/models/operations/getcarrierparceltemplateresponse.md
-  - docs/models/operations/listparcelsrequest.md
-  - docs/models/operations/listparcelsresponse.md
-  - docs/models/operations/createparcelrequest.md
-  - docs/models/operations/createparcelresponse.md
-  - docs/models/operations/getparcelrequest.md
-  - docs/models/operations/getparcelresponse.md
-  - docs/models/operations/createpickuprequest.md
-  - docs/models/operations/createpickupresponse.md
-  - docs/models/operations/getraterequest.md
-  - docs/models/operations/getrateresponse.md
-  - docs/models/operations/listshipmentratesrequest.md
-  - docs/models/operations/listshipmentratesresponse.md
-  - docs/models/operations/listshipmentratesbycurrencycoderequest.md
-  - docs/models/operations/listshipmentratesbycurrencycoderesponse.md
-  - docs/models/operations/createrefundrequest.md
-  - docs/models/operations/createrefundresponse.md
-  - docs/models/operations/listrefundrequest.md
-  - docs/models/operations/listrefundresponse.md
-  - docs/models/operations/getrefundrequest.md
-  - docs/models/operations/getrefundresponse.md
-  - docs/models/operations/listservicegroupsrequest.md
-  - docs/models/operations/listservicegroupsresponse.md
-  - docs/models/operations/createservicegrouprequest.md
-  - docs/models/operations/createservicegroupresponse.md
-  - docs/models/operations/updateservicegrouprequest.md
-  - docs/models/operations/updateservicegroupresponse.md
-  - docs/models/operations/deleteservicegrouprequest.md
-  - docs/models/operations/deleteservicegroupresponse.md
-  - docs/models/operations/listshipmentsrequest.md
-  - docs/models/operations/listshipmentsresponse.md
-  - docs/models/operations/createshipmentrequest.md
-  - docs/models/operations/createshipmentresponse.md
-  - docs/models/operations/getshipmentrequest.md
-  - docs/models/operations/getshipmentresponse.md
-  - docs/models/operations/createtrackrequest.md
-  - docs/models/operations/createtrackresponse.md
-  - docs/models/operations/gettrackrequest.md
-  - docs/models/operations/gettrackresponse.md
-  - docs/models/operations/listtransactionsrequest.md
-  - docs/models/operations/listtransactionsresponse.md
-  - docs/models/operations/createtransactionrequestbody.md
-  - docs/models/operations/createtransactionrequest.md
-  - docs/models/operations/createtransactionresponse.md
-  - docs/models/operations/gettransactionrequest.md
-  - docs/models/operations/gettransactionresponse.md
-  - docs/models/operations/listuserparceltemplatesrequest.md
-  - docs/models/operations/listuserparceltemplatesresponse.md
-  - docs/models/operations/createuserparceltemplaterequest.md
-  - docs/models/operations/createuserparceltemplateresponse.md
-  - docs/models/operations/deleteuserparceltemplaterequest.md
-  - docs/models/operations/deleteuserparceltemplateresponse.md
-  - docs/models/operations/getuserparceltemplaterequest.md
-  - docs/models/operations/getuserparceltemplateresponse.md
-  - docs/models/operations/updateuserparceltemplaterequest.md
-  - docs/models/operations/updateuserparceltemplateresponse.md
-  - docs/models/operations/listshippoaccountsrequest.md
-  - docs/models/operations/listshippoaccountsresponse.md
-  - docs/models/operations/createshippoaccountrequest.md
-  - docs/models/operations/createshippoaccountresponse.md
-  - docs/models/operations/getshippoaccountrequest.md
-  - docs/models/operations/getshippoaccountresponse.md
-  - docs/models/operations/updateshippoaccountrequest.md
-  - docs/models/operations/updateshippoaccountresponse.md
+  - src/shippo/models/operations/__init__.py
   - docs/models/components/addresspaginatedlist.md
   - docs/models/components/address.md
   - docs/models/components/addressvalidationresults.md
   - docs/models/components/code.md
   - docs/models/components/source.md
   - docs/models/components/addressvalidationresultsmessage.md
-  - docs/models/components/httpmetadata.md
   - docs/models/components/addresscreaterequest.md
   - docs/models/components/objectresults.md
   - docs/models/components/batchstatus.md
@@ -402,14 +264,14 @@ generatedFiles:
   - docs/models/components/parcels.md
   - docs/models/components/shipmentcreaterequest.md
   - docs/models/components/parcelcreaterequest.md
-  - docs/models/components/parceltemplateenumset.md
-  - docs/models/components/parceltemplatefedex.md
-  - docs/models/components/parceltemplateups.md
-  - docs/models/components/parceltemplateusps.md
-  - docs/models/components/parceltemplatedhlecommerce.md
-  - docs/models/components/parceltemplatedpduk.md
-  - docs/models/components/parceltemplatecouriersplease.md
   - docs/models/components/parceltemplatearamexaustralia.md
+  - docs/models/components/parceltemplatecouriersplease.md
+  - docs/models/components/parceltemplatedpduk.md
+  - docs/models/components/parceltemplatedhlecommerce.md
+  - docs/models/components/parceltemplateusps.md
+  - docs/models/components/parceltemplateups.md
+  - docs/models/components/parceltemplatefedex.md
+  - docs/models/components/parceltemplateenumset.md
   - docs/models/components/weightunit.md
   - docs/models/components/distanceunittemplate.md
   - docs/models/components/ancillaryendorsement.md
@@ -572,9 +434,120 @@ generatedFiles:
   - docs/models/components/shippoaccount.md
   - docs/models/components/shippoaccountupdaterequest.md
   - docs/models/components/security.md
+  - docs/models/components/servicelevelswyft.md
+  - docs/models/components/servicelevelveho.md
+  - docs/models/components/serviceleveluds.md
+  - docs/models/components/servicelevelevriuk.md
+  - docs/models/components/servicelevellasership.md
+  - docs/models/components/servicelevelontrac.md
+  - docs/models/components/servicelevelsendle.md
+  - docs/models/components/servicelevelroyalmail.md
+  - docs/models/components/servicelevelepostglobal.md
+  - docs/models/components/servicelevelpostitaliane.md
+  - docs/models/components/servicelevelparcelforce.md
+  - docs/models/components/servicelevelmaergo.md
+  - docs/models/components/servicelevelmondialrelay.md
+  - docs/models/components/servicelevellso.md
+  - docs/models/components/servicelevelglsus.md
+  - docs/models/components/servicelevelglobegistics.md
+  - docs/models/components/servicelevelaramexaustralia.md
+  - docs/models/components/serviceleveldeutschepost.md
+  - docs/models/components/serviceleveldpduk.md
+  - docs/models/components/serviceleveldpdde.md
+  - docs/models/components/serviceleveldhlgermany.md
+  - docs/models/components/serviceleveldhlecommerce.md
+  - docs/models/components/serviceleveldhlexpress.md
+  - docs/models/components/servicelevelpurolator.md
+  - docs/models/components/servicelevelcolissimo.md
+  - docs/models/components/servicelevelcorreosespana.md
+  - docs/models/components/servicelevelcouriersplease.md
+  - docs/models/components/servicelevelchronopost.md
+  - docs/models/components/servicelevelcdl.md
+  - docs/models/components/servicelevelcanadapost.md
+  - docs/models/components/servicelevelbettertrucks.md
+  - docs/models/components/servicelevelapg.md
+  - docs/models/components/servicelevelaxlehire.md
+  - docs/models/components/servicelevelaustraliapost.md
+  - docs/models/components/servicelevelasendia.md
+  - docs/models/components/servicelevelapcpostal.md
+  - docs/models/components/servicelevelairterra.md
+  - docs/models/components/servicelevelups.md
+  - docs/models/components/servicelevelfedex.md
+  - docs/models/components/servicelevelusps.md
+  - docs/models/components/servicelevelenumset.md
+  - docs/models/operations/listaddressesrequest.md
+  - docs/models/operations/createaddressrequest.md
+  - docs/models/operations/getaddressrequest.md
+  - docs/models/operations/validateaddressrequest.md
+  - docs/models/operations/createbatchrequest.md
+  - docs/models/operations/getbatchrequest.md
+  - docs/models/operations/addshipmentstobatchrequest.md
+  - docs/models/operations/purchasebatchrequest.md
+  - docs/models/operations/removeshipmentsfrombatchrequest.md
+  - docs/models/operations/listcarrieraccountsrequest.md
+  - docs/models/operations/createcarrieraccountrequest.md
+  - docs/models/operations/getcarrieraccountrequest.md
+  - docs/models/operations/updatecarrieraccountrequest.md
+  - docs/models/operations/registercarrieraccountrequestbody.md
+  - docs/models/operations/registercarrieraccountrequest.md
+  - docs/models/operations/carrier.md
+  - docs/models/operations/getcarrierregistrationstatusrequest.md
+  - docs/models/operations/listcustomsdeclarationsrequest.md
+  - docs/models/operations/createcustomsdeclarationrequest.md
+  - docs/models/operations/getcustomsdeclarationrequest.md
+  - docs/models/operations/listcustomsitemsrequest.md
+  - docs/models/operations/createcustomsitemrequest.md
+  - docs/models/operations/getcustomsitemrequest.md
+  - docs/models/operations/createliveraterequest.md
+  - docs/models/operations/getdefaultparceltemplaterequest.md
+  - docs/models/operations/updatedefaultparceltemplaterequest.md
+  - docs/models/operations/deletedefaultparceltemplaterequest.md
+  - docs/models/operations/deletedefaultparceltemplateresponse.md
+  - docs/models/operations/listmanifestsrequest.md
+  - docs/models/operations/createmanifestrequest.md
+  - docs/models/operations/getmanifestrequest.md
+  - docs/models/operations/listordersrequest.md
+  - docs/models/operations/createorderrequest.md
+  - docs/models/operations/getorderrequest.md
+  - docs/models/operations/include.md
+  - docs/models/operations/listcarrierparceltemplatesrequest.md
+  - docs/models/operations/getcarrierparceltemplaterequest.md
+  - docs/models/operations/listparcelsrequest.md
+  - docs/models/operations/createparcelrequest.md
+  - docs/models/operations/getparcelrequest.md
+  - docs/models/operations/createpickuprequest.md
+  - docs/models/operations/getraterequest.md
+  - docs/models/operations/listshipmentratesrequest.md
+  - docs/models/operations/listshipmentratesbycurrencycoderequest.md
+  - docs/models/operations/createrefundrequest.md
+  - docs/models/operations/listrefundsrequest.md
+  - docs/models/operations/getrefundrequest.md
+  - docs/models/operations/listservicegroupsrequest.md
+  - docs/models/operations/createservicegrouprequest.md
+  - docs/models/operations/updateservicegrouprequest.md
+  - docs/models/operations/deleteservicegrouprequest.md
+  - docs/models/operations/deleteservicegroupresponse.md
+  - docs/models/operations/listshipmentsrequest.md
+  - docs/models/operations/createshipmentrequest.md
+  - docs/models/operations/getshipmentrequest.md
+  - docs/models/operations/createtrackrequest.md
+  - docs/models/operations/gettrackrequest.md
+  - docs/models/operations/listtransactionsrequest.md
+  - docs/models/operations/createtransactionrequestbody.md
+  - docs/models/operations/createtransactionrequest.md
+  - docs/models/operations/gettransactionrequest.md
+  - docs/models/operations/listuserparceltemplatesrequest.md
+  - docs/models/operations/createuserparceltemplaterequest.md
+  - docs/models/operations/deleteuserparceltemplaterequest.md
+  - docs/models/operations/deleteuserparceltemplateresponse.md
+  - docs/models/operations/getuserparceltemplaterequest.md
+  - docs/models/operations/updateuserparceltemplaterequest.md
+  - docs/models/operations/listshippoaccountsrequest.md
+  - docs/models/operations/createshippoaccountrequest.md
+  - docs/models/operations/getshippoaccountrequest.md
+  - docs/models/operations/updateshippoaccountrequest.md
   - docs/models/errors/badrequestwithdetail.md
   - docs/models/errors/badrequestwitherror.md
-  - docs/models/errors/tracks400response.md
   - docs/sdks/shippo/README.md
   - docs/sdks/addresses/README.md
   - docs/sdks/batches/README.md
