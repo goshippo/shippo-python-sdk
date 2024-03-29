@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import carrierparceltemplatestruct as components_carrierparceltemplatestruct
+from ...models.components import carrierparceltemplate as components_carrierparceltemplate
 from ...models.components import httpmetadata as components_httpmetadata
 from typing import Optional
 
@@ -20,6 +20,6 @@ class GetCarrierParcelTemplateRequest:
 @dataclasses.dataclass
 class GetCarrierParcelTemplateResponse:
     http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    carrier_parcel_template_struct: Optional[components_carrierparceltemplatestruct.CarrierParcelTemplateStruct] = dataclasses.field(default=None)
+    carrier_parcel_template: Optional[components_carrierparceltemplate.CarrierParcelTemplate] = dataclasses.field(default=None)
     
 

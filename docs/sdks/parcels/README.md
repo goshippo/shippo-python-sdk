@@ -32,7 +32,7 @@ s = shippo.Shippo(
 
 res = s.parcels.list_parcels(page=1, results=25, shippo_api_version='<value>')
 
-if res.parcel_list_wrapper is not None:
+if res.parcel_paginated_list is not None:
     # handle response
     pass
 

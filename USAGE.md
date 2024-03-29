@@ -9,7 +9,7 @@ s = shippo.Shippo(
 
 res = s.addresses.list_addresses(page=1, results=25, shippo_api_version='<value>')
 
-if res.address_list_wrapper is not None:
+if res.address_paginated_list is not None:
     # handle response
     pass
 

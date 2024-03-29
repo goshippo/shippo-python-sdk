@@ -27,6 +27,10 @@ class ServiceLevel:
     Guaranteed to be unique across all Service Levels, and may help offer insight into the specific Service Level it describes.
     """
     parent_servicelevel: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parent_servicelevel'), 'exclude': lambda f: f is None }})
-    r"""Used for some Service Levels to link to the more \\"generic\\" version of this Service Level - for example, if this Service Level is a variation specific to shipments to Europe(\\"ups_saver_eu\\"), the \\"parent\\" is the fully generic version (\\"ups_saver\\"). Helpful when displaying Service Levels to users. Has the same structure of the servicelevel - \\"name\\", \\"token\\", \\"terms\\", and \\"extended_token\\", or it is otherwise null."""
+    r"""Used for some Service Levels to link to the more \\"generic\\" version of this Service Level - for example,
+    if this Service Level is a variation specific to shipments to Europe(\"ups_saver_eu\"), the \"parent\" is 
+    the fully generic version (\"ups_saver\"). Helpful when displaying Service Levels to users. Has the same 
+    structure of the servicelevel - \"name\", \"token\", \"terms\", and \"extended_token\", or it is otherwise null.
+    """
     
 

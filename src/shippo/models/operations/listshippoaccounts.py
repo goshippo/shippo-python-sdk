@@ -3,7 +3,7 @@
 from __future__ import annotations
 import dataclasses
 from ...models.components import httpmetadata as components_httpmetadata
-from ...models.components import paginatedshippoaccountresponse as components_paginatedshippoaccountresponse
+from ...models.components import shippoaccountpaginatedlist as components_shippoaccountpaginatedlist
 from typing import Optional
 
 
@@ -22,6 +22,6 @@ class ListShippoAccountsRequest:
 @dataclasses.dataclass
 class ListShippoAccountsResponse:
     http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    paginated_shippo_account_response: Optional[components_paginatedshippoaccountresponse.PaginatedShippoAccountResponse] = dataclasses.field(default=None)
+    shippo_account_paginated_list: Optional[components_shippoaccountpaginatedlist.ShippoAccountPaginatedList] = dataclasses.field(default=None)
     
 

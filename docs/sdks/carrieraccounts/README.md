@@ -13,7 +13,7 @@ Carriers are the companies who deliver your package. Shippo uses Carrier account
 * [create_carrier_account](#create_carrier_account) - Create a new carrier account
 * [get_carrier_account](#get_carrier_account) - Retrieve a carrier account
 * [update_carrier_account](#update_carrier_account) - Update a carrier account
-* [register_carrier_account](#register_carrier_account) - Add a Shippo master carrier account
+* [register_carrier_account](#register_carrier_account) - Add a Shippo carrier account
 * [get_carrier_registration_status](#get_carrier_registration_status) - Get Carrier Registration status
 
 ## list_carrier_accounts
@@ -38,7 +38,7 @@ req = operations.ListCarrierAccountsRequest()
 
 res = s.carrier_accounts.list_carrier_accounts(req)
 
-if res.carrier_account_list_wrapper is not None:
+if res.carrier_account_paginated_list is not None:
     # handle response
     pass
 
@@ -126,10 +126,10 @@ if res.carrier_account is not None:
 **[operations.CreateCarrierAccountResponse](../../models/operations/createcarrieraccountresponse.md)**
 ### Errors
 
-| Error Object                                        | Status Code                                         | Content Type                                        |
-| --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- |
-| errors.PlatformCarrierOwnAccountCreation400Response | 400                                                 | application/json                                    |
-| errors.SDKError                                     | 4x-5xx                                              | */*                                                 |
+| Error Object                | Status Code                 | Content Type                |
+| --------------------------- | --------------------------- | --------------------------- |
+| errors.BadRequestWithDetail | 400                         | application/json            |
+| errors.SDKError             | 4x-5xx                      | */*                         |
 
 ## get_carrier_account
 
@@ -216,7 +216,7 @@ if res.carrier_account is not None:
 
 ## register_carrier_account
 
-Adds a Shippo master carrier account
+Adds a Shippo carrier account
 
 ### Example Usage
 
@@ -255,10 +255,10 @@ if res.carrier_account is not None:
 **[operations.RegisterCarrierAccountResponse](../../models/operations/registercarrieraccountresponse.md)**
 ### Errors
 
-| Error Object                                       | Status Code                                        | Content Type                                       |
-| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |
-| errors.CarrierAccountRegistrationStatus400Response | 400                                                | application/json                                   |
-| errors.SDKError                                    | 4x-5xx                                             | */*                                                |
+| Error Object               | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.BadRequestWithError | 400                        | application/json           |
+| errors.SDKError            | 4x-5xx                     | */*                        |
 
 ## get_carrier_registration_status
 

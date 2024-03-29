@@ -3,7 +3,7 @@
 from __future__ import annotations
 import dataclasses
 import dateutil.parser
-from .carrierparceltemplatestruct import CarrierParcelTemplateStruct
+from .carrierparceltemplate import CarrierParcelTemplate
 from .distanceunitusertemplate import DistanceUnitUserTemplate
 from .weightunit import WeightUnit
 from dataclasses_json import Undefined, dataclass_json
@@ -37,6 +37,6 @@ class UserParcelTemplate:
     r"""Username of the user who created the User Parcel Template object"""
     object_updated: Optional[datetime] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_updated'), 'encoder': utils.datetimeisoformat(True), 'decoder': dateutil.parser.isoparse, 'exclude': lambda f: f is None }})
     r"""Date and time of last update on User Parcel Template"""
-    template: Optional[CarrierParcelTemplateStruct] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('template'), 'exclude': lambda f: f is None }})
+    template: Optional[CarrierParcelTemplate] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('template'), 'exclude': lambda f: f is None }})
     
 

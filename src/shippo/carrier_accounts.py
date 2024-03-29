@@ -68,8 +68,8 @@ class CarrierAccounts:
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
-                out = utils.unmarshal_json(http_res.text, Optional[components.CarrierAccountListWrapper])
-                res.carrier_account_list_wrapper = out
+                out = utils.unmarshal_json(http_res.text, Optional[components.CarrierAccountPaginatedList])
+                res.carrier_account_paginated_list = out
             else:
                 content_type = http_res.headers.get('Content-Type')
                 raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
@@ -141,7 +141,7 @@ class CarrierAccounts:
                 raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code == 400:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
-                out = utils.unmarshal_json(http_res.text, errors.PlatformCarrierOwnAccountCreation400Response)
+                out = utils.unmarshal_json(http_res.text, errors.BadRequestWithDetail)
                 raise out
             else:
                 content_type = http_res.headers.get('Content-Type')
@@ -286,8 +286,8 @@ class CarrierAccounts:
     
     
     def register_carrier_account(self, shippo_api_version: Optional[str] = None, request_body: Optional[Union[components.CarrierAccountCanadaPostCreateRequest, components.CarrierAccountChronopostCreateRequest, components.CarrierAccountColissimoCreateRequest, components.CarrierAccountCorreosCreateRequest, components.CarrierAccountDeutschePostCreateRequest, components.CarrierAccountDHLExpressCreateRequest, components.CarrierAccountDpdDeCreateRequest, components.CarrierAccountDPDUKCreateRequest, components.CarrierAccountHermesUKCreateRequest, components.CarrierAccountPosteItalianeCreateRequest, components.CarrierAccountUPSCreateRequest, components.CarrierAccountUSPSCreateRequest]] = None) -> operations.RegisterCarrierAccountResponse:
-        r"""Add a Shippo master carrier account
-        Adds a Shippo master carrier account
+        r"""Add a Shippo carrier account
+        Adds a Shippo carrier account
         """
         hook_ctx = HookContext(operation_id='RegisterCarrierAccount', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.RegisterCarrierAccountRequest(
@@ -344,7 +344,7 @@ class CarrierAccounts:
                 raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code == 400:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
-                out = utils.unmarshal_json(http_res.text, errors.CarrierAccountRegistrationStatus400Response)
+                out = utils.unmarshal_json(http_res.text, errors.BadRequestWithError)
                 raise out
             else:
                 content_type = http_res.headers.get('Content-Type')

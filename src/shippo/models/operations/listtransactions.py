@@ -3,7 +3,7 @@
 from __future__ import annotations
 import dataclasses
 from ...models.components import httpmetadata as components_httpmetadata
-from ...models.components import transactionlistwrapper as components_transactionlistwrapper
+from ...models.components import transactionpaginatedlist as components_transactionpaginatedlist
 from typing import Optional
 
 
@@ -22,6 +22,6 @@ class ListTransactionsRequest:
 @dataclasses.dataclass
 class ListTransactionsResponse:
     http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    transaction_list_wrapper: Optional[components_transactionlistwrapper.TransactionListWrapper] = dataclasses.field(default=None)
+    transaction_paginated_list: Optional[components_transactionpaginatedlist.TransactionPaginatedList] = dataclasses.field(default=None)
     
 

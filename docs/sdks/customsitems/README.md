@@ -28,7 +28,7 @@ s = shippo.Shippo(
 
 res = s.customs_items.list_customs_items(page=1, results=25, shippo_api_version='<value>')
 
-if res.customs_item_list_wrapper is not None:
+if res.customs_item_paginated_list is not None:
     # handle response
     pass
 

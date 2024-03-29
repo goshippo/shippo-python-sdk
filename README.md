@@ -39,7 +39,7 @@ s = shippo.Shippo(
 
 res = s.addresses.list_addresses(page=1, results=25)
 
-if res.address_list_wrapper is not None:
+if res.address_paginated_list is not None:
     # handle response
     pass
 
@@ -74,7 +74,7 @@ Review our full guides and references at [https://docs.goshippo.com/](https://do
 * [create_carrier_account](docs/sdks/carrieraccounts/README.md#create_carrier_account) - Create a new carrier account
 * [get_carrier_account](docs/sdks/carrieraccounts/README.md#get_carrier_account) - Retrieve a carrier account
 * [update_carrier_account](docs/sdks/carrieraccounts/README.md#update_carrier_account) - Update a carrier account
-* [register_carrier_account](docs/sdks/carrieraccounts/README.md#register_carrier_account) - Add a Shippo master carrier account
+* [register_carrier_account](docs/sdks/carrieraccounts/README.md#register_carrier_account) - Add a Shippo carrier account
 * [get_carrier_registration_status](docs/sdks/carrieraccounts/README.md#get_carrier_registration_status) - Get Carrier Registration status
 
 ### [customs_declarations](docs/sdks/customsdeclarations/README.md)
@@ -221,6 +221,37 @@ http_client.headers.update({'x-custom-header': 'someValue'})
 s = shippo.Shippo(client: http_client)
 ```
 <!-- End Custom HTTP Client [http-client] -->
+
+
+<!-- Start Authentication [security] -->
+## Authentication
+
+### Per-Client Security Schemes
+
+This SDK supports the following security scheme globally:
+
+| Name             | Type             | Scheme           |
+| ---------------- | ---------------- | ---------------- |
+| `api_key_header` | apiKey           | API key          |
+
+To authenticate with the API the `api_key_header` parameter must be set when initializing the SDK client instance. For example:
+```python
+import shippo
+
+s = shippo.Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+)
+
+
+res = s.addresses.list_addresses(page=1, results=25, shippo_api_version='<value>')
+
+if res.address_paginated_list is not None:
+    # handle response
+    pass
+
+```
+<!-- End Authentication [security] -->
+
 ## Maturity
 
 This SDK is in beta, and there may be breaking changes between versions without a major version update. Therefore, we recommend pinning usage

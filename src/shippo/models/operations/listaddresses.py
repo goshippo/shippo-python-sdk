@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import addresslistwrapper as components_addresslistwrapper
+from ...models.components import addresspaginatedlist as components_addresspaginatedlist
 from ...models.components import httpmetadata as components_httpmetadata
 from typing import Optional
 
@@ -22,6 +22,6 @@ class ListAddressesRequest:
 @dataclasses.dataclass
 class ListAddressesResponse:
     http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    address_list_wrapper: Optional[components_addresslistwrapper.AddressListWrapper] = dataclasses.field(default=None)
+    address_paginated_list: Optional[components_addresspaginatedlist.AddressPaginatedList] = dataclasses.field(default=None)
     
 

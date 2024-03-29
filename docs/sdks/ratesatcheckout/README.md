@@ -75,7 +75,7 @@ res = s.rates_at_checkout.create_live_rate(shippo_api_version='<value>', live_ra
     parcel='5df144dca289442cv7a06',
 ))
 
-if res.live_rate_list is not None:
+if res.live_rate_paginated_list is not None:
     # handle response
     pass
 
