@@ -11,6 +11,8 @@ jobs:
     timeout-minutes: 10
     env:
       SHIPPO_TOKEN: ${{ secrets.SHIPPO_TOKEN }}
+    concurrency:
+      group: python-sdk-check
     steps:
       - name: Check out repository
         uses: actions/checkout@v4

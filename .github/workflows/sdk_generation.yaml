@@ -25,5 +25,5 @@ jobs:
       pypi_token: ${{ secrets.PYPI_TOKEN }}
       speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
   check:
-    uses: ./github/workflows/sdk_validation.yaml@latest
+    uses: ./.github/workflows/sdk_validation.yaml
     needs: generate
