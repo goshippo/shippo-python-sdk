@@ -19,7 +19,7 @@ class ServiceGroups:
         
     
     
-    def list_service_groups(self, shippo_api_version: Optional[str] = None) -> operations.ListServiceGroupsResponse:
+    def list(self, shippo_api_version: Optional[str] = None) -> List[components.ServiceGroup]:
         r"""List all service groups
         Returns a list of service group objects.
         """
@@ -63,25 +63,22 @@ class ServiceGroups:
             http_res = result
         
         
-        res = operations.ListServiceGroupsResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[List[components.ServiceGroup]])
-                res.service_group_list_response = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def create_service_group(self, shippo_api_version: Optional[str] = None, service_group_create_request: Optional[components.ServiceGroupCreateRequest] = None) -> operations.CreateServiceGroupResponse:
+    def create(self, shippo_api_version: Optional[str] = None, service_group_create_request: Optional[components.ServiceGroupCreateRequest] = None) -> components.ServiceGroup:
         r"""Create a new service group
         Creates a new service group.
         """
@@ -129,25 +126,22 @@ class ServiceGroups:
             http_res = result
         
         
-        res = operations.CreateServiceGroupResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 201:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.ServiceGroup])
-                res.service_group = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def update_service_group(self, shippo_api_version: Optional[str] = None, service_group_update_request: Optional[components.ServiceGroupUpdateRequest] = None) -> operations.UpdateServiceGroupResponse:
+    def update(self, shippo_api_version: Optional[str] = None, service_group_update_request: Optional[components.ServiceGroupUpdateRequest] = None) -> components.ServiceGroup:
         r"""Update an existing service group
         Updates an existing service group object. <br>The object_id cannot be updated as it is the unique identifier for the object.
         """
@@ -195,25 +189,22 @@ class ServiceGroups:
             http_res = result
         
         
-        res = operations.UpdateServiceGroupResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.ServiceGroup])
-                res.service_group = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def delete_service_group(self, service_group_id: str, shippo_api_version: Optional[str] = None) -> operations.DeleteServiceGroupResponse:
+    def delete(self, service_group_id: str, shippo_api_version: Optional[str] = None) -> operations.DeleteServiceGroupResponse:
         r"""Delete a service group
         Deletes an existing service group using an object ID.
         """
@@ -258,7 +249,7 @@ class ServiceGroups:
             http_res = result
         
         
-        res = operations.DeleteServiceGroupResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
+        res = operations.DeleteServiceGroupResponse()
         
         if http_res.status_code == 204:
             pass

@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import httpmetadata as components_httpmetadata
-from ...models.components import transaction as components_transaction
 from typing import Optional
 
 
@@ -13,13 +11,5 @@ class GetTransactionRequest:
     r"""Object ID of the transaction to update"""
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""
-    
-
-
-
-@dataclasses.dataclass
-class GetTransactionResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    transaction: Optional[components_transaction.Transaction] = dataclasses.field(default=None)
     
 

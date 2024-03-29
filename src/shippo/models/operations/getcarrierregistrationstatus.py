@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import carrieraccountregistrationstatus as components_carrieraccountregistrationstatus
-from ...models.components import httpmetadata as components_httpmetadata
 from enum import Enum
 from typing import Optional
 
@@ -20,13 +18,5 @@ class GetCarrierRegistrationStatusRequest:
     r"""filter by specific carrier"""
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""
-    
-
-
-
-@dataclasses.dataclass
-class GetCarrierRegistrationStatusResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    carrier_account_registration_status: Optional[components_carrieraccountregistrationstatus.CarrierAccountRegistrationStatus] = dataclasses.field(default=None)
     
 

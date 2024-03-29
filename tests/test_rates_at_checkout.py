@@ -3,7 +3,7 @@ import pytest
 import shippo
 from shippo.models.components import ServiceGroupCreateRequest, Carriers, \
     ServiceGroupAccountAndServiceLevel, ServiceGroupType, LiveRateCreateRequest, AddressCompleteCreateRequest, \
-    LineItem, WeightUnit, Parcel, DistanceUnitTemplate
+    LineItem, WeightUnit, Parcel, DistanceUnitTemplate, ServiceLevelUPS
 from tests.helpers_custom import get_carrier_account
 
 
@@ -14,25 +14,24 @@ class TestRatesAtCheckout:
         self._delete_all_service_groups(api)
 
     def _delete_all_service_groups(self, api: shippo.Shippo):
-        response = api.service_groups.list_service_groups()
-        for sg in response.service_group_list_response:
-            api.service_groups.delete_service_group(sg.object_id)
+        service_groups = api.service_groups.list()
+        for sg in service_groups:
+            api.service_groups.delete(sg.object_id)
 
     def test_rates_at_checkout(self, api: shippo.Shippo):
         carrier_account = get_carrier_account(api, Carriers.USPS)
         ups_account_id = carrier_account.object_id
 
-        # TODO: update spec so that ServiceLevel* enum models are generated
-        available_service_levels = ["ups_ground", "ups_next_day_air_saver"]
+        available_service_levels = [ServiceLevelUPS.UPS_GROUND, ServiceLevelUPS.UPS_NEXT_DAY_AIR_SAVER]
         service_levels = [
             ServiceGroupAccountAndServiceLevel(
                 account_object_id=ups_account_id,
-                service_level_token=available_service_level
+                service_level_token=available_service_level.value
             )
             for available_service_level in available_service_levels
         ]
 
-        create_service_group_response = api.service_groups.create_service_group(
+        service_group = api.service_groups.create(
             service_group_create_request=ServiceGroupCreateRequest(
                 name="UPS shipping",
                 description="UPS shipping options",
@@ -41,9 +40,9 @@ class TestRatesAtCheckout:
                 type=ServiceGroupType.LIVE_RATE,
                 service_levels=service_levels
             ))
-        assert create_service_group_response.service_group is not None
+        assert service_group is not None
 
-        response = api.rates_at_checkout.create_live_rate(
+        live_rates = api.rates_at_checkout.create(
             live_rate_create_request=LiveRateCreateRequest(
                 address_from=AddressCompleteCreateRequest(
                     name="S. Hippo",
@@ -84,6 +83,6 @@ class TestRatesAtCheckout:
                     mass_unit=WeightUnit.LB
                 )
             ))
-        assert len(response.live_rate_paginated_list.results) > 0
-        for live_rate in response.live_rate_paginated_list.results:
-            assert live_rate.title == create_service_group_response.service_group.name
+        assert len(live_rates.results) > 0
+        for live_rate in live_rates.results:
+            assert live_rate.title == service_group.name

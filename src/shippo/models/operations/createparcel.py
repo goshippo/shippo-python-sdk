@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import httpmetadata as components_httpmetadata
-from ...models.components import parcel as components_parcel
 from ...models.components import parcelrequest as components_parcelrequest
 from typing import Optional
 
@@ -14,13 +12,5 @@ class CreateParcelRequest:
     r"""String used to pick a non-default API version to use"""
     parcel_request: Optional[components_parcelrequest.ParcelRequest] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     r"""Parcel details."""
-    
-
-
-
-@dataclasses.dataclass
-class CreateParcelResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    parcel: Optional[components_parcel.Parcel] = dataclasses.field(default=None)
     
 

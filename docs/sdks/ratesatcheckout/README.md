@@ -15,12 +15,12 @@ Assign one of your user parcel templates to be the default used when generating 
 
 ### Available Operations
 
-* [create_live_rate](#create_live_rate) - Generate a live rates request
+* [create](#create) - Generate a live rates request
 * [get_default_parcel_template](#get_default_parcel_template) - Show current default parcel template
 * [update_default_parcel_template](#update_default_parcel_template) - Update default parcel template
 * [delete_default_parcel_template](#delete_default_parcel_template) - Clear current default parcel template
 
-## create_live_rate
+## create
 
 Initiates a live rates request. Include either the object ID for
 an existing address record or a fully formed address object when entering
@@ -39,23 +39,8 @@ s = shippo.Shippo(
 )
 
 
-res = s.rates_at_checkout.create_live_rate(shippo_api_version='<value>', live_rate_create_request=components.LiveRateCreateRequest(
-    address_to=components.AddressCompleteCreateRequest(
-        name='Shwan Ippotle',
-        street1='215 Clayton St.',
-        city='San Francisco',
-        state='CA',
-        zip='94117',
-        country='US',
-        company='Shippo',
-        street3='',
-        street_no='',
-        phone='+1 555 341 9393',
-        email='shippotle@shippo.com',
-        is_residential=True,
-        metadata='Customer ID 123456',
-        validate=True,
-    ),
+res = s.rates_at_checkout.create(shippo_api_version='<value>', live_rate_create_request=components.LiveRateCreateRequest(
+    address_to='<value>',
     line_items=[
         components.LineItem(
             currency='USD',
@@ -75,7 +60,7 @@ res = s.rates_at_checkout.create_live_rate(shippo_api_version='<value>', live_ra
     parcel='5df144dca289442cv7a06',
 ))
 
-if res.live_rate_paginated_list is not None:
+if res is not None:
     # handle response
     pass
 
@@ -91,7 +76,7 @@ if res.live_rate_paginated_list is not None:
 
 ### Response
 
-**[operations.CreateLiveRateResponse](../../models/operations/createliverateresponse.md)**
+**[components.LiveRatePaginatedList](../../models/components/liveratepaginatedlist.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
@@ -114,7 +99,7 @@ s = shippo.Shippo(
 
 res = s.rates_at_checkout.get_default_parcel_template(shippo_api_version='<value>')
 
-if res.default_parcel_template is not None:
+if res is not None:
     # handle response
     pass
 
@@ -129,7 +114,7 @@ if res.default_parcel_template is not None:
 
 ### Response
 
-**[operations.GetDefaultParcelTemplateResponse](../../models/operations/getdefaultparceltemplateresponse.md)**
+**[components.DefaultParcelTemplate](../../models/components/defaultparceltemplate.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
@@ -155,7 +140,7 @@ res = s.rates_at_checkout.update_default_parcel_template(shippo_api_version='<va
     object_id='b958d3690bb04bb8b2986724872750f5',
 ))
 
-if res.default_parcel_template is not None:
+if res is not None:
     # handle response
     pass
 
@@ -171,7 +156,7 @@ if res.default_parcel_template is not None:
 
 ### Response
 
-**[operations.UpdateDefaultParcelTemplateResponse](../../models/operations/updatedefaultparceltemplateresponse.md)**
+**[components.DefaultParcelTemplate](../../models/components/defaultparceltemplate.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

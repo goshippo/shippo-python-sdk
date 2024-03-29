@@ -12,7 +12,7 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: true
 python:
-  version: 0.0.6
+  version: 0.1.0
   additionalDependencies:
     dependencies: {}
     extraDependencies:
@@ -34,4 +34,4 @@ python:
   maxMethodParams: 4
   outputModelSuffix: output
   packageName: shippo
-  responseFormat: envelope-http
+  responseFormat: flat

@@ -2,10 +2,8 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import carrierparceltemplate as components_carrierparceltemplate
-from ...models.components import httpmetadata as components_httpmetadata
 from enum import Enum
-from typing import List, Optional
+from typing import Optional
 
 class Include(str, Enum):
     r"""filter by user or enabled"""
@@ -22,13 +20,5 @@ class ListCarrierParcelTemplatesRequest:
     r"""filter by specific carrier"""
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""
-    
-
-
-
-@dataclasses.dataclass
-class ListCarrierParcelTemplatesResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    carrier_parcel_template_list_response: Optional[List[components_carrierparceltemplate.CarrierParcelTemplate]] = dataclasses.field(default=None)
     
 

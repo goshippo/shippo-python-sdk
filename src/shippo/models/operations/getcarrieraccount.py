@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import carrieraccount as components_carrieraccount
-from ...models.components import httpmetadata as components_httpmetadata
 from typing import Optional
 
 
@@ -13,13 +11,5 @@ class GetCarrierAccountRequest:
     r"""Object ID of the carrier account"""
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""
-    
-
-
-
-@dataclasses.dataclass
-class GetCarrierAccountResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    carrier_account: Optional[components_carrieraccount.CarrierAccount] = dataclasses.field(default=None)
     
 

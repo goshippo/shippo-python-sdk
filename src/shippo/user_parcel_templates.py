@@ -23,7 +23,7 @@ class UserParcelTemplates:
         
     
     
-    def list_user_parcel_templates(self, shippo_api_version: Optional[str] = None) -> operations.ListUserParcelTemplatesResponse:
+    def list(self, shippo_api_version: Optional[str] = None) -> List[components.UserParcelTemplate]:
         r"""List all user parcel templates
         Returns a list all of all user parcel template objects.
         """
@@ -67,25 +67,22 @@ class UserParcelTemplates:
             http_res = result
         
         
-        res = operations.ListUserParcelTemplatesResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[List[components.UserParcelTemplate]])
-                res.user_parcel_template_list_response = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def create_user_parcel_template(self, shippo_api_version: Optional[str] = None, user_parcel_template_create_request: Optional[Union[components.UserParcelTemplateWithCarrierTemplateCreateRequest, components.UserParcelTemplateWithoutCarrierTemplateCreateRequest]] = None) -> operations.CreateUserParcelTemplateResponse:
+    def create(self, shippo_api_version: Optional[str] = None, user_parcel_template_create_request: Optional[Union[components.UserParcelTemplateWithCarrierTemplateCreateRequest, components.UserParcelTemplateWithoutCarrierTemplateCreateRequest]] = None) -> components.UserParcelTemplate:
         r"""Create a new user parcel template
         Creates a new user parcel template. <br>You can choose to create a
         parcel template using a preset carrier template as a starting point, or
@@ -139,25 +136,22 @@ class UserParcelTemplates:
             http_res = result
         
         
-        res = operations.CreateUserParcelTemplateResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.UserParcelTemplate])
-                res.user_parcel_template = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def delete_user_parcel_template(self, user_parcel_template_object_id: str, shippo_api_version: Optional[str] = None) -> operations.DeleteUserParcelTemplateResponse:
+    def delete(self, user_parcel_template_object_id: str, shippo_api_version: Optional[str] = None) -> operations.DeleteUserParcelTemplateResponse:
         r"""Delete a user parcel template
         Deletes a user parcel template using an object ID.
         """
@@ -202,7 +196,7 @@ class UserParcelTemplates:
             http_res = result
         
         
-        res = operations.DeleteUserParcelTemplateResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
+        res = operations.DeleteUserParcelTemplateResponse()
         
         if http_res.status_code == 204:
             pass
@@ -215,7 +209,7 @@ class UserParcelTemplates:
 
     
     
-    def get_user_parcel_template(self, user_parcel_template_object_id: str, shippo_api_version: Optional[str] = None) -> operations.GetUserParcelTemplateResponse:
+    def get(self, user_parcel_template_object_id: str, shippo_api_version: Optional[str] = None) -> components.UserParcelTemplate:
         r"""Retrieves a user parcel template
         Returns the parcel template information for a specific user parcel
         template, identified by the object ID.
@@ -261,25 +255,22 @@ class UserParcelTemplates:
             http_res = result
         
         
-        res = operations.GetUserParcelTemplateResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.UserParcelTemplate])
-                res.user_parcel_template = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def update_user_parcel_template(self, user_parcel_template_object_id: str, shippo_api_version: Optional[str] = None, user_parcel_template_update_request: Optional[components.UserParcelTemplateUpdateRequest] = None) -> operations.UpdateUserParcelTemplateResponse:
+    def update(self, user_parcel_template_object_id: str, shippo_api_version: Optional[str] = None, user_parcel_template_update_request: Optional[components.UserParcelTemplateUpdateRequest] = None) -> components.UserParcelTemplate:
         r"""Update an existing user parcel template
         Updates an existing user parcel template.
         """
@@ -328,20 +319,17 @@ class UserParcelTemplates:
             http_res = result
         
         
-        res = operations.UpdateUserParcelTemplateResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.UserParcelTemplate])
-                res.user_parcel_template = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
-
-        return res
 
     

@@ -20,7 +20,7 @@ class ShippoAccounts:
         
     
     
-    def list_shippo_accounts(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListShippoAccountsResponse:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> components.ShippoAccountPaginatedList:
         r"""List all Shippo Accounts
         Returns a list of Shippo Accounts objects
         """
@@ -67,25 +67,22 @@ class ShippoAccounts:
             http_res = result
         
         
-        res = operations.ListShippoAccountsResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.ShippoAccountPaginatedList])
-                res.shippo_account_paginated_list = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def create_shippo_account(self, shippo_api_version: Optional[str] = None, shippo_account_update_request: Optional[components.ShippoAccountUpdateRequest] = None) -> operations.CreateShippoAccountResponse:
+    def create(self, shippo_api_version: Optional[str] = None, shippo_account_update_request: Optional[components.ShippoAccountUpdateRequest] = None) -> components.ShippoAccount:
         r"""Create a Shippo Account
         Creates a Shippo Account object
         """
@@ -133,25 +130,22 @@ class ShippoAccounts:
             http_res = result
         
         
-        res = operations.CreateShippoAccountResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.ShippoAccount])
-                res.shippo_account = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def get_shippo_account(self, shippo_account_id: str, shippo_api_version: Optional[str] = None) -> operations.GetShippoAccountResponse:
+    def get(self, shippo_account_id: str, shippo_api_version: Optional[str] = None) -> components.ShippoAccount:
         r"""Retrieve a Shippo Account
         Returns a Shippo Account using an object ID
         """
@@ -196,25 +190,22 @@ class ShippoAccounts:
             http_res = result
         
         
-        res = operations.GetShippoAccountResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.ShippoAccount])
-                res.shippo_account = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def update_shippo_account(self, shippo_account_id: str, shippo_api_version: Optional[str] = None, shippo_account_update_request: Optional[components.ShippoAccountUpdateRequest] = None) -> operations.UpdateShippoAccountResponse:
+    def update(self, shippo_account_id: str, shippo_api_version: Optional[str] = None, shippo_account_update_request: Optional[components.ShippoAccountUpdateRequest] = None) -> components.ShippoAccount:
         r"""Update a Shippo Account
         Updates a Shippo Account object
         """
@@ -263,20 +254,17 @@ class ShippoAccounts:
             http_res = result
         
         
-        res = operations.UpdateShippoAccountResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.ShippoAccount])
-                res.shippo_account = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
-
-        return res
 
     

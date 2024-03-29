@@ -18,7 +18,7 @@ class Rates:
         
     
     
-    def get_rate(self, rate_id: str, shippo_api_version: Optional[str] = None) -> operations.GetRateResponse:
+    def get(self, rate_id: str, shippo_api_version: Optional[str] = None) -> components.Rate:
         r"""Retrieve a rate
         Returns an existing rate using a rate object ID.
         """
@@ -63,25 +63,22 @@ class Rates:
             http_res = result
         
         
-        res = operations.GetRateResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Rate])
-                res.rate = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def list_shipment_rates(self, shipment_id: str, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListShipmentRatesResponse:
+    def list_shipment_rates(self, shipment_id: str, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> components.RatePaginatedList:
         r"""Retrieve shipment rates
         Returns a paginated list of rates associated with a shipment
         """
@@ -129,25 +126,22 @@ class Rates:
             http_res = result
         
         
-        res = operations.ListShipmentRatesResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.RatePaginatedList])
-                res.rate_paginated_list = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
-        return res
-
     
     
-    def list_shipment_rates_by_currency_code(self, request: operations.ListShipmentRatesByCurrencyCodeRequest) -> operations.ListShipmentRatesByCurrencyCodeResponse:
+    def list_shipment_rates_by_currency_code(self, request: operations.ListShipmentRatesByCurrencyCodeRequest) -> components.RatePaginatedList:
         r"""Retrieve shipment rates in currency
         Returns all available shipping rates for a shipment object.
 
@@ -194,20 +188,17 @@ class Rates:
             http_res = result
         
         
-        res = operations.ListShipmentRatesByCurrencyCodeResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.RatePaginatedList])
-                res.rate_paginated_list = out
-            else:
-                content_type = http_res.headers.get('Content-Type')
-                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+                return out
+            
+            content_type = http_res.headers.get('Content-Type')
+            raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
-
-        return res
 
     

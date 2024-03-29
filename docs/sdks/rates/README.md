@@ -8,11 +8,11 @@ A rate is the cost to ship a parcel from a carrier. The rate object details the 
 
 ### Available Operations
 
-* [get_rate](#get_rate) - Retrieve a rate
+* [get](#get) - Retrieve a rate
 * [list_shipment_rates](#list_shipment_rates) - Retrieve shipment rates
 * [list_shipment_rates_by_currency_code](#list_shipment_rates_by_currency_code) - Retrieve shipment rates in currency
 
-## get_rate
+## get
 
 Returns an existing rate using a rate object ID.
 
@@ -26,9 +26,9 @@ s = shippo.Shippo(
 )
 
 
-res = s.rates.get_rate(rate_id='<value>', shippo_api_version='<value>')
+res = s.rates.get(rate_id='<value>', shippo_api_version='<value>')
 
-if res.rate is not None:
+if res is not None:
     # handle response
     pass
 
@@ -44,7 +44,7 @@ if res.rate is not None:
 
 ### Response
 
-**[operations.GetRateResponse](../../models/operations/getrateresponse.md)**
+**[components.Rate](../../models/components/rate.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
@@ -67,7 +67,7 @@ s = shippo.Shippo(
 
 res = s.rates.list_shipment_rates(shipment_id='<value>', page=1, results=25, shippo_api_version='<value>')
 
-if res.rate_paginated_list is not None:
+if res is not None:
     # handle response
     pass
 
@@ -85,7 +85,7 @@ if res.rate_paginated_list is not None:
 
 ### Response
 
-**[operations.ListShipmentRatesResponse](../../models/operations/listshipmentratesresponse.md)**
+**[components.RatePaginatedList](../../models/components/ratepaginatedlist.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
@@ -119,7 +119,7 @@ req = operations.ListShipmentRatesByCurrencyCodeRequest(
 
 res = s.rates.list_shipment_rates_by_currency_code(req)
 
-if res.rate_paginated_list is not None:
+if res is not None:
     # handle response
     pass
 
@@ -134,7 +134,7 @@ if res.rate_paginated_list is not None:
 
 ### Response
 
-**[operations.ListShipmentRatesByCurrencyCodeResponse](../../models/operations/listshipmentratesbycurrencycoderesponse.md)**
+**[components.RatePaginatedList](../../models/components/ratepaginatedlist.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

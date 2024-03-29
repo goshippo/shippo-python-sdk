@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import batch as components_batch
-from ...models.components import httpmetadata as components_httpmetadata
 from typing import List, Optional
 
 
@@ -15,13 +13,5 @@ class RemoveShipmentsFromBatchRequest:
     r"""String used to pick a non-default API version to use"""
     request_body: Optional[List[str]] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     r"""Array of shipments object ids to remove from the batch"""
-    
-
-
-
-@dataclasses.dataclass
-class RemoveShipmentsFromBatchResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    batch: Optional[components_batch.Batch] = dataclasses.field(default=None)
     
 

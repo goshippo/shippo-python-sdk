@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import defaultparceltemplate as components_defaultparceltemplate
-from ...models.components import httpmetadata as components_httpmetadata
 from typing import Optional
 
 
@@ -11,13 +9,5 @@ from typing import Optional
 class GetDefaultParcelTemplateRequest:
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""
-    
-
-
-
-@dataclasses.dataclass
-class GetDefaultParcelTemplateResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    default_parcel_template: Optional[components_defaultparceltemplate.DefaultParcelTemplate] = dataclasses.field(default=None)
     
 

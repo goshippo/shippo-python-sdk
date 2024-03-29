@@ -2,9 +2,7 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import customsdeclaration as components_customsdeclaration
 from ...models.components import customsdeclarationcreaterequest as components_customsdeclarationcreaterequest
-from ...models.components import httpmetadata as components_httpmetadata
 from typing import Optional
 
 
@@ -14,13 +12,5 @@ class CreateCustomsDeclarationRequest:
     r"""String used to pick a non-default API version to use"""
     customs_declaration_create_request: Optional[components_customsdeclarationcreaterequest.CustomsDeclarationCreateRequest] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     r"""CustomsDeclaration details."""
-    
-
-
-
-@dataclasses.dataclass
-class CreateCustomsDeclarationResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    customs_declaration: Optional[components_customsdeclaration.CustomsDeclaration] = dataclasses.field(default=None)
     
 

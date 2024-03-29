@@ -41,10 +41,9 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
 )
 
+address_list = s.addresses.list(page=1, results=25)
 
-res = s.addresses.list_addresses(page=1, results=25)
-
-if res.address_paginated_list is not None:
+if address_list is not None:
     # handle response
     pass
 
@@ -75,124 +74,124 @@ Review our full guides and references at [https://docs.goshippo.com/](https://do
 
 ### [addresses](docs/sdks/addresses/README.md)
 
-* [list_addresses](docs/sdks/addresses/README.md#list_addresses) - List all addresses
-* [create_address](docs/sdks/addresses/README.md#create_address) - Create a new address
-* [get_address](docs/sdks/addresses/README.md#get_address) - Retrieve an address
-* [validate_address](docs/sdks/addresses/README.md#validate_address) - Validate an address
+* [list](docs/sdks/addresses/README.md#list) - List all addresses
+* [create](docs/sdks/addresses/README.md#create) - Create a new address
+* [get](docs/sdks/addresses/README.md#get) - Retrieve an address
+* [validate](docs/sdks/addresses/README.md#validate) - Validate an address
 
 ### [batches](docs/sdks/batches/README.md)
 
-* [create_batch](docs/sdks/batches/README.md#create_batch) - Create a batch
-* [get_batch](docs/sdks/batches/README.md#get_batch) - Retrieve a batch
-* [add_shipments_to_batch](docs/sdks/batches/README.md#add_shipments_to_batch) - Add shipments to a batch
-* [purchase_batch](docs/sdks/batches/README.md#purchase_batch) - Purchase a batch
-* [remove_shipments_from_batch](docs/sdks/batches/README.md#remove_shipments_from_batch) - Remove shipments from a batch
+* [create](docs/sdks/batches/README.md#create) - Create a batch
+* [get](docs/sdks/batches/README.md#get) - Retrieve a batch
+* [add_shipments](docs/sdks/batches/README.md#add_shipments) - Add shipments to a batch
+* [purchase](docs/sdks/batches/README.md#purchase) - Purchase a batch
+* [remove_shipments](docs/sdks/batches/README.md#remove_shipments) - Remove shipments from a batch
 
 ### [carrier_accounts](docs/sdks/carrieraccounts/README.md)
 
-* [list_carrier_accounts](docs/sdks/carrieraccounts/README.md#list_carrier_accounts) - List all carrier accounts
-* [create_carrier_account](docs/sdks/carrieraccounts/README.md#create_carrier_account) - Create a new carrier account
-* [get_carrier_account](docs/sdks/carrieraccounts/README.md#get_carrier_account) - Retrieve a carrier account
-* [update_carrier_account](docs/sdks/carrieraccounts/README.md#update_carrier_account) - Update a carrier account
-* [register_carrier_account](docs/sdks/carrieraccounts/README.md#register_carrier_account) - Add a Shippo carrier account
-* [get_carrier_registration_status](docs/sdks/carrieraccounts/README.md#get_carrier_registration_status) - Get Carrier Registration status
+* [list](docs/sdks/carrieraccounts/README.md#list) - List all carrier accounts
+* [create](docs/sdks/carrieraccounts/README.md#create) - Create a new carrier account
+* [get](docs/sdks/carrieraccounts/README.md#get) - Retrieve a carrier account
+* [update](docs/sdks/carrieraccounts/README.md#update) - Update a carrier account
+* [register](docs/sdks/carrieraccounts/README.md#register) - Add a Shippo carrier account
+* [get_registration_status](docs/sdks/carrieraccounts/README.md#get_registration_status) - Get Carrier Registration status
 
 ### [customs_declarations](docs/sdks/customsdeclarations/README.md)
 
-* [list_customs_declarations](docs/sdks/customsdeclarations/README.md#list_customs_declarations) - List all customs declarations
-* [create_customs_declaration](docs/sdks/customsdeclarations/README.md#create_customs_declaration) - Create a new customs declaration
-* [get_customs_declaration](docs/sdks/customsdeclarations/README.md#get_customs_declaration) - Retrieve a customs declaration
+* [list](docs/sdks/customsdeclarations/README.md#list) - List all customs declarations
+* [create](docs/sdks/customsdeclarations/README.md#create) - Create a new customs declaration
+* [get](docs/sdks/customsdeclarations/README.md#get) - Retrieve a customs declaration
 
 ### [customs_items](docs/sdks/customsitems/README.md)
 
-* [list_customs_items](docs/sdks/customsitems/README.md#list_customs_items) - List all customs items
-* [create_customs_item](docs/sdks/customsitems/README.md#create_customs_item) - Create a new customs item
-* [get_customs_item](docs/sdks/customsitems/README.md#get_customs_item) - Retrieve a customs item
+* [list](docs/sdks/customsitems/README.md#list) - List all customs items
+* [create](docs/sdks/customsitems/README.md#create) - Create a new customs item
+* [get](docs/sdks/customsitems/README.md#get) - Retrieve a customs item
 
 ### [rates_at_checkout](docs/sdks/ratesatcheckout/README.md)
 
-* [create_live_rate](docs/sdks/ratesatcheckout/README.md#create_live_rate) - Generate a live rates request
+* [create](docs/sdks/ratesatcheckout/README.md#create) - Generate a live rates request
 * [get_default_parcel_template](docs/sdks/ratesatcheckout/README.md#get_default_parcel_template) - Show current default parcel template
 * [update_default_parcel_template](docs/sdks/ratesatcheckout/README.md#update_default_parcel_template) - Update default parcel template
 * [delete_default_parcel_template](docs/sdks/ratesatcheckout/README.md#delete_default_parcel_template) - Clear current default parcel template
 
 ### [manifests](docs/sdks/manifests/README.md)
 
-* [list_manifests](docs/sdks/manifests/README.md#list_manifests) - List all manifests
-* [create_manifest](docs/sdks/manifests/README.md#create_manifest) - Create a new manifest
-* [get_manifest](docs/sdks/manifests/README.md#get_manifest) - Retrieve a manifest
+* [list](docs/sdks/manifests/README.md#list) - List all manifests
+* [create](docs/sdks/manifests/README.md#create) - Create a new manifest
+* [get](docs/sdks/manifests/README.md#get) - Retrieve a manifest
 
 ### [orders](docs/sdks/orders/README.md)
 
-* [list_orders](docs/sdks/orders/README.md#list_orders) - List all orders
-* [create_order](docs/sdks/orders/README.md#create_order) - Create a new order
-* [get_order](docs/sdks/orders/README.md#get_order) - Retrieve an order
+* [list](docs/sdks/orders/README.md#list) - List all orders
+* [create](docs/sdks/orders/README.md#create) - Create a new order
+* [get](docs/sdks/orders/README.md#get) - Retrieve an order
 
 ### [carrier_parcel_templates](docs/sdks/carrierparceltemplates/README.md)
 
-* [list_carrier_parcel_templates](docs/sdks/carrierparceltemplates/README.md#list_carrier_parcel_templates) - List all carrier parcel templates
-* [get_carrier_parcel_template](docs/sdks/carrierparceltemplates/README.md#get_carrier_parcel_template) - Retrieve a carrier parcel templates
+* [list](docs/sdks/carrierparceltemplates/README.md#list) - List all carrier parcel templates
+* [get](docs/sdks/carrierparceltemplates/README.md#get) - Retrieve a carrier parcel templates
 
 ### [parcels](docs/sdks/parcels/README.md)
 
-* [list_parcels](docs/sdks/parcels/README.md#list_parcels) - List all parcels
-* [create_parcel](docs/sdks/parcels/README.md#create_parcel) - Create a new parcel
-* [get_parcel](docs/sdks/parcels/README.md#get_parcel) - Retrieve an existing parcel
+* [list](docs/sdks/parcels/README.md#list) - List all parcels
+* [create](docs/sdks/parcels/README.md#create) - Create a new parcel
+* [get](docs/sdks/parcels/README.md#get) - Retrieve an existing parcel
 
 ### [pickups](docs/sdks/pickups/README.md)
 
-* [create_pickup](docs/sdks/pickups/README.md#create_pickup) - Create a pickup
+* [create](docs/sdks/pickups/README.md#create) - Create a pickup
 
 ### [rates](docs/sdks/rates/README.md)
 
-* [get_rate](docs/sdks/rates/README.md#get_rate) - Retrieve a rate
+* [get](docs/sdks/rates/README.md#get) - Retrieve a rate
 * [list_shipment_rates](docs/sdks/rates/README.md#list_shipment_rates) - Retrieve shipment rates
 * [list_shipment_rates_by_currency_code](docs/sdks/rates/README.md#list_shipment_rates_by_currency_code) - Retrieve shipment rates in currency
 
 ### [refunds](docs/sdks/refunds/README.md)
 
-* [create_refund](docs/sdks/refunds/README.md#create_refund) - Create a refund
-* [list_refund](docs/sdks/refunds/README.md#list_refund) - List all refunds
-* [get_refund](docs/sdks/refunds/README.md#get_refund) - Retrieve a refund
+* [create](docs/sdks/refunds/README.md#create) - Create a refund
+* [list](docs/sdks/refunds/README.md#list) - List all refunds
+* [get](docs/sdks/refunds/README.md#get) - Retrieve a refund
 
 ### [service_groups](docs/sdks/servicegroups/README.md)
 
-* [list_service_groups](docs/sdks/servicegroups/README.md#list_service_groups) - List all service groups
-* [create_service_group](docs/sdks/servicegroups/README.md#create_service_group) - Create a new service group
-* [update_service_group](docs/sdks/servicegroups/README.md#update_service_group) - Update an existing service group
-* [delete_service_group](docs/sdks/servicegroups/README.md#delete_service_group) - Delete a service group
+* [list](docs/sdks/servicegroups/README.md#list) - List all service groups
+* [create](docs/sdks/servicegroups/README.md#create) - Create a new service group
+* [update](docs/sdks/servicegroups/README.md#update) - Update an existing service group
+* [delete](docs/sdks/servicegroups/README.md#delete) - Delete a service group
 
 ### [shipments](docs/sdks/shipments/README.md)
 
-* [list_shipments](docs/sdks/shipments/README.md#list_shipments) - List all shipments
-* [create_shipment](docs/sdks/shipments/README.md#create_shipment) - Create a new shipment
-* [get_shipment](docs/sdks/shipments/README.md#get_shipment) - Retrieve a shipment
+* [list](docs/sdks/shipments/README.md#list) - List all shipments
+* [create](docs/sdks/shipments/README.md#create) - Create a new shipment
+* [get](docs/sdks/shipments/README.md#get) - Retrieve a shipment
 
 ### [tracking_status](docs/sdks/trackingstatus/README.md)
 
-* [create_track](docs/sdks/trackingstatus/README.md#create_track) - Register a tracking webhook
-* [get_track](docs/sdks/trackingstatus/README.md#get_track) - Get a tracking status
+* [create](docs/sdks/trackingstatus/README.md#create) - Register a tracking webhook
+* [get](docs/sdks/trackingstatus/README.md#get) - Get a tracking status
 
 ### [transactions](docs/sdks/transactions/README.md)
 
-* [list_transactions](docs/sdks/transactions/README.md#list_transactions) - List all shipping labels
-* [create_transaction](docs/sdks/transactions/README.md#create_transaction) - Create a shipping label
-* [get_transaction](docs/sdks/transactions/README.md#get_transaction) - Retrieve a shipping label
+* [list](docs/sdks/transactions/README.md#list) - List all shipping labels
+* [create](docs/sdks/transactions/README.md#create) - Create a shipping label
+* [get](docs/sdks/transactions/README.md#get) - Retrieve a shipping label
 
 ### [user_parcel_templates](docs/sdks/userparceltemplates/README.md)
 
-* [list_user_parcel_templates](docs/sdks/userparceltemplates/README.md#list_user_parcel_templates) - List all user parcel templates
-* [create_user_parcel_template](docs/sdks/userparceltemplates/README.md#create_user_parcel_template) - Create a new user parcel template
-* [delete_user_parcel_template](docs/sdks/userparceltemplates/README.md#delete_user_parcel_template) - Delete a user parcel template
-* [get_user_parcel_template](docs/sdks/userparceltemplates/README.md#get_user_parcel_template) - Retrieves a user parcel template
-* [update_user_parcel_template](docs/sdks/userparceltemplates/README.md#update_user_parcel_template) - Update an existing user parcel template
+* [list](docs/sdks/userparceltemplates/README.md#list) - List all user parcel templates
+* [create](docs/sdks/userparceltemplates/README.md#create) - Create a new user parcel template
+* [delete](docs/sdks/userparceltemplates/README.md#delete) - Delete a user parcel template
+* [get](docs/sdks/userparceltemplates/README.md#get) - Retrieves a user parcel template
+* [update](docs/sdks/userparceltemplates/README.md#update) - Update an existing user parcel template
 
 ### [shippo_accounts](docs/sdks/shippoaccounts/README.md)
 
-* [list_shippo_accounts](docs/sdks/shippoaccounts/README.md#list_shippo_accounts) - List all Shippo Accounts
-* [create_shippo_account](docs/sdks/shippoaccounts/README.md#create_shippo_account) - Create a Shippo Account
-* [get_shippo_account](docs/sdks/shippoaccounts/README.md#get_shippo_account) - Retrieve a Shippo Account
-* [update_shippo_account](docs/sdks/shippoaccounts/README.md#update_shippo_account) - Update a Shippo Account
+* [list](docs/sdks/shippoaccounts/README.md#list) - List all Shippo Accounts
+* [create](docs/sdks/shippoaccounts/README.md#create) - Create a Shippo Account
+* [get](docs/sdks/shippoaccounts/README.md#get) - Retrieve a Shippo Account
+* [update](docs/sdks/shippoaccounts/README.md#update) - Update a Shippo Account
 <!-- End Available Resources and Operations [operations] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->

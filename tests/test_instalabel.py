@@ -11,7 +11,7 @@ class TestInstalabel:
     def test_instalabel(self, api: shippo.Shippo):
         carrier_account = get_carrier_account(api, Carriers.USPS)
 
-        create_transaction_response = api.transactions.create_transaction(
+        transaction = api.transactions.create(
             request_body=InstantTransactionRequestBody(
                 carrier_account=carrier_account.object_id,
                 servicelevel_token="usps_ground_advantage",
@@ -48,4 +48,4 @@ class TestInstalabel:
                     ]
                 )
             ))
-        assert create_transaction_response.transaction is not None
+        assert transaction is not None

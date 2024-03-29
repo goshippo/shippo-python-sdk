@@ -1,9 +1,0 @@
-# ListCustomsItemsResponse
-
-
-## Fields
-
-| Field                                                                                                | Type                                                                                                 | Required                                                                                             | Description                                                                                          |
-| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `http_meta`                                                                                          | [components.HTTPMetadata](../../models/components/httpmetadata.md)                                   | :heavy_check_mark:                                                                                   | N/A                                                                                                  |
-| `customs_item_paginated_list`                                                                        | [Optional[components.CustomsItemPaginatedList]](../../models/components/customsitempaginatedlist.md) | :heavy_minus_sign:                                                                                   | N/A                                                                                                  |

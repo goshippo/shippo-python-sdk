@@ -2,9 +2,7 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import carrieraccount as components_carrieraccount
 from ...models.components import connectexistingownupsaccountrequest as components_connectexistingownupsaccountrequest
-from ...models.components import httpmetadata as components_httpmetadata
 from typing import Optional
 
 
@@ -14,13 +12,5 @@ class CreateCarrierAccountRequest:
     r"""String used to pick a non-default API version to use"""
     connect_existing_own_ups_account_request: Optional[components_connectexistingownupsaccountrequest.ConnectExistingOwnUPSAccountRequest] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     r"""Examples."""
-    
-
-
-
-@dataclasses.dataclass
-class CreateCarrierAccountResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    carrier_account: Optional[components_carrieraccount.CarrierAccount] = dataclasses.field(default=None)
     
 

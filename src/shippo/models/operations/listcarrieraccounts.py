@@ -2,9 +2,7 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import carrieraccountpaginatedlist as components_carrieraccountpaginatedlist
 from ...models.components import carriers as components_carriers
-from ...models.components import httpmetadata as components_httpmetadata
 from typing import Optional
 
 
@@ -22,13 +20,5 @@ class ListCarrierAccountsRequest:
     r"""The number of results to return per page (max 100)"""
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""
-    
-
-
-
-@dataclasses.dataclass
-class ListCarrierAccountsResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    carrier_account_paginated_list: Optional[components_carrieraccountpaginatedlist.CarrierAccountPaginatedList] = dataclasses.field(default=None)
     
 

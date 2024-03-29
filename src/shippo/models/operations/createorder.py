@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import httpmetadata as components_httpmetadata
-from ...models.components import order as components_order
 from ...models.components import ordercreaterequest as components_ordercreaterequest
 from typing import Optional
 
@@ -14,13 +12,5 @@ class CreateOrderRequest:
     r"""String used to pick a non-default API version to use"""
     order_create_request: Optional[components_ordercreaterequest.OrderCreateRequest] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     r"""Order details."""
-    
-
-
-
-@dataclasses.dataclass
-class CreateOrderResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    order: Optional[components_order.Order] = dataclasses.field(default=None)
     
 

@@ -12,11 +12,11 @@ The following values are supported for the `extra` field of the parcel object.
 
 ### Available Operations
 
-* [list_parcels](#list_parcels) - List all parcels
-* [create_parcel](#create_parcel) - Create a new parcel
-* [get_parcel](#get_parcel) - Retrieve an existing parcel
+* [list](#list) - List all parcels
+* [create](#create) - Create a new parcel
+* [get](#get) - Retrieve an existing parcel
 
-## list_parcels
+## list
 
 Returns a list of all parcel objects.
 
@@ -30,9 +30,9 @@ s = shippo.Shippo(
 )
 
 
-res = s.parcels.list_parcels(page=1, results=25, shippo_api_version='<value>')
+res = s.parcels.list(page=1, results=25, shippo_api_version='<value>')
 
-if res.parcel_paginated_list is not None:
+if res is not None:
     # handle response
     pass
 
@@ -49,14 +49,14 @@ if res.parcel_paginated_list is not None:
 
 ### Response
 
-**[operations.ListParcelsResponse](../../models/operations/listparcelsresponse.md)**
+**[components.ParcelPaginatedList](../../models/components/parcelpaginatedlist.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## create_parcel
+## create
 
 Creates a new parcel object.
 
@@ -71,7 +71,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.parcels.create_parcel(shippo_api_version='<value>', parcel_request=components.ParcelRequest(
+res = s.parcels.create(shippo_api_version='<value>', parcel_request=components.ParcelRequest(
     distance_unit=components.DistanceUnitTemplate.IN,
     height='1',
     length='1',
@@ -80,7 +80,7 @@ res = s.parcels.create_parcel(shippo_api_version='<value>', parcel_request=compo
     width='1',
 ))
 
-if res.parcel is not None:
+if res is not None:
     # handle response
     pass
 
@@ -96,14 +96,14 @@ if res.parcel is not None:
 
 ### Response
 
-**[operations.CreateParcelResponse](../../models/operations/createparcelresponse.md)**
+**[components.Parcel](../../models/components/parcel.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## get_parcel
+## get
 
 Returns parcel details using an existing parcel object ID (this will not return parcel details associated with un-purchased shipment/rate parcel object IDs).
 
@@ -117,9 +117,9 @@ s = shippo.Shippo(
 )
 
 
-res = s.parcels.get_parcel(parcel_id='<value>', shippo_api_version='<value>')
+res = s.parcels.get(parcel_id='<value>', shippo_api_version='<value>')
 
-if res.parcel is not None:
+if res is not None:
     # handle response
     pass
 
@@ -135,7 +135,7 @@ if res.parcel is not None:
 
 ### Response
 
-**[operations.GetParcelResponse](../../models/operations/getparcelresponse.md)**
+**[components.Parcel](../../models/components/parcel.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

@@ -22,4 +22,4 @@ speakeasy-generate: # dev task, run the generator on a local spec.  useful for t
 	SPEAKEASY_FORCE_GENERATION=true speakeasy generate sdk -s ${LOCAL_SPEC_FILE} -o . -l python
 
 speakeasy-run: # dev task, locally run the complete speakeasy workflow.  useful if the generator workflow ever fails, to replicate locally
-	SPEAKEASY_FORCE_GENERATION=true speakeasy run
+	speakeasy run

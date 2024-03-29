@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import carrierparceltemplate as components_carrierparceltemplate
-from ...models.components import httpmetadata as components_httpmetadata
 from typing import Optional
 
 
@@ -13,13 +11,5 @@ class GetCarrierParcelTemplateRequest:
     r"""The unique string representation of the carrier parcel template"""
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""
-    
-
-
-
-@dataclasses.dataclass
-class GetCarrierParcelTemplateResponse:
-    http_meta: components_httpmetadata.HTTPMetadata = dataclasses.field()
-    carrier_parcel_template: Optional[components_carrierparceltemplate.CarrierParcelTemplate] = dataclasses.field(default=None)
     
 
