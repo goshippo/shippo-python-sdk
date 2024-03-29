@@ -34,4 +34,4 @@ python:
   maxMethodParams: 4
   outputModelSuffix: output
   packageName: shippo
-  responseFormat: envelope-http
+  responseFormat: flat
