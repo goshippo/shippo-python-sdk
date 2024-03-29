@@ -41,10 +41,9 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
 )
 
+address_list = s.addresses.list(page=1, results=25)
 
-res = s.addresses.list_addresses(page=1, results=25)
-
-if res.address_paginated_list is not None:
+if address_list is not None:
     # handle response
     pass
 

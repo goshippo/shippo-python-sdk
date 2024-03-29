@@ -12,7 +12,7 @@ class TestPurchaseLabelInternational:
 
     @pytest.mark.skip(reason="API returns '' for documented enum values and this test will always fail - need to update the spec")
     def test_purchase_label_international(self, api: shippo.Shippo):
-        create_address_response = api.addresses.create_address(
+        address = api.addresses.create(
             address_create_request=AddressCreateRequest(
                 name="Sarah",
                 company="We Sell Guitars",
@@ -26,9 +26,9 @@ class TestPurchaseLabelInternational:
                 is_residential=False,
                 metadata="We Sell Guitars HQ"
             ))
-        assert create_address_response.address is not None
+        assert address.address is not None
 
-        create_customs_declaration_response = api.customs_declarations.create_customs_declaration(
+        customs_declaration = api.customs_declarations.create(
             customs_declaration_create_request=CustomsDeclarationCreateRequest(
                 contents_type=CustomsDeclarationCreateRequestContentsType.MERCHANDISE,
                 non_delivery_option=CustomsDeclarationCreateRequestNonDeliveryOption.RETURN,
@@ -47,11 +47,11 @@ class TestPurchaseLabelInternational:
                     )
                 ]
             ))
-        assert create_customs_declaration_response.customs_declaration is not None
+        assert customs_declaration is not None
 
-        shipment_create_response = api.shipments.create_shipment(
+        shipment = api.shipments.create(
             shipment_create_request=ShipmentCreateRequest(
-                address_from=create_address_response.address.object_id,
+                address_from=address.object_id,
                 address_to=AddressCreateRequest(
                     name="Tom Marks",
                     street1="159 Broadhurst Gardens",
@@ -71,7 +71,7 @@ class TestPurchaseLabelInternational:
                         mass_unit=WeightUnit.LB
                     )
                 ],
-                customs_declaration=create_customs_declaration_response.customs_declaration.object_id,
+                customs_declaration=customs_declaration.object_id,
                 extra=ShipmentExtra(
                     insurance=Insurance(
                         amount="200",
@@ -80,4 +80,4 @@ class TestPurchaseLabelInternational:
                     )
                 )
             ))
-        assert shipment_create_response.shipment is not None
+        assert shipment is not None
