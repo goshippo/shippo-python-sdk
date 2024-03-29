@@ -27,7 +27,7 @@ class TrackingStatus:
         
     
     
-    def create_track(self, shippo_api_version: Optional[str] = None, tracks_request: Optional[components.TracksRequest] = None) -> operations.CreateTrackResponse:
+    def create(self, shippo_api_version: Optional[str] = None, tracks_request: Optional[components.TracksRequest] = None) -> operations.CreateTrackResponse:
         r"""Register a tracking webhook
         Registers a webhook that will send HTTP notifications to you when the status of your tracked package changes. For more details on creating a webhook, see our guides on <a href=\"https://docs.goshippo.com/docs/tracking/webhooks/\">Webhooks</a> and <a href=\"https://docs.goshippo.com/docs/tracking/tracking/\">Tracking</a>.
         """
@@ -86,7 +86,7 @@ class TrackingStatus:
                 raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code == 400:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
-                out = utils.unmarshal_json(http_res.text, errors.Tracks400Response)
+                out = utils.unmarshal_json(http_res.text, errors.BadRequestWithDetail)
                 raise out
             else:
                 content_type = http_res.headers.get('Content-Type')
@@ -100,7 +100,7 @@ class TrackingStatus:
 
     
     
-    def get_track(self, tracking_number: str, carrier: str, shippo_api_version: Optional[str] = None) -> operations.GetTrackResponse:
+    def get(self, tracking_number: str, carrier: str, shippo_api_version: Optional[str] = None) -> operations.GetTrackResponse:
         r"""Get a tracking status
         Returns the tracking status of a shipment using a carrier name and a tracking number.
         """
@@ -157,7 +157,7 @@ class TrackingStatus:
                 raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
         elif http_res.status_code == 400:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
-                out = utils.unmarshal_json(http_res.text, errors.Tracks400Response)
+                out = utils.unmarshal_json(http_res.text, errors.BadRequestWithDetail)
                 raise out
             else:
                 content_type = http_res.headers.get('Content-Type')

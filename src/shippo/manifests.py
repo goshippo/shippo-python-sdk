@@ -24,7 +24,7 @@ class Manifests:
         
     
     
-    def list_manifests(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListManifestsResponse:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListManifestsResponse:
         r"""List all manifests
         Returns a list of all manifest objects.
         """
@@ -89,7 +89,7 @@ class Manifests:
 
     
     
-    def create_manifest(self, shippo_api_version: Optional[str] = None, manifest_create_request: Optional[components.ManifestCreateRequest] = None) -> operations.CreateManifestResponse:
+    def create(self, shippo_api_version: Optional[str] = None, manifest_create_request: Optional[components.ManifestCreateRequest] = None) -> operations.CreateManifestResponse:
         r"""Create a new manifest
         Creates a new manifest object.
         """
@@ -155,7 +155,7 @@ class Manifests:
 
     
     
-    def get_manifest(self, manifest_id: str, shippo_api_version: Optional[str] = None) -> operations.GetManifestResponse:
+    def get(self, manifest_id: str, shippo_api_version: Optional[str] = None) -> operations.GetManifestResponse:
         r"""Retrieve a manifest
         Returns an existing manifest using an object ID.
         """

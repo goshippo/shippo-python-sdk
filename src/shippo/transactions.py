@@ -18,7 +18,7 @@ class Transactions:
         
     
     
-    def list_transactions(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListTransactionsResponse:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListTransactionsResponse:
         r"""List all shipping labels
         Returns a list of all transaction objects.
         """
@@ -83,7 +83,7 @@ class Transactions:
 
     
     
-    def create_transaction(self, shippo_api_version: Optional[str] = None, request_body: Optional[Union[components.TransactionCreateRequest, components.InstantTransactionRequestBody]] = None) -> operations.CreateTransactionResponse:
+    def create(self, shippo_api_version: Optional[str] = None, request_body: Optional[Union[components.TransactionCreateRequest, components.InstantTransactionRequestBody]] = None) -> operations.CreateTransactionResponse:
         r"""Create a shipping label
         Creates a new transaction object and purchases the shipping label using a rate object that has previously been created. <br> OR <br> Creates a new transaction object and purchases the shipping label instantly using shipment details, an existing carrier account, and an existing service level token.
         """
@@ -149,7 +149,7 @@ class Transactions:
 
     
     
-    def get_transaction(self, transaction_id: str, shippo_api_version: Optional[str] = None) -> operations.GetTransactionResponse:
+    def get(self, transaction_id: str, shippo_api_version: Optional[str] = None) -> operations.GetTransactionResponse:
         r"""Retrieve a shipping label
         Returns an existing transaction using an object ID.
         """

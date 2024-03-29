@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: 0bf2dad708604fc3509f94befece514c
+  docChecksum: aca3a63b6749e3b713cb0c95f1e09457
   docVersion: "2018-02-08"
   speakeasyVersion: 1.228.1
   generationVersion: 2.292.0
-  releaseVersion: 0.0.6
-  configChecksum: 789171a6b0ac7ab636f75e58458bed6f
+  releaseVersion: 0.1.0
+  configChecksum: 113f873a79ae1b26a828a13174c6f131
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
@@ -17,6 +17,8 @@ features:
     flattening: 2.81.1
     globalSecurity: 2.83.5
     globalServerURLs: 2.82.2
+    includes: 2.81.1
+    nameOverrides: 2.81.1
     responseFormat: 0.1.0
     unions: 2.82.6
 generatedFiles:
@@ -91,7 +93,7 @@ generatedFiles:
   - src/shippo/models/operations/listshipmentrates.py
   - src/shippo/models/operations/listshipmentratesbycurrencycode.py
   - src/shippo/models/operations/createrefund.py
-  - src/shippo/models/operations/listrefund.py
+  - src/shippo/models/operations/listrefunds.py
   - src/shippo/models/operations/getrefund.py
   - src/shippo/models/operations/listservicegroups.py
   - src/shippo/models/operations/createservicegroup.py
@@ -126,13 +128,7 @@ generatedFiles:
   - src/shippo/models/components/errormessage.py
   - src/shippo/models/components/shipmentcreaterequest.py
   - src/shippo/models/components/parcelcreaterequest.py
-  - src/shippo/models/components/parceltemplatefedex.py
-  - src/shippo/models/components/parceltemplateups.py
-  - src/shippo/models/components/parceltemplateusps.py
-  - src/shippo/models/components/parceltemplatedhlecommerce.py
-  - src/shippo/models/components/parceltemplatedpduk.py
-  - src/shippo/models/components/parceltemplatecouriersplease.py
-  - src/shippo/models/components/parceltemplatearamexaustralia.py
+  - src/shippo/models/components/parceltemplateenumset.py
   - src/shippo/models/components/weightunit.py
   - src/shippo/models/components/distanceunittemplate.py
   - src/shippo/models/components/shipmentextra.py
@@ -242,9 +238,9 @@ generatedFiles:
   - src/shippo/models/components/shippoaccount.py
   - src/shippo/models/components/shippoaccountupdaterequest.py
   - src/shippo/models/components/security.py
+  - src/shippo/models/components/servicelevelenumset.py
   - src/shippo/models/errors/badrequestwithdetail.py
   - src/shippo/models/errors/badrequestwitherror.py
-  - src/shippo/models/errors/tracks400response.py
   - src/shippo/models/__init__.py
   - src/shippo/models/errors/__init__.py
   - src/shippo/models/operations/__init__.py
@@ -334,8 +330,8 @@ generatedFiles:
   - docs/models/operations/listshipmentratesbycurrencycoderesponse.md
   - docs/models/operations/createrefundrequest.md
   - docs/models/operations/createrefundresponse.md
-  - docs/models/operations/listrefundrequest.md
-  - docs/models/operations/listrefundresponse.md
+  - docs/models/operations/listrefundsrequest.md
+  - docs/models/operations/listrefundsresponse.md
   - docs/models/operations/getrefundrequest.md
   - docs/models/operations/getrefundresponse.md
   - docs/models/operations/listservicegroupsrequest.md
@@ -402,14 +398,14 @@ generatedFiles:
   - docs/models/components/parcels.md
   - docs/models/components/shipmentcreaterequest.md
   - docs/models/components/parcelcreaterequest.md
-  - docs/models/components/parceltemplateenumset.md
-  - docs/models/components/parceltemplatefedex.md
-  - docs/models/components/parceltemplateups.md
-  - docs/models/components/parceltemplateusps.md
-  - docs/models/components/parceltemplatedhlecommerce.md
-  - docs/models/components/parceltemplatedpduk.md
-  - docs/models/components/parceltemplatecouriersplease.md
   - docs/models/components/parceltemplatearamexaustralia.md
+  - docs/models/components/parceltemplatecouriersplease.md
+  - docs/models/components/parceltemplatedpduk.md
+  - docs/models/components/parceltemplatedhlecommerce.md
+  - docs/models/components/parceltemplateusps.md
+  - docs/models/components/parceltemplateups.md
+  - docs/models/components/parceltemplatefedex.md
+  - docs/models/components/parceltemplateenumset.md
   - docs/models/components/weightunit.md
   - docs/models/components/distanceunittemplate.md
   - docs/models/components/ancillaryendorsement.md
@@ -572,9 +568,49 @@ generatedFiles:
   - docs/models/components/shippoaccount.md
   - docs/models/components/shippoaccountupdaterequest.md
   - docs/models/components/security.md
+  - docs/models/components/servicelevelswyft.md
+  - docs/models/components/servicelevelveho.md
+  - docs/models/components/serviceleveluds.md
+  - docs/models/components/servicelevelevriuk.md
+  - docs/models/components/servicelevellasership.md
+  - docs/models/components/servicelevelontrac.md
+  - docs/models/components/servicelevelsendle.md
+  - docs/models/components/servicelevelroyalmail.md
+  - docs/models/components/servicelevelepostglobal.md
+  - docs/models/components/servicelevelpostitaliane.md
+  - docs/models/components/servicelevelparcelforce.md
+  - docs/models/components/servicelevelmaergo.md
+  - docs/models/components/servicelevelmondialrelay.md
+  - docs/models/components/servicelevellso.md
+  - docs/models/components/servicelevelglsus.md
+  - docs/models/components/servicelevelglobegistics.md
+  - docs/models/components/servicelevelaramexaustralia.md
+  - docs/models/components/serviceleveldeutschepost.md
+  - docs/models/components/serviceleveldpduk.md
+  - docs/models/components/serviceleveldpdde.md
+  - docs/models/components/serviceleveldhlgermany.md
+  - docs/models/components/serviceleveldhlecommerce.md
+  - docs/models/components/serviceleveldhlexpress.md
+  - docs/models/components/servicelevelpurolator.md
+  - docs/models/components/servicelevelcolissimo.md
+  - docs/models/components/servicelevelcorreosespana.md
+  - docs/models/components/servicelevelcouriersplease.md
+  - docs/models/components/servicelevelchronopost.md
+  - docs/models/components/servicelevelcdl.md
+  - docs/models/components/servicelevelcanadapost.md
+  - docs/models/components/servicelevelbettertrucks.md
+  - docs/models/components/servicelevelapg.md
+  - docs/models/components/servicelevelaxlehire.md
+  - docs/models/components/servicelevelaustraliapost.md
+  - docs/models/components/servicelevelasendia.md
+  - docs/models/components/servicelevelapcpostal.md
+  - docs/models/components/servicelevelairterra.md
+  - docs/models/components/servicelevelups.md
+  - docs/models/components/servicelevelfedex.md
+  - docs/models/components/servicelevelusps.md
+  - docs/models/components/servicelevelenumset.md
   - docs/models/errors/badrequestwithdetail.md
   - docs/models/errors/badrequestwitherror.md
-  - docs/models/errors/tracks400response.md
   - docs/sdks/shippo/README.md
   - docs/sdks/addresses/README.md
   - docs/sdks/batches/README.md

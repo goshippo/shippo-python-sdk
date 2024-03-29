@@ -18,7 +18,7 @@ class Refunds:
         
     
     
-    def create_refund(self, shippo_api_version: Optional[str] = None, refund_request_body: Optional[components.RefundRequestBody] = None) -> operations.CreateRefundResponse:
+    def create(self, shippo_api_version: Optional[str] = None, refund_request_body: Optional[components.RefundRequestBody] = None) -> operations.CreateRefundResponse:
         r"""Create a refund
         Creates a new refund object.
         """
@@ -84,12 +84,12 @@ class Refunds:
 
     
     
-    def list_refund(self, shippo_api_version: Optional[str] = None) -> operations.ListRefundResponse:
+    def list(self, shippo_api_version: Optional[str] = None) -> operations.ListRefundsResponse:
         r"""List all refunds
         Returns a list all refund objects.
         """
-        hook_ctx = HookContext(operation_id='ListRefund', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.ListRefundRequest(
+        hook_ctx = HookContext(operation_id='ListRefunds', oauth2_scopes=[], security_source=self.sdk_configuration.security)
+        request = operations.ListRefundsRequest(
             shippo_api_version=shippo_api_version,
         )
         
@@ -128,7 +128,7 @@ class Refunds:
             http_res = result
         
         
-        res = operations.ListRefundResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
+        res = operations.ListRefundsResponse(http_meta=components.HTTPMetadata(request=req, response=http_res))
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type'), 'application/json'):                
@@ -146,7 +146,7 @@ class Refunds:
 
     
     
-    def get_refund(self, refund_id: str, shippo_api_version: Optional[str] = None) -> operations.GetRefundResponse:
+    def get(self, refund_id: str, shippo_api_version: Optional[str] = None) -> operations.GetRefundResponse:
         r"""Retrieve a refund
         Returns an existing rate using a rate object ID.
         """

@@ -8,11 +8,11 @@ A rate is the cost to ship a parcel from a carrier. The rate object details the 
 
 ### Available Operations
 
-* [get_rate](#get_rate) - Retrieve a rate
+* [get](#get) - Retrieve a rate
 * [list_shipment_rates](#list_shipment_rates) - Retrieve shipment rates
 * [list_shipment_rates_by_currency_code](#list_shipment_rates_by_currency_code) - Retrieve shipment rates in currency
 
-## get_rate
+## get
 
 Returns an existing rate using a rate object ID.
 
@@ -26,7 +26,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.rates.get_rate(rate_id='<value>', shippo_api_version='<value>')
+res = s.rates.get(rate_id='<value>', shippo_api_version='<value>')
 
 if res.rate is not None:
     # handle response

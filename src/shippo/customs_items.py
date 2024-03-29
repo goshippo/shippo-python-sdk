@@ -18,7 +18,7 @@ class CustomsItems:
         
     
     
-    def list_customs_items(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListCustomsItemsResponse:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListCustomsItemsResponse:
         r"""List all customs items
         Returns a list all customs items objects.
         """
@@ -83,7 +83,7 @@ class CustomsItems:
 
     
     
-    def create_customs_item(self, shippo_api_version: Optional[str] = None, customs_item_base: Optional[components.CustomsItemBase] = None) -> operations.CreateCustomsItemResponse:
+    def create(self, shippo_api_version: Optional[str] = None, customs_item_base: Optional[components.CustomsItemBase] = None) -> operations.CreateCustomsItemResponse:
         r"""Create a new customs item
         Creates a new customs item object.
         """
@@ -149,7 +149,7 @@ class CustomsItems:
 
     
     
-    def get_customs_item(self, customs_item_id: str, page: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.GetCustomsItemResponse:
+    def get(self, customs_item_id: str, page: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.GetCustomsItemResponse:
         r"""Retrieve a customs item
         Returns an existing customs item using an object ID
         """

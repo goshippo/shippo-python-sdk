@@ -29,7 +29,7 @@ class Orders:
         
     
     
-    def list_orders(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListOrdersResponse:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListOrdersResponse:
         r"""List all orders
         Returns a list of all order objects.
         """
@@ -94,7 +94,7 @@ class Orders:
 
     
     
-    def create_order(self, shippo_api_version: Optional[str] = None, order_create_request: Optional[components.OrderCreateRequest] = None) -> operations.CreateOrderResponse:
+    def create(self, shippo_api_version: Optional[str] = None, order_create_request: Optional[components.OrderCreateRequest] = None) -> operations.CreateOrderResponse:
         r"""Create a new order
         Creates a new order object.
         """
@@ -160,7 +160,7 @@ class Orders:
 
     
     
-    def get_order(self, order_id: str, shippo_api_version: Optional[str] = None) -> operations.GetOrderResponse:
+    def get(self, order_id: str, shippo_api_version: Optional[str] = None) -> operations.GetOrderResponse:
         r"""Retrieve an order
         Retrieves an existing order using an object ID.
         """

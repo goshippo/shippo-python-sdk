@@ -14,11 +14,11 @@ The following codes and messages are the possible errors that may occur when cre
 
 ### Available Operations
 
-* [list_manifests](#list_manifests) - List all manifests
-* [create_manifest](#create_manifest) - Create a new manifest
-* [get_manifest](#get_manifest) - Retrieve a manifest
+* [list](#list) - List all manifests
+* [create](#create) - Create a new manifest
+* [get](#get) - Retrieve a manifest
 
-## list_manifests
+## list
 
 Returns a list of all manifest objects.
 
@@ -32,7 +32,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.manifests.list_manifests(page=1, results=25, shippo_api_version='<value>')
+res = s.manifests.list(page=1, results=25, shippo_api_version='<value>')
 
 if res.manifest_paginated_list is not None:
     # handle response
@@ -58,7 +58,7 @@ if res.manifest_paginated_list is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## create_manifest
+## create
 
 Creates a new manifest object.
 
@@ -73,7 +73,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.manifests.create_manifest(shippo_api_version='<value>', manifest_create_request=components.ManifestCreateRequest(
+res = s.manifests.create(shippo_api_version='<value>', manifest_create_request=components.ManifestCreateRequest(
     carrier_account='adcfdddf8ec64b84ad22772bce3ea37a',
     shipment_date='2014-05-16T23:59:59Z',
     address_from=components.AddressCreateRequest(
@@ -120,7 +120,7 @@ if res.manifest is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## get_manifest
+## get
 
 Returns an existing manifest using an object ID.
 
@@ -134,7 +134,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.manifests.get_manifest(manifest_id='<value>', shippo_api_version='<value>')
+res = s.manifests.get(manifest_id='<value>', shippo_api_version='<value>')
 
 if res.manifest is not None:
     # handle response

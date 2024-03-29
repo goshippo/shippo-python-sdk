@@ -18,7 +18,7 @@ class Addresses:
         
     
     
-    def list_addresses(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListAddressesResponse:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListAddressesResponse:
         r"""List all addresses
         Returns a list of all address objects that have been created in this account.
         """
@@ -83,7 +83,7 @@ class Addresses:
 
     
     
-    def create_address(self, shippo_api_version: Optional[str] = None, address_create_request: Optional[components.AddressCreateRequest] = None) -> operations.CreateAddressResponse:
+    def create(self, shippo_api_version: Optional[str] = None, address_create_request: Optional[components.AddressCreateRequest] = None) -> operations.CreateAddressResponse:
         r"""Create a new address
         Creates a new address object. You can use address objects to create new shipments, calculate rates, and to create orders.
         """
@@ -149,7 +149,7 @@ class Addresses:
 
     
     
-    def get_address(self, address_id: str, shippo_api_version: Optional[str] = None) -> operations.GetAddressResponse:
+    def get(self, address_id: str, shippo_api_version: Optional[str] = None) -> operations.GetAddressResponse:
         r"""Retrieve an address
         Returns an existing address using an object ID.
         """
@@ -212,7 +212,7 @@ class Addresses:
 
     
     
-    def validate_address(self, address_id: str, shippo_api_version: Optional[str] = None) -> operations.ValidateAddressResponse:
+    def validate(self, address_id: str, shippo_api_version: Optional[str] = None) -> operations.ValidateAddressResponse:
         r"""Validate an address
         Validates an existing address using an object ID
         """

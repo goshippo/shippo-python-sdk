@@ -22,7 +22,7 @@ class Shipments:
         
     
     
-    def list_shipments(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListShipmentsResponse:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> operations.ListShipmentsResponse:
         r"""List all shipments
         Returns a list of all shipment objects.<br><br>
         In order to filter results, you must use the below path parameters. 
@@ -104,7 +104,7 @@ class Shipments:
 
     
     
-    def create_shipment(self, shippo_api_version: Optional[str] = None, shipment_create_request: Optional[components.ShipmentCreateRequest] = None) -> operations.CreateShipmentResponse:
+    def create(self, shippo_api_version: Optional[str] = None, shipment_create_request: Optional[components.ShipmentCreateRequest] = None) -> operations.CreateShipmentResponse:
         r"""Create a new shipment
         Creates a new shipment object.
         """
@@ -170,7 +170,7 @@ class Shipments:
 
     
     
-    def get_shipment(self, shipment_id: str, shippo_api_version: Optional[str] = None) -> operations.GetShipmentResponse:
+    def get(self, shipment_id: str, shippo_api_version: Optional[str] = None) -> operations.GetShipmentResponse:
         r"""Retrieve a shipment
         Returns an existing shipment using an object ID
         """

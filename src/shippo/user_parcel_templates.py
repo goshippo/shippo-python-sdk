@@ -23,7 +23,7 @@ class UserParcelTemplates:
         
     
     
-    def list_user_parcel_templates(self, shippo_api_version: Optional[str] = None) -> operations.ListUserParcelTemplatesResponse:
+    def list(self, shippo_api_version: Optional[str] = None) -> operations.ListUserParcelTemplatesResponse:
         r"""List all user parcel templates
         Returns a list all of all user parcel template objects.
         """
@@ -85,7 +85,7 @@ class UserParcelTemplates:
 
     
     
-    def create_user_parcel_template(self, shippo_api_version: Optional[str] = None, user_parcel_template_create_request: Optional[Union[components.UserParcelTemplateWithCarrierTemplateCreateRequest, components.UserParcelTemplateWithoutCarrierTemplateCreateRequest]] = None) -> operations.CreateUserParcelTemplateResponse:
+    def create(self, shippo_api_version: Optional[str] = None, user_parcel_template_create_request: Optional[Union[components.UserParcelTemplateWithCarrierTemplateCreateRequest, components.UserParcelTemplateWithoutCarrierTemplateCreateRequest]] = None) -> operations.CreateUserParcelTemplateResponse:
         r"""Create a new user parcel template
         Creates a new user parcel template. <br>You can choose to create a
         parcel template using a preset carrier template as a starting point, or
@@ -157,7 +157,7 @@ class UserParcelTemplates:
 
     
     
-    def delete_user_parcel_template(self, user_parcel_template_object_id: str, shippo_api_version: Optional[str] = None) -> operations.DeleteUserParcelTemplateResponse:
+    def delete(self, user_parcel_template_object_id: str, shippo_api_version: Optional[str] = None) -> operations.DeleteUserParcelTemplateResponse:
         r"""Delete a user parcel template
         Deletes a user parcel template using an object ID.
         """
@@ -215,7 +215,7 @@ class UserParcelTemplates:
 
     
     
-    def get_user_parcel_template(self, user_parcel_template_object_id: str, shippo_api_version: Optional[str] = None) -> operations.GetUserParcelTemplateResponse:
+    def get(self, user_parcel_template_object_id: str, shippo_api_version: Optional[str] = None) -> operations.GetUserParcelTemplateResponse:
         r"""Retrieves a user parcel template
         Returns the parcel template information for a specific user parcel
         template, identified by the object ID.
@@ -279,7 +279,7 @@ class UserParcelTemplates:
 
     
     
-    def update_user_parcel_template(self, user_parcel_template_object_id: str, shippo_api_version: Optional[str] = None, user_parcel_template_update_request: Optional[components.UserParcelTemplateUpdateRequest] = None) -> operations.UpdateUserParcelTemplateResponse:
+    def update(self, user_parcel_template_object_id: str, shippo_api_version: Optional[str] = None, user_parcel_template_update_request: Optional[components.UserParcelTemplateUpdateRequest] = None) -> operations.UpdateUserParcelTemplateResponse:
         r"""Update an existing user parcel template
         Updates an existing user parcel template.
         """

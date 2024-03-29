@@ -17,10 +17,10 @@ payloads look like.
 
 ### Available Operations
 
-* [create_track](#create_track) - Register a tracking webhook
-* [get_track](#get_track) - Get a tracking status
+* [create](#create) - Register a tracking webhook
+* [get](#get) - Get a tracking status
 
-## create_track
+## create
 
 Registers a webhook that will send HTTP notifications to you when the status of your tracked package changes. For more details on creating a webhook, see our guides on <a href="https://docs.goshippo.com/docs/tracking/webhooks/">Webhooks</a> and <a href="https://docs.goshippo.com/docs/tracking/tracking/">Tracking</a>.
 
@@ -35,7 +35,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.tracking_status.create_track(shippo_api_version='<value>', tracks_request=components.TracksRequest(
+res = s.tracking_status.create(shippo_api_version='<value>', tracks_request=components.TracksRequest(
     carrier='usps',
     tracking_number='9205590164917312751089',
     metadata='Order 000123',
@@ -60,12 +60,12 @@ if res.track is not None:
 **[operations.CreateTrackResponse](../../models/operations/createtrackresponse.md)**
 ### Errors
 
-| Error Object             | Status Code              | Content Type             |
-| ------------------------ | ------------------------ | ------------------------ |
-| errors.Tracks400Response | 400                      | application/json         |
-| errors.SDKError          | 4x-5xx                   | */*                      |
+| Error Object                | Status Code                 | Content Type                |
+| --------------------------- | --------------------------- | --------------------------- |
+| errors.BadRequestWithDetail | 400                         | application/json            |
+| errors.SDKError             | 4x-5xx                      | */*                         |
 
-## get_track
+## get
 
 Returns the tracking status of a shipment using a carrier name and a tracking number.
 
@@ -79,7 +79,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.tracking_status.get_track(tracking_number='<value>', carrier='<value>', shippo_api_version='<value>')
+res = s.tracking_status.get(tracking_number='<value>', carrier='<value>', shippo_api_version='<value>')
 
 if res.track is not None:
     # handle response
@@ -101,7 +101,7 @@ if res.track is not None:
 **[operations.GetTrackResponse](../../models/operations/gettrackresponse.md)**
 ### Errors
 
-| Error Object             | Status Code              | Content Type             |
-| ------------------------ | ------------------------ | ------------------------ |
-| errors.Tracks400Response | 400                      | application/json         |
-| errors.SDKError          | 4x-5xx                   | */*                      |
+| Error Object                | Status Code                 | Content Type                |
+| --------------------------- | --------------------------- | --------------------------- |
+| errors.BadRequestWithDetail | 400                         | application/json            |
+| errors.SDKError             | 4x-5xx                      | */*                         |

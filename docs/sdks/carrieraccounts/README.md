@@ -9,14 +9,14 @@ Carriers are the companies who deliver your package. Shippo uses Carrier account
 
 ### Available Operations
 
-* [list_carrier_accounts](#list_carrier_accounts) - List all carrier accounts
-* [create_carrier_account](#create_carrier_account) - Create a new carrier account
-* [get_carrier_account](#get_carrier_account) - Retrieve a carrier account
-* [update_carrier_account](#update_carrier_account) - Update a carrier account
-* [register_carrier_account](#register_carrier_account) - Add a Shippo carrier account
-* [get_carrier_registration_status](#get_carrier_registration_status) - Get Carrier Registration status
+* [list](#list) - List all carrier accounts
+* [create](#create) - Create a new carrier account
+* [get](#get) - Retrieve a carrier account
+* [update](#update) - Update a carrier account
+* [register](#register) - Add a Shippo carrier account
+* [get_registration_status](#get_registration_status) - Get Carrier Registration status
 
-## list_carrier_accounts
+## list
 
 Returns a list of all carrier accounts connected to your Shippo account. These carrier accounts include both Shippo carrier accounts and your own carrier accounts that you have connected to your Shippo account.
 
@@ -36,7 +36,7 @@ s = shippo.Shippo(
 
 req = operations.ListCarrierAccountsRequest()
 
-res = s.carrier_accounts.list_carrier_accounts(req)
+res = s.carrier_accounts.list(req)
 
 if res.carrier_account_paginated_list is not None:
     # handle response
@@ -60,7 +60,7 @@ if res.carrier_account_paginated_list is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## create_carrier_account
+## create
 
 Creates a new carrier account or connects an existing carrier account to the Shippo account.
 
@@ -75,7 +75,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.carrier_accounts.create_carrier_account(shippo_api_version='<value>', connect_existing_own_ups_account_request=components.ConnectExistingOwnUPSAccountRequest(
+res = s.carrier_accounts.create(shippo_api_version='<value>', connect_existing_own_ups_account_request=components.ConnectExistingOwnUPSAccountRequest(
     account_id='<value>',
     active=False,
     parameters=components.UPSConnectExistingOwnAccountParameters(
@@ -131,7 +131,7 @@ if res.carrier_account is not None:
 | errors.BadRequestWithDetail | 400                         | application/json            |
 | errors.SDKError             | 4x-5xx                      | */*                         |
 
-## get_carrier_account
+## get
 
 Returns an existing carrier account using an object ID.
 
@@ -145,7 +145,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.carrier_accounts.get_carrier_account(carrier_account_id='<value>', shippo_api_version='<value>')
+res = s.carrier_accounts.get(carrier_account_id='<value>', shippo_api_version='<value>')
 
 if res.carrier_account is not None:
     # handle response
@@ -170,7 +170,7 @@ if res.carrier_account is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## update_carrier_account
+## update
 
 Updates an existing carrier account object. The account_id and carrier can't be updated. This is because they form the unique identifier together.
 
@@ -185,7 +185,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.carrier_accounts.update_carrier_account(carrier_account_id='<value>', shippo_api_version='<value>', carrier_account_base=components.CarrierAccountBase(
+res = s.carrier_accounts.update(carrier_account_id='<value>', shippo_api_version='<value>', carrier_account_base=components.CarrierAccountBase(
     account_id='****',
     carrier='usps',
 ))
@@ -214,7 +214,7 @@ if res.carrier_account is not None:
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4x-5xx          | */*             |
 
-## register_carrier_account
+## register
 
 Adds a Shippo carrier account
 
@@ -229,11 +229,9 @@ s = shippo.Shippo(
 )
 
 
-res = s.carrier_accounts.register_carrier_account(shippo_api_version='<value>', request_body=components.CarrierAccountDHLExpressCreateRequest(
-    carrier='dhl_express',
-    parameters=components.CarrierAccountDHLExpressCreateRequestParameters(
-        user_accepted_terms_and_conditions=False,
-    ),
+res = s.carrier_accounts.register(shippo_api_version='<value>', request_body=components.CarrierAccountColissimoCreateRequest(
+    carrier='colissimo',
+    parameters=components.CarrierAccountColissimoCreateRequestParameters(),
 ))
 
 if res.carrier_account is not None:
@@ -260,7 +258,7 @@ if res.carrier_account is not None:
 | errors.BadRequestWithError | 400                        | application/json           |
 | errors.SDKError            | 4x-5xx                     | */*                        |
 
-## get_carrier_registration_status
+## get_registration_status
 
 Returns the registration status for the given account for the given carrier
 
@@ -275,7 +273,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.carrier_accounts.get_carrier_registration_status(carrier=operations.Carrier.CANADA_POST, shippo_api_version='<value>')
+res = s.carrier_accounts.get_registration_status(carrier=operations.Carrier.USPS, shippo_api_version='<value>')
 
 if res.carrier_account_registration_status is not None:
     # handle response

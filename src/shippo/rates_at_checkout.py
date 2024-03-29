@@ -25,7 +25,7 @@ class RatesAtCheckout:
         
     
     
-    def create_live_rate(self, shippo_api_version: Optional[str] = None, live_rate_create_request: Optional[components.LiveRateCreateRequest] = None) -> operations.CreateLiveRateResponse:
+    def create(self, shippo_api_version: Optional[str] = None, live_rate_create_request: Optional[components.LiveRateCreateRequest] = None) -> operations.CreateLiveRateResponse:
         r"""Generate a live rates request
         Initiates a live rates request. Include either the object ID for
         an existing address record or a fully formed address object when entering

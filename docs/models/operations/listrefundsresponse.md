@@ -1,4 +1,4 @@
-# ListRefundResponse
+# ListRefundsResponse
 
 
 ## Fields
