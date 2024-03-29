@@ -20,27 +20,6 @@ pip install shippo
 ```
 <!-- End SDK Installation [installation] -->
 
-
-<!-- Start SDK Example Usage [usage] -->
-## SDK Example Usage
-
-### Example
-
-```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
-)
-
-
-res = s.addresses.list_addresses(page=1, results=25)
-
-if res.address_paginated_list is not None:
-    # handle response
-    pass
-
-```
 <!-- No SDK Example Usage [usage] -->
 <!-- No Error Handling [errors] -->
 <!-- No Server Selection [server] -->
