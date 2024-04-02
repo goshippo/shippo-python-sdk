@@ -54,7 +54,7 @@ if res is not None:
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4x-5xx          | */*             |
+| errors.SDKError | 4xx-5xx         | */*             |
 
 ## create
 
@@ -72,7 +72,7 @@ s = shippo.Shippo(
 
 
 res = s.parcels.create(shippo_api_version='<value>', parcel_request=components.ParcelRequest(
-    distance_unit=components.DistanceUnitTemplate.IN,
+    distance_unit=components.DistanceUnit.IN,
     height='1',
     length='1',
     mass_unit=components.WeightUnit.LB,
@@ -101,7 +101,7 @@ if res is not None:
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4x-5xx          | */*             |
+| errors.SDKError | 4xx-5xx         | */*             |
 
 ## get
 
@@ -140,4 +140,4 @@ if res is not None:
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4x-5xx          | */*             |
+| errors.SDKError | 4xx-5xx         | */*             |

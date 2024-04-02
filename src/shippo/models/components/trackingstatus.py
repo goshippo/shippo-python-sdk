@@ -3,22 +3,13 @@
 from __future__ import annotations
 import dataclasses
 import dateutil.parser
+from .trackingstatusenum import TrackingStatusEnum
 from .trackingstatuslocationbase import TrackingStatusLocationBase
 from .trackingstatussubstatus import TrackingStatusSubstatus
 from dataclasses_json import Undefined, dataclass_json
 from datetime import datetime
-from enum import Enum
 from shippo import utils
 from typing import Optional
-
-class TrackingStatusStatus(str, Enum):
-    r"""Indicates the high level status of the shipment."""
-    UNKNOWN = 'UNKNOWN'
-    PRE_TRANSIT = 'PRE_TRANSIT'
-    TRANSIT = 'TRANSIT'
-    DELIVERED = 'DELIVERED'
-    RETURNED = 'RETURNED'
-    FAILURE = 'FAILURE'
 
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
@@ -30,7 +21,7 @@ class TrackingStatus:
     object_created: datetime = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_created'), 'encoder': utils.datetimeisoformat(False), 'decoder': dateutil.parser.isoparse }})
     object_id: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_id') }})
     object_updated: datetime = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_updated'), 'encoder': utils.datetimeisoformat(False), 'decoder': dateutil.parser.isoparse }})
-    status: TrackingStatusStatus = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('status') }})
+    status: TrackingStatusEnum = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('status') }})
     r"""Indicates the high level status of the shipment."""
     status_date: datetime = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('status_date'), 'encoder': utils.datetimeisoformat(False), 'decoder': dateutil.parser.isoparse }})
     r"""Date and time when the carrier scanned this tracking event. This is displayed in UTC."""

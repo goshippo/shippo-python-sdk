@@ -1,5 +1,5 @@
 import shippo
-from shippo.models.components import Carriers, DistanceUnitTemplate, WeightUnit, \
+from shippo.models.components import Carriers, DistanceUnit, WeightUnit, \
     AddressCreateRequest, ShipmentCreateRequest, InstantTransactionRequestBody, \
     ParcelCreateRequest
 from tests.helpers_custom import get_carrier_account
@@ -41,7 +41,7 @@ class TestInstalabel:
                             length="5",
                             width="5",
                             height="5",
-                            distance_unit=DistanceUnitTemplate.CM,
+                            distance_unit=DistanceUnit.CM,
                             weight="2",
                             mass_unit=WeightUnit.LB
                         )

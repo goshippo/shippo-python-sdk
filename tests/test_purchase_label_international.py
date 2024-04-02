@@ -3,7 +3,7 @@ import pytest
 import shippo
 from shippo.models.components import AddressCreateRequest, CustomsDeclarationCreateRequest, \
     CustomsDeclarationCreateRequestIncoterm, CustomsItemBase, WeightUnit, CustomsDeclarationCreateRequestContentsType, \
-    CustomsDeclarationCreateRequestNonDeliveryOption, ShipmentCreateRequest, ParcelCreateRequest, DistanceUnitTemplate, \
+    CustomsDeclarationCreateRequestNonDeliveryOption, ShipmentCreateRequest, ParcelCreateRequest, DistanceUnit, \
     ShipmentExtra, Insurance
 
 
@@ -67,7 +67,7 @@ class TestPurchaseLabelInternational:
                         length="10",
                         width="5",
                         height="4",
-                        distance_unit=DistanceUnitTemplate.IN,
+                        distance_unit=DistanceUnit.IN,
                         mass_unit=WeightUnit.LB
                     )
                 ],

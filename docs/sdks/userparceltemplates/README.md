@@ -55,7 +55,7 @@ if res is not None:
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4x-5xx          | */*             |
+| errors.SDKError | 4xx-5xx         | */*             |
 
 ## create
 
@@ -104,7 +104,7 @@ if res is not None:
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4x-5xx          | */*             |
+| errors.SDKError | 4xx-5xx         | */*             |
 
 ## delete
 
@@ -143,7 +143,7 @@ if res is not None:
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4x-5xx          | */*             |
+| errors.SDKError | 4xx-5xx         | */*             |
 
 ## get
 
@@ -183,7 +183,7 @@ if res is not None:
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4x-5xx          | */*             |
+| errors.SDKError | 4xx-5xx         | */*             |
 
 ## update
 
@@ -201,7 +201,7 @@ s = shippo.Shippo(
 
 
 res = s.user_parcel_templates.update(user_parcel_template_object_id='<value>', shippo_api_version='<value>', user_parcel_template_update_request=components.UserParcelTemplateUpdateRequest(
-    distance_unit=components.DistanceUnitUserTemplate.IN,
+    distance_unit=components.DistanceUnit.IN,
     height='6',
     length='10',
     name='My Custom Template',
@@ -232,4 +232,4 @@ if res is not None:
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4x-5xx          | */*             |
+| errors.SDKError | 4xx-5xx         | */*             |

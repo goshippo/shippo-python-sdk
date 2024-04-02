@@ -1,24 +1,24 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: aca3a63b6749e3b713cb0c95f1e09457
+  docChecksum: e240e27a9d6acb009884e70a11e9ee3e
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.228.1
-  generationVersion: 2.292.0
-  releaseVersion: 3.0.0
-  configChecksum: d46cb2777c6c5993e1a1dc3c7f0b2021
+  speakeasyVersion: 1.234.0
+  generationVersion: 2.298.0
+  releaseVersion: 3.1.0
+  configChecksum: 1754b12f688d2a6d73ce40ef13360df7
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
 features:
   python:
     constsAndDefaults: 0.1.3
-    core: 4.5.2
+    core: 4.6.0
     flattening: 2.81.1
     globalSecurity: 2.83.5
     globalServerURLs: 2.82.2
     includes: 2.81.1
-    nameOverrides: 2.81.1
+    nameOverrides: 2.81.2
     responseFormat: 0.1.0
     unions: 2.82.6
 generatedFiles:
@@ -65,7 +65,7 @@ generatedFiles:
   - src/shippo/models/components/parcelcreaterequest.py
   - src/shippo/models/components/parceltemplateenumset.py
   - src/shippo/models/components/weightunit.py
-  - src/shippo/models/components/distanceunittemplate.py
+  - src/shippo/models/components/distanceunit.py
   - src/shippo/models/components/shipmentextra.py
   - src/shippo/models/components/rmanumber.py
   - src/shippo/models/components/ponumber.py
@@ -128,8 +128,6 @@ generatedFiles:
   - src/shippo/models/components/defaultparceltemplate.py
   - src/shippo/models/components/userparceltemplate.py
   - src/shippo/models/components/carrierparceltemplate.py
-  - src/shippo/models/components/distanceunit.py
-  - src/shippo/models/components/distanceunitusertemplate.py
   - src/shippo/models/components/defaultparceltemplateupdaterequest.py
   - src/shippo/models/components/manifestpaginatedlist.py
   - src/shippo/models/components/manifest.py
@@ -160,10 +158,12 @@ generatedFiles:
   - src/shippo/models/components/track.py
   - src/shippo/models/components/trackingstatus.py
   - src/shippo/models/components/trackingstatussubstatus.py
+  - src/shippo/models/components/trackingstatusenum.py
   - src/shippo/models/components/trackingstatuslocationbase.py
   - src/shippo/models/components/tracksrequest.py
   - src/shippo/models/components/transactionpaginatedlist.py
   - src/shippo/models/components/transaction.py
+  - src/shippo/models/components/transactionstatusenum.py
   - src/shippo/models/components/transactioncreaterequest.py
   - src/shippo/models/components/instanttransactionrequestbody.py
   - src/shippo/models/components/userparceltemplatewithcarriertemplatecreaterequest.py
@@ -273,7 +273,7 @@ generatedFiles:
   - docs/models/components/parceltemplatefedex.md
   - docs/models/components/parceltemplateenumset.md
   - docs/models/components/weightunit.md
-  - docs/models/components/distanceunittemplate.md
+  - docs/models/components/distanceunit.md
   - docs/models/components/ancillaryendorsement.md
   - docs/models/components/dangerousgoodscode.md
   - docs/models/components/lasershipattrs.md
@@ -372,8 +372,6 @@ generatedFiles:
   - docs/models/components/defaultparceltemplate.md
   - docs/models/components/userparceltemplate.md
   - docs/models/components/carrierparceltemplate.md
-  - docs/models/components/distanceunit.md
-  - docs/models/components/distanceunitusertemplate.md
   - docs/models/components/defaultparceltemplateupdaterequest.md
   - docs/models/components/manifestpaginatedlist.md
   - docs/models/components/manifeststatus.md
@@ -414,15 +412,15 @@ generatedFiles:
   - docs/models/components/shipmentstatus.md
   - docs/models/components/shipment.md
   - docs/models/components/track.md
-  - docs/models/components/trackingstatusstatus.md
   - docs/models/components/trackingstatus.md
   - docs/models/components/trackingstatussubstatus.md
+  - docs/models/components/trackingstatusenum.md
   - docs/models/components/trackingstatuslocationbase.md
   - docs/models/components/tracksrequest.md
   - docs/models/components/transactionpaginatedlist.md
   - docs/models/components/transactionmessages.md
-  - docs/models/components/transactionstatus.md
   - docs/models/components/transaction.md
+  - docs/models/components/transactionstatusenum.md
   - docs/models/components/transactioncreaterequest.md
   - docs/models/components/instanttransactionrequestbodylabelfiletype.md
   - docs/models/components/instanttransactionrequestbody.md

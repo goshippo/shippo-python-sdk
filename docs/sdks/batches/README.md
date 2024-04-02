@@ -116,7 +116,7 @@ if res is not None:
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4x-5xx          | */*             |
+| errors.SDKError | 4xx-5xx         | */*             |
 
 ## get
 
@@ -158,7 +158,7 @@ if res is not None:
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4x-5xx          | */*             |
+| errors.SDKError | 4xx-5xx         | */*             |
 
 ## add_shipments
 
@@ -182,7 +182,7 @@ res = s.batches.add_shipments(batch_id='<value>', shippo_api_version='<value>', 
             address_to='<value>',
             parcels=[
                 components.ParcelCreateRequest(
-                    distance_unit=components.DistanceUnitTemplate.IN,
+                    distance_unit=components.DistanceUnit.IN,
                     height='1',
                     length='1',
                     mass_unit=components.WeightUnit.LB,
@@ -227,7 +227,7 @@ if res is not None:
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4x-5xx          | */*             |
+| errors.SDKError | 4xx-5xx         | */*             |
 
 ## purchase
 
@@ -269,7 +269,7 @@ if res is not None:
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4x-5xx          | */*             |
+| errors.SDKError | 4xx-5xx         | */*             |
 
 ## remove_shipments
 
@@ -311,4 +311,4 @@ if res is not None:
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4x-5xx          | */*             |
+| errors.SDKError | 4xx-5xx         | */*             |

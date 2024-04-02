@@ -5,9 +5,10 @@ import dataclasses
 import dateutil.parser
 from .labelfiletype import LabelFileType
 from .objectstate import ObjectState
+from .trackingstatusenum import TrackingStatusEnum
+from .transactionstatusenum import TransactionStatusEnum
 from dataclasses_json import Undefined, dataclass_json
 from datetime import datetime
-from enum import Enum
 from shippo import utils
 from typing import List, Optional
 
@@ -15,16 +16,6 @@ from typing import List, Optional
 @dataclasses.dataclass
 class TransactionMessages:
     pass
-
-class TransactionStatus(str, Enum):
-    r"""Indicates the status of the Transaction."""
-    WAITING = 'WAITING'
-    QUEUED = 'QUEUED'
-    SUCCESS = 'SUCCESS'
-    ERROR = 'ERROR'
-    REFUNDED = 'REFUNDED'
-    REFUNDPENDING = 'REFUNDPENDING'
-    REFUNDREJECTED = 'REFUNDREJECTED'
 
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
@@ -71,7 +62,7 @@ class Transaction:
     r"""ID of the Rate object for which a Label has to be obtained.
     Please note that only rates that are not older than 7 days can be purchased in order to ensure up-to-date pricing.
     """
-    status: Optional[TransactionStatus] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('status'), 'exclude': lambda f: f is None }})
+    status: Optional[TransactionStatusEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('status'), 'exclude': lambda f: f is None }})
     r"""Indicates the status of the Transaction."""
     test: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('test'), 'exclude': lambda f: f is None }})
     r"""Indicates whether the object has been created in test mode."""
@@ -79,8 +70,8 @@ class Transaction:
     r"""The carrier-specific tracking number that can be used to track the Shipment.
     A value will only be returned if the Rate is for a trackable Shipment and if the Transactions has been processed successfully.
     """
-    tracking_status: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('tracking_status'), 'exclude': lambda f: f is None }})
-    r"""Indicates the high level status of the shipment: `UNKNOWN`, `DELIVERED`, `TRANSIT`, `FAILURE`, `RETURNED`."""
+    tracking_status: Optional[TrackingStatusEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('tracking_status'), 'exclude': lambda f: f is None }})
+    r"""Indicates the high level status of the shipment."""
     tracking_url_provider: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('tracking_url_provider'), 'exclude': lambda f: f is None }})
     r"""A link to track this item on the carrier-provided tracking website.
     A value will only be returned if tracking is available and the carrier provides such a service.

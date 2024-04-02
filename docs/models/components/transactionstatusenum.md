@@ -1,4 +1,4 @@
-# TransactionStatus
+# TransactionStatusEnum
 
 Indicates the status of the Transaction.
 

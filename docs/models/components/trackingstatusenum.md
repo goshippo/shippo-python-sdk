@@ -1,4 +1,4 @@
-# TrackingStatusStatus
+# TrackingStatusEnum
 
 Indicates the high level status of the shipment.
 

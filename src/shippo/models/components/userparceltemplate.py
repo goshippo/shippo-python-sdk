@@ -4,7 +4,7 @@ from __future__ import annotations
 import dataclasses
 import dateutil.parser
 from .carrierparceltemplate import CarrierParcelTemplate
-from .distanceunitusertemplate import DistanceUnitUserTemplate
+from .distanceunit import DistanceUnit
 from .weightunit import WeightUnit
 from dataclasses_json import Undefined, dataclass_json
 from datetime import datetime
@@ -15,8 +15,8 @@ from typing import Optional
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class UserParcelTemplate:
-    distance_unit: Optional[DistanceUnitUserTemplate] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('distance_unit'), 'exclude': lambda f: f is None }})
-    r"""The measure unit used for length, width and height. Required, but if using a preset carrier template then this field must be empty."""
+    distance_unit: Optional[DistanceUnit] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('distance_unit'), 'exclude': lambda f: f is None }})
+    r"""The measure unit used for length, width and height."""
     height: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('height'), 'exclude': lambda f: f is None }})
     r"""The height of the package, in units specified by the `distance_unit` attribute. Required, but if using a preset carrier template then this field must be empty."""
     length: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('length'), 'exclude': lambda f: f is None }})

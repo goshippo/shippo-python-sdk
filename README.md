@@ -62,7 +62,7 @@ import requests
 
 http_client = requests.Session()
 http_client.headers.update({'x-custom-header': 'someValue'})
-s = shippo.Shippo(client: http_client)
+s = shippo.Shippo(client=http_client)
 ```
 <!-- End Custom HTTP Client [http-client] -->
 
