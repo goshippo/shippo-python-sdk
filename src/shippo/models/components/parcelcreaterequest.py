@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 import dataclasses
-from .distanceunittemplate import DistanceUnitTemplate
+from .distanceunit import DistanceUnit
 from .parceltemplateenumset import ParcelTemplateAramexAustralia, ParcelTemplateCouriersPlease, ParcelTemplateDHLeCommerce, ParcelTemplateDPDUK, ParcelTemplateFedEx, ParcelTemplateUPS, ParcelTemplateUSPS
 from .weightunit import WeightUnit
 from dataclasses_json import Undefined, dataclass_json
@@ -13,8 +13,8 @@ from typing import Optional, Union
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class ParcelCreateRequest:
-    distance_unit: DistanceUnitTemplate = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('distance_unit') }})
-    r"""The measure unit used for length, width and height. Required if template is not specified."""
+    distance_unit: DistanceUnit = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('distance_unit') }})
+    r"""The measure unit used for length, width and height."""
     height: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('height') }})
     r"""**Required if template is not specified**<br>
     Height of the parcel. Up to six digits in front and four digits after the decimal separator are accepted.

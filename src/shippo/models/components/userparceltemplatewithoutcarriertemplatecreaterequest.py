@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 import dataclasses
-from .distanceunitusertemplate import DistanceUnitUserTemplate
+from .distanceunit import DistanceUnit
 from .weightunit import WeightUnit
 from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
@@ -12,8 +12,8 @@ from typing import Optional
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class UserParcelTemplateWithoutCarrierTemplateCreateRequest:
-    distance_unit: DistanceUnitUserTemplate = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('distance_unit') }})
-    r"""The measure unit used for length, width and height. Required, but if using a preset carrier template then this field must be empty."""
+    distance_unit: DistanceUnit = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('distance_unit') }})
+    r"""The measure unit used for length, width and height."""
     height: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('height') }})
     r"""The height of the package, in units specified by the `distance_unit` attribute. Required, but if using a preset carrier template then this field must be empty."""
     length: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('length') }})

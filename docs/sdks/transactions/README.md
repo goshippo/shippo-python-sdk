@@ -20,13 +20,18 @@ Returns a list of all transaction objects.
 
 ```python
 import shippo
+from shippo.models import components, operations
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
 )
 
+req = operations.ListTransactionsRequest(
+    object_status=components.TransactionStatusEnum.SUCCESS,
+    tracking_status=components.TrackingStatusEnum.DELIVERED,
+)
 
-res = s.transactions.list(page=1, results=25, shippo_api_version='<value>')
+res = s.transactions.list(req)
 
 if res is not None:
     # handle response
@@ -36,11 +41,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `page`                                               | *Optional[int]*                                      | :heavy_minus_sign:                                   | The page number you want to select                   |
-| `results`                                            | *Optional[int]*                                      | :heavy_minus_sign:                                   | The number of results to return per page (max 100)   |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use |
+| Parameter                                                                                | Type                                                                                     | Required                                                                                 | Description                                                                              |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `request`                                                                                | [operations.ListTransactionsRequest](../../models/operations/listtransactionsrequest.md) | :heavy_check_mark:                                                                       | The request object to use for the request.                                               |
 
 
 ### Response
@@ -50,7 +53,7 @@ if res is not None:
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4x-5xx          | */*             |
+| errors.SDKError | 4xx-5xx         | */*             |
 
 ## create
 
@@ -95,7 +98,7 @@ if res is not None:
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4x-5xx          | */*             |
+| errors.SDKError | 4xx-5xx         | */*             |
 
 ## get
 
@@ -134,4 +137,4 @@ if res is not None:
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4x-5xx          | */*             |
+| errors.SDKError | 4xx-5xx         | */*             |
