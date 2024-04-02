@@ -1,5 +1,5 @@
 import shippo
-from shippo.models.components import Carriers, ParcelRequest, DistanceUnitTemplate, WeightUnit, \
+from shippo.models.components import Carriers, ParcelRequest, DistanceUnit, WeightUnit, \
     AddressCreateRequest, ShipmentCreateRequest, TransactionCreateRequest, ParcelCreateRequest
 from tests.helpers_custom import get_carrier_accounts
 
@@ -38,7 +38,7 @@ class TestPurchaseLabel:
                         length="5",
                         width="5",
                         height="5",
-                        distance_unit=DistanceUnitTemplate.CM,
+                        distance_unit=DistanceUnit.CM,
                         weight="2",
                         mass_unit=WeightUnit.LB
                     )
@@ -82,7 +82,7 @@ class TestPurchaseLabel:
                 length="5",
                 width="5",
                 height="5",
-                distance_unit=DistanceUnitTemplate.CM,
+                distance_unit=DistanceUnit.CM,
                 weight="2",
                 mass_unit=WeightUnit.LB,
                 metadata="Wool Box1",

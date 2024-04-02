@@ -3,7 +3,7 @@ import pytest
 import shippo
 from shippo.models.components import ServiceGroupCreateRequest, Carriers, \
     ServiceGroupAccountAndServiceLevel, ServiceGroupType, LiveRateCreateRequest, AddressCompleteCreateRequest, \
-    LineItem, WeightUnit, Parcel, DistanceUnitTemplate, ServiceLevelUPS
+    LineItem, WeightUnit, Parcel, DistanceUnit, ServiceLevelUPS
 from tests.helpers_custom import get_carrier_account
 
 
@@ -78,7 +78,7 @@ class TestRatesAtCheckout:
                     length="10",
                     width="15",
                     height="10",
-                    distance_unit=DistanceUnitTemplate.IN,
+                    distance_unit=DistanceUnit.IN,
                     weight="1",
                     mass_unit=WeightUnit.LB
                 )
