@@ -27,13 +27,13 @@ pip install shippo
 ```python
 import shippo
 
-s = shippo.Shippo(
+shippo_sdk = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     # the API version can be globally set, though this is normally not required
     # shippo_api_version='<YYYY-MM-DD>',
 )
 
-address_list = s.addresses.list()
+address_list = shippo_sdk.addresses.list()
 
 if address_list is not None:
     # handle response
