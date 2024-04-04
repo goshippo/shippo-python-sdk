@@ -47,7 +47,7 @@ class RatesAtCheckout:
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request), **headers }
+        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
         req_content_type, data, form = utils.serialize_request_body(request, operations.CreateLiveRateRequest, "live_rate_create_request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
@@ -108,7 +108,7 @@ class RatesAtCheckout:
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request), **headers }
+        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client
@@ -167,7 +167,7 @@ class RatesAtCheckout:
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request), **headers }
+        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
         req_content_type, data, form = utils.serialize_request_body(request, operations.UpdateDefaultParcelTemplateRequest, "default_parcel_template_update_request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
@@ -228,7 +228,7 @@ class RatesAtCheckout:
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request), **headers }
+        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
         headers['Accept'] = '*/*'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client

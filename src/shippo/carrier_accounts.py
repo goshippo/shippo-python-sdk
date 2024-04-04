@@ -37,8 +37,8 @@ class CarrierAccounts:
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request), **headers }
-        query_params = { **utils.get_query_params(operations.ListCarrierAccountsRequest, request), **query_params }
+        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
+        query_params = { **utils.get_query_params(operations.ListCarrierAccountsRequest, request, self.sdk_configuration.globals), **query_params }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client
@@ -97,7 +97,7 @@ class CarrierAccounts:
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request), **headers }
+        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
         req_content_type, data, form = utils.serialize_request_body(request, operations.CreateCarrierAccountRequest, "connect_existing_own_ups_account_request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
@@ -159,14 +159,14 @@ class CarrierAccounts:
         
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
         
-        url = utils.generate_url(operations.GetCarrierAccountRequest, base_url, '/carrier_accounts/{CarrierAccountId}', request)
+        url = utils.generate_url(operations.GetCarrierAccountRequest, base_url, '/carrier_accounts/{CarrierAccountId}', request, self.sdk_configuration.globals)
         
         if callable(self.sdk_configuration.security):
             headers, query_params = utils.get_security(self.sdk_configuration.security())
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request), **headers }
+        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client
@@ -219,14 +219,14 @@ class CarrierAccounts:
         
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
         
-        url = utils.generate_url(operations.UpdateCarrierAccountRequest, base_url, '/carrier_accounts/{CarrierAccountId}', request)
+        url = utils.generate_url(operations.UpdateCarrierAccountRequest, base_url, '/carrier_accounts/{CarrierAccountId}', request, self.sdk_configuration.globals)
         
         if callable(self.sdk_configuration.security):
             headers, query_params = utils.get_security(self.sdk_configuration.security())
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request), **headers }
+        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
         req_content_type, data, form = utils.serialize_request_body(request, operations.UpdateCarrierAccountRequest, "carrier_account_base", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
@@ -288,7 +288,7 @@ class CarrierAccounts:
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request), **headers }
+        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
         req_content_type, data, form = utils.serialize_request_body(request, operations.RegisterCarrierAccountRequest, "request_body", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
@@ -357,8 +357,8 @@ class CarrierAccounts:
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request), **headers }
-        query_params = { **utils.get_query_params(operations.GetCarrierRegistrationStatusRequest, request), **query_params }
+        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
+        query_params = { **utils.get_query_params(operations.GetCarrierRegistrationStatusRequest, request, self.sdk_configuration.globals), **query_params }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client
