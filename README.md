@@ -20,35 +20,30 @@ pip install shippo
 ```
 <!-- End SDK Installation [installation] -->
 
-<!-- No SDK Example Usage [usage] -->
-<!-- No Error Handling [errors] -->
-<!-- No Server Selection [server] -->
+## SDK Example Usage
 
-<!-- Start Authentication [security] -->
-## Authentication
+### Example
 
-This SDK supports the following security scheme globally:
-
-| Name             | Type             | Scheme           |
-| ---------------- | ---------------- | ---------------- |
-| `api_key_header` | apiKey           | API key          |
-
-To authenticate with the API the `api_key_header` parameter must be set when initializing the SDK client instance. For example:
 ```python
 import shippo
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
+    # the API version can be globally set, though this is normally not required
+    # shippo_api_version='<YYYY-MM-DD>',
 )
 
-address_list = s.addresses.list(page=1, results=25)
+address_list = s.addresses.list()
 
 if address_list is not None:
     # handle response
     pass
-
 ```
+<!-- No SDK Example Usage [usage] -->
+<!-- No Error Handling [errors] -->
+<!-- No Server Selection [server] -->
 <!-- No Authentication [security] -->
+<!-- No Global Parameters [global-parameters] -->
 
 <!-- Start Custom HTTP Client [http-client] -->
 ## Custom HTTP Client
@@ -68,6 +63,8 @@ s = shippo.Shippo(client=http_client)
 
 ## Documentation
 Review our full guides and references at [https://docs.goshippo.com/](https://docs.goshippo.com/).
+
+<!-- Placeholder for Future Speakeasy SDK Sections -->
 
 <!-- Start Available Resources and Operations [operations] -->
 ## Available Resources and Operations
@@ -193,8 +190,6 @@ Review our full guides and references at [https://docs.goshippo.com/](https://do
 * [get](docs/sdks/shippoaccounts/README.md#get) - Retrieve a Shippo Account
 * [update](docs/sdks/shippoaccounts/README.md#update) - Update a Shippo Account
 <!-- End Available Resources and Operations [operations] -->
-
-<!-- Placeholder for Future Speakeasy SDK Sections -->
 
 ## Maturity
 
