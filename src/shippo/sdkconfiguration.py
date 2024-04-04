@@ -5,9 +5,9 @@ import requests as requests_http
 from ._hooks import SDKHooks
 from .utils import utils
 from .utils.retries import RetryConfig
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from shippo.models import components
-from typing import Callable, Dict, Optional, Tuple, Union
+from typing import Any, Callable, Dict, Optional, Tuple, Union
 
 
 SERVERS = [
@@ -21,11 +21,12 @@ class SDKConfiguration:
     security: Union[components.Security,Callable[[], components.Security]] = None
     server_url: Optional[str] = ''
     server_idx: Optional[int] = 0
+    globals: Dict[str, Dict[str, Dict[str, Any]]] = field(default_factory=Dict)
     language: str = 'python'
     openapi_doc_version: str = '2018-02-08'
-    sdk_version: str = '3.1.0'
-    gen_version: str = '2.298.0'
-    user_agent: str = 'speakeasy-sdk/python 3.1.0 2.298.0 2018-02-08 shippo'
+    sdk_version: str = '3.2.0'
+    gen_version: str = '2.298.2'
+    user_agent: str = 'speakeasy-sdk/python 3.2.0 2.298.2 2018-02-08 shippo'
     retry_config: Optional[RetryConfig] = None
     _hooks: Optional[SDKHooks] = None
 

@@ -32,10 +32,11 @@ from shippo.models import components
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version='2018-02-08',
 )
 
 
-res = s.tracking_status.create(shippo_api_version='<value>', tracks_request=components.TracksRequest(
+res = s.tracking_status.create(shippo_api_version='2018-02-08', tracks_request=components.TracksRequest(
     carrier='usps',
     tracking_number='9205590164917312751089',
     metadata='Order 000123',
@@ -49,10 +50,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                      | Type                                                                           | Required                                                                       | Description                                                                    |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| `shippo_api_version`                                                           | *Optional[str]*                                                                | :heavy_minus_sign:                                                             | String used to pick a non-default API version to use                           |
-| `tracks_request`                                                               | [Optional[components.TracksRequest]](../../models/components/tracksrequest.md) | :heavy_minus_sign:                                                             | N/A                                                                            |
+| Parameter                                                                      | Type                                                                           | Required                                                                       | Description                                                                    | Example                                                                        |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `shippo_api_version`                                                           | *Optional[str]*                                                                | :heavy_minus_sign:                                                             | String used to pick a non-default API version to use                           | 2018-02-08                                                                     |
+| `tracks_request`                                                               | [Optional[components.TracksRequest]](../../models/components/tracksrequest.md) | :heavy_minus_sign:                                                             | N/A                                                                            |                                                                                |
 
 
 ### Response
@@ -76,10 +77,11 @@ import shippo
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version='2018-02-08',
 )
 
 
-res = s.tracking_status.get(tracking_number='<value>', carrier='<value>', shippo_api_version='<value>')
+res = s.tracking_status.get(tracking_number='<value>', carrier='<value>', shippo_api_version='2018-02-08')
 
 if res is not None:
     # handle response
@@ -89,11 +91,11 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `tracking_number`                                    | *str*                                                | :heavy_check_mark:                                   | Tracking number                                      |
-| `carrier`                                            | *str*                                                | :heavy_check_mark:                                   | Name of the carrier                                  |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use |
+| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
+| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
+| `tracking_number`                                    | *str*                                                | :heavy_check_mark:                                   | Tracking number                                      |                                                      |
+| `carrier`                                            | *str*                                                | :heavy_check_mark:                                   | Name of the carrier                                  |                                                      |
+| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
 
 
 ### Response

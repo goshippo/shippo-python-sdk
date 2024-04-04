@@ -24,6 +24,7 @@ from shippo.models import components, operations
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version='2018-02-08',
 )
 
 req = operations.ListTransactionsRequest(
@@ -67,10 +68,11 @@ from shippo.models import components
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version='2018-02-08',
 )
 
 
-res = s.transactions.create(shippo_api_version='<value>', request_body=components.TransactionCreateRequest(
+res = s.transactions.create(shippo_api_version='2018-02-08', request_body=components.TransactionCreateRequest(
     rate='ec9f0d3adc9441449c85d315f0997fd5',
     async_=False,
     label_file_type=components.LabelFileType.PDF_4X6,
@@ -85,10 +87,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                                                                 | Type                                                                                                                                                      | Required                                                                                                                                                  | Description                                                                                                                                               |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `shippo_api_version`                                                                                                                                      | *Optional[str]*                                                                                                                                           | :heavy_minus_sign:                                                                                                                                        | String used to pick a non-default API version to use                                                                                                      |
-| `request_body`                                                                                                                                            | [Optional[Union[components.TransactionCreateRequest, components.InstantTransactionRequestBody]]](../../models/operations/createtransactionrequestbody.md) | :heavy_minus_sign:                                                                                                                                        | Examples.                                                                                                                                                 |
+| Parameter                                                                                                                                                 | Type                                                                                                                                                      | Required                                                                                                                                                  | Description                                                                                                                                               | Example                                                                                                                                                   |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `shippo_api_version`                                                                                                                                      | *Optional[str]*                                                                                                                                           | :heavy_minus_sign:                                                                                                                                        | String used to pick a non-default API version to use                                                                                                      | 2018-02-08                                                                                                                                                |
+| `request_body`                                                                                                                                            | [Optional[Union[components.TransactionCreateRequest, components.InstantTransactionRequestBody]]](../../models/operations/createtransactionrequestbody.md) | :heavy_minus_sign:                                                                                                                                        | Examples.                                                                                                                                                 |                                                                                                                                                           |
 
 
 ### Response
@@ -111,10 +113,11 @@ import shippo
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version='2018-02-08',
 )
 
 
-res = s.transactions.get(transaction_id='<value>', shippo_api_version='<value>')
+res = s.transactions.get(transaction_id='<value>', shippo_api_version='2018-02-08')
 
 if res is not None:
     # handle response
@@ -124,10 +127,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `transaction_id`                                     | *str*                                                | :heavy_check_mark:                                   | Object ID of the transaction to update               |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use |
+| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
+| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
+| `transaction_id`                                     | *str*                                                | :heavy_check_mark:                                   | Object ID of the transaction to update               |                                                      |
+| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
 
 
 ### Response
