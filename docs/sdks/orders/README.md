@@ -34,10 +34,11 @@ import shippo
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version='2018-02-08',
 )
 
 
-res = s.orders.list(page=1, results=25, shippo_api_version='<value>')
+res = s.orders.list(page=1, results=25, shippo_api_version='2018-02-08')
 
 if res is not None:
     # handle response
@@ -47,11 +48,11 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `page`                                               | *Optional[int]*                                      | :heavy_minus_sign:                                   | The page number you want to select                   |
-| `results`                                            | *Optional[int]*                                      | :heavy_minus_sign:                                   | The number of results to return per page (max 100)   |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use |
+| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
+| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
+| `page`                                               | *Optional[int]*                                      | :heavy_minus_sign:                                   | The page number you want to select                   |                                                      |
+| `results`                                            | *Optional[int]*                                      | :heavy_minus_sign:                                   | The number of results to return per page (max 100)   |                                                      |
+| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
 
 
 ### Response
@@ -75,10 +76,11 @@ from shippo.models import components
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version='2018-02-08',
 )
 
 
-res = s.orders.create(shippo_api_version='<value>', order_create_request=components.OrderCreateRequest(
+res = s.orders.create(shippo_api_version='2018-02-08', order_create_request=components.OrderCreateRequest(
     placed_at='2016-09-23T01:28:12Z',
     to_address=components.AddressCreateRequest(
         country='US',
@@ -118,10 +120,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                | Type                                                                                     | Required                                                                                 | Description                                                                              |
-| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `shippo_api_version`                                                                     | *Optional[str]*                                                                          | :heavy_minus_sign:                                                                       | String used to pick a non-default API version to use                                     |
-| `order_create_request`                                                                   | [Optional[components.OrderCreateRequest]](../../models/components/ordercreaterequest.md) | :heavy_minus_sign:                                                                       | Order details.                                                                           |
+| Parameter                                                                                | Type                                                                                     | Required                                                                                 | Description                                                                              | Example                                                                                  |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `shippo_api_version`                                                                     | *Optional[str]*                                                                          | :heavy_minus_sign:                                                                       | String used to pick a non-default API version to use                                     | 2018-02-08                                                                               |
+| `order_create_request`                                                                   | [Optional[components.OrderCreateRequest]](../../models/components/ordercreaterequest.md) | :heavy_minus_sign:                                                                       | Order details.                                                                           |                                                                                          |
 
 
 ### Response
@@ -144,10 +146,11 @@ import shippo
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version='2018-02-08',
 )
 
 
-res = s.orders.get(order_id='<value>', shippo_api_version='<value>')
+res = s.orders.get(order_id='<value>', shippo_api_version='2018-02-08')
 
 if res is not None:
     # handle response
@@ -157,10 +160,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `order_id`                                           | *str*                                                | :heavy_check_mark:                                   | Object ID of the order                               |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use |
+| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
+| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
+| `order_id`                                           | *str*                                                | :heavy_check_mark:                                   | Object ID of the order                               |                                                      |
+| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
 
 
 ### Response

@@ -29,10 +29,11 @@ import shippo
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version='2018-02-08',
 )
 
 
-res = s.manifests.list(page=1, results=25, shippo_api_version='<value>')
+res = s.manifests.list(page=1, results=25, shippo_api_version='2018-02-08')
 
 if res is not None:
     # handle response
@@ -42,11 +43,11 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `page`                                               | *Optional[int]*                                      | :heavy_minus_sign:                                   | The page number you want to select                   |
-| `results`                                            | *Optional[int]*                                      | :heavy_minus_sign:                                   | The number of results to return per page (max 100)   |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use |
+| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
+| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
+| `page`                                               | *Optional[int]*                                      | :heavy_minus_sign:                                   | The page number you want to select                   |                                                      |
+| `results`                                            | *Optional[int]*                                      | :heavy_minus_sign:                                   | The number of results to return per page (max 100)   |                                                      |
+| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
 
 
 ### Response
@@ -70,10 +71,11 @@ from shippo.models import components
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version='2018-02-08',
 )
 
 
-res = s.manifests.create(shippo_api_version='<value>', manifest_create_request=components.ManifestCreateRequest(
+res = s.manifests.create(shippo_api_version='2018-02-08', manifest_create_request=components.ManifestCreateRequest(
     carrier_account='adcfdddf8ec64b84ad22772bce3ea37a',
     shipment_date='2014-05-16T23:59:59Z',
     address_from=components.AddressCreateRequest(
@@ -105,10 +107,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                      | Type                                                                                           | Required                                                                                       | Description                                                                                    |
-| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `shippo_api_version`                                                                           | *Optional[str]*                                                                                | :heavy_minus_sign:                                                                             | String used to pick a non-default API version to use                                           |
-| `manifest_create_request`                                                                      | [Optional[components.ManifestCreateRequest]](../../models/components/manifestcreaterequest.md) | :heavy_minus_sign:                                                                             | Manifest details and contact info.                                                             |
+| Parameter                                                                                      | Type                                                                                           | Required                                                                                       | Description                                                                                    | Example                                                                                        |
+| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `shippo_api_version`                                                                           | *Optional[str]*                                                                                | :heavy_minus_sign:                                                                             | String used to pick a non-default API version to use                                           | 2018-02-08                                                                                     |
+| `manifest_create_request`                                                                      | [Optional[components.ManifestCreateRequest]](../../models/components/manifestcreaterequest.md) | :heavy_minus_sign:                                                                             | Manifest details and contact info.                                                             |                                                                                                |
 
 
 ### Response
@@ -131,10 +133,11 @@ import shippo
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version='2018-02-08',
 )
 
 
-res = s.manifests.get(manifest_id='<value>', shippo_api_version='<value>')
+res = s.manifests.get(manifest_id='<value>', shippo_api_version='2018-02-08')
 
 if res is not None:
     # handle response
@@ -144,10 +147,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `manifest_id`                                        | *str*                                                | :heavy_check_mark:                                   | Object ID of the manifest to update                  |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use |
+| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
+| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
+| `manifest_id`                                        | *str*                                                | :heavy_check_mark:                                   | Object ID of the manifest to update                  |                                                      |
+| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
 
 
 ### Response

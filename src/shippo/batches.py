@@ -45,7 +45,7 @@ class Batches:
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request), **headers }
+        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
         req_content_type, data, form = utils.serialize_request_body(request, operations.CreateBatchRequest, "batch_create_request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
@@ -103,14 +103,14 @@ class Batches:
         
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
         
-        url = utils.generate_url(operations.GetBatchRequest, base_url, '/batches/{BatchId}', request)
+        url = utils.generate_url(operations.GetBatchRequest, base_url, '/batches/{BatchId}', request, self.sdk_configuration.globals)
         
         if callable(self.sdk_configuration.security):
             headers, query_params = utils.get_security(self.sdk_configuration.security())
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request), **headers }
+        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client
@@ -163,14 +163,14 @@ class Batches:
         
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
         
-        url = utils.generate_url(operations.AddShipmentsToBatchRequest, base_url, '/batches/{BatchId}/add_shipments', request)
+        url = utils.generate_url(operations.AddShipmentsToBatchRequest, base_url, '/batches/{BatchId}/add_shipments', request, self.sdk_configuration.globals)
         
         if callable(self.sdk_configuration.security):
             headers, query_params = utils.get_security(self.sdk_configuration.security())
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request), **headers }
+        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
         req_content_type, data, form = utils.serialize_request_body(request, operations.AddShipmentsToBatchRequest, "request_body", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
@@ -228,14 +228,14 @@ class Batches:
         
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
         
-        url = utils.generate_url(operations.PurchaseBatchRequest, base_url, '/batches/{BatchId}/purchase', request)
+        url = utils.generate_url(operations.PurchaseBatchRequest, base_url, '/batches/{BatchId}/purchase', request, self.sdk_configuration.globals)
         
         if callable(self.sdk_configuration.security):
             headers, query_params = utils.get_security(self.sdk_configuration.security())
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request), **headers }
+        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client
@@ -288,14 +288,14 @@ class Batches:
         
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
         
-        url = utils.generate_url(operations.RemoveShipmentsFromBatchRequest, base_url, '/batches/{BatchId}/remove_shipments', request)
+        url = utils.generate_url(operations.RemoveShipmentsFromBatchRequest, base_url, '/batches/{BatchId}/remove_shipments', request, self.sdk_configuration.globals)
         
         if callable(self.sdk_configuration.security):
             headers, query_params = utils.get_security(self.sdk_configuration.security())
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request), **headers }
+        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
         req_content_type, data, form = utils.serialize_request_body(request, operations.RemoveShipmentsFromBatchRequest, "request_body", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type

@@ -194,6 +194,43 @@ Review our full guides and references at [https://docs.goshippo.com/](https://do
 * [update](docs/sdks/shippoaccounts/README.md#update) - Update a Shippo Account
 <!-- End Available Resources and Operations [operations] -->
 
+<!-- Start Global Parameters [global-parameters] -->
+## Global Parameters
+
+A parameter is configured globally. This parameter may be set on the SDK client instance itself during initialization. When configured as an option during SDK initialization, This global value will be used as the default on the operations that use it. When such operations are called, there is a place in each to override the global value, if needed.
+
+For example, you can set `SHIPPO-API-VERSION` to `'2018-02-08'` at SDK initialization and then you do not have to pass the same value on calls to operations like `list`. But if you want to do so you may, which will locally override the global setting. See the example code below for a demonstration.
+
+
+### Available Globals
+
+The following global parameter is available.
+
+| Name | Type | Required | Description |
+| ---- | ---- |:--------:| ----------- |
+| shippo_api_version | str |  | String used to pick a non-default API version to use |
+
+
+### Example
+
+```python
+import shippo
+
+s = shippo.Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version='2018-02-08',
+)
+
+
+res = s.addresses.list(page=1, results=25, shippo_api_version='2018-02-08')
+
+if res is not None:
+    # handle response
+    pass
+
+```
+<!-- End Global Parameters [global-parameters] -->
+
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 
 ## Maturity
