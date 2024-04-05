@@ -12,7 +12,7 @@ from .types import Hooks, BeforeRequestHook, BeforeRequestContext, SDKInitHook
 
 def add_shippo_token_to_auth_header_if_missing(request: requests.PreparedRequest):
     auth_header = request.headers.get("authorization")
-    if auth_header is not None and auth_header.startswith("ShippoToken") is False:
+    if auth_header is not None and auth_header.startswith("shippo_"):
         request.headers["authorization"] = f"ShippoToken {auth_header}"
 
 
