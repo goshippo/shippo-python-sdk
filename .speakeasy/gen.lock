@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: 808bb00529d07c08d5fe4b85812d7996
+  docChecksum: a54eebce27f2a415d50b1a487eb647aa
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.237.0
-  generationVersion: 2.298.2
-  releaseVersion: 3.2.0
-  configChecksum: ad9ed8ee8d007730c8a24273666da50d
+  speakeasyVersion: 1.241.0
+  generationVersion: 2.300.0
+  releaseVersion: 3.2.1
+  configChecksum: f5626830a177eac5d70288ba46370fc8
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
 features:
   python:
     constsAndDefaults: 0.1.3
-    core: 4.6.2
+    core: 4.6.3
     flattening: 2.81.1
     globalSecurity: 2.83.5
     globalServerURLs: 2.82.2
@@ -85,12 +85,14 @@ generatedFiles:
   - src/shippo/models/components/batchcreaterequest.py
   - src/shippo/models/components/batchshipmentbase.py
   - src/shippo/models/components/carrieraccountpaginatedlist.py
-  - src/shippo/models/components/carrieraccount.py
+  - src/shippo/models/components/carrieraccountwithextrainfo.py
   - src/shippo/models/components/carrieraccountservicelevel.py
   - src/shippo/models/components/carriers.py
+  - src/shippo/models/components/carrieraccount.py
   - src/shippo/models/components/connectexistingownupsaccountrequest.py
   - src/shippo/models/components/upsconnectexistingownaccountparameters.py
   - src/shippo/models/components/carrieraccountbase.py
+  - src/shippo/models/components/httpmetadata.py
   - src/shippo/models/components/carrieraccountcanadapostcreaterequest.py
   - src/shippo/models/components/carrieraccountcanadapostcreateparameters.py
   - src/shippo/models/components/carrieraccountchronopostcreaterequest.py
@@ -188,6 +190,7 @@ generatedFiles:
   - src/shippo/models/operations/createcarrieraccount.py
   - src/shippo/models/operations/getcarrieraccount.py
   - src/shippo/models/operations/updatecarrieraccount.py
+  - src/shippo/models/operations/initiateoauth2signin.py
   - src/shippo/models/operations/registercarrieraccount.py
   - src/shippo/models/operations/getcarrierregistrationstatus.py
   - src/shippo/models/operations/listcustomsdeclarations.py
@@ -240,6 +243,7 @@ generatedFiles:
   - src/shippo/models/operations/getshippoaccount.py
   - src/shippo/models/operations/updateshippoaccount.py
   - src/shippo/models/errors/badrequestwithdetail.py
+  - src/shippo/models/errors/initiateoauth2signin.py
   - src/shippo/models/errors/badrequestwitherror.py
   - src/shippo/models/__init__.py
   - src/shippo/models/errors/__init__.py
@@ -303,12 +307,18 @@ generatedFiles:
   - docs/models/components/batchcreaterequest.md
   - docs/models/components/batchshipmentbase.md
   - docs/models/components/carrieraccountpaginatedlist.md
-  - docs/models/components/carrieraccount.md
+  - docs/models/components/carrieraccountwithextrainfotype.md
+  - docs/models/components/carrieraccountwithextrainfostatus.md
+  - docs/models/components/authentication.md
+  - docs/models/components/objectinfo.md
+  - docs/models/components/carrieraccountwithextrainfo.md
   - docs/models/components/carrieraccountservicelevel.md
   - docs/models/components/carriers.md
+  - docs/models/components/carrieraccount.md
   - docs/models/components/connectexistingownupsaccountrequest.md
   - docs/models/components/upsconnectexistingownaccountparameters.md
   - docs/models/components/carrieraccountbase.md
+  - docs/models/components/httpmetadata.md
   - docs/models/components/carrieraccountcanadapostcreaterequest.md
   - docs/models/components/carrieraccountcanadapostcreateparameters.md
   - docs/models/components/parameters.md
@@ -487,6 +497,8 @@ generatedFiles:
   - docs/models/operations/createcarrieraccountrequest.md
   - docs/models/operations/getcarrieraccountrequest.md
   - docs/models/operations/updatecarrieraccountrequest.md
+  - docs/models/operations/initiateoauth2signinrequest.md
+  - docs/models/operations/initiateoauth2signinresponse.md
   - docs/models/operations/registercarrieraccountrequestbody.md
   - docs/models/operations/registercarrieraccountrequest.md
   - docs/models/operations/carrier.md
@@ -546,6 +558,9 @@ generatedFiles:
   - docs/models/operations/getshippoaccountrequest.md
   - docs/models/operations/updateshippoaccountrequest.md
   - docs/models/errors/badrequestwithdetail.md
+  - docs/models/errors/initiateoauth2signincarrieraccountsresponseresponsebody.md
+  - docs/models/errors/initiateoauth2signincarrieraccountsresponsebody.md
+  - docs/models/errors/initiateoauth2signinresponsebody.md
   - docs/models/errors/badrequestwitherror.md
   - docs/sdks/shippo/README.md
   - docs/sdks/addresses/README.md

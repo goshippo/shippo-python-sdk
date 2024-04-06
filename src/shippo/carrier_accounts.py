@@ -147,7 +147,7 @@ class CarrierAccounts:
 
     
     
-    def get(self, carrier_account_id: str, shippo_api_version: Optional[str] = None) -> components.CarrierAccount:
+    def get(self, carrier_account_id: str, shippo_api_version: Optional[str] = None) -> components.CarrierAccountWithExtraInfo:
         r"""Retrieve a carrier account
         Returns an existing carrier account using an object ID.
         """
@@ -194,7 +194,7 @@ class CarrierAccounts:
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type') or '', 'application/json'):                
-                out = utils.unmarshal_json(http_res.text, Optional[components.CarrierAccount])
+                out = utils.unmarshal_json(http_res.text, Optional[components.CarrierAccountWithExtraInfo])
                 return out
             
             content_type = http_res.headers.get('Content-Type')
@@ -266,6 +266,88 @@ class CarrierAccounts:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
+
+    
+    
+    def initiate_oauth2_signin(self, carrier_account_object_id: str, redirect_uri: str, state: Optional[str] = None, shippo_api_version: Optional[str] = None) -> operations.InitiateOauth2SigninResponse:
+        r"""Connect an existing carrier account using OAuth 2.0
+        Used by client applications to setup or reconnect an existing carrier account with carriers that support OAuth 2.0
+        """
+        hook_ctx = HookContext(operation_id='InitiateOauth2Signin', oauth2_scopes=[], security_source=self.sdk_configuration.security)
+        request = operations.InitiateOauth2SigninRequest(
+            carrier_account_object_id=carrier_account_object_id,
+            redirect_uri=redirect_uri,
+            state=state,
+            shippo_api_version=shippo_api_version,
+        )
+        
+        base_url = utils.template_url(*self.sdk_configuration.get_server_details())
+        
+        url = utils.generate_url(operations.InitiateOauth2SigninRequest, base_url, '/carrier_accounts/{CarrierAccountObjectId}/signin/initiate', request, self.sdk_configuration.globals)
+        
+        if callable(self.sdk_configuration.security):
+            headers, query_params = utils.get_security(self.sdk_configuration.security())
+        else:
+            headers, query_params = utils.get_security(self.sdk_configuration.security)
+        
+        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
+        query_params = { **utils.get_query_params(operations.InitiateOauth2SigninRequest, request, self.sdk_configuration.globals), **query_params }
+        headers['Accept'] = 'application/json'
+        headers['user-agent'] = self.sdk_configuration.user_agent
+        client = self.sdk_configuration.client
+        
+        try:
+            req = client.prepare_request(requests_http.Request('GET', url, params=query_params, headers=headers))
+            req = self.sdk_configuration.get_hooks().before_request(BeforeRequestContext(hook_ctx), req)
+            http_res = client.send(req)
+        except Exception as e:
+            _, e = self.sdk_configuration.get_hooks().after_error(AfterErrorContext(hook_ctx), None, e)
+            if e is not None:
+                raise e
+
+        if utils.match_status_codes(['400','401','422','4XX','5XX'], http_res.status_code):
+            result, e = self.sdk_configuration.get_hooks().after_error(AfterErrorContext(hook_ctx), http_res, None)
+            if e is not None:
+                raise e
+            if result is not None:
+                http_res = result
+        else:
+            http_res = self.sdk_configuration.get_hooks().after_success(AfterSuccessContext(hook_ctx), http_res)
+            
+        
+        
+        res = operations.InitiateOauth2SigninResponse(headers=None)
+        
+        if http_res.status_code == 302:
+            res.headers = http_res.headers
+            
+        elif http_res.status_code == 400:
+            if utils.match_content_type(http_res.headers.get('Content-Type') or '', 'application/json'):                
+                out = utils.unmarshal_json(http_res.text, errors.InitiateOauth2SigninResponseBody)
+                raise out
+            else:
+                content_type = http_res.headers.get('Content-Type')
+                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+        elif http_res.status_code == 401:
+            if utils.match_content_type(http_res.headers.get('Content-Type') or '', 'application/json'):                
+                out = utils.unmarshal_json(http_res.text, errors.InitiateOauth2SigninCarrierAccountsResponseBody)
+                raise out
+            else:
+                content_type = http_res.headers.get('Content-Type')
+                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+        elif http_res.status_code == 422:
+            if utils.match_content_type(http_res.headers.get('Content-Type') or '', 'application/json'):                
+                out = utils.unmarshal_json(http_res.text, errors.InitiateOauth2SigninCarrierAccountsResponseResponseBody)
+                raise out
+            else:
+                content_type = http_res.headers.get('Content-Type')
+                raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
+        elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
+            raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
+        else:
+            raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
+
+        return res
 
     
     
@@ -397,3 +479,4 @@ class CarrierAccounts:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
     
+
