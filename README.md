@@ -63,7 +63,7 @@ s = shippo.Shippo(client=http_client)
 
 ## Debug HTTP Client
 
-The Python SDK returns schema models directly rather than wrapping the response in an envelope along with 
+The Shippo Python SDK returns schema models directly rather than wrapping the response in an envelope along with 
 additional request/response details (status code, raw json, etc).  However, there are times when the underlying 
 http information is useful so a 'debug' client is provided.  Using this client, you can retrieve the 
 `requests.PreparedRequest` and `requests.Response` from the most recent API call.
