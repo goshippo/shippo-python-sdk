@@ -7,6 +7,14 @@ from typing import Optional
 
 
 @dataclasses.dataclass
+class CreateParcelGlobals:
+    shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
+    r"""String used to pick a non-default API version to use"""
+    
+
+
+
+@dataclasses.dataclass
 class CreateParcelRequest:
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""

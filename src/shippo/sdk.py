@@ -24,7 +24,7 @@ from .user_parcel_templates import UserParcelTemplates
 from .utils.retries import RetryConfig
 from shippo import utils
 from shippo._hooks import SDKHooks
-from shippo.models import components
+from shippo.models import components, internal
 from typing import Callable, Dict, Optional, Union
 
 class Shippo:
@@ -207,24 +207,17 @@ class Shippo:
         if server_url is not None:
             if url_params is not None:
                 server_url = utils.template_url(server_url, url_params)
-        global_params = {
-            'parameters': {
-                'queryParam': {
-                },
-                'pathParam': {
-                },
-                'header': {
-                    'shippo_api_version': shippo_api_version,
-                },
-            },
-        }
+    
+        _globals = internal.Globals(
+            shippo_api_version=shippo_api_version,
+        )
 
         self.sdk_configuration = SDKConfiguration(
             client,
+            _globals,
             security,
             server_url,
             server_idx,
-            global_params,
             retry_config=retry_config
         )
 
@@ -236,7 +229,7 @@ class Shippo:
             self.sdk_configuration.server_url = server_url
 
         # pylint: disable=protected-access
-        self.sdk_configuration._hooks = hooks
+        self.sdk_configuration.__dict__['_hooks'] = hooks
 
         self._init_sdks()
 

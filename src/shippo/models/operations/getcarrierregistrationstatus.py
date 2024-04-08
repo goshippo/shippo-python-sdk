@@ -5,6 +5,14 @@ import dataclasses
 from enum import Enum
 from typing import Optional
 
+
+@dataclasses.dataclass
+class GetCarrierRegistrationStatusGlobals:
+    shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
+    r"""String used to pick a non-default API version to use"""
+    
+
+
 class Carrier(str, Enum):
     r"""filter by specific carrier"""
     UPS = 'ups'

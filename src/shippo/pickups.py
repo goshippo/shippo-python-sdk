@@ -29,19 +29,24 @@ class Pickups:
             pickup_base=pickup_base,
         )
         
+        _globals = operations.CreatePickupGlobals(
+            shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+        )
+        
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
         
-        url = base_url + '/pickups'
+        url = utils.generate_url(base_url, '/pickups', request, _globals)
         
         if callable(self.sdk_configuration.security):
             headers, query_params = utils.get_security(self.sdk_configuration.security())
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
+        headers = { **utils.get_headers(request, _globals), **headers }
         req_content_type, data, form = utils.serialize_request_body(request, operations.CreatePickupRequest, "pickup_base", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
+        query_params = { **utils.get_query_params(request, _globals), **query_params }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client

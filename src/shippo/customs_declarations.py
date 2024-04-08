@@ -30,17 +30,21 @@ class CustomsDeclarations:
             shippo_api_version=shippo_api_version,
         )
         
+        _globals = operations.ListCustomsDeclarationsGlobals(
+            shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+        )
+        
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
         
-        url = base_url + '/customs/declarations'
+        url = utils.generate_url(base_url, '/customs/declarations', request, _globals)
         
         if callable(self.sdk_configuration.security):
             headers, query_params = utils.get_security(self.sdk_configuration.security())
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
-        query_params = { **utils.get_query_params(operations.ListCustomsDeclarationsRequest, request, self.sdk_configuration.globals), **query_params }
+        headers = { **utils.get_headers(request, _globals), **headers }
+        query_params = { **utils.get_query_params(request, _globals), **query_params }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client
@@ -90,19 +94,24 @@ class CustomsDeclarations:
             customs_declaration_create_request=customs_declaration_create_request,
         )
         
+        _globals = operations.CreateCustomsDeclarationGlobals(
+            shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+        )
+        
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
         
-        url = base_url + '/customs/declarations'
+        url = utils.generate_url(base_url, '/customs/declarations', request, _globals)
         
         if callable(self.sdk_configuration.security):
             headers, query_params = utils.get_security(self.sdk_configuration.security())
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
+        headers = { **utils.get_headers(request, _globals), **headers }
         req_content_type, data, form = utils.serialize_request_body(request, operations.CreateCustomsDeclarationRequest, "customs_declaration_create_request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
+        query_params = { **utils.get_query_params(request, _globals), **query_params }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client
@@ -153,17 +162,21 @@ class CustomsDeclarations:
             shippo_api_version=shippo_api_version,
         )
         
+        _globals = operations.GetCustomsDeclarationGlobals(
+            shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+        )
+        
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
         
-        url = utils.generate_url(operations.GetCustomsDeclarationRequest, base_url, '/customs/declarations/{CustomsDeclarationId}', request, self.sdk_configuration.globals)
+        url = utils.generate_url(base_url, '/customs/declarations/{CustomsDeclarationId}', request, _globals)
         
         if callable(self.sdk_configuration.security):
             headers, query_params = utils.get_security(self.sdk_configuration.security())
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
-        query_params = { **utils.get_query_params(operations.GetCustomsDeclarationRequest, request, self.sdk_configuration.globals), **query_params }
+        headers = { **utils.get_headers(request, _globals), **headers }
+        query_params = { **utils.get_query_params(request, _globals), **query_params }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client

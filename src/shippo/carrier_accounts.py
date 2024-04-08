@@ -28,17 +28,21 @@ class CarrierAccounts:
         By default, if the query parameter is omitted, the `service_levels` property will not be included in the response.
         """
         hook_ctx = HookContext(operation_id='ListCarrierAccounts', oauth2_scopes=[], security_source=self.sdk_configuration.security)
+        _globals = operations.ListCarrierAccountsGlobals(
+            shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+        )
+        
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
         
-        url = base_url + '/carrier_accounts'
+        url = utils.generate_url(base_url, '/carrier_accounts', request, _globals)
         
         if callable(self.sdk_configuration.security):
             headers, query_params = utils.get_security(self.sdk_configuration.security())
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
-        query_params = { **utils.get_query_params(operations.ListCarrierAccountsRequest, request, self.sdk_configuration.globals), **query_params }
+        headers = { **utils.get_headers(request, _globals), **headers }
+        query_params = { **utils.get_query_params(request, _globals), **query_params }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client
@@ -88,19 +92,24 @@ class CarrierAccounts:
             connect_existing_own_ups_account_request=connect_existing_own_ups_account_request,
         )
         
+        _globals = operations.CreateCarrierAccountGlobals(
+            shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+        )
+        
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
         
-        url = base_url + '/carrier_accounts'
+        url = utils.generate_url(base_url, '/carrier_accounts', request, _globals)
         
         if callable(self.sdk_configuration.security):
             headers, query_params = utils.get_security(self.sdk_configuration.security())
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
+        headers = { **utils.get_headers(request, _globals), **headers }
         req_content_type, data, form = utils.serialize_request_body(request, operations.CreateCarrierAccountRequest, "connect_existing_own_ups_account_request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
+        query_params = { **utils.get_query_params(request, _globals), **query_params }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client
@@ -157,16 +166,21 @@ class CarrierAccounts:
             shippo_api_version=shippo_api_version,
         )
         
+        _globals = operations.GetCarrierAccountGlobals(
+            shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+        )
+        
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
         
-        url = utils.generate_url(operations.GetCarrierAccountRequest, base_url, '/carrier_accounts/{CarrierAccountId}', request, self.sdk_configuration.globals)
+        url = utils.generate_url(base_url, '/carrier_accounts/{CarrierAccountId}', request, _globals)
         
         if callable(self.sdk_configuration.security):
             headers, query_params = utils.get_security(self.sdk_configuration.security())
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
+        headers = { **utils.get_headers(request, _globals), **headers }
+        query_params = { **utils.get_query_params(request, _globals), **query_params }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client
@@ -217,19 +231,24 @@ class CarrierAccounts:
             carrier_account_base=carrier_account_base,
         )
         
+        _globals = operations.UpdateCarrierAccountGlobals(
+            shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+        )
+        
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
         
-        url = utils.generate_url(operations.UpdateCarrierAccountRequest, base_url, '/carrier_accounts/{CarrierAccountId}', request, self.sdk_configuration.globals)
+        url = utils.generate_url(base_url, '/carrier_accounts/{CarrierAccountId}', request, _globals)
         
         if callable(self.sdk_configuration.security):
             headers, query_params = utils.get_security(self.sdk_configuration.security())
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
+        headers = { **utils.get_headers(request, _globals), **headers }
         req_content_type, data, form = utils.serialize_request_body(request, operations.UpdateCarrierAccountRequest, "carrier_account_base", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
+        query_params = { **utils.get_query_params(request, _globals), **query_params }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client
@@ -281,17 +300,21 @@ class CarrierAccounts:
             shippo_api_version=shippo_api_version,
         )
         
+        _globals = operations.InitiateOauth2SigninGlobals(
+            shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+        )
+        
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
         
-        url = utils.generate_url(operations.InitiateOauth2SigninRequest, base_url, '/carrier_accounts/{CarrierAccountObjectId}/signin/initiate', request, self.sdk_configuration.globals)
+        url = utils.generate_url(base_url, '/carrier_accounts/{CarrierAccountObjectId}/signin/initiate', request, _globals)
         
         if callable(self.sdk_configuration.security):
             headers, query_params = utils.get_security(self.sdk_configuration.security())
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
-        query_params = { **utils.get_query_params(operations.InitiateOauth2SigninRequest, request, self.sdk_configuration.globals), **query_params }
+        headers = { **utils.get_headers(request, _globals), **headers }
+        query_params = { **utils.get_query_params(request, _globals), **query_params }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client
@@ -361,19 +384,24 @@ class CarrierAccounts:
             request_body=request_body,
         )
         
+        _globals = operations.RegisterCarrierAccountGlobals(
+            shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+        )
+        
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
         
-        url = base_url + '/carrier_accounts/register/new'
+        url = utils.generate_url(base_url, '/carrier_accounts/register/new', request, _globals)
         
         if callable(self.sdk_configuration.security):
             headers, query_params = utils.get_security(self.sdk_configuration.security())
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
+        headers = { **utils.get_headers(request, _globals), **headers }
         req_content_type, data, form = utils.serialize_request_body(request, operations.RegisterCarrierAccountRequest, "request_body", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
+        query_params = { **utils.get_query_params(request, _globals), **query_params }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client
@@ -430,17 +458,21 @@ class CarrierAccounts:
             shippo_api_version=shippo_api_version,
         )
         
+        _globals = operations.GetCarrierRegistrationStatusGlobals(
+            shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+        )
+        
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
         
-        url = base_url + '/carrier_accounts/reg-status'
+        url = utils.generate_url(base_url, '/carrier_accounts/reg-status', request, _globals)
         
         if callable(self.sdk_configuration.security):
             headers, query_params = utils.get_security(self.sdk_configuration.security())
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
-        query_params = { **utils.get_query_params(operations.GetCarrierRegistrationStatusRequest, request, self.sdk_configuration.globals), **query_params }
+        headers = { **utils.get_headers(request, _globals), **headers }
+        query_params = { **utils.get_query_params(request, _globals), **query_params }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client

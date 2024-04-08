@@ -6,6 +6,14 @@ from typing import Optional
 
 
 @dataclasses.dataclass
+class GetTrackGlobals:
+    shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
+    r"""String used to pick a non-default API version to use"""
+    
+
+
+
+@dataclasses.dataclass
 class GetTrackRequest:
     tracking_number: str = dataclasses.field(metadata={'path_param': { 'field_name': 'TrackingNumber', 'style': 'simple', 'explode': False }})
     r"""Tracking number"""
