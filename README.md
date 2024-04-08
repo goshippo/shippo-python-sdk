@@ -61,6 +61,28 @@ s = shippo.Shippo(client=http_client)
 ```
 <!-- End Custom HTTP Client [http-client] -->
 
+## Debug HTTP Client
+
+The Shippo Python SDK returns schema models directly rather than wrapping the response in an envelope along with 
+additional request/response details (status code, raw json, etc).  However, there are times when the underlying 
+http information is useful so a 'debug' client is provided.  Using this client, you can retrieve the 
+`requests.PreparedRequest` and `requests.Response` from the most recent API call.
+
+```python
+import shippo
+from shippo.debug import DebugSession
+
+debug_session = DebugSession()
+shippo_sdk = shippo.Shippo(api_key_header="<YOUR_API_KEY_HERE>", client=debug_session)
+
+shippo_sdk.addresses.list()
+
+# print the previous request http headers
+print(debug_session.last_request.headers)  
+# print the previous response status code and raw json
+print(debug_session.last_response.status_code, debug_session.last_response.text)
+```
+
 ## Documentation
 Review our full guides and references at [https://docs.goshippo.com/](https://docs.goshippo.com/).
 
