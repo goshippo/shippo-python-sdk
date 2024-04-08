@@ -28,16 +28,21 @@ class Rates:
             shippo_api_version=shippo_api_version,
         )
         
+        _globals = operations.GetRateGlobals(
+            shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+        )
+        
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
         
-        url = utils.generate_url(operations.GetRateRequest, base_url, '/rates/{RateId}', request, self.sdk_configuration.globals)
+        url = utils.generate_url(base_url, '/rates/{RateId}', request, _globals)
         
         if callable(self.sdk_configuration.security):
             headers, query_params = utils.get_security(self.sdk_configuration.security())
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
+        headers = { **utils.get_headers(request, _globals), **headers }
+        query_params = { **utils.get_query_params(request, _globals), **query_params }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client
@@ -89,17 +94,21 @@ class Rates:
             shippo_api_version=shippo_api_version,
         )
         
+        _globals = operations.ListShipmentRatesGlobals(
+            shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+        )
+        
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
         
-        url = utils.generate_url(operations.ListShipmentRatesRequest, base_url, '/shipments/{ShipmentId}/rates', request, self.sdk_configuration.globals)
+        url = utils.generate_url(base_url, '/shipments/{ShipmentId}/rates', request, _globals)
         
         if callable(self.sdk_configuration.security):
             headers, query_params = utils.get_security(self.sdk_configuration.security())
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
-        query_params = { **utils.get_query_params(operations.ListShipmentRatesRequest, request, self.sdk_configuration.globals), **query_params }
+        headers = { **utils.get_headers(request, _globals), **headers }
+        query_params = { **utils.get_query_params(request, _globals), **query_params }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client
@@ -150,17 +159,21 @@ class Rates:
         Note: re-requesting the rates with a different currency code will re-queue the shipment (i.e. set the Shipment's `status` to `QUEUED`) and the converted currency rates will only be available when the Shipment's `status` is set to `SUCCESS`.
         """
         hook_ctx = HookContext(operation_id='ListShipmentRatesByCurrencyCode', oauth2_scopes=[], security_source=self.sdk_configuration.security)
+        _globals = operations.ListShipmentRatesByCurrencyCodeGlobals(
+            shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+        )
+        
         base_url = utils.template_url(*self.sdk_configuration.get_server_details())
         
-        url = utils.generate_url(operations.ListShipmentRatesByCurrencyCodeRequest, base_url, '/shipments/{ShipmentId}/rates/{CurrencyCode}', request, self.sdk_configuration.globals)
+        url = utils.generate_url(base_url, '/shipments/{ShipmentId}/rates/{CurrencyCode}', request, _globals)
         
         if callable(self.sdk_configuration.security):
             headers, query_params = utils.get_security(self.sdk_configuration.security())
         else:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
-        headers = { **utils.get_headers(request, self.sdk_configuration.globals), **headers }
-        query_params = { **utils.get_query_params(operations.ListShipmentRatesByCurrencyCodeRequest, request, self.sdk_configuration.globals), **query_params }
+        headers = { **utils.get_headers(request, _globals), **headers }
+        query_params = { **utils.get_query_params(request, _globals), **query_params }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client
@@ -199,3 +212,4 @@ class Rates:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
 
     
+

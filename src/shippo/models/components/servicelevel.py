@@ -18,7 +18,7 @@ class ServiceLevel:
     """
     terms: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('terms'), 'exclude': lambda f: f is None }})
     r"""Further clarification of the service."""
-    service_level_token: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('service_level_token'), 'exclude': lambda f: f is None }})
+    token: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('token'), 'exclude': lambda f: f is None }})
     r"""Token of the Rate's servicelevel, e.g. `usps_priority` or `fedex_ground`.
     See <a href=\"#tag/Service-Levels\">servicelevels</a>.
     """

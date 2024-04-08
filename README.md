@@ -112,6 +112,7 @@ Review our full guides and references at [https://docs.goshippo.com/](https://do
 * [create](docs/sdks/carrieraccounts/README.md#create) - Create a new carrier account
 * [get](docs/sdks/carrieraccounts/README.md#get) - Retrieve a carrier account
 * [update](docs/sdks/carrieraccounts/README.md#update) - Update a carrier account
+* [initiate_oauth2_signin](docs/sdks/carrieraccounts/README.md#initiate_oauth2_signin) - Connect an existing carrier account using OAuth 2.0
 * [register](docs/sdks/carrieraccounts/README.md#register) - Add a Shippo carrier account
 * [get_registration_status](docs/sdks/carrieraccounts/README.md#get_registration_status) - Get Carrier Registration status
 
