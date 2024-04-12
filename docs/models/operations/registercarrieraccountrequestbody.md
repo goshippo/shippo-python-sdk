@@ -53,10 +53,22 @@ registerCarrierAccountRequestBody: components.CarrierAccountDpdDeCreateRequest =
 registerCarrierAccountRequestBody: components.CarrierAccountDPDUKCreateRequest = /* values here */
 ```
 
+### CarrierAccountFedExCreateRequest
+
+```python
+registerCarrierAccountRequestBody: components.CarrierAccountFedExCreateRequest = /* values here */
+```
+
 ### CarrierAccountHermesUKCreateRequest
 
 ```python
 registerCarrierAccountRequestBody: components.CarrierAccountHermesUKCreateRequest = /* values here */
+```
+
+### CarrierAccountMondialRelayCreateRequest
+
+```python
+registerCarrierAccountRequestBody: components.CarrierAccountMondialRelayCreateRequest = /* values here */
 ```
 
 ### CarrierAccountPosteItalianeCreateRequest

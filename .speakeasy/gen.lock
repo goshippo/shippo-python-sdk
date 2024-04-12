@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: 89ba5e19fde8c0a8c161d1abf1eb315f
+  docChecksum: 162c8b55c01b8a31d3379ae5249e86a4
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.243.0
-  generationVersion: 2.301.0
-  releaseVersion: 3.2.2
-  configChecksum: 823fd4375b53da2da55d4228b9e382a5
+  speakeasyVersion: 1.250.0
+  generationVersion: 2.304.1
+  releaseVersion: 3.2.3
+  configChecksum: 91960152d1884dcb0faf6182527d5ab7
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
@@ -103,7 +103,9 @@ generatedFiles:
   - src/shippo/models/components/carrieraccountdhlexpresscreaterequestparameters.py
   - src/shippo/models/components/carrieraccountdpddecreaterequest.py
   - src/shippo/models/components/carrieraccountdpdukcreaterequest.py
+  - src/shippo/models/components/carrieraccountfedexcreaterequest.py
   - src/shippo/models/components/carrieraccounthermesukcreaterequest.py
+  - src/shippo/models/components/carrieraccountmondialrelaycreaterequest.py
   - src/shippo/models/components/carrieraccountposteitalianecreaterequest.py
   - src/shippo/models/components/carrieraccountupscreaterequest.py
   - src/shippo/models/components/carrieraccountupscreaterequestparameters.py
@@ -337,8 +339,12 @@ generatedFiles:
   - docs/models/components/carrieraccountdpddecreaterequest.md
   - docs/models/components/carrieraccountdpdukcreaterequestparameters.md
   - docs/models/components/carrieraccountdpdukcreaterequest.md
+  - docs/models/components/carrieraccountfedexcreaterequestparameters.md
+  - docs/models/components/carrieraccountfedexcreaterequest.md
   - docs/models/components/carrieraccounthermesukcreaterequestparameters.md
   - docs/models/components/carrieraccounthermesukcreaterequest.md
+  - docs/models/components/carrieraccountmondialrelaycreaterequestparameters.md
+  - docs/models/components/carrieraccountmondialrelaycreaterequest.md
   - docs/models/components/carrieraccountposteitalianecreaterequestparameters.md
   - docs/models/components/carrieraccountposteitalianecreaterequest.md
   - docs/models/components/carrieraccountupscreaterequest.md
