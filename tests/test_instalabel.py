@@ -1,5 +1,5 @@
 import shippo
-from shippo.models.components import Carriers, DistanceUnit, WeightUnit, \
+from shippo.models.components import CarriersEnum, DistanceUnitEnum, WeightUnitEnum, \
     AddressCreateRequest, ShipmentCreateRequest, InstantTransactionRequestBody, \
     ParcelCreateRequest
 from tests.helpers_custom import get_carrier_account
@@ -9,7 +9,7 @@ from tests.helpers_custom import get_carrier_account
 class TestInstalabel:
 
     def test_instalabel(self, api: shippo.Shippo):
-        carrier_account = get_carrier_account(api, Carriers.USPS)
+        carrier_account = get_carrier_account(api, CarriersEnum.USPS)
 
         transaction = api.transactions.create(
             request_body=InstantTransactionRequestBody(
@@ -41,9 +41,9 @@ class TestInstalabel:
                             length="5",
                             width="5",
                             height="5",
-                            distance_unit=DistanceUnit.CM,
+                            distance_unit=DistanceUnitEnum.CM,
                             weight="2",
-                            mass_unit=WeightUnit.LB
+                            mass_unit=WeightUnitEnum.LB
                         )
                     ]
                 )

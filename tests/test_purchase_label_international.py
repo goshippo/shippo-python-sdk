@@ -2,8 +2,8 @@ import pytest
 
 import shippo
 from shippo.models.components import AddressCreateRequest, CustomsDeclarationCreateRequest, \
-    CustomsDeclarationCreateRequestIncoterm, CustomsItemBase, WeightUnit, CustomsDeclarationCreateRequestContentsType, \
-    CustomsDeclarationCreateRequestNonDeliveryOption, ShipmentCreateRequest, ParcelCreateRequest, DistanceUnit, \
+    CustomsDeclarationIncotermEnum, CustomsItemBase, WeightUnitEnum, CustomsDeclarationContentsTypeEnum, \
+    CustomsDeclarationNonDeliveryOptionEnum, ShipmentCreateRequest, ParcelCreateRequest, DistanceUnitEnum, \
     ShipmentExtra, Insurance
 
 
@@ -30,17 +30,17 @@ class TestPurchaseLabelInternational:
 
         customs_declaration = api.customs_declarations.create(
             customs_declaration_create_request=CustomsDeclarationCreateRequest(
-                contents_type=CustomsDeclarationCreateRequestContentsType.MERCHANDISE,
-                non_delivery_option=CustomsDeclarationCreateRequestNonDeliveryOption.RETURN,
+                contents_type=CustomsDeclarationContentsTypeEnum.MERCHANDISE,
+                non_delivery_option=CustomsDeclarationNonDeliveryOptionEnum.RETURN,
                 certify=True,
                 certify_signer="Tom Marks",
-                incoterm=CustomsDeclarationCreateRequestIncoterm.DDP,
+                incoterm=CustomsDeclarationIncotermEnum.DDP,
                 items=[
                     CustomsItemBase(
                         description="Guitar Pedal",
                         quantity=1,
                         net_weight="5",
-                        mass_unit=WeightUnit.LB,
+                        mass_unit=WeightUnitEnum.LB,
                         value_amount="200",
                         value_currency="USD",
                         origin_country="US"
@@ -67,8 +67,8 @@ class TestPurchaseLabelInternational:
                         length="10",
                         width="5",
                         height="4",
-                        distance_unit=DistanceUnit.IN,
-                        mass_unit=WeightUnit.LB
+                        distance_unit=DistanceUnitEnum.IN,
+                        mass_unit=WeightUnitEnum.LB
                     )
                 ],
                 customs_declaration=customs_declaration.object_id,
