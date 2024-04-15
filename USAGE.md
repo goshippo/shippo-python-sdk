@@ -8,7 +8,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.addresses.list(page=1, results=25, shippo_api_version='2018-02-08')
+res = s.addresses.list(page=1, results=5, shippo_api_version='2018-02-08')
 
 if res is not None:
     # handle response

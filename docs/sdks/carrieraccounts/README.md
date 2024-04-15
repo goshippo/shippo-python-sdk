@@ -78,35 +78,13 @@ s = shippo.Shippo(
 )
 
 
-res = s.carrier_accounts.create(shippo_api_version='2018-02-08', connect_existing_own_ups_account_request=components.ConnectExistingOwnUPSAccountRequest(
-    account_id='<value>',
-    active=False,
-    parameters=components.UPSConnectExistingOwnAccountParameters(
-        account_number='94567e',
-        billing_address_city='San Francisco',
-        billing_address_country_iso2='US',
-        billing_address_state='CA',
-        billing_address_street1='731 Market St',
-        billing_address_zip='94103',
-        collec_country_iso2='US',
-        collec_zip='94103',
-        company='Shippo',
-        email='hippo@shippo.com',
-        full_name='Shippo Meister',
-        has_invoice=False,
-        phone='1112223333',
-        title='Manager',
-        ups_agreements=False,
-        aia_country_iso2='US',
-        billing_address_street2='STE 200',
-        currency_code='USD',
-        invoice_controlid='1234',
-        invoice_date='20210529',
-        invoice_number='1112234',
-        invoice_value='11.23',
-    ),
-    carrier='ups',
-    metadata='UPS Account',
+res = s.carrier_accounts.create(shippo_api_version='2018-02-08', connect_existing_own_account_request=components.ConnectExistingOwnAccountRequest(
+    account_id='321123',
+    carrier='fedex',
+    parameters={
+        'key': '<value>',
+    },
+    metadata='FEDEX Account',
     test=False,
 ))
 
@@ -118,10 +96,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                                  | Type                                                                                                                       | Required                                                                                                                   | Description                                                                                                                | Example                                                                                                                    |
-| -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `shippo_api_version`                                                                                                       | *Optional[str]*                                                                                                            | :heavy_minus_sign:                                                                                                         | String used to pick a non-default API version to use                                                                       | 2018-02-08                                                                                                                 |
-| `connect_existing_own_ups_account_request`                                                                                 | [Optional[components.ConnectExistingOwnUPSAccountRequest]](../../models/components/connectexistingownupsaccountrequest.md) | :heavy_minus_sign:                                                                                                         | Examples.                                                                                                                  |                                                                                                                            |
+| Parameter                                                                                                            | Type                                                                                                                 | Required                                                                                                             | Description                                                                                                          | Example                                                                                                              |
+| -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `shippo_api_version`                                                                                                 | *Optional[str]*                                                                                                      | :heavy_minus_sign:                                                                                                   | String used to pick a non-default API version to use                                                                 | 2018-02-08                                                                                                           |
+| `connect_existing_own_account_request`                                                                               | [Optional[components.ConnectExistingOwnAccountRequest]](../../models/components/connectexistingownaccountrequest.md) | :heavy_minus_sign:                                                                                                   | Examples.                                                                                                            |                                                                                                                      |
 
 
 ### Response
@@ -167,7 +145,7 @@ if res is not None:
 
 ### Response
 
-**[components.CarrierAccountWithExtraInfo](../../models/components/carrieraccountwithextrainfo.md)**
+**[components.CarrierAccount](../../models/components/carrieraccount.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

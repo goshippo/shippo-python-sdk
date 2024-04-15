@@ -7,7 +7,7 @@ from shippo import utils
 
 
 @dataclasses.dataclass
-class Parameters:
+class CarrierAccountChronopostCreateRequestParameters:
     pass
 
 
@@ -15,6 +15,6 @@ class Parameters:
 @dataclasses.dataclass
 class CarrierAccountChronopostCreateRequest:
     carrier: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('carrier') }})
-    parameters: Parameters = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parameters') }})
+    parameters: CarrierAccountChronopostCreateRequestParameters = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parameters') }})
     
 

@@ -3,10 +3,11 @@
 from __future__ import annotations
 import dataclasses
 from .carrieraccountservicelevel import CarrierAccountServiceLevel
+from .upsconnectexistingownaccountparameters import UPSConnectExistingOwnAccountParameters
 from dataclasses_json import Undefined, dataclass_json
 from enum import Enum
 from shippo import utils
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 
 class CarrierAccountWithExtraInfoType(str, Enum):
     r"""Authentication method used by this account."""
@@ -56,11 +57,7 @@ class CarrierAccountWithExtraInfo:
     r"""Determines whether the account is active. When creating a shipment, if no `carrier_accounts` are explicitly
     passed Shippo will query all carrier accounts that have this field set. By default, this is set to True.
     """
-    parameters: Optional[Dict[str, Any]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parameters'), 'exclude': lambda f: f is None }})
-    r"""An array of additional parameters for the account, such as e.g. password or token.
-    Please check the <a href=\"https://docs.goshippo.com/docs/carriers/carrieraccounts/\">carrier accounts tutorial</a> page for the parameters per carrier.<br> 
-    To protect account information, this field will be masked in any API response.
-    """
+    parameters: Optional[Union[Dict[str, Any], UPSConnectExistingOwnAccountParameters]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parameters'), 'exclude': lambda f: f is None }})
     carrier_name: Optional[Any] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('carrier_name'), 'exclude': lambda f: f is None }})
     r"""Carrier name, see <a href=\\"#tag/Carriers\\">Carriers</a><br>"""
     is_shippo_account: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('is_shippo_account'), 'exclude': lambda f: f is None }})

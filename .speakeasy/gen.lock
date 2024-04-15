@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: 162c8b55c01b8a31d3379ae5249e86a4
+  docChecksum: 985442215506a34c323557058dbb819e
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.250.0
-  generationVersion: 2.304.1
-  releaseVersion: 3.2.3
-  configChecksum: 91960152d1884dcb0faf6182527d5ab7
+  speakeasyVersion: 1.252.0
+  generationVersion: 2.306.0
+  releaseVersion: 3.2.4
+  configChecksum: cb3f24fa1da3890b3f68e527341594c7
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
@@ -87,10 +87,10 @@ generatedFiles:
   - src/shippo/models/components/carrieraccountpaginatedlist.py
   - src/shippo/models/components/carrieraccountwithextrainfo.py
   - src/shippo/models/components/carrieraccountservicelevel.py
+  - src/shippo/models/components/upsconnectexistingownaccountparameters.py
   - src/shippo/models/components/carriers.py
   - src/shippo/models/components/carrieraccount.py
-  - src/shippo/models/components/connectexistingownupsaccountrequest.py
-  - src/shippo/models/components/upsconnectexistingownaccountparameters.py
+  - src/shippo/models/components/connectexistingownaccountrequest.py
   - src/shippo/models/components/carrieraccountbase.py
   - src/shippo/models/components/httpmetadata.py
   - src/shippo/models/components/carrieraccountcanadapostcreaterequest.py
@@ -311,21 +311,25 @@ generatedFiles:
   - docs/models/components/batchcreaterequest.md
   - docs/models/components/batchshipmentbase.md
   - docs/models/components/carrieraccountpaginatedlist.md
+  - docs/models/components/parameters.md
   - docs/models/components/carrieraccountwithextrainfotype.md
   - docs/models/components/carrieraccountwithextrainfostatus.md
   - docs/models/components/authentication.md
   - docs/models/components/objectinfo.md
   - docs/models/components/carrieraccountwithextrainfo.md
   - docs/models/components/carrieraccountservicelevel.md
-  - docs/models/components/carriers.md
-  - docs/models/components/carrieraccount.md
-  - docs/models/components/connectexistingownupsaccountrequest.md
   - docs/models/components/upsconnectexistingownaccountparameters.md
+  - docs/models/components/carriers.md
+  - docs/models/components/carrieraccountparameters.md
+  - docs/models/components/carrieraccount.md
+  - docs/models/components/connectexistingownaccountrequestparameters.md
+  - docs/models/components/connectexistingownaccountrequest.md
+  - docs/models/components/carrieraccountbaseparameters.md
   - docs/models/components/carrieraccountbase.md
   - docs/models/components/httpmetadata.md
   - docs/models/components/carrieraccountcanadapostcreaterequest.md
   - docs/models/components/carrieraccountcanadapostcreateparameters.md
-  - docs/models/components/parameters.md
+  - docs/models/components/carrieraccountchronopostcreaterequestparameters.md
   - docs/models/components/carrieraccountchronopostcreaterequest.md
   - docs/models/components/carrieraccountcolissimocreaterequestparameters.md
   - docs/models/components/carrieraccountcolissimocreaterequest.md
