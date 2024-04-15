@@ -82,14 +82,14 @@ class CarrierAccounts:
 
     
     
-    def create(self, shippo_api_version: Optional[str] = None, connect_existing_own_ups_account_request: Optional[components.ConnectExistingOwnUPSAccountRequest] = None) -> components.CarrierAccount:
+    def create(self, shippo_api_version: Optional[str] = None, connect_existing_own_account_request: Optional[components.ConnectExistingOwnAccountRequest] = None) -> components.CarrierAccount:
         r"""Create a new carrier account
         Creates a new carrier account or connects an existing carrier account to the Shippo account.
         """
         hook_ctx = HookContext(operation_id='CreateCarrierAccount', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.CreateCarrierAccountRequest(
             shippo_api_version=shippo_api_version,
-            connect_existing_own_ups_account_request=connect_existing_own_ups_account_request,
+            connect_existing_own_account_request=connect_existing_own_account_request,
         )
         
         _globals = operations.CreateCarrierAccountGlobals(
@@ -106,7 +106,7 @@ class CarrierAccounts:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateCarrierAccountRequest, "connect_existing_own_ups_account_request", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateCarrierAccountRequest, "connect_existing_own_account_request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }
@@ -156,7 +156,7 @@ class CarrierAccounts:
 
     
     
-    def get(self, carrier_account_id: str, shippo_api_version: Optional[str] = None) -> components.CarrierAccountWithExtraInfo:
+    def get(self, carrier_account_id: str, shippo_api_version: Optional[str] = None) -> components.CarrierAccount:
         r"""Retrieve a carrier account
         Returns an existing carrier account using an object ID.
         """
@@ -208,7 +208,7 @@ class CarrierAccounts:
         
         if http_res.status_code == 200:
             if utils.match_content_type(http_res.headers.get('Content-Type') or '', 'application/json'):                
-                out = utils.unmarshal_json(http_res.text, Optional[components.CarrierAccountWithExtraInfo])
+                out = utils.unmarshal_json(http_res.text, Optional[components.CarrierAccount])
                 return out
             
             content_type = http_res.headers.get('Content-Type')

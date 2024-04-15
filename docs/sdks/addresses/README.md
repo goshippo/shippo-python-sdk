@@ -28,7 +28,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.addresses.list(page=1, results=25, shippo_api_version='2018-02-08')
+res = s.addresses.list(page=1, results=5, shippo_api_version='2018-02-08')
 
 if res is not None:
     # handle response
@@ -38,11 +38,11 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `page`                                               | *Optional[int]*                                      | :heavy_minus_sign:                                   | The page number you want to select                   |                                                      |
-| `results`                                            | *Optional[int]*                                      | :heavy_minus_sign:                                   | The number of results to return per page (max 100)   |                                                      |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
+| Parameter                                                     | Type                                                          | Required                                                      | Description                                                   | Example                                                       |
+| ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- |
+| `page`                                                        | *Optional[int]*                                               | :heavy_minus_sign:                                            | The page number you want to select                            |                                                               |
+| `results`                                                     | *Optional[int]*                                               | :heavy_minus_sign:                                            | The number of results to return per page (max 100, default 5) |                                                               |
+| `shippo_api_version`                                          | *Optional[str]*                                               | :heavy_minus_sign:                                            | String used to pick a non-default API version to use          | 2018-02-08                                                    |
 
 
 ### Response

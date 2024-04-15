@@ -1,7 +1,17 @@
 # Parameters
 
 
-## Fields
+## Supported Types
 
-| Field       | Type        | Required    | Description |
-| ----------- | ----------- | ----------- | ----------- |
+### 
+
+```python
+parameters: Dict[str, Any] = /* values here */
+```
+
+### UPSConnectExistingOwnAccountParameters
+
+```python
+parameters: components.UPSConnectExistingOwnAccountParameters = /* values here */
+```
+
