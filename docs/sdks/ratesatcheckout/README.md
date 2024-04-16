@@ -54,7 +54,7 @@ res = s.rates_at_checkout.create(shippo_api_version='2018-02-08', live_rate_crea
             total_price='12.1',
             variant_title='June Edition',
             weight='0.4',
-            weight_unit=components.WeightUnit.LB,
+            weight_unit=components.WeightUnitEnum.LB,
             object_id='abf7d5675d744b6ea9fdb6f796b28f28',
         ),
     ],

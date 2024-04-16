@@ -3,7 +3,7 @@
 from __future__ import annotations
 import dataclasses
 from .batchshipmentpaginatedlist import BatchShipmentPaginatedList
-from .labelfiletype import LabelFileType
+from .labelfiletypeenum import LabelFileTypeEnum
 from dataclasses_json import Undefined, dataclass_json
 from enum import Enum
 from shippo import utils
@@ -68,7 +68,7 @@ class Batch:
     Batches that are in the `PURCHASING` state are being purchased<br>
     `PURCHASED` batches are finished purchasing.
     """
-    label_filetype: Optional[LabelFileType] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('label_filetype'), 'exclude': lambda f: f is None }})
+    label_filetype: Optional[LabelFileTypeEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('label_filetype'), 'exclude': lambda f: f is None }})
     r"""Print format of the <a href=\\"https://docs.goshippo.com/docs/shipments/shippinglabelsizes/\\">label</a>. If empty, will use the default format set from
     <a href=\"https://apps.goshippo.com/settings/labels\">the Shippo dashboard.</a>
     """

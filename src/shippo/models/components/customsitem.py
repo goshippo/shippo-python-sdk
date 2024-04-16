@@ -3,8 +3,8 @@
 from __future__ import annotations
 import dataclasses
 import dateutil.parser
-from .objectstate import ObjectState
-from .weightunit import WeightUnit
+from .objectstateenum import ObjectStateEnum
+from .weightunitenum import WeightUnitEnum
 from dataclasses_json import Undefined, dataclass_json
 from datetime import datetime
 from shippo import utils
@@ -16,7 +16,7 @@ from typing import Optional
 class CustomsItem:
     description: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('description') }})
     r"""Text description of your item."""
-    mass_unit: WeightUnit = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('mass_unit') }})
+    mass_unit: WeightUnitEnum = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('mass_unit') }})
     r"""The unit used for weight."""
     net_weight: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('net_weight') }})
     r"""Total weight of this item, i.e. quantity * weight per item."""
@@ -48,7 +48,7 @@ class CustomsItem:
     r"""Unique identifier of the given object."""
     object_owner: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_owner'), 'exclude': lambda f: f is None }})
     r"""Username of the user who created the object."""
-    object_state: Optional[ObjectState] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_state'), 'exclude': lambda f: f is None }})
+    object_state: Optional[ObjectStateEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_state'), 'exclude': lambda f: f is None }})
     r"""Indicates the validity of the enclosing object"""
     object_updated: Optional[datetime] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_updated'), 'encoder': utils.datetimeisoformat(True), 'decoder': dateutil.parser.isoparse, 'exclude': lambda f: f is None }})
     r"""Date and time of last object update."""

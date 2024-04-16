@@ -3,7 +3,7 @@
 from __future__ import annotations
 import dataclasses
 import dateutil.parser
-from .weightunit import WeightUnit
+from .weightunitenum import WeightUnitEnum
 from dataclasses_json import Undefined, dataclass_json
 from datetime import datetime
 from shippo import utils
@@ -44,7 +44,7 @@ class LineItem:
     r"""Total weight of this/these item(s). Instead of specifying the weight of all items,
     you can also set the <code>total_weight</code> value of the order object.
     """
-    weight_unit: Optional[WeightUnit] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('weight_unit'), 'exclude': lambda f: f is None }})
+    weight_unit: Optional[WeightUnitEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('weight_unit'), 'exclude': lambda f: f is None }})
     r"""The unit used for weight."""
     object_id: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_id'), 'exclude': lambda f: f is None }})
     r"""Unique identifier of the line item object."""

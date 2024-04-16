@@ -3,58 +3,18 @@
 from __future__ import annotations
 import dataclasses
 import dateutil.parser
+from .customsdeclarationb13afilingoptionenum import CustomsDeclarationB13AFilingOptionEnum
+from .customsdeclarationcontentstypeenum import CustomsDeclarationContentsTypeEnum
+from .customsdeclarationeelpfcenum import CustomsDeclarationEelPfcEnum
+from .customsdeclarationincotermenum import CustomsDeclarationIncotermEnum
+from .customsdeclarationnondeliveryoptionenum import CustomsDeclarationNonDeliveryOptionEnum
 from .customsexporteridentification import CustomsExporterIdentification
 from .customsinvoicedcharges import CustomsInvoicedCharges
-from .objectstate import ObjectState
+from .objectstateenum import ObjectStateEnum
 from dataclasses_json import Undefined, dataclass_json
 from datetime import datetime
-from enum import Enum
 from shippo import utils
 from typing import Any, List, Optional
-
-class B13aFilingOption(str, Enum):
-    r"""B13A Option details are obtained by filing a B13A Canada Export Declaration via the Canadian Export Reporting System (CERS).
-    <a href=\"https://www.cbsa-asfc.gc.ca/services/export/guide-eng.html\" target=\"_blank\" rel=\"noopener noreferrer\"> More information on reporting commercial exports from Canada. </a>
-    """
-    FILED_ELECTRONICALLY = 'FILED_ELECTRONICALLY'
-    SUMMARY_REPORTING = 'SUMMARY_REPORTING'
-    NOT_REQUIRED = 'NOT_REQUIRED'
-
-class ContentsType(str, Enum):
-    r"""Type of goods of the shipment."""
-    DOCUMENTS = 'DOCUMENTS'
-    GIFT = 'GIFT'
-    SAMPLE = 'SAMPLE'
-    MERCHANDISE = 'MERCHANDISE'
-    HUMANITARIAN_DONATION = 'HUMANITARIAN_DONATION'
-    RETURN_MERCHANDISE = 'RETURN_MERCHANDISE'
-    OTHER = 'OTHER'
-
-class EelPfc(str, Enum):
-    r"""EEL / PFC type of the shipment. For most shipments from the US to CA, `NOEEI_30_36` is applicable; for most
-    other shipments from the US, `NOEEI_30_37_a` is applicable.
-    """
-    NOEEI_30_37_A = 'NOEEI_30_37_a'
-    NOEEI_30_37_H = 'NOEEI_30_37_h'
-    NOEEI_30_37_F = 'NOEEI_30_37_f'
-    NOEEI_30_36 = 'NOEEI_30_36'
-    AES_ITN = 'AES_ITN'
-
-class Incoterm(str, Enum):
-    r"""The incoterm reference of the shipment. FCA is available for DHL Express and FedEx only.
-    eDAP is available for DPD UK only. DAP is available for DHL Express and DPD UK.
-    If expecting DAP for other carriers, please use DDU.
-    """
-    DDP = 'DDP'
-    DDU = 'DDU'
-    FCA = 'FCA'
-    DAP = 'DAP'
-    E_DAP = 'eDAP'
-
-class NonDeliveryOption(str, Enum):
-    r"""Indicates how the carrier should proceed in case the shipment can't be delivered."""
-    ABANDON = 'ABANDON'
-    RETURN = 'RETURN'
 
 
 @dataclasses.dataclass
@@ -73,9 +33,9 @@ class CustomsDeclaration:
     r"""Name of the person who created the customs declaration and is responsible for the validity of all
     information provided.
     """
-    contents_type: ContentsType = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('contents_type') }})
+    contents_type: CustomsDeclarationContentsTypeEnum = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('contents_type') }})
     r"""Type of goods of the shipment."""
-    non_delivery_option: NonDeliveryOption = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('non_delivery_option') }})
+    non_delivery_option: CustomsDeclarationNonDeliveryOptionEnum = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('non_delivery_option') }})
     r"""Indicates how the carrier should proceed in case the shipment can't be delivered."""
     items: List[str] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('items') }})
     r"""Distinct Parcel content items as Customs Items object_ids."""
@@ -83,7 +43,7 @@ class CustomsDeclaration:
     r"""**required if eel_pfc is `AES_ITN`**<br>
     AES / ITN reference of the shipment.
     """
-    b13a_filing_option: Optional[B13aFilingOption] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('b13a_filing_option'), 'exclude': lambda f: f is None }})
+    b13a_filing_option: Optional[CustomsDeclarationB13AFilingOptionEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('b13a_filing_option'), 'exclude': lambda f: f is None }})
     r"""B13A Option details are obtained by filing a B13A Canada Export Declaration via the Canadian Export Reporting System (CERS).
     <a href=\"https://www.cbsa-asfc.gc.ca/services/export/guide-eng.html\" target=\"_blank\" rel=\"noopener noreferrer\"> More information on reporting commercial exports from Canada. </a>
     """
@@ -102,7 +62,7 @@ class CustomsDeclaration:
     """
     disclaimer: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('disclaimer'), 'exclude': lambda f: f is None }})
     r"""Disclaimer for the shipment and customs information that have been provided."""
-    eel_pfc: Optional[EelPfc] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('eel_pfc'), 'exclude': lambda f: f is None }})
+    eel_pfc: Optional[CustomsDeclarationEelPfcEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('eel_pfc'), 'exclude': lambda f: f is None }})
     r"""EEL / PFC type of the shipment. For most shipments from the US to CA, `NOEEI_30_36` is applicable; for most
     other shipments from the US, `NOEEI_30_37_a` is applicable.
     """
@@ -110,7 +70,7 @@ class CustomsDeclaration:
     r"""Exporter reference of an export shipment."""
     importer_reference: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('importer_reference'), 'exclude': lambda f: f is None }})
     r"""Importer reference of an import shipment."""
-    incoterm: Optional[Incoterm] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('incoterm'), 'exclude': lambda f: f is None }})
+    incoterm: Optional[CustomsDeclarationIncotermEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('incoterm'), 'exclude': lambda f: f is None }})
     r"""The incoterm reference of the shipment. FCA is available for DHL Express and FedEx only.
     eDAP is available for DPD UK only. DAP is available for DHL Express and DPD UK.
     If expecting DAP for other carriers, please use DDU.
@@ -139,7 +99,7 @@ class CustomsDeclaration:
     r"""Unique identifier of the given object."""
     object_owner: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_owner'), 'exclude': lambda f: f is None }})
     r"""Username of the user who created the object."""
-    object_state: Optional[ObjectState] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_state'), 'exclude': lambda f: f is None }})
+    object_state: Optional[ObjectStateEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_state'), 'exclude': lambda f: f is None }})
     r"""Indicates the validity of the enclosing object"""
     object_updated: Optional[datetime] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_updated'), 'encoder': utils.datetimeisoformat(True), 'decoder': dateutil.parser.isoparse, 'exclude': lambda f: f is None }})
     r"""Date and time of last object update."""

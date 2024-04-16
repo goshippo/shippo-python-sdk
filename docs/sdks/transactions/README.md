@@ -75,7 +75,7 @@ s = shippo.Shippo(
 res = s.transactions.create(shippo_api_version='2018-02-08', request_body=components.TransactionCreateRequest(
     rate='ec9f0d3adc9441449c85d315f0997fd5',
     async_=False,
-    label_file_type=components.LabelFileType.PDF_4X6,
+    label_file_type=components.LabelFileTypeEnum.PDF_4X6,
     metadata='Order ID #12345',
 ))
 

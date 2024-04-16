@@ -1,9 +1,9 @@
 import pytest
 
 import shippo
-from shippo.models.components import ServiceGroupCreateRequest, Carriers, \
-    ServiceGroupAccountAndServiceLevel, ServiceGroupType, LiveRateCreateRequest, AddressCompleteCreateRequest, \
-    LineItem, WeightUnit, Parcel, DistanceUnit, ServiceLevelUPS
+from shippo.models.components import ServiceGroupCreateRequest, CarriersEnum, \
+    ServiceGroupAccountAndServiceLevel, ServiceGroupTypeEnum, LiveRateCreateRequest, AddressCompleteCreateRequest, \
+    LineItem, WeightUnitEnum, Parcel, DistanceUnitEnum, ServiceLevelUPSEnum
 from tests.helpers_custom import get_carrier_account
 
 
@@ -19,10 +19,10 @@ class TestRatesAtCheckout:
             api.service_groups.delete(sg.object_id)
 
     def test_rates_at_checkout(self, api: shippo.Shippo):
-        carrier_account = get_carrier_account(api, Carriers.USPS)
+        carrier_account = get_carrier_account(api, CarriersEnum.USPS)
         ups_account_id = carrier_account.object_id
 
-        available_service_levels = [ServiceLevelUPS.UPS_GROUND, ServiceLevelUPS.UPS_NEXT_DAY_AIR_SAVER]
+        available_service_levels = [ServiceLevelUPSEnum.UPS_GROUND, ServiceLevelUPSEnum.UPS_NEXT_DAY_AIR_SAVER]
         service_levels = [
             ServiceGroupAccountAndServiceLevel(
                 account_object_id=ups_account_id,
@@ -37,7 +37,7 @@ class TestRatesAtCheckout:
                 description="UPS shipping options",
                 flat_rate="5",
                 flat_rate_currency="USD",
-                type=ServiceGroupType.LIVE_RATE,
+                type=ServiceGroupTypeEnum.LIVE_RATE,
                 service_levels=service_levels
             ))
         assert service_group is not None
@@ -68,7 +68,7 @@ class TestRatesAtCheckout:
                         total_price="12.00",
                         currency="USD",
                         weight="1.0",
-                        weight_unit=WeightUnit.LB,
+                        weight_unit=WeightUnitEnum.LB,
                         title="Hippo Snax",
                         manufacture_country="US",
                         sku="HM-123"
@@ -78,9 +78,9 @@ class TestRatesAtCheckout:
                     length="10",
                     width="15",
                     height="10",
-                    distance_unit=DistanceUnit.IN,
+                    distance_unit=DistanceUnitEnum.IN,
                     weight="1",
-                    mass_unit=WeightUnit.LB
+                    mass_unit=WeightUnitEnum.LB
                 )
             ))
         assert len(live_rates.results) > 0

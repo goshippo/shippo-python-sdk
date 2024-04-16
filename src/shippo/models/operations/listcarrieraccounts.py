@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import carriers as components_carriers
+from ...models.components import carriersenum as components_carriersenum
 from typing import Optional
 
 
@@ -18,7 +18,7 @@ class ListCarrierAccountsGlobals:
 class ListCarrierAccountsRequest:
     service_levels: Optional[bool] = dataclasses.field(default=None, metadata={'query_param': { 'field_name': 'service_levels', 'style': 'form', 'explode': True }})
     r"""Appends the property `service_levels` to each returned carrier account"""
-    carrier: Optional[components_carriers.Carriers] = dataclasses.field(default=None, metadata={'query_param': { 'field_name': 'carrier', 'style': 'form', 'explode': True }})
+    carrier: Optional[components_carriersenum.CarriersEnum] = dataclasses.field(default=None, metadata={'query_param': { 'field_name': 'carrier', 'style': 'form', 'explode': True }})
     r"""Filter the response by the specified carrier"""
     account_id: Optional[str] = dataclasses.field(default=None, metadata={'query_param': { 'field_name': 'account_id', 'style': 'form', 'explode': True }})
     r"""Filter the response by the specified carrier account Id"""

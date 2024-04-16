@@ -92,7 +92,7 @@ res = s.batches.create(shippo_api_version='2018-02-08', batch_create_request=com
             servicelevel_token='fedex_ground',
         ),
     ],
-    label_filetype=components.LabelFileType.PDF_4X6,
+    label_filetype=components.LabelFileTypeEnum.PDF_4X6,
     metadata='BATCH #1',
 ))
 
@@ -185,10 +185,10 @@ res = s.batches.add_shipments(batch_id='<value>', shippo_api_version='2018-02-08
             address_to='<value>',
             parcels=[
                 components.ParcelCreateRequest(
-                    distance_unit=components.DistanceUnit.IN,
+                    distance_unit=components.DistanceUnitEnum.IN,
                     height='1',
                     length='1',
-                    mass_unit=components.WeightUnit.LB,
+                    mass_unit=components.WeightUnitEnum.LB,
                     weight='1',
                     width='1',
                     metadata='Customer ID 123456',

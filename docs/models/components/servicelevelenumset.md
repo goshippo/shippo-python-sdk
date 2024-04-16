@@ -3,243 +3,243 @@
 
 ## Supported Types
 
-### ServiceLevelUSPS
+### ServiceLevelUSPSEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelUSPS = /* values here */
+serviceLevelEnumSet: components.ServiceLevelUSPSEnum = /* values here */
 ```
 
-### ServiceLevelFedEx
+### ServiceLevelFedExEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelFedEx = /* values here */
+serviceLevelEnumSet: components.ServiceLevelFedExEnum = /* values here */
 ```
 
-### ServiceLevelUPS
+### ServiceLevelUPSEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelUPS = /* values here */
+serviceLevelEnumSet: components.ServiceLevelUPSEnum = /* values here */
 ```
 
-### ServiceLevelAirterra
+### ServiceLevelAirterraEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelAirterra = /* values here */
+serviceLevelEnumSet: components.ServiceLevelAirterraEnum = /* values here */
 ```
 
-### ServiceLevelAPCPostal
+### ServiceLevelAPCPostalEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelAPCPostal = /* values here */
+serviceLevelEnumSet: components.ServiceLevelAPCPostalEnum = /* values here */
 ```
 
-### ServiceLevelAsendia
+### ServiceLevelAsendiaEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelAsendia = /* values here */
+serviceLevelEnumSet: components.ServiceLevelAsendiaEnum = /* values here */
 ```
 
-### ServiceLevelAustraliaPost
+### ServiceLevelAustraliaPostEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelAustraliaPost = /* values here */
+serviceLevelEnumSet: components.ServiceLevelAustraliaPostEnum = /* values here */
 ```
 
-### ServiceLevelAxleHire
+### ServiceLevelAxleHireEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelAxleHire = /* values here */
+serviceLevelEnumSet: components.ServiceLevelAxleHireEnum = /* values here */
 ```
 
-### ServiceLevelAPG
+### ServiceLevelAPGEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelAPG = /* values here */
+serviceLevelEnumSet: components.ServiceLevelAPGEnum = /* values here */
 ```
 
-### ServiceLevelBetterTrucks
+### ServiceLevelBetterTrucksEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelBetterTrucks = /* values here */
+serviceLevelEnumSet: components.ServiceLevelBetterTrucksEnum = /* values here */
 ```
 
-### ServiceLevelCanadaPost
+### ServiceLevelCanadaPostEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelCanadaPost = /* values here */
+serviceLevelEnumSet: components.ServiceLevelCanadaPostEnum = /* values here */
 ```
 
-### ServiceLevelCDL
+### ServiceLevelCDLEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelCDL = /* values here */
+serviceLevelEnumSet: components.ServiceLevelCDLEnum = /* values here */
 ```
 
-### ServiceLevelChronopost
+### ServiceLevelChronopostEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelChronopost = /* values here */
+serviceLevelEnumSet: components.ServiceLevelChronopostEnum = /* values here */
 ```
 
-### ServiceLevelCouriersPlease
+### ServiceLevelCouriersPleaseEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelCouriersPlease = /* values here */
+serviceLevelEnumSet: components.ServiceLevelCouriersPleaseEnum = /* values here */
 ```
 
-### ServiceLevelCorreosEspana
+### ServiceLevelCorreosEspanaEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelCorreosEspana = /* values here */
+serviceLevelEnumSet: components.ServiceLevelCorreosEspanaEnum = /* values here */
 ```
 
-### ServiceLevelColissimo
+### ServiceLevelColissimoEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelColissimo = /* values here */
+serviceLevelEnumSet: components.ServiceLevelColissimoEnum = /* values here */
 ```
 
-### ServiceLevelPurolator
+### ServiceLevelPurolatorEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelPurolator = /* values here */
+serviceLevelEnumSet: components.ServiceLevelPurolatorEnum = /* values here */
 ```
 
-### ServiceLevelDHLExpress
+### ServiceLevelDHLExpressEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelDHLExpress = /* values here */
+serviceLevelEnumSet: components.ServiceLevelDHLExpressEnum = /* values here */
 ```
 
-### ServiceLevelDHLeCommerce
+### ServiceLevelDHLeCommerceEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelDHLeCommerce = /* values here */
+serviceLevelEnumSet: components.ServiceLevelDHLeCommerceEnum = /* values here */
 ```
 
-### ServiceLevelDHLGermany
+### ServiceLevelDHLGermanyEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelDHLGermany = /* values here */
+serviceLevelEnumSet: components.ServiceLevelDHLGermanyEnum = /* values here */
 ```
 
-### ServiceLevelDPDDE
+### ServiceLevelDPDDEEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelDPDDE = /* values here */
+serviceLevelEnumSet: components.ServiceLevelDPDDEEnum = /* values here */
 ```
 
-### ServiceLevelDPDUK
+### ServiceLevelDPDUKEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelDPDUK = /* values here */
+serviceLevelEnumSet: components.ServiceLevelDPDUKEnum = /* values here */
 ```
 
-### ServiceLevelDeutschePost
+### ServiceLevelDeutschePostEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelDeutschePost = /* values here */
+serviceLevelEnumSet: components.ServiceLevelDeutschePostEnum = /* values here */
 ```
 
-### ServiceLevelAramexAustralia
+### ServiceLevelAramexAustraliaEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelAramexAustralia = /* values here */
+serviceLevelEnumSet: components.ServiceLevelAramexAustraliaEnum = /* values here */
 ```
 
-### ServiceLevelGlobegistics
+### ServiceLevelGlobegisticsEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelGlobegistics = /* values here */
+serviceLevelEnumSet: components.ServiceLevelGlobegisticsEnum = /* values here */
 ```
 
-### ServiceLevelGLSUS
+### ServiceLevelGLSUSEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelGLSUS = /* values here */
+serviceLevelEnumSet: components.ServiceLevelGLSUSEnum = /* values here */
 ```
 
-### ServiceLevelLSO
+### ServiceLevelLSOEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelLSO = /* values here */
+serviceLevelEnumSet: components.ServiceLevelLSOEnum = /* values here */
 ```
 
-### ServiceLevelMondialRelay
+### ServiceLevelMondialRelayEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelMondialRelay = /* values here */
+serviceLevelEnumSet: components.ServiceLevelMondialRelayEnum = /* values here */
 ```
 
-### ServiceLevelMaergo
+### ServiceLevelMaergoEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelMaergo = /* values here */
+serviceLevelEnumSet: components.ServiceLevelMaergoEnum = /* values here */
 ```
 
-### ServiceLevelParcelforce
+### ServiceLevelParcelforceEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelParcelforce = /* values here */
+serviceLevelEnumSet: components.ServiceLevelParcelforceEnum = /* values here */
 ```
 
-### ServiceLevelPostItaliane
+### ServiceLevelPostItalianeEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelPostItaliane = /* values here */
+serviceLevelEnumSet: components.ServiceLevelPostItalianeEnum = /* values here */
 ```
 
-### ServiceLevelePostGlobal
+### ServiceLevelePostGlobalEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelePostGlobal = /* values here */
+serviceLevelEnumSet: components.ServiceLevelePostGlobalEnum = /* values here */
 ```
 
-### ServiceLevelRoyalMail
+### ServiceLevelRoyalMailEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelRoyalMail = /* values here */
+serviceLevelEnumSet: components.ServiceLevelRoyalMailEnum = /* values here */
 ```
 
-### ServiceLevelSendle
+### ServiceLevelSendleEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelSendle = /* values here */
+serviceLevelEnumSet: components.ServiceLevelSendleEnum = /* values here */
 ```
 
-### ServiceLevelOnTrac
+### ServiceLevelOnTracEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelOnTrac = /* values here */
+serviceLevelEnumSet: components.ServiceLevelOnTracEnum = /* values here */
 ```
 
-### ServiceLevelLasership
+### ServiceLevelLasershipEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelLasership = /* values here */
+serviceLevelEnumSet: components.ServiceLevelLasershipEnum = /* values here */
 ```
 
-### ServiceLevelEvriUK
+### ServiceLevelEvriUKEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelEvriUK = /* values here */
+serviceLevelEnumSet: components.ServiceLevelEvriUKEnum = /* values here */
 ```
 
-### ServiceLevelUDS
+### ServiceLevelUDSEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelUDS = /* values here */
+serviceLevelEnumSet: components.ServiceLevelUDSEnum = /* values here */
 ```
 
-### ServiceLevelVeho
+### ServiceLevelVehoEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelVeho = /* values here */
+serviceLevelEnumSet: components.ServiceLevelVehoEnum = /* values here */
 ```
 
-### ServiceLevelSwyft
+### ServiceLevelSwyftEnum
 
 ```python
-serviceLevelEnumSet: components.ServiceLevelSwyft = /* values here */
+serviceLevelEnumSet: components.ServiceLevelSwyftEnum = /* values here */
 ```
 

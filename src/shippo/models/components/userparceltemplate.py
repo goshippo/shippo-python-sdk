@@ -4,8 +4,8 @@ from __future__ import annotations
 import dataclasses
 import dateutil.parser
 from .carrierparceltemplate import CarrierParcelTemplate
-from .distanceunit import DistanceUnit
-from .weightunit import WeightUnit
+from .distanceunitenum import DistanceUnitEnum
+from .weightunitenum import WeightUnitEnum
 from dataclasses_json import Undefined, dataclass_json
 from datetime import datetime
 from shippo import utils
@@ -15,7 +15,7 @@ from typing import Optional
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class UserParcelTemplate:
-    distance_unit: Optional[DistanceUnit] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('distance_unit'), 'exclude': lambda f: f is None }})
+    distance_unit: Optional[DistanceUnitEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('distance_unit'), 'exclude': lambda f: f is None }})
     r"""The measure unit used for length, width and height."""
     height: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('height'), 'exclude': lambda f: f is None }})
     r"""The height of the package, in units specified by the `distance_unit` attribute. Required, but if using a preset carrier template then this field must be empty."""
@@ -25,7 +25,7 @@ class UserParcelTemplate:
     r"""The name of the User Parcel Template"""
     weight: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('weight'), 'exclude': lambda f: f is None }})
     r"""The weight of the package, in units specified by the weight_unit attribute."""
-    weight_unit: Optional[WeightUnit] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('weight_unit'), 'exclude': lambda f: f is None }})
+    weight_unit: Optional[WeightUnitEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('weight_unit'), 'exclude': lambda f: f is None }})
     r"""The unit used for weight."""
     width: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('width'), 'exclude': lambda f: f is None }})
     r"""The width of the package, in units specified by the `distance_unit` attribute. Required, but if using a preset carrier template then this field must be empty."""

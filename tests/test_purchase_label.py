@@ -1,5 +1,5 @@
 import shippo
-from shippo.models.components import Carriers, ParcelRequest, DistanceUnit, WeightUnit, \
+from shippo.models.components import CarriersEnum, ParcelRequest, DistanceUnitEnum, WeightUnitEnum, \
     AddressCreateRequest, ShipmentCreateRequest, TransactionCreateRequest, ParcelCreateRequest
 from tests.helpers_custom import get_carrier_accounts
 
@@ -8,7 +8,7 @@ from tests.helpers_custom import get_carrier_accounts
 class TestPurchaseLabel:
 
     def test_purchase_label(self, api: shippo.Shippo):
-        carrier_accounts = get_carrier_accounts(api, Carriers.USPS)
+        carrier_accounts = get_carrier_accounts(api, CarriersEnum.USPS)
         carrier_account_ids = [carrier_account.object_id for carrier_account in carrier_accounts]
 
         shipment = api.shipments.create(
@@ -38,9 +38,9 @@ class TestPurchaseLabel:
                         length="5",
                         width="5",
                         height="5",
-                        distance_unit=DistanceUnit.CM,
+                        distance_unit=DistanceUnitEnum.CM,
                         weight="2",
-                        mass_unit=WeightUnit.LB
+                        mass_unit=WeightUnitEnum.LB
                     )
                 ],
                 carrier_accounts=carrier_account_ids
@@ -82,9 +82,9 @@ class TestPurchaseLabel:
                 length="5",
                 width="5",
                 height="5",
-                distance_unit=DistanceUnit.CM,
+                distance_unit=DistanceUnitEnum.CM,
                 weight="2",
-                mass_unit=WeightUnit.LB,
+                mass_unit=WeightUnitEnum.LB,
                 metadata="Wool Box1",
             ))
 

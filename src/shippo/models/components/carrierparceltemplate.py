@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 import dataclasses
-from .distanceunit import DistanceUnit
+from .distanceunitenum import DistanceUnitEnum
 from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
 from typing import Optional
@@ -13,7 +13,7 @@ from typing import Optional
 class CarrierParcelTemplate:
     carrier: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('carrier'), 'exclude': lambda f: f is None }})
     r"""The name of the carrier that provides this parcel template"""
-    distance_unit: Optional[DistanceUnit] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('distance_unit'), 'exclude': lambda f: f is None }})
+    distance_unit: Optional[DistanceUnitEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('distance_unit'), 'exclude': lambda f: f is None }})
     r"""The measure unit used for length, width and height."""
     height: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('height'), 'exclude': lambda f: f is None }})
     r"""The height of the package, in units specified by the distance_unit attribute"""
