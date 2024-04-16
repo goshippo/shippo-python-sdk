@@ -73,12 +73,12 @@ s = shippo.Shippo(
 res = s.customs_declarations.create(shippo_api_version='2018-02-08', customs_declaration_create_request=components.CustomsDeclarationCreateRequest(
     certify=True,
     certify_signer='Shawn Ippotle',
-    contents_type=components.CustomsDeclarationCreateRequestContentsType.MERCHANDISE,
-    non_delivery_option=components.CustomsDeclarationCreateRequestNonDeliveryOption.ABANDON,
+    contents_type=components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,
+    non_delivery_option=components.CustomsDeclarationNonDeliveryOptionEnum.ABANDON,
     items=[
         components.CustomsItemBase(
             description='T-Shirt',
-            mass_unit=components.WeightUnit.LB,
+            mass_unit=components.WeightUnitEnum.LB,
             net_weight='5',
             origin_country='<value>',
             quantity=20,
@@ -89,8 +89,8 @@ res = s.customs_declarations.create(shippo_api_version='2018-02-08', customs_dec
         ),
     ],
     contents_explanation='T-Shirt purchase',
-    eel_pfc=components.CustomsDeclarationCreateRequestEelPfc.NOEEI_30_37_A,
-    incoterm=components.CustomsDeclarationCreateRequestIncoterm.DDP,
+    eel_pfc=components.CustomsDeclarationEelPfcEnum.NOEEI_30_37_A,
+    incoterm=components.CustomsDeclarationIncotermEnum.DDP,
     invoice='#123123',
     metadata='Order ID #123123',
     test=True,

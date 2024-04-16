@@ -2,22 +2,11 @@
 
 from __future__ import annotations
 import dataclasses
+from .labelfiletypeenum import LabelFileTypeEnum
 from .shipmentcreaterequest import ShipmentCreateRequest
 from dataclasses_json import Undefined, dataclass_json
-from enum import Enum
 from shippo import utils
 from typing import Optional
-
-class InstantTransactionRequestBodyLabelFileType(str, Enum):
-    PNG = 'PNG'
-    PNG_2_3X7_5 = 'PNG_2.3x7.5'
-    PDF = 'PDF'
-    PDF_2_3X7_5 = 'PDF_2.3x7.5'
-    PDF_4X6 = 'PDF_4x6'
-    PDF_4X8 = 'PDF_4x8'
-    PDF_A4 = 'PDF_A4'
-    PDF_A6 = 'PDF_A6'
-    ZPLII = 'ZPLII'
 
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
@@ -26,7 +15,10 @@ class InstantTransactionRequestBody:
     carrier_account: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('carrier_account') }})
     servicelevel_token: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('servicelevel_token') }})
     shipment: ShipmentCreateRequest = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('shipment') }})
-    label_file_type: Optional[InstantTransactionRequestBodyLabelFileType] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('label_file_type'), 'exclude': lambda f: f is None }})
+    label_file_type: Optional[LabelFileTypeEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('label_file_type'), 'exclude': lambda f: f is None }})
+    r"""Print format of the <a href=\\"https://docs.goshippo.com/docs/shipments/shippinglabelsizes/\\">label</a>. If empty, will use the default format set from
+    <a href=\"https://apps.goshippo.com/settings/labels\">the Shippo dashboard.</a>
+    """
     metadata: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('metadata'), 'exclude': lambda f: f is None }})
     
 

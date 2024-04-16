@@ -3,7 +3,7 @@
 from __future__ import annotations
 import dataclasses
 from .batchshipmentbase import BatchShipmentBase
-from .labelfiletype import LabelFileType
+from .labelfiletypeenum import LabelFileTypeEnum
 from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
 from typing import List, Optional
@@ -24,7 +24,7 @@ class BatchCreateRequest:
     """
     batch_shipments: List[BatchShipmentBase] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('batch_shipments') }})
     r"""Array of BatchShipment objects. The response keeps the same order as in the request array."""
-    label_filetype: Optional[LabelFileType] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('label_filetype'), 'exclude': lambda f: f is None }})
+    label_filetype: Optional[LabelFileTypeEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('label_filetype'), 'exclude': lambda f: f is None }})
     r"""Print format of the <a href=\\"https://docs.goshippo.com/docs/shipments/shippinglabelsizes/\\">label</a>. If empty, will use the default format set from
     <a href=\"https://apps.goshippo.com/settings/labels\">the Shippo dashboard.</a>
     """

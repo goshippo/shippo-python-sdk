@@ -3,7 +3,7 @@
 from __future__ import annotations
 import dataclasses
 from .servicegroupaccountandservicelevel import ServiceGroupAccountAndServiceLevel
-from .servicegrouptype import ServiceGroupType
+from .servicegrouptypeenum import ServiceGroupTypeEnum
 from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
 from typing import List, Optional
@@ -16,7 +16,7 @@ class ServiceGroupUpdateRequest:
     r"""Description for the service group"""
     name: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('name') }})
     r"""Name for the service group that will be shown to customers in the response"""
-    type: ServiceGroupType = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('type') }})
+    type: ServiceGroupTypeEnum = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('type') }})
     r"""The type of the service group.<br> `LIVE_RATE` - Shippo will make a rating request and return real-time rates for the shipping group, only falling back to the specified flat rate amount if no rates match a service level in the service group.<br> `FLAT_RATE` - Returns a shipping option with the specified flat rate amount.<br> `FREE_SHIPPING` - Returns a shipping option with a price of $0 only if the total cost of items exceeds the amount defined by `free_shipping_threshold_min`"""
     object_id: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_id') }})
     r"""The unique identifier of the given Service Group object."""

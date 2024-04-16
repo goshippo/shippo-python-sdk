@@ -1,11 +1,10 @@
 # ObjectState
 
-Indicates the validity of the enclosing object
+A Parcel will only be valid when all required values have been sent and validated successfully.
 
 
 ## Values
 
-| Name      | Value     |
-| --------- | --------- |
-| `VALID`   | VALID     |
-| `INVALID` | INVALID   |
+| Name    | Value   |
+| ------- | ------- |
+| `VALID` | VALID   |

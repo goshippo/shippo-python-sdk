@@ -3,8 +3,8 @@
 from __future__ import annotations
 import dataclasses
 import dateutil.parser
-from .labelfiletype import LabelFileType
-from .objectstate import ObjectState
+from .labelfiletypeenum import LabelFileTypeEnum
+from .objectstateenum import ObjectStateEnum
 from .trackingstatusenum import TrackingStatusEnum
 from .transactionstatusenum import TransactionStatusEnum
 from dataclasses_json import Undefined, dataclass_json
@@ -27,7 +27,7 @@ class Transaction:
     """
     eta: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('eta'), 'exclude': lambda f: f is None }})
     r"""The estimated time of arrival according to the carrier."""
-    label_file_type: Optional[LabelFileType] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('label_file_type'), 'exclude': lambda f: f is None }})
+    label_file_type: Optional[LabelFileTypeEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('label_file_type'), 'exclude': lambda f: f is None }})
     r"""Print format of the <a href=\\"https://docs.goshippo.com/docs/shipments/shippinglabelsizes/\\">label</a>. If empty, will use the default format set from
     <a href=\"https://apps.goshippo.com/settings/labels\">the Shippo dashboard.</a>
     """
@@ -50,7 +50,7 @@ class Transaction:
     r"""Unique identifier of the given Transaction object."""
     object_owner: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_owner'), 'exclude': lambda f: f is None }})
     r"""Username of the user who created the Transaction object."""
-    object_state: Optional[ObjectState] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_state'), 'exclude': lambda f: f is None }})
+    object_state: Optional[ObjectStateEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_state'), 'exclude': lambda f: f is None }})
     r"""Indicates the validity of the enclosing object"""
     object_updated: Optional[datetime] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_updated'), 'encoder': utils.datetimeisoformat(True), 'decoder': dateutil.parser.isoparse, 'exclude': lambda f: f is None }})
     r"""Date and time of last Transaction update."""

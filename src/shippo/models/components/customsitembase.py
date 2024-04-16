@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 import dataclasses
-from .weightunit import WeightUnit
+from .weightunitenum import WeightUnitEnum
 from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
 from typing import Optional
@@ -13,7 +13,7 @@ from typing import Optional
 class CustomsItemBase:
     description: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('description') }})
     r"""Text description of your item."""
-    mass_unit: WeightUnit = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('mass_unit') }})
+    mass_unit: WeightUnitEnum = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('mass_unit') }})
     r"""The unit used for weight."""
     net_weight: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('net_weight') }})
     r"""Total weight of this item, i.e. quantity * weight per item."""

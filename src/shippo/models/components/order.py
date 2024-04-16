@@ -4,22 +4,12 @@ from __future__ import annotations
 import dataclasses
 from .address import Address
 from .lineitem import LineItem
-from .weightunit import WeightUnit
+from .orderstatusenum import OrderStatusEnum
+from .weightunitenum import WeightUnitEnum
 from dataclasses_json import Undefined, dataclass_json
 from enum import Enum
 from shippo import utils
 from typing import List, Optional
-
-class OrderStatus(str, Enum):
-    r"""Current state of the order. See the <a href=\\"https://docs.goshippo.com/docs/orders/orders/\\">orders tutorial</a>
-    for the logic of how the status is handled.
-    """
-    UNKNOWN = 'UNKNOWN'
-    AWAITPAY = 'AWAITPAY'
-    PAID = 'PAID'
-    REFUNDED = 'REFUNDED'
-    PARTIALLY_FULFILLED = 'PARTIALLY_FULFILLED'
-    SHIPPED = 'SHIPPED'
 
 class ShopApp(str, Enum):
     r"""Platform the order was created on and, if applicable, imported from.
@@ -56,7 +46,7 @@ class Order:
     r"""Custom buyer- or seller-provided notes about the order."""
     order_number: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('order_number'), 'exclude': lambda f: f is None }})
     r"""An alphanumeric identifier for the order used by the seller/buyer. This identifier doesn't need to be unique."""
-    order_status: Optional[OrderStatus] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('order_status'), 'exclude': lambda f: f is None }})
+    order_status: Optional[OrderStatusEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('order_status'), 'exclude': lambda f: f is None }})
     r"""Current state of the order. See the <a href=\\"https://docs.goshippo.com/docs/orders/orders/\\">orders tutorial</a>
     for the logic of how the status is handled.
     """
@@ -77,7 +67,7 @@ class Order:
     r"""Total tax amount paid by the buyer for this order."""
     weight: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('weight'), 'exclude': lambda f: f is None }})
     r"""Total weight of the order."""
-    weight_unit: Optional[WeightUnit] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('weight_unit'), 'exclude': lambda f: f is None }})
+    weight_unit: Optional[WeightUnitEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('weight_unit'), 'exclude': lambda f: f is None }})
     r"""The unit used for weight."""
     from_address: Optional[Address] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('from_address'), 'exclude': lambda f: f is None }})
     r"""<a href=\\"#tag/Addresses\\">Address</a> object of the sender / seller. Will be returned expanded by default."""

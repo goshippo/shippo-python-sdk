@@ -101,7 +101,7 @@ res = s.orders.create(shippo_api_version='2018-02-08', order_create_request=comp
     currency='USD',
     notes='This customer is a VIP',
     order_number='#1068',
-    order_status=components.OrderCreateRequestOrderStatus.PAID,
+    order_status=components.OrderStatusEnum.PAID,
     shipping_cost='12.83',
     shipping_cost_currency='USD',
     shipping_method='USPS First Class Package',
@@ -109,7 +109,7 @@ res = s.orders.create(shippo_api_version='2018-02-08', order_create_request=comp
     total_price='24.93',
     total_tax='0.0',
     weight='0.4',
-    weight_unit=components.WeightUnit.LB,
+    weight_unit=components.WeightUnitEnum.LB,
 ))
 
 if res is not None:

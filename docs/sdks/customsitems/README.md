@@ -71,7 +71,7 @@ s = shippo.Shippo(
 
 res = s.customs_items.create(shippo_api_version='2018-02-08', customs_item_base=components.CustomsItemBase(
     description='T-Shirt',
-    mass_unit=components.WeightUnit.LB,
+    mass_unit=components.WeightUnitEnum.LB,
     net_weight='5',
     origin_country='<value>',
     quantity=20,

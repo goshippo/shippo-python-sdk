@@ -74,10 +74,10 @@ s = shippo.Shippo(
 
 
 res = s.parcels.create(shippo_api_version='2018-02-08', parcel_request=components.ParcelRequest(
-    distance_unit=components.DistanceUnit.IN,
+    distance_unit=components.DistanceUnitEnum.IN,
     height='1',
     length='1',
-    mass_unit=components.WeightUnit.LB,
+    mass_unit=components.WeightUnitEnum.LB,
     weight='1',
     width='1',
 ))

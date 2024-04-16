@@ -72,7 +72,7 @@ s = shippo.Shippo(
 res = s.service_groups.create(shippo_api_version='2018-02-08', service_group_create_request=components.ServiceGroupCreateRequest(
     description='USPS shipping options',
     name='USPS Shipping',
-    type=components.ServiceGroupType.FLAT_RATE,
+    type=components.ServiceGroupTypeEnum.FLAT_RATE,
     service_levels=[
         components.ServiceGroupAccountAndServiceLevel(
             account_object_id='80feb1633d4a43c898f0058506cfd82d',
@@ -128,7 +128,7 @@ s = shippo.Shippo(
 res = s.service_groups.update(shippo_api_version='2018-02-08', service_group_update_request=components.ServiceGroupUpdateRequest(
     description='USPS shipping options',
     name='USPS Shipping',
-    type=components.ServiceGroupType.FLAT_RATE,
+    type=components.ServiceGroupTypeEnum.FLAT_RATE,
     object_id='80feb1633d4a43c898f005850',
     is_active=True,
     service_levels=[

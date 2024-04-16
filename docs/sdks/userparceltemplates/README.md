@@ -82,7 +82,7 @@ s = shippo.Shippo(
 
 res = s.user_parcel_templates.create(shippo_api_version='2018-02-08', user_parcel_template_create_request=components.UserParcelTemplateWithCarrierTemplateCreateRequest(
     weight='12',
-    weight_unit=components.WeightUnit.LB,
+    weight_unit=components.WeightUnitEnum.LB,
 ))
 
 if res is not None:
@@ -206,13 +206,13 @@ s = shippo.Shippo(
 
 
 res = s.user_parcel_templates.update(user_parcel_template_object_id='<value>', shippo_api_version='2018-02-08', user_parcel_template_update_request=components.UserParcelTemplateUpdateRequest(
-    distance_unit=components.DistanceUnit.IN,
+    distance_unit=components.DistanceUnitEnum.IN,
     height='6',
     length='10',
     name='My Custom Template',
     width='8',
     weight='12',
-    weight_unit=components.WeightUnit.LB,
+    weight_unit=components.WeightUnitEnum.LB,
 ))
 
 if res is not None:
