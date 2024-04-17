@@ -107,10 +107,9 @@ if res is not None:
 **[components.CarrierAccount](../../models/components/carrieraccount.md)**
 ### Errors
 
-| Error Object                | Status Code                 | Content Type                |
-| --------------------------- | --------------------------- | --------------------------- |
-| errors.BadRequestWithDetail | 400                         | application/json            |
-| errors.SDKError             | 4xx-5xx                     | */*                         |
+| Error Object    | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| errors.SDKError | 4xx-5xx         | */*             |
 
 ## get
 
@@ -282,10 +281,9 @@ if res is not None:
 **[components.CarrierAccount](../../models/components/carrieraccount.md)**
 ### Errors
 
-| Error Object               | Status Code                | Content Type               |
-| -------------------------- | -------------------------- | -------------------------- |
-| errors.BadRequestWithError | 400                        | application/json           |
-| errors.SDKError            | 4xx-5xx                    | */*                        |
+| Error Object    | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| errors.SDKError | 4xx-5xx         | */*             |
 
 ## get_registration_status
 
