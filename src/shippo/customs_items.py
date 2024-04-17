@@ -57,7 +57,7 @@ class CustomsItems:
             if e is not None:
                 raise e
 
-        if utils.match_status_codes(['4XX','5XX'], http_res.status_code):
+        if utils.match_status_codes(['400','4XX','5XX'], http_res.status_code):
             result, e = self.sdk_configuration.get_hooks().after_error(AfterErrorContext(hook_ctx), http_res, None)
             if e is not None:
                 raise e
@@ -76,7 +76,7 @@ class CustomsItems:
             
             content_type = http_res.headers.get('Content-Type')
             raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
-        elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
+        elif http_res.status_code == 400 or http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
@@ -124,7 +124,7 @@ class CustomsItems:
             if e is not None:
                 raise e
 
-        if utils.match_status_codes(['4XX','5XX'], http_res.status_code):
+        if utils.match_status_codes(['400','4XX','5XX'], http_res.status_code):
             result, e = self.sdk_configuration.get_hooks().after_error(AfterErrorContext(hook_ctx), http_res, None)
             if e is not None:
                 raise e
@@ -143,7 +143,7 @@ class CustomsItems:
             
             content_type = http_res.headers.get('Content-Type')
             raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
-        elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
+        elif http_res.status_code == 400 or http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
@@ -189,7 +189,7 @@ class CustomsItems:
             if e is not None:
                 raise e
 
-        if utils.match_status_codes(['4XX','5XX'], http_res.status_code):
+        if utils.match_status_codes(['400','4XX','5XX'], http_res.status_code):
             result, e = self.sdk_configuration.get_hooks().after_error(AfterErrorContext(hook_ctx), http_res, None)
             if e is not None:
                 raise e
@@ -208,7 +208,7 @@ class CustomsItems:
             
             content_type = http_res.headers.get('Content-Type')
             raise errors.SDKError(f'unknown content-type received: {content_type}', http_res.status_code, http_res.text, http_res)
-        elif http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
+        elif http_res.status_code == 400 or http_res.status_code >= 400 and http_res.status_code < 500 or http_res.status_code >= 500 and http_res.status_code < 600:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)

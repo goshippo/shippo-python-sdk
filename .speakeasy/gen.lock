@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: 790d1cb748cc206bd331e96019b98d91
+  docChecksum: d10a3059bc8b209dec494205b9c7f269
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.253.3
+  speakeasyVersion: 1.253.4
   generationVersion: 2.306.3
-  releaseVersion: 3.2.5
-  configChecksum: 6e58af76bbd07a1158ab9f2b7bc3a959
+  releaseVersion: 3.2.6
+  configChecksum: f8edb8641a77d2b0fe9d13df910bee6a
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
@@ -250,9 +250,7 @@ generatedFiles:
   - src/shippo/models/operations/createshippoaccount.py
   - src/shippo/models/operations/getshippoaccount.py
   - src/shippo/models/operations/updateshippoaccount.py
-  - src/shippo/models/errors/badrequestwithdetail.py
   - src/shippo/models/errors/initiateoauth2signin.py
-  - src/shippo/models/errors/badrequestwitherror.py
   - src/shippo/models/internal/globals.py
   - src/shippo/models/__init__.py
   - src/shippo/models/errors/__init__.py
@@ -633,11 +631,9 @@ generatedFiles:
   - docs/models/operations/getshippoaccountrequest.md
   - docs/models/operations/updateshippoaccountglobals.md
   - docs/models/operations/updateshippoaccountrequest.md
-  - docs/models/errors/badrequestwithdetail.md
   - docs/models/errors/initiateoauth2signincarrieraccountsresponseresponsebody.md
   - docs/models/errors/initiateoauth2signincarrieraccountsresponsebody.md
   - docs/models/errors/initiateoauth2signinresponsebody.md
-  - docs/models/errors/badrequestwitherror.md
   - docs/models/internal/globals.md
   - docs/sdks/shippo/README.md
   - docs/sdks/addresses/README.md
