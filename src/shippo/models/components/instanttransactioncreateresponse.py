@@ -3,6 +3,7 @@
 from __future__ import annotations
 import dataclasses
 import dateutil.parser
+from .instanttransactionrate import InstantTransactionRate
 from .labelfiletypeenum import LabelFileTypeEnum
 from .objectstateenum import ObjectStateEnum
 from .trackingstatusenum import TrackingStatusEnum
@@ -14,13 +15,13 @@ from typing import List, Optional
 
 
 @dataclasses.dataclass
-class TransactionMessages:
+class InstantTransactionCreateResponseMessages:
     pass
 
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
-class Transaction:
+class InstantTransactionCreateResponse:
     commercial_invoice_url: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('commercial_invoice_url'), 'exclude': lambda f: f is None }})
     r"""A URL pointing to the commercial invoice as a 8.5x11 inch PDF file.
     A value will only be returned if the Transactions has been processed successfully and if the shipment is international.
@@ -35,7 +36,7 @@ class Transaction:
     r"""A URL pointing directly to the label in the format you've set in your settings.
     A value will only be returned if the Transactions has been processed successfully.
     """
-    messages: Optional[List[TransactionMessages]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('messages'), 'exclude': lambda f: f is None }})
+    messages: Optional[List[InstantTransactionCreateResponseMessages]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('messages'), 'exclude': lambda f: f is None }})
     r"""An array containing elements of the following schema:<br>
     `code` (string): an identifier for the corresponding message (not always available)<br>
     `message` (string): a publishable message containing further information.
@@ -72,9 +73,6 @@ class Transaction:
     r"""A link to track this item on the carrier-provided tracking website.
     A value will only be returned if tracking is available and the carrier provides such a service.
     """
-    rate: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('rate'), 'exclude': lambda f: f is None }})
-    r"""ID of the Rate object for which a Label has to be obtained.
-    Please note that only rates that are not older than 7 days can be purchased in order to ensure up-to-date pricing.
-    """
+    rate: Optional[InstantTransactionRate] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('rate'), 'exclude': lambda f: f is None }})
     
 

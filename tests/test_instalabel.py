@@ -1,6 +1,6 @@
 import shippo
 from shippo.models.components import CarriersEnum, DistanceUnitEnum, WeightUnitEnum, \
-    AddressCreateRequest, ShipmentCreateRequest, InstantTransactionRequestBody, \
+    AddressCreateRequest, ShipmentCreateRequest, InstantTransactionCreateRequest, \
     ParcelCreateRequest
 from tests.helpers_custom import get_carrier_account
 
@@ -12,7 +12,7 @@ class TestInstalabel:
         carrier_account = get_carrier_account(api, CarriersEnum.USPS)
 
         transaction = api.transactions.create(
-            request_body=InstantTransactionRequestBody(
+            request_body=InstantTransactionCreateRequest(
                 carrier_account=carrier_account.object_id,
                 servicelevel_token="usps_ground_advantage",
                 shipment=ShipmentCreateRequest(

@@ -77,7 +77,7 @@ class Transactions:
 
     
     
-    def create(self, shippo_api_version: Optional[str] = None, request_body: Optional[Union[components.TransactionCreateRequest, components.InstantTransactionRequestBody]] = None) -> components.Transaction:
+    def create(self, shippo_api_version: Optional[str] = None, request_body: Optional[Union[components.TransactionCreateRequest, components.InstantTransactionCreateRequest]] = None) -> Union[components.Transaction, components.InstantTransactionCreateResponse]:
         r"""Create a shipping label
         Creates a new transaction object and purchases the shipping label using a rate object that has previously been created. <br> OR <br> Creates a new transaction object and purchases the shipping label instantly using shipment details, an existing carrier account, and an existing service level token.
         """
@@ -132,7 +132,7 @@ class Transactions:
         
         if http_res.status_code == 201:
             if utils.match_content_type(http_res.headers.get('Content-Type') or '', 'application/json'):                
-                out = utils.unmarshal_json(http_res.text, Optional[components.Transaction])
+                out = utils.unmarshal_json(http_res.text, Optional[Union[components.Transaction, components.InstantTransactionCreateResponse]])
                 return out
             
             content_type = http_res.headers.get('Content-Type')

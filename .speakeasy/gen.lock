@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: d10a3059bc8b209dec494205b9c7f269
+  docChecksum: 1dd065f0b69fdf1f392a15d7d7cd4e7b
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.253.4
-  generationVersion: 2.306.3
-  releaseVersion: 3.2.6
-  configChecksum: f8edb8641a77d2b0fe9d13df910bee6a
+  speakeasyVersion: 1.258.2
+  generationVersion: 2.309.2
+  releaseVersion: 3.2.7
+  configChecksum: 18e5e7665d39581a649de439f222f6af
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
@@ -123,7 +123,7 @@ generatedFiles:
   - src/shippo/models/components/customsdeclarationcontentstypeenum.py
   - src/shippo/models/components/customsdeclarationb13afilingoptionenum.py
   - src/shippo/models/components/customsdeclarationcreaterequest.py
-  - src/shippo/models/components/customsitembase.py
+  - src/shippo/models/components/customsitemcreaterequest.py
   - src/shippo/models/components/addressimporter.py
   - src/shippo/models/components/customsitempaginatedlist.py
   - src/shippo/models/components/customsitem.py
@@ -175,8 +175,10 @@ generatedFiles:
   - src/shippo/models/components/transactionpaginatedlist.py
   - src/shippo/models/components/transaction.py
   - src/shippo/models/components/transactionstatusenum.py
+  - src/shippo/models/components/instanttransactioncreateresponse.py
+  - src/shippo/models/components/instanttransactionrate.py
   - src/shippo/models/components/transactioncreaterequest.py
-  - src/shippo/models/components/instanttransactionrequestbody.py
+  - src/shippo/models/components/instanttransactioncreaterequest.py
   - src/shippo/models/components/userparceltemplatewithcarriertemplatecreaterequest.py
   - src/shippo/models/components/userparceltemplatewithoutcarriertemplatecreaterequest.py
   - src/shippo/models/components/userparceltemplateupdaterequest.py
@@ -374,7 +376,7 @@ generatedFiles:
   - docs/models/components/customsdeclarationcontentstypeenum.md
   - docs/models/components/customsdeclarationb13afilingoptionenum.md
   - docs/models/components/customsdeclarationcreaterequest.md
-  - docs/models/components/customsitembase.md
+  - docs/models/components/customsitemcreaterequest.md
   - docs/models/components/addressimporter.md
   - docs/models/components/customsitempaginatedlist.md
   - docs/models/components/customsitem.md
@@ -442,8 +444,13 @@ generatedFiles:
   - docs/models/components/transactionmessages.md
   - docs/models/components/transaction.md
   - docs/models/components/transactionstatusenum.md
+  - docs/models/components/transactioncreateresponse.md
+  - docs/models/components/instanttransactioncreateresponsemessages.md
+  - docs/models/components/instanttransactioncreateresponse.md
+  - docs/models/components/instanttransactionrate.md
   - docs/models/components/transactioncreaterequest.md
-  - docs/models/components/instanttransactionrequestbody.md
+  - docs/models/components/labelfiletype.md
+  - docs/models/components/instanttransactioncreaterequest.md
   - docs/models/components/userparceltemplatecreaterequest.md
   - docs/models/components/userparceltemplatewithcarriertemplatecreaterequest.md
   - docs/models/components/userparceltemplatewithoutcarriertemplatecreaterequest.md

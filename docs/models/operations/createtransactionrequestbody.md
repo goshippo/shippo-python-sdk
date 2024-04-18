@@ -11,9 +11,9 @@ Examples.
 createTransactionRequestBody: components.TransactionCreateRequest = /* values here */
 ```
 
-### InstantTransactionRequestBody
+### InstantTransactionCreateRequest
 
 ```python
-createTransactionRequestBody: components.InstantTransactionRequestBody = /* values here */
+createTransactionRequestBody: components.InstantTransactionCreateRequest = /* values here */
 ```
 

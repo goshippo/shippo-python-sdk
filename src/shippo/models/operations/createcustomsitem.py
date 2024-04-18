@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import customsitembase as components_customsitembase
+from ...models.components import customsitemcreaterequest as components_customsitemcreaterequest
 from typing import Optional
 
 
@@ -18,7 +18,7 @@ class CreateCustomsItemGlobals:
 class CreateCustomsItemRequest:
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""
-    customs_item_base: Optional[components_customsitembase.CustomsItemBase] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
+    customs_item_create_request: Optional[components_customsitemcreaterequest.CustomsItemCreateRequest] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     r"""CustomsItem details."""
     
 

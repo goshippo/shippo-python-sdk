@@ -1,4 +1,4 @@
-# CustomsItemBase
+# CustomsItemCreateRequest
 
 
 ## Fields

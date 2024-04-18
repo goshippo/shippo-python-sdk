@@ -11,13 +11,17 @@ from typing import Optional
 @dataclasses.dataclass
 class LiveRate:
     amount: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('amount'), 'exclude': lambda f: f is None }})
-    r"""The value of the price for the service group, in units of currency of the sender address"""
+    r"""Final Rate price, expressed in the currency used in the sender's country."""
     amount_local: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('amount_local'), 'exclude': lambda f: f is None }})
-    r"""The value of the price for the service group, in the currency of the destination address"""
+    r"""Final Rate price, expressed in the currency used in the recipient's country."""
     currency: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('currency'), 'exclude': lambda f: f is None }})
-    r"""The ISO 4217 currency code for the price"""
+    r"""Currency used in the sender's country, refers to `amount`.
+    The <a href=\"http://www.xe.com/iso4217.php\">official ISO 4217</a> currency codes are used, e.g. `USD` or `EUR`.
+    """
     currency_local: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('currency_local'), 'exclude': lambda f: f is None }})
-    r"""The ISO 4217 currency code for the currency describing amount_local"""
+    r"""Currency used in the recipient's country, refers to `amount_local`.
+    The <a href=\"http://www.xe.com/iso4217.php\">official ISO 4217</a> currency codes are used, e.g. `USD` or \"EUR\".
+    """
     estimated_days: Optional[int] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('estimated_days'), 'exclude': lambda f: f is None }})
     r"""The estimated days in transit of the rate that powers the shipping option, if available."""
     title: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('title'), 'exclude': lambda f: f is None }})

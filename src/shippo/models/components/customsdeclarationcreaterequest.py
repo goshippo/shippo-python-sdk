@@ -8,7 +8,7 @@ from .customsdeclarationcontentstypeenum import CustomsDeclarationContentsTypeEn
 from .customsdeclarationeelpfcenum import CustomsDeclarationEelPfcEnum
 from .customsdeclarationincotermenum import CustomsDeclarationIncotermEnum
 from .customsdeclarationnondeliveryoptionenum import CustomsDeclarationNonDeliveryOptionEnum
-from .customsitembase import CustomsItemBase
+from .customsitemcreaterequest import CustomsItemCreateRequest
 from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
 from typing import Any, List, Optional
@@ -27,7 +27,7 @@ class CustomsDeclarationCreateRequest:
     r"""Type of goods of the shipment."""
     non_delivery_option: CustomsDeclarationNonDeliveryOptionEnum = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('non_delivery_option') }})
     r"""Indicates how the carrier should proceed in case the shipment can't be delivered."""
-    items: List[CustomsItemBase] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('items') }})
+    items: List[CustomsItemCreateRequest] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('items') }})
     aes_itn: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('aes_itn'), 'exclude': lambda f: f is None }})
     r"""**required if eel_pfc is `AES_ITN`**<br>
     AES / ITN reference of the shipment.
