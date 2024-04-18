@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: 1dd065f0b69fdf1f392a15d7d7cd4e7b
+  docChecksum: c1432566bb0f190d84ea60211789b4e9
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.258.2
-  generationVersion: 2.309.2
-  releaseVersion: 3.2.7
-  configChecksum: 18e5e7665d39581a649de439f222f6af
+  speakeasyVersion: 1.259.0
+  generationVersion: 2.310.0
+  releaseVersion: 3.2.8
+  configChecksum: 7e72c6b5e6163d4a3085d6fce09bb1ca
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
 features:
   python:
     constsAndDefaults: 0.1.3
-    core: 4.6.4
+    core: 4.6.5
     flattening: 2.81.1
     globalSecurity: 2.83.5
     globalServerURLs: 2.82.2
@@ -442,10 +442,12 @@ generatedFiles:
   - docs/models/components/tracksrequest.md
   - docs/models/components/transactionpaginatedlist.md
   - docs/models/components/transactionmessages.md
+  - docs/models/components/responsetype.md
   - docs/models/components/transaction.md
   - docs/models/components/transactionstatusenum.md
   - docs/models/components/transactioncreateresponse.md
   - docs/models/components/instanttransactioncreateresponsemessages.md
+  - docs/models/components/instanttransactioncreateresponseresponsetype.md
   - docs/models/components/instanttransactioncreateresponse.md
   - docs/models/components/instanttransactionrate.md
   - docs/models/components/transactioncreaterequest.md
