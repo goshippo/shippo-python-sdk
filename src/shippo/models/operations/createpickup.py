@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import pickupbase as components_pickupbase
 from typing import Optional
 
 
@@ -10,15 +9,5 @@ from typing import Optional
 class CreatePickupGlobals:
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""
-    
-
-
-
-@dataclasses.dataclass
-class CreatePickupRequest:
-    shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
-    r"""String used to pick a non-default API version to use"""
-    pickup_base: Optional[components_pickupbase.PickupBase] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
-    r"""Shippo’s pickups endpoint allows you to schedule pickups with USPS and DHL Express for eligible shipments that you have already created."""
     
 

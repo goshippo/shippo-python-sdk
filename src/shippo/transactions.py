@@ -77,16 +77,11 @@ class Transactions:
 
     
     
-    def create(self, shippo_api_version: Optional[str] = None, request_body: Optional[Union[components.TransactionCreateRequest, components.InstantTransactionCreateRequest]] = None) -> Union[components.Transaction, components.InstantTransactionCreateResponse]:
+    def create(self, request: Optional[Union[components.TransactionCreateRequest, components.InstantTransactionCreateRequest]]) -> Union[components.Transaction, components.InstantTransactionCreateResponse]:
         r"""Create a shipping label
         Creates a new transaction object and purchases the shipping label using a rate object that has previously been created. <br> OR <br> Creates a new transaction object and purchases the shipping label instantly using shipment details, an existing carrier account, and an existing service level token.
         """
         hook_ctx = HookContext(operation_id='CreateTransaction', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.CreateTransactionRequest(
-            shippo_api_version=shippo_api_version,
-            request_body=request_body,
-        )
-        
         _globals = operations.CreateTransactionGlobals(
             shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
         )
@@ -101,7 +96,7 @@ class Transactions:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateTransactionRequest, "request_body", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, Optional[Union[components.TransactionCreateRequest, components.InstantTransactionCreateRequest]], "request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }
@@ -144,14 +139,13 @@ class Transactions:
 
     
     
-    def get(self, transaction_id: str, shippo_api_version: Optional[str] = None) -> components.Transaction:
+    def get(self, transaction_id: str) -> components.Transaction:
         r"""Retrieve a shipping label
         Returns an existing transaction using an object ID.
         """
         hook_ctx = HookContext(operation_id='GetTransaction', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.GetTransactionRequest(
             transaction_id=transaction_id,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.GetTransactionGlobals(

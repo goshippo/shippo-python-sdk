@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import servicegroupcreaterequest as components_servicegroupcreaterequest
 from typing import Optional
 
 
@@ -10,14 +9,5 @@ from typing import Optional
 class CreateServiceGroupGlobals:
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""
-    
-
-
-
-@dataclasses.dataclass
-class CreateServiceGroupRequest:
-    shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
-    r"""String used to pick a non-default API version to use"""
-    service_group_create_request: Optional[components_servicegroupcreaterequest.ServiceGroupCreateRequest] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     
 

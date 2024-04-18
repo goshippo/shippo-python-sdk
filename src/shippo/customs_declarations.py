@@ -19,7 +19,7 @@ class CustomsDeclarations:
         
     
     
-    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> components.CustomsDeclarationPaginatedList:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None) -> components.CustomsDeclarationPaginatedList:
         r"""List all customs declarations
         Returns a a list of all customs declaration objects
         """
@@ -27,7 +27,6 @@ class CustomsDeclarations:
         request = operations.ListCustomsDeclarationsRequest(
             page=page,
             results=results,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.ListCustomsDeclarationsGlobals(
@@ -84,16 +83,11 @@ class CustomsDeclarations:
 
     
     
-    def create(self, shippo_api_version: Optional[str] = None, customs_declaration_create_request: Optional[components.CustomsDeclarationCreateRequest] = None) -> components.CustomsDeclaration:
+    def create(self, request: Optional[components.CustomsDeclarationCreateRequest]) -> components.CustomsDeclaration:
         r"""Create a new customs declaration
         Creates a new customs declaration object
         """
         hook_ctx = HookContext(operation_id='CreateCustomsDeclaration', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.CreateCustomsDeclarationRequest(
-            shippo_api_version=shippo_api_version,
-            customs_declaration_create_request=customs_declaration_create_request,
-        )
-        
         _globals = operations.CreateCustomsDeclarationGlobals(
             shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
         )
@@ -108,7 +102,7 @@ class CustomsDeclarations:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateCustomsDeclarationRequest, "customs_declaration_create_request", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, Optional[components.CustomsDeclarationCreateRequest], "request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }
@@ -151,7 +145,7 @@ class CustomsDeclarations:
 
     
     
-    def get(self, customs_declaration_id: str, page: Optional[int] = None, shippo_api_version: Optional[str] = None) -> components.CustomsDeclaration:
+    def get(self, customs_declaration_id: str, page: Optional[int] = None) -> components.CustomsDeclaration:
         r"""Retrieve a customs declaration
         Returns an existing customs declaration using an object ID
         """
@@ -159,7 +153,6 @@ class CustomsDeclarations:
         request = operations.GetCustomsDeclarationRequest(
             customs_declaration_id=customs_declaration_id,
             page=page,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.GetCustomsDeclarationGlobals(

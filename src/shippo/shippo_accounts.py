@@ -20,7 +20,7 @@ class ShippoAccounts:
         
     
     
-    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> components.ShippoAccountPaginatedList:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None) -> components.ShippoAccountPaginatedList:
         r"""List all Shippo Accounts
         Returns a list of Shippo Accounts objects
         """
@@ -28,7 +28,6 @@ class ShippoAccounts:
         request = operations.ListShippoAccountsRequest(
             page=page,
             results=results,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.ListShippoAccountsGlobals(
@@ -85,14 +84,16 @@ class ShippoAccounts:
 
     
     
-    def create(self, shippo_api_version: Optional[str] = None, shippo_account_update_request: Optional[components.ShippoAccountUpdateRequest] = None) -> components.ShippoAccount:
+    def create(self, email: str, first_name: str, last_name: str, company_name: str) -> components.ShippoAccount:
         r"""Create a Shippo Account
         Creates a Shippo Account object
         """
         hook_ctx = HookContext(operation_id='CreateShippoAccount', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.CreateShippoAccountRequest(
-            shippo_api_version=shippo_api_version,
-            shippo_account_update_request=shippo_account_update_request,
+        request = components.ShippoAccountUpdateRequest(
+            email=email,
+            first_name=first_name,
+            last_name=last_name,
+            company_name=company_name,
         )
         
         _globals = operations.CreateShippoAccountGlobals(
@@ -109,7 +110,7 @@ class ShippoAccounts:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateShippoAccountRequest, "shippo_account_update_request", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, Optional[components.ShippoAccountUpdateRequest], "request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }
@@ -152,14 +153,13 @@ class ShippoAccounts:
 
     
     
-    def get(self, shippo_account_id: str, shippo_api_version: Optional[str] = None) -> components.ShippoAccount:
+    def get(self, shippo_account_id: str) -> components.ShippoAccount:
         r"""Retrieve a Shippo Account
         Returns a Shippo Account using an object ID
         """
         hook_ctx = HookContext(operation_id='GetShippoAccount', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.GetShippoAccountRequest(
             shippo_account_id=shippo_account_id,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.GetShippoAccountGlobals(
@@ -216,14 +216,13 @@ class ShippoAccounts:
 
     
     
-    def update(self, shippo_account_id: str, shippo_api_version: Optional[str] = None, shippo_account_update_request: Optional[components.ShippoAccountUpdateRequest] = None) -> components.ShippoAccount:
+    def update(self, shippo_account_id: str, shippo_account_update_request: Optional[components.ShippoAccountUpdateRequest] = None) -> components.ShippoAccount:
         r"""Update a Shippo Account
         Updates a Shippo Account object
         """
         hook_ctx = HookContext(operation_id='UpdateShippoAccount', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.UpdateShippoAccountRequest(
             shippo_account_id=shippo_account_id,
-            shippo_api_version=shippo_api_version,
             shippo_account_update_request=shippo_account_update_request,
         )
         

@@ -40,26 +40,22 @@ s = shippo.Shippo(
 )
 
 
-res = s.rates_at_checkout.create(shippo_api_version='2018-02-08', live_rate_create_request=components.LiveRateCreateRequest(
-    address_to='<value>',
-    line_items=[
-        components.LineItem(
-            currency='USD',
-            manufacture_country='US',
-            max_delivery_time=dateutil.parser.isoparse('2016-07-23T00:00:00Z'),
-            max_ship_time=dateutil.parser.isoparse('2016-07-23T00:00:00Z'),
-            quantity=20,
-            sku='HM-123',
-            title='Hippo Magazines',
-            total_price='12.1',
-            variant_title='June Edition',
-            weight='0.4',
-            weight_unit=components.WeightUnitEnum.LB,
-            object_id='abf7d5675d744b6ea9fdb6f796b28f28',
-        ),
-    ],
-    parcel='5df144dca289442cv7a06',
-))
+res = s.rates_at_checkout.create(address_to='<value>', line_items=[
+    components.LineItem(
+        currency='USD',
+        manufacture_country='US',
+        max_delivery_time=dateutil.parser.isoparse('2016-07-23T00:00:00Z'),
+        max_ship_time=dateutil.parser.isoparse('2016-07-23T00:00:00Z'),
+        quantity=20,
+        sku='HM-123',
+        title='Hippo Magazines',
+        total_price='12.1',
+        variant_title='June Edition',
+        weight='0.4',
+        weight_unit=components.WeightUnitEnum.LB,
+        object_id='abf7d5675d744b6ea9fdb6f796b28f28',
+    ),
+], address_from='<value>', parcel='5df144dca289442cv7a06')
 
 if res is not None:
     # handle response
@@ -69,10 +65,12 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                      | Type                                                                                           | Required                                                                                       | Description                                                                                    | Example                                                                                        |
-| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `shippo_api_version`                                                                           | *Optional[str]*                                                                                | :heavy_minus_sign:                                                                             | String used to pick a non-default API version to use                                           | 2018-02-08                                                                                     |
-| `live_rate_create_request`                                                                     | [Optional[components.LiveRateCreateRequest]](../../models/components/liveratecreaterequest.md) | :heavy_minus_sign:                                                                             | Generate rates at checkout                                                                     |                                                                                                |
+| Parameter                                                                                                                                                                                                                                                                     | Type                                                                                                                                                                                                                                                                          | Required                                                                                                                                                                                                                                                                      | Description                                                                                                                                                                                                                                                                   | Example                                                                                                                                                                                                                                                                       |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `address_to`                                                                                                                                                                                                                                                                  | [Union[str, components.AddressCompleteCreateRequest]](../../models/components/liveratecreaterequestaddressto.md)                                                                                                                                                              | :heavy_check_mark:                                                                                                                                                                                                                                                            | The recipient address, which includes the recipient's name, company name, street address, city, state, zip code, <br/>country, phone number, and email address (strings). Special characters should not be included in <br/>any address element, especially name, company, and email. |                                                                                                                                                                                                                                                                               |
+| `line_items`                                                                                                                                                                                                                                                                  | List[[components.LineItem](../../models/components/lineitem.md)]                                                                                                                                                                                                              | :heavy_check_mark:                                                                                                                                                                                                                                                            | Array of Line Item objects                                                                                                                                                                                                                                                    |                                                                                                                                                                                                                                                                               |
+| `address_from`                                                                                                                                                                                                                                                                | [Optional[Union[str, components.AddressCompleteCreateRequest]]](../../models/components/liveratecreaterequestaddressfrom.md)                                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                                                                                                                            | The sender address, which includes your name, company name, street address, city, state, zip code, <br/>country, phone number, and email address (strings). Special characters should not be included in <br/>any address element, especially name, company, and email.       |                                                                                                                                                                                                                                                                               |
+| `parcel`                                                                                                                                                                                                                                                                      | [Optional[Union[str, components.Parcel]]](../../models/components/liveratecreaterequestparcel.md)                                                                                                                                                                             | :heavy_minus_sign:                                                                                                                                                                                                                                                            | Object ID for an existing User Parcel Template OR a fully formed Parcel object.                                                                                                                                                                                               | 5df144dca289442cv7a06                                                                                                                                                                                                                                                         |
 
 
 ### Response
@@ -99,19 +97,13 @@ s = shippo.Shippo(
 )
 
 
-res = s.rates_at_checkout.get_default_parcel_template(shippo_api_version='2018-02-08')
+res = s.rates_at_checkout.get_default_parcel_template()
 
 if res is not None:
     # handle response
     pass
 
 ```
-
-### Parameters
-
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
 
 
 ### Response
@@ -131,7 +123,6 @@ Update the currently configured default parcel template for live rates. The obje
 
 ```python
 import shippo
-from shippo.models import components
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
@@ -139,9 +130,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.rates_at_checkout.update_default_parcel_template(shippo_api_version='2018-02-08', default_parcel_template_update_request=components.DefaultParcelTemplateUpdateRequest(
-    object_id='b958d3690bb04bb8b2986724872750f5',
-))
+res = s.rates_at_checkout.update_default_parcel_template(object_id='b958d3690bb04bb8b2986724872750f5')
 
 if res is not None:
     # handle response
@@ -151,10 +140,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                                | Type                                                                                                                     | Required                                                                                                                 | Description                                                                                                              | Example                                                                                                                  |
-| ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
-| `shippo_api_version`                                                                                                     | *Optional[str]*                                                                                                          | :heavy_minus_sign:                                                                                                       | String used to pick a non-default API version to use                                                                     | 2018-02-08                                                                                                               |
-| `default_parcel_template_update_request`                                                                                 | [Optional[components.DefaultParcelTemplateUpdateRequest]](../../models/components/defaultparceltemplateupdaterequest.md) | :heavy_minus_sign:                                                                                                       | N/A                                                                                                                      |                                                                                                                          |
+| Parameter                        | Type                             | Required                         | Description                      | Example                          |
+| -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- |
+| `object_id`                      | *Optional[str]*                  | :heavy_minus_sign:               | N/A                              | b958d3690bb04bb8b2986724872750f5 |
 
 
 ### Response
@@ -181,19 +169,13 @@ s = shippo.Shippo(
 )
 
 
-res = s.rates_at_checkout.delete_default_parcel_template(shippo_api_version='2018-02-08')
+res = s.rates_at_checkout.delete_default_parcel_template()
 
 if res is not None:
     # handle response
     pass
 
 ```
-
-### Parameters
-
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
 
 
 ### Response

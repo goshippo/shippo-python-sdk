@@ -31,7 +31,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.parcels.list(page=1, results=25, shippo_api_version='2018-02-08')
+res = s.parcels.list(page=1, results=25)
 
 if res is not None:
     # handle response
@@ -41,11 +41,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `page`                                               | *Optional[int]*                                      | :heavy_minus_sign:                                   | The page number you want to select                   |                                                      |
-| `results`                                            | *Optional[int]*                                      | :heavy_minus_sign:                                   | The number of results to return per page (max 100)   |                                                      |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
+| Parameter                                          | Type                                               | Required                                           | Description                                        |
+| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |
+| `page`                                             | *Optional[int]*                                    | :heavy_minus_sign:                                 | The page number you want to select                 |
+| `results`                                          | *Optional[int]*                                    | :heavy_minus_sign:                                 | The number of results to return per page (max 100) |
 
 
 ### Response
@@ -72,15 +71,16 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
-res = s.parcels.create(shippo_api_version='2018-02-08', parcel_request=components.ParcelRequest(
+req = components.ParcelRequest(
     distance_unit=components.DistanceUnitEnum.IN,
     height='1',
     length='1',
     mass_unit=components.WeightUnitEnum.LB,
     weight='1',
     width='1',
-))
+)
+
+res = s.parcels.create(req)
 
 if res is not None:
     # handle response
@@ -90,10 +90,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                      | Type                                                                           | Required                                                                       | Description                                                                    | Example                                                                        |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| `shippo_api_version`                                                           | *Optional[str]*                                                                | :heavy_minus_sign:                                                             | String used to pick a non-default API version to use                           | 2018-02-08                                                                     |
-| `parcel_request`                                                               | [Optional[components.ParcelRequest]](../../models/components/parcelrequest.md) | :heavy_minus_sign:                                                             | Parcel details.                                                                |                                                                                |
+| Parameter                                                            | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `request`                                                            | [components.ParcelRequest](../../models/components/parcelrequest.md) | :heavy_check_mark:                                                   | The request object to use for the request.                           |
 
 
 ### Response
@@ -120,7 +119,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.parcels.get(parcel_id='<value>', shippo_api_version='2018-02-08')
+res = s.parcels.get(parcel_id='<value>')
 
 if res is not None:
     # handle response
@@ -130,10 +129,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `parcel_id`                                          | *str*                                                | :heavy_check_mark:                                   | Object ID of the parcel                              |                                                      |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
+| Parameter               | Type                    | Required                | Description             |
+| ----------------------- | ----------------------- | ----------------------- | ----------------------- |
+| `parcel_id`             | *str*                   | :heavy_check_mark:      | Object ID of the parcel |
 
 
 ### Response

@@ -28,7 +28,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_declarations.list(page=1, results=5, shippo_api_version='2018-02-08')
+res = s.customs_declarations.list(page=1, results=5)
 
 if res is not None:
     # handle response
@@ -38,11 +38,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                     | Type                                                          | Required                                                      | Description                                                   | Example                                                       |
-| ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- |
-| `page`                                                        | *Optional[int]*                                               | :heavy_minus_sign:                                            | The page number you want to select                            |                                                               |
-| `results`                                                     | *Optional[int]*                                               | :heavy_minus_sign:                                            | The number of results to return per page (max 100, default 5) |                                                               |
-| `shippo_api_version`                                          | *Optional[str]*                                               | :heavy_minus_sign:                                            | String used to pick a non-default API version to use          | 2018-02-08                                                    |
+| Parameter                                                     | Type                                                          | Required                                                      | Description                                                   |
+| ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- |
+| `page`                                                        | *Optional[int]*                                               | :heavy_minus_sign:                                            | The page number you want to select                            |
+| `results`                                                     | *Optional[int]*                                               | :heavy_minus_sign:                                            | The number of results to return per page (max 100, default 5) |
 
 
 ### Response
@@ -69,8 +68,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
-res = s.customs_declarations.create(shippo_api_version='2018-02-08', customs_declaration_create_request=components.CustomsDeclarationCreateRequest(
+req = components.CustomsDeclarationCreateRequest(
     certify=True,
     certify_signer='Shawn Ippotle',
     contents_type=components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,
@@ -94,7 +92,9 @@ res = s.customs_declarations.create(shippo_api_version='2018-02-08', customs_dec
     invoice='#123123',
     metadata='Order ID #123123',
     test=True,
-))
+)
+
+res = s.customs_declarations.create(req)
 
 if res is not None:
     # handle response
@@ -104,10 +104,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                          | Type                                                                                                               | Required                                                                                                           | Description                                                                                                        | Example                                                                                                            |
-| ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
-| `shippo_api_version`                                                                                               | *Optional[str]*                                                                                                    | :heavy_minus_sign:                                                                                                 | String used to pick a non-default API version to use                                                               | 2018-02-08                                                                                                         |
-| `customs_declaration_create_request`                                                                               | [Optional[components.CustomsDeclarationCreateRequest]](../../models/components/customsdeclarationcreaterequest.md) | :heavy_minus_sign:                                                                                                 | CustomsDeclaration details.                                                                                        |                                                                                                                    |
+| Parameter                                                                                                | Type                                                                                                     | Required                                                                                                 | Description                                                                                              |
+| -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `request`                                                                                                | [components.CustomsDeclarationCreateRequest](../../models/components/customsdeclarationcreaterequest.md) | :heavy_check_mark:                                                                                       | The request object to use for the request.                                                               |
 
 
 ### Response
@@ -134,7 +133,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_declarations.get(customs_declaration_id='<value>', page=1, shippo_api_version='2018-02-08')
+res = s.customs_declarations.get(customs_declaration_id='<value>', page=1)
 
 if res is not None:
     # handle response
@@ -144,11 +143,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `customs_declaration_id`                             | *str*                                                | :heavy_check_mark:                                   | Object ID of the customs declaration                 |                                                      |
-| `page`                                               | *Optional[int]*                                      | :heavy_minus_sign:                                   | The page number you want to select                   |                                                      |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
+| Parameter                            | Type                                 | Required                             | Description                          |
+| ------------------------------------ | ------------------------------------ | ------------------------------------ | ------------------------------------ |
+| `customs_declaration_id`             | *str*                                | :heavy_check_mark:                   | Object ID of the customs declaration |
+| `page`                               | *Optional[int]*                      | :heavy_minus_sign:                   | The page number you want to select   |
 
 
 ### Response

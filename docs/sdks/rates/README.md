@@ -27,7 +27,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.rates.get(rate_id='<value>', shippo_api_version='2018-02-08')
+res = s.rates.get(rate_id='<value>')
 
 if res is not None:
     # handle response
@@ -37,10 +37,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `rate_id`                                            | *str*                                                | :heavy_check_mark:                                   | Object ID of the rate                                |                                                      |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
+| Parameter             | Type                  | Required              | Description           |
+| --------------------- | --------------------- | --------------------- | --------------------- |
+| `rate_id`             | *str*                 | :heavy_check_mark:    | Object ID of the rate |
 
 
 ### Response
@@ -67,7 +66,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.rates.list_shipment_rates(shipment_id='<value>', page=1, results=25, shippo_api_version='2018-02-08')
+res = s.rates.list_shipment_rates(shipment_id='<value>', page=1, results=25)
 
 if res is not None:
     # handle response
@@ -77,12 +76,11 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `shipment_id`                                        | *str*                                                | :heavy_check_mark:                                   | Object ID of the shipment to update                  |                                                      |
-| `page`                                               | *Optional[int]*                                      | :heavy_minus_sign:                                   | The page number you want to select                   |                                                      |
-| `results`                                            | *Optional[int]*                                      | :heavy_minus_sign:                                   | The number of results to return per page (max 100)   |                                                      |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
+| Parameter                                          | Type                                               | Required                                           | Description                                        |
+| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |
+| `shipment_id`                                      | *str*                                              | :heavy_check_mark:                                 | Object ID of the shipment to update                |
+| `page`                                             | *Optional[int]*                                    | :heavy_minus_sign:                                 | The page number you want to select                 |
+| `results`                                          | *Optional[int]*                                    | :heavy_minus_sign:                                 | The number of results to return per page (max 100) |
 
 
 ### Response
@@ -108,19 +106,14 @@ Note: re-requesting the rates with a different currency code will re-queue the s
 
 ```python
 import shippo
-from shippo.models import operations
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
 
-req = operations.ListShipmentRatesByCurrencyCodeRequest(
-    shipment_id='<value>',
-    currency_code='USD',
-)
 
-res = s.rates.list_shipment_rates_by_currency_code(req)
+res = s.rates.list_shipment_rates_by_currency_code(shipment_id='<value>', currency_code='USD', page=1, results=25)
 
 if res is not None:
     # handle response
@@ -130,9 +123,12 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                              | Type                                                                                                                   | Required                                                                                                               | Description                                                                                                            |
-| ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `request`                                                                                                              | [operations.ListShipmentRatesByCurrencyCodeRequest](../../models/operations/listshipmentratesbycurrencycoderequest.md) | :heavy_check_mark:                                                                                                     | The request object to use for the request.                                                                             |
+| Parameter                                          | Type                                               | Required                                           | Description                                        |
+| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |
+| `shipment_id`                                      | *str*                                              | :heavy_check_mark:                                 | Object ID of the shipment to update                |
+| `currency_code`                                    | *str*                                              | :heavy_check_mark:                                 | ISO currency code for the rates                    |
+| `page`                                             | *Optional[int]*                                    | :heavy_minus_sign:                                 | The page number you want to select                 |
+| `results`                                          | *Optional[int]*                                    | :heavy_minus_sign:                                 | The number of results to return per page (max 100) |
 
 
 ### Response

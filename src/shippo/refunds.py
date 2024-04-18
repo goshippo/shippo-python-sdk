@@ -18,14 +18,14 @@ class Refunds:
         
     
     
-    def create(self, shippo_api_version: Optional[str] = None, refund_request_body: Optional[components.RefundRequestBody] = None) -> components.Refund:
+    def create(self, transaction: str, async_: Optional[bool] = None) -> components.Refund:
         r"""Create a refund
         Creates a new refund object.
         """
         hook_ctx = HookContext(operation_id='CreateRefund', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.CreateRefundRequest(
-            shippo_api_version=shippo_api_version,
-            refund_request_body=refund_request_body,
+        request = components.RefundRequestBody(
+            transaction=transaction,
+            async_=async_,
         )
         
         _globals = operations.CreateRefundGlobals(
@@ -42,7 +42,7 @@ class Refunds:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateRefundRequest, "refund_request_body", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, Optional[components.RefundRequestBody], "request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }
@@ -85,13 +85,12 @@ class Refunds:
 
     
     
-    def list(self, shippo_api_version: Optional[str] = None) -> components.RefundPaginatedList:
+    def list(self) -> components.RefundPaginatedList:
         r"""List all refunds
         Returns a list all refund objects.
         """
         hook_ctx = HookContext(operation_id='ListRefunds', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.ListRefundsRequest(
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.ListRefundsGlobals(
@@ -148,14 +147,13 @@ class Refunds:
 
     
     
-    def get(self, refund_id: str, shippo_api_version: Optional[str] = None) -> components.Refund:
+    def get(self, refund_id: str) -> components.Refund:
         r"""Retrieve a refund
         Returns an existing rate using a rate object ID.
         """
         hook_ctx = HookContext(operation_id='GetRefund', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.GetRefundRequest(
             refund_id=refund_id,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.GetRefundGlobals(

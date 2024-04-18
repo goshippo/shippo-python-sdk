@@ -20,7 +20,6 @@ Creates a new refund object.
 
 ```python
 import shippo
-from shippo.models import components
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
@@ -28,10 +27,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.refunds.create(shippo_api_version='2018-02-08', refund_request_body=components.RefundRequestBody(
-    transaction='915d94940ea54c3a80cbfa328722f5a1',
-    async_=False,
-))
+res = s.refunds.create(transaction='915d94940ea54c3a80cbfa328722f5a1', async_=False)
 
 if res is not None:
     # handle response
@@ -41,10 +37,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                              | Type                                                                                   | Required                                                                               | Description                                                                            | Example                                                                                |
-| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `shippo_api_version`                                                                   | *Optional[str]*                                                                        | :heavy_minus_sign:                                                                     | String used to pick a non-default API version to use                                   | 2018-02-08                                                                             |
-| `refund_request_body`                                                                  | [Optional[components.RefundRequestBody]](../../models/components/refundrequestbody.md) | :heavy_minus_sign:                                                                     | Refund details                                                                         |                                                                                        |
+| Parameter                        | Type                             | Required                         | Description                      | Example                          |
+| -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- |
+| `transaction`                    | *str*                            | :heavy_check_mark:               | N/A                              | 915d94940ea54c3a80cbfa328722f5a1 |
+| `async_`                         | *Optional[bool]*                 | :heavy_minus_sign:               | N/A                              | false                            |
 
 
 ### Response
@@ -71,19 +67,13 @@ s = shippo.Shippo(
 )
 
 
-res = s.refunds.list(shippo_api_version='2018-02-08')
+res = s.refunds.list()
 
 if res is not None:
     # handle response
     pass
 
 ```
-
-### Parameters
-
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
 
 
 ### Response
@@ -110,7 +100,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.refunds.get(refund_id='<value>', shippo_api_version='2018-02-08')
+res = s.refunds.get(refund_id='<value>')
 
 if res is not None:
     # handle response
@@ -120,10 +110,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `refund_id`                                          | *str*                                                | :heavy_check_mark:                                   | Object ID of the refund to update                    |                                                      |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
+| Parameter                         | Type                              | Required                          | Description                       |
+| --------------------------------- | --------------------------------- | --------------------------------- | --------------------------------- |
+| `refund_id`                       | *str*                             | :heavy_check_mark:                | Object ID of the refund to update |
 
 
 ### Response

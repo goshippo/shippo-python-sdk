@@ -30,7 +30,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.shippo_accounts.list(page=1, results=25, shippo_api_version='2018-02-08')
+res = s.shippo_accounts.list(page=1, results=25)
 
 if res is not None:
     # handle response
@@ -40,11 +40,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `page`                                               | *Optional[int]*                                      | :heavy_minus_sign:                                   | The page number you want to select                   |                                                      |
-| `results`                                            | *Optional[int]*                                      | :heavy_minus_sign:                                   | The number of results to return per page (max 100)   |                                                      |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
+| Parameter                                          | Type                                               | Required                                           | Description                                        |
+| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |
+| `page`                                             | *Optional[int]*                                    | :heavy_minus_sign:                                 | The page number you want to select                 |
+| `results`                                          | *Optional[int]*                                    | :heavy_minus_sign:                                 | The number of results to return per page (max 100) |
 
 
 ### Response
@@ -64,7 +63,6 @@ Creates a Shippo Account object
 
 ```python
 import shippo
-from shippo.models import components
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
@@ -72,12 +70,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.shippo_accounts.create(shippo_api_version='2018-02-08', shippo_account_update_request=components.ShippoAccountUpdateRequest(
-    email='hippo@shippo.com',
-    first_name='Shippo',
-    last_name='Meister',
-    company_name='Acme',
-))
+res = s.shippo_accounts.create(email='hippo@shippo.com', first_name='Shippo', last_name='Meister', company_name='Acme')
 
 if res is not None:
     # handle response
@@ -87,10 +80,12 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                | Type                                                                                                     | Required                                                                                                 | Description                                                                                              | Example                                                                                                  |
-| -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `shippo_api_version`                                                                                     | *Optional[str]*                                                                                          | :heavy_minus_sign:                                                                                       | String used to pick a non-default API version to use                                                     | 2018-02-08                                                                                               |
-| `shippo_account_update_request`                                                                          | [Optional[components.ShippoAccountUpdateRequest]](../../models/components/shippoaccountupdaterequest.md) | :heavy_minus_sign:                                                                                       | N/A                                                                                                      |                                                                                                          |
+| Parameter          | Type               | Required           | Description        | Example            |
+| ------------------ | ------------------ | ------------------ | ------------------ | ------------------ |
+| `email`            | *str*              | :heavy_check_mark: | N/A                | hippo@shippo.com   |
+| `first_name`       | *str*              | :heavy_check_mark: | N/A                | Shippo             |
+| `last_name`        | *str*              | :heavy_check_mark: | N/A                | Meister            |
+| `company_name`     | *str*              | :heavy_check_mark: | N/A                | Acme               |
 
 
 ### Response
@@ -117,7 +112,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.shippo_accounts.get(shippo_account_id='<value>', shippo_api_version='2018-02-08')
+res = s.shippo_accounts.get(shippo_account_id='<value>')
 
 if res is not None:
     # handle response
@@ -127,10 +122,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `shippo_account_id`                                  | *str*                                                | :heavy_check_mark:                                   | Object ID of the ShippoAccount                       |                                                      |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
+| Parameter                      | Type                           | Required                       | Description                    |
+| ------------------------------ | ------------------------------ | ------------------------------ | ------------------------------ |
+| `shippo_account_id`            | *str*                          | :heavy_check_mark:             | Object ID of the ShippoAccount |
 
 
 ### Response
@@ -158,7 +152,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.shippo_accounts.update(shippo_account_id='<value>', shippo_api_version='2018-02-08', shippo_account_update_request=components.ShippoAccountUpdateRequest(
+res = s.shippo_accounts.update(shippo_account_id='<value>', shippo_account_update_request=components.ShippoAccountUpdateRequest(
     email='hippo@shippo.com',
     first_name='Shippo',
     last_name='Meister',
@@ -173,11 +167,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                | Type                                                                                                     | Required                                                                                                 | Description                                                                                              | Example                                                                                                  |
-| -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `shippo_account_id`                                                                                      | *str*                                                                                                    | :heavy_check_mark:                                                                                       | Object ID of the ShippoAccount                                                                           |                                                                                                          |
-| `shippo_api_version`                                                                                     | *Optional[str]*                                                                                          | :heavy_minus_sign:                                                                                       | String used to pick a non-default API version to use                                                     | 2018-02-08                                                                                               |
-| `shippo_account_update_request`                                                                          | [Optional[components.ShippoAccountUpdateRequest]](../../models/components/shippoaccountupdaterequest.md) | :heavy_minus_sign:                                                                                       | N/A                                                                                                      |                                                                                                          |
+| Parameter                                                                                                | Type                                                                                                     | Required                                                                                                 | Description                                                                                              |
+| -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `shippo_account_id`                                                                                      | *str*                                                                                                    | :heavy_check_mark:                                                                                       | Object ID of the ShippoAccount                                                                           |
+| `shippo_account_update_request`                                                                          | [Optional[components.ShippoAccountUpdateRequest]](../../models/components/shippoaccountupdaterequest.md) | :heavy_minus_sign:                                                                                       | N/A                                                                                                      |
 
 
 ### Response

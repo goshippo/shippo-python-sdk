@@ -17,7 +17,5 @@ class GetCarrierParcelTemplateGlobals:
 class GetCarrierParcelTemplateRequest:
     carrier_parcel_template_token: str = dataclasses.field(metadata={'path_param': { 'field_name': 'CarrierParcelTemplateToken', 'style': 'simple', 'explode': False }})
     r"""The unique string representation of the carrier parcel template"""
-    shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
-    r"""String used to pick a non-default API version to use"""
     
 

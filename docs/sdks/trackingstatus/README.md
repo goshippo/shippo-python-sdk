@@ -28,7 +28,6 @@ Registers a webhook that will send HTTP notifications to you when the status of 
 
 ```python
 import shippo
-from shippo.models import components
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
@@ -36,11 +35,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.tracking_status.create(shippo_api_version='2018-02-08', tracks_request=components.TracksRequest(
-    carrier='usps',
-    tracking_number='9205590164917312751089',
-    metadata='Order 000123',
-))
+res = s.tracking_status.create(carrier='usps', tracking_number='9205590164917312751089', metadata='Order 000123')
 
 if res is not None:
     # handle response
@@ -50,10 +45,11 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                      | Type                                                                           | Required                                                                       | Description                                                                    | Example                                                                        |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| `shippo_api_version`                                                           | *Optional[str]*                                                                | :heavy_minus_sign:                                                             | String used to pick a non-default API version to use                           | 2018-02-08                                                                     |
-| `tracks_request`                                                               | [Optional[components.TracksRequest]](../../models/components/tracksrequest.md) | :heavy_minus_sign:                                                             | N/A                                                                            |                                                                                |
+| Parameter                                                                                                             | Type                                                                                                                  | Required                                                                                                              | Description                                                                                                           | Example                                                                                                               |
+| --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `carrier`                                                                                                             | *str*                                                                                                                 | :heavy_check_mark:                                                                                                    | Name of the carrier of the shipment to track.                                                                         | usps                                                                                                                  |
+| `tracking_number`                                                                                                     | *str*                                                                                                                 | :heavy_check_mark:                                                                                                    | Tracking number to track.                                                                                             | 9205590164917312751089                                                                                                |
+| `metadata`                                                                                                            | *Optional[str]*                                                                                                       | :heavy_minus_sign:                                                                                                    | A string of up to 100 characters that can be filled with any additional information you want to attach to the object. | Order 000123                                                                                                          |
 
 
 ### Response
@@ -80,7 +76,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.tracking_status.get(tracking_number='<value>', carrier='<value>', shippo_api_version='2018-02-08')
+res = s.tracking_status.get(tracking_number='<value>', carrier='<value>')
 
 if res is not None:
     # handle response
@@ -90,11 +86,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `tracking_number`                                    | *str*                                                | :heavy_check_mark:                                   | Tracking number                                      |                                                      |
-| `carrier`                                            | *str*                                                | :heavy_check_mark:                                   | Name of the carrier                                  |                                                      |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
+| Parameter           | Type                | Required            | Description         |
+| ------------------- | ------------------- | ------------------- | ------------------- |
+| `tracking_number`   | *str*               | :heavy_check_mark:  | Tracking number     |
+| `carrier`           | *str*               | :heavy_check_mark:  | Name of the carrier |
 
 
 ### Response

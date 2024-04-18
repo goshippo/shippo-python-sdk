@@ -19,7 +19,5 @@ class GetTrackRequest:
     r"""Tracking number"""
     carrier: str = dataclasses.field(metadata={'path_param': { 'field_name': 'Carrier', 'style': 'simple', 'explode': False }})
     r"""Name of the carrier"""
-    shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
-    r"""String used to pick a non-default API version to use"""
     
 

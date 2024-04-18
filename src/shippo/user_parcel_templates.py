@@ -23,13 +23,12 @@ class UserParcelTemplates:
         
     
     
-    def list(self, shippo_api_version: Optional[str] = None) -> List[components.UserParcelTemplate]:
+    def list(self) -> List[components.UserParcelTemplate]:
         r"""List all user parcel templates
         Returns a list all of all user parcel template objects.
         """
         hook_ctx = HookContext(operation_id='ListUserParcelTemplates', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.ListUserParcelTemplatesRequest(
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.ListUserParcelTemplatesGlobals(
@@ -86,7 +85,7 @@ class UserParcelTemplates:
 
     
     
-    def create(self, shippo_api_version: Optional[str] = None, user_parcel_template_create_request: Optional[Union[components.UserParcelTemplateWithCarrierTemplateCreateRequest, components.UserParcelTemplateWithoutCarrierTemplateCreateRequest]] = None) -> components.UserParcelTemplate:
+    def create(self, request: Optional[Union[components.UserParcelTemplateWithCarrierTemplateCreateRequest, components.UserParcelTemplateWithoutCarrierTemplateCreateRequest]]) -> components.UserParcelTemplate:
         r"""Create a new user parcel template
         Creates a new user parcel template. <br>You can choose to create a
         parcel template using a preset carrier template as a starting point, or
@@ -97,11 +96,6 @@ class UserParcelTemplates:
         and depth, as well as their units.\" 
         """
         hook_ctx = HookContext(operation_id='CreateUserParcelTemplate', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.CreateUserParcelTemplateRequest(
-            shippo_api_version=shippo_api_version,
-            user_parcel_template_create_request=user_parcel_template_create_request,
-        )
-        
         _globals = operations.CreateUserParcelTemplateGlobals(
             shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
         )
@@ -116,7 +110,7 @@ class UserParcelTemplates:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateUserParcelTemplateRequest, "user_parcel_template_create_request", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, Optional[Union[components.UserParcelTemplateWithCarrierTemplateCreateRequest, components.UserParcelTemplateWithoutCarrierTemplateCreateRequest]], "request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }
@@ -159,14 +153,13 @@ class UserParcelTemplates:
 
     
     
-    def delete(self, user_parcel_template_object_id: str, shippo_api_version: Optional[str] = None) -> operations.DeleteUserParcelTemplateResponse:
+    def delete(self, user_parcel_template_object_id: str) -> operations.DeleteUserParcelTemplateResponse:
         r"""Delete a user parcel template
         Deletes a user parcel template using an object ID.
         """
         hook_ctx = HookContext(operation_id='DeleteUserParcelTemplate', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.DeleteUserParcelTemplateRequest(
             user_parcel_template_object_id=user_parcel_template_object_id,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.DeleteUserParcelTemplateGlobals(
@@ -221,7 +214,7 @@ class UserParcelTemplates:
 
     
     
-    def get(self, user_parcel_template_object_id: str, shippo_api_version: Optional[str] = None) -> components.UserParcelTemplate:
+    def get(self, user_parcel_template_object_id: str) -> components.UserParcelTemplate:
         r"""Retrieves a user parcel template
         Returns the parcel template information for a specific user parcel
         template, identified by the object ID.
@@ -229,7 +222,6 @@ class UserParcelTemplates:
         hook_ctx = HookContext(operation_id='GetUserParcelTemplate', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.GetUserParcelTemplateRequest(
             user_parcel_template_object_id=user_parcel_template_object_id,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.GetUserParcelTemplateGlobals(
@@ -286,14 +278,13 @@ class UserParcelTemplates:
 
     
     
-    def update(self, user_parcel_template_object_id: str, shippo_api_version: Optional[str] = None, user_parcel_template_update_request: Optional[components.UserParcelTemplateUpdateRequest] = None) -> components.UserParcelTemplate:
+    def update(self, user_parcel_template_object_id: str, user_parcel_template_update_request: Optional[components.UserParcelTemplateUpdateRequest] = None) -> components.UserParcelTemplate:
         r"""Update an existing user parcel template
         Updates an existing user parcel template.
         """
         hook_ctx = HookContext(operation_id='UpdateUserParcelTemplate', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.UpdateUserParcelTemplateRequest(
             user_parcel_template_object_id=user_parcel_template_object_id,
-            shippo_api_version=shippo_api_version,
             user_parcel_template_update_request=user_parcel_template_update_request,
         )
         

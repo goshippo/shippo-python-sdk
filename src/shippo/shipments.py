@@ -22,7 +22,7 @@ class Shipments:
         
     
     
-    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> components.ShipmentPaginatedList:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None) -> components.ShipmentPaginatedList:
         r"""List all shipments
         Returns a list of all shipment objects.<br><br>
         In order to filter results, you must use the below path parameters. 
@@ -47,7 +47,6 @@ class Shipments:
         request = operations.ListShipmentsRequest(
             page=page,
             results=results,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.ListShipmentsGlobals(
@@ -104,16 +103,11 @@ class Shipments:
 
     
     
-    def create(self, shippo_api_version: Optional[str] = None, shipment_create_request: Optional[components.ShipmentCreateRequest] = None) -> components.Shipment:
+    def create(self, request: Optional[components.ShipmentCreateRequest]) -> components.Shipment:
         r"""Create a new shipment
         Creates a new shipment object.
         """
         hook_ctx = HookContext(operation_id='CreateShipment', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.CreateShipmentRequest(
-            shippo_api_version=shippo_api_version,
-            shipment_create_request=shipment_create_request,
-        )
-        
         _globals = operations.CreateShipmentGlobals(
             shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
         )
@@ -128,7 +122,7 @@ class Shipments:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateShipmentRequest, "shipment_create_request", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, Optional[components.ShipmentCreateRequest], "request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }
@@ -171,14 +165,13 @@ class Shipments:
 
     
     
-    def get(self, shipment_id: str, shippo_api_version: Optional[str] = None) -> components.Shipment:
+    def get(self, shipment_id: str) -> components.Shipment:
         r"""Retrieve a shipment
         Returns an existing shipment using an object ID
         """
         hook_ctx = HookContext(operation_id='GetShipment', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.GetShipmentRequest(
             shipment_id=shipment_id,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.GetShipmentGlobals(

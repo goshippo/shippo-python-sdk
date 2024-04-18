@@ -27,7 +27,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_items.list(page=1, results=25, shippo_api_version='2018-02-08')
+res = s.customs_items.list(page=1, results=25)
 
 if res is not None:
     # handle response
@@ -37,11 +37,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `page`                                               | *Optional[int]*                                      | :heavy_minus_sign:                                   | The page number you want to select                   |                                                      |
-| `results`                                            | *Optional[int]*                                      | :heavy_minus_sign:                                   | The number of results to return per page (max 100)   |                                                      |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
+| Parameter                                          | Type                                               | Required                                           | Description                                        |
+| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |
+| `page`                                             | *Optional[int]*                                    | :heavy_minus_sign:                                 | The page number you want to select                 |
+| `results`                                          | *Optional[int]*                                    | :heavy_minus_sign:                                 | The number of results to return per page (max 100) |
 
 
 ### Response
@@ -68,8 +67,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
-res = s.customs_items.create(shippo_api_version='2018-02-08', customs_item_create_request=components.CustomsItemCreateRequest(
+req = components.CustomsItemCreateRequest(
     description='T-Shirt',
     mass_unit=components.WeightUnitEnum.LB,
     net_weight='5',
@@ -79,7 +77,9 @@ res = s.customs_items.create(shippo_api_version='2018-02-08', customs_item_creat
     value_currency='USD',
     metadata='Order ID "123454"',
     sku_code='HM-123',
-))
+)
+
+res = s.customs_items.create(req)
 
 if res is not None:
     # handle response
@@ -89,10 +89,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                            | Type                                                                                                 | Required                                                                                             | Description                                                                                          | Example                                                                                              |
-| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `shippo_api_version`                                                                                 | *Optional[str]*                                                                                      | :heavy_minus_sign:                                                                                   | String used to pick a non-default API version to use                                                 | 2018-02-08                                                                                           |
-| `customs_item_create_request`                                                                        | [Optional[components.CustomsItemCreateRequest]](../../models/components/customsitemcreaterequest.md) | :heavy_minus_sign:                                                                                   | CustomsItem details.                                                                                 |                                                                                                      |
+| Parameter                                                                                  | Type                                                                                       | Required                                                                                   | Description                                                                                |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `request`                                                                                  | [components.CustomsItemCreateRequest](../../models/components/customsitemcreaterequest.md) | :heavy_check_mark:                                                                         | The request object to use for the request.                                                 |
 
 
 ### Response
@@ -119,7 +118,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_items.get(customs_item_id='<value>', page=1, shippo_api_version='2018-02-08')
+res = s.customs_items.get(customs_item_id='<value>', page=1)
 
 if res is not None:
     # handle response
@@ -129,11 +128,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `customs_item_id`                                    | *str*                                                | :heavy_check_mark:                                   | Object ID of the customs item                        |                                                      |
-| `page`                                               | *Optional[int]*                                      | :heavy_minus_sign:                                   | The page number you want to select                   |                                                      |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
+| Parameter                          | Type                               | Required                           | Description                        |
+| ---------------------------------- | ---------------------------------- | ---------------------------------- | ---------------------------------- |
+| `customs_item_id`                  | *str*                              | :heavy_check_mark:                 | Object ID of the customs item      |
+| `page`                             | *Optional[int]*                    | :heavy_minus_sign:                 | The page number you want to select |
 
 
 ### Response

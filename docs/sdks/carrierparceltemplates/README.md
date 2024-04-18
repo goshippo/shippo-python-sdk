@@ -28,7 +28,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.carrier_parcel_templates.list(include=operations.Include.ENABLED, carrier='<value>', shippo_api_version='2018-02-08')
+res = s.carrier_parcel_templates.list(include=operations.Include.ENABLED, carrier='<value>')
 
 if res is not None:
     # handle response
@@ -38,11 +38,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                          | Type                                                               | Required                                                           | Description                                                        | Example                                                            |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
-| `include`                                                          | [Optional[operations.Include]](../../models/operations/include.md) | :heavy_minus_sign:                                                 | filter by user or enabled                                          |                                                                    |
-| `carrier`                                                          | *Optional[str]*                                                    | :heavy_minus_sign:                                                 | filter by specific carrier                                         |                                                                    |
-| `shippo_api_version`                                               | *Optional[str]*                                                    | :heavy_minus_sign:                                                 | String used to pick a non-default API version to use               | 2018-02-08                                                         |
+| Parameter                                                          | Type                                                               | Required                                                           | Description                                                        |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| `include`                                                          | [Optional[operations.Include]](../../models/operations/include.md) | :heavy_minus_sign:                                                 | filter by user or enabled                                          |
+| `carrier`                                                          | *Optional[str]*                                                    | :heavy_minus_sign:                                                 | filter by specific carrier                                         |
 
 
 ### Response
@@ -69,7 +68,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.carrier_parcel_templates.get(carrier_parcel_template_token='<value>', shippo_api_version='2018-02-08')
+res = s.carrier_parcel_templates.get(carrier_parcel_template_token='<value>')
 
 if res is not None:
     # handle response
@@ -79,10 +78,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                       | Type                                                            | Required                                                        | Description                                                     | Example                                                         |
-| --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
-| `carrier_parcel_template_token`                                 | *str*                                                           | :heavy_check_mark:                                              | The unique string representation of the carrier parcel template |                                                                 |
-| `shippo_api_version`                                            | *Optional[str]*                                                 | :heavy_minus_sign:                                              | String used to pick a non-default API version to use            | 2018-02-08                                                      |
+| Parameter                                                       | Type                                                            | Required                                                        | Description                                                     |
+| --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
+| `carrier_parcel_template_token`                                 | *str*                                                           | :heavy_check_mark:                                              | The unique string representation of the carrier parcel template |
 
 
 ### Response

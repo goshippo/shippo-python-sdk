@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import manifestcreaterequest as components_manifestcreaterequest
 from typing import Optional
 
 
@@ -10,15 +9,5 @@ from typing import Optional
 class CreateManifestGlobals:
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""
-    
-
-
-
-@dataclasses.dataclass
-class CreateManifestRequest:
-    shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
-    r"""String used to pick a non-default API version to use"""
-    manifest_create_request: Optional[components_manifestcreaterequest.ManifestCreateRequest] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
-    r"""Manifest details and contact info."""
     
 

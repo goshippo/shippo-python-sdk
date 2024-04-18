@@ -19,7 +19,7 @@ class CarrierParcelTemplates:
         
     
     
-    def list(self, include: Optional[operations.Include] = None, carrier: Optional[str] = None, shippo_api_version: Optional[str] = None) -> List[components.CarrierParcelTemplate]:
+    def list(self, include: Optional[operations.Include] = None, carrier: Optional[str] = None) -> List[components.CarrierParcelTemplate]:
         r"""List all carrier parcel templates
         List all carrier parcel template objects. <br> Use the following query string params to filter the results as needed. <br> <ul> <li>`include=all` (the default). Includes templates from all carriers </li> <li>`include=user`. Includes templates only from carriers which the user has added (whether or not they're currently enabled) </li> <li>`include=enabled`. includes templates only for carriers which the user has added and enabled </li> <li>`carrier=*token*`. filter by specific carrier, e.g. fedex, usps </li> </ul>
         """
@@ -27,7 +27,6 @@ class CarrierParcelTemplates:
         request = operations.ListCarrierParcelTemplatesRequest(
             include=include,
             carrier=carrier,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.ListCarrierParcelTemplatesGlobals(
@@ -84,14 +83,13 @@ class CarrierParcelTemplates:
 
     
     
-    def get(self, carrier_parcel_template_token: str, shippo_api_version: Optional[str] = None) -> components.CarrierParcelTemplate:
+    def get(self, carrier_parcel_template_token: str) -> components.CarrierParcelTemplate:
         r"""Retrieve a carrier parcel templates
         Fetches the parcel template information for a specific carrier parcel template, identified by the token.
         """
         hook_ctx = HookContext(operation_id='GetCarrierParcelTemplate', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.GetCarrierParcelTemplateRequest(
             carrier_parcel_template_token=carrier_parcel_template_token,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.GetCarrierParcelTemplateGlobals(

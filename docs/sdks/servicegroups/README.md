@@ -29,19 +29,13 @@ s = shippo.Shippo(
 )
 
 
-res = s.service_groups.list(shippo_api_version='2018-02-08')
+res = s.service_groups.list()
 
 if res is not None:
     # handle response
     pass
 
 ```
-
-### Parameters
-
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
 
 
 ### Response
@@ -68,8 +62,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
-res = s.service_groups.create(shippo_api_version='2018-02-08', service_group_create_request=components.ServiceGroupCreateRequest(
+req = components.ServiceGroupCreateRequest(
     description='USPS shipping options',
     name='USPS Shipping',
     type=components.ServiceGroupTypeEnum.FLAT_RATE,
@@ -84,7 +77,9 @@ res = s.service_groups.create(shippo_api_version='2018-02-08', service_group_cre
     free_shipping_threshold_currency='USD',
     free_shipping_threshold_min='5',
     rate_adjustment=15,
-))
+)
+
+res = s.service_groups.create(req)
 
 if res is not None:
     # handle response
@@ -94,10 +89,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                              | Type                                                                                                   | Required                                                                                               | Description                                                                                            | Example                                                                                                |
-| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
-| `shippo_api_version`                                                                                   | *Optional[str]*                                                                                        | :heavy_minus_sign:                                                                                     | String used to pick a non-default API version to use                                                   | 2018-02-08                                                                                             |
-| `service_group_create_request`                                                                         | [Optional[components.ServiceGroupCreateRequest]](../../models/components/servicegroupcreaterequest.md) | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |                                                                                                        |
+| Parameter                                                                                    | Type                                                                                         | Required                                                                                     | Description                                                                                  |
+| -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `request`                                                                                    | [components.ServiceGroupCreateRequest](../../models/components/servicegroupcreaterequest.md) | :heavy_check_mark:                                                                           | The request object to use for the request.                                                   |
 
 
 ### Response
@@ -124,8 +118,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
-res = s.service_groups.update(shippo_api_version='2018-02-08', service_group_update_request=components.ServiceGroupUpdateRequest(
+req = components.ServiceGroupUpdateRequest(
     description='USPS shipping options',
     name='USPS Shipping',
     type=components.ServiceGroupTypeEnum.FLAT_RATE,
@@ -142,7 +135,9 @@ res = s.service_groups.update(shippo_api_version='2018-02-08', service_group_upd
     free_shipping_threshold_currency='USD',
     free_shipping_threshold_min='5',
     rate_adjustment=15,
-))
+)
+
+res = s.service_groups.update(req)
 
 if res is not None:
     # handle response
@@ -152,10 +147,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                              | Type                                                                                                   | Required                                                                                               | Description                                                                                            | Example                                                                                                |
-| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
-| `shippo_api_version`                                                                                   | *Optional[str]*                                                                                        | :heavy_minus_sign:                                                                                     | String used to pick a non-default API version to use                                                   | 2018-02-08                                                                                             |
-| `service_group_update_request`                                                                         | [Optional[components.ServiceGroupUpdateRequest]](../../models/components/servicegroupupdaterequest.md) | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |                                                                                                        |
+| Parameter                                                                                    | Type                                                                                         | Required                                                                                     | Description                                                                                  |
+| -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `request`                                                                                    | [components.ServiceGroupUpdateRequest](../../models/components/servicegroupupdaterequest.md) | :heavy_check_mark:                                                                           | The request object to use for the request.                                                   |
 
 
 ### Response
@@ -182,7 +176,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.service_groups.delete(service_group_id='<value>', shippo_api_version='2018-02-08')
+res = s.service_groups.delete(service_group_id='<value>')
 
 if res is not None:
     # handle response
@@ -192,10 +186,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `service_group_id`                                   | *str*                                                | :heavy_check_mark:                                   | Object ID of the service group                       |                                                      |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
+| Parameter                      | Type                           | Required                       | Description                    |
+| ------------------------------ | ------------------------------ | ------------------------------ | ------------------------------ |
+| `service_group_id`             | *str*                          | :heavy_check_mark:             | Object ID of the service group |
 
 
 ### Response

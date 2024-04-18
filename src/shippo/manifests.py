@@ -24,7 +24,7 @@ class Manifests:
         
     
     
-    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> components.ManifestPaginatedList:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None) -> components.ManifestPaginatedList:
         r"""List all manifests
         Returns a list of all manifest objects.
         """
@@ -32,7 +32,6 @@ class Manifests:
         request = operations.ListManifestsRequest(
             page=page,
             results=results,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.ListManifestsGlobals(
@@ -89,16 +88,11 @@ class Manifests:
 
     
     
-    def create(self, shippo_api_version: Optional[str] = None, manifest_create_request: Optional[components.ManifestCreateRequest] = None) -> components.Manifest:
+    def create(self, request: Optional[components.ManifestCreateRequest]) -> components.Manifest:
         r"""Create a new manifest
         Creates a new manifest object.
         """
         hook_ctx = HookContext(operation_id='CreateManifest', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.CreateManifestRequest(
-            shippo_api_version=shippo_api_version,
-            manifest_create_request=manifest_create_request,
-        )
-        
         _globals = operations.CreateManifestGlobals(
             shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
         )
@@ -113,7 +107,7 @@ class Manifests:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateManifestRequest, "manifest_create_request", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, Optional[components.ManifestCreateRequest], "request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }
@@ -156,14 +150,13 @@ class Manifests:
 
     
     
-    def get(self, manifest_id: str, shippo_api_version: Optional[str] = None) -> components.Manifest:
+    def get(self, manifest_id: str) -> components.Manifest:
         r"""Retrieve a manifest
         Returns an existing manifest using an object ID.
         """
         hook_ctx = HookContext(operation_id='GetManifest', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.GetManifestRequest(
             manifest_id=manifest_id,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.GetManifestGlobals(

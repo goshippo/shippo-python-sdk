@@ -24,7 +24,5 @@ class Carrier(str, Enum):
 class GetCarrierRegistrationStatusRequest:
     carrier: Carrier = dataclasses.field(metadata={'query_param': { 'field_name': 'carrier', 'style': 'form', 'explode': True }})
     r"""filter by specific carrier"""
-    shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
-    r"""String used to pick a non-default API version to use"""
     
 

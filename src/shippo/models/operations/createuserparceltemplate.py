@@ -2,23 +2,12 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import userparceltemplatewithcarriertemplatecreaterequest as components_userparceltemplatewithcarriertemplatecreaterequest
-from ...models.components import userparceltemplatewithoutcarriertemplatecreaterequest as components_userparceltemplatewithoutcarriertemplatecreaterequest
-from typing import Optional, Union
+from typing import Optional
 
 
 @dataclasses.dataclass
 class CreateUserParcelTemplateGlobals:
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""
-    
-
-
-
-@dataclasses.dataclass
-class CreateUserParcelTemplateRequest:
-    shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
-    r"""String used to pick a non-default API version to use"""
-    user_parcel_template_create_request: Optional[Union[components_userparceltemplatewithcarriertemplatecreaterequest.UserParcelTemplateWithCarrierTemplateCreateRequest, components_userparceltemplatewithoutcarriertemplatecreaterequest.UserParcelTemplateWithoutCarrierTemplateCreateRequest]] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     
 

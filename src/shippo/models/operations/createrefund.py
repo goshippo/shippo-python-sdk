@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import refundrequestbody as components_refundrequestbody
 from typing import Optional
 
 
@@ -10,15 +9,5 @@ from typing import Optional
 class CreateRefundGlobals:
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""
-    
-
-
-
-@dataclasses.dataclass
-class CreateRefundRequest:
-    shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
-    r"""String used to pick a non-default API version to use"""
-    refund_request_body: Optional[components_refundrequestbody.RefundRequestBody] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
-    r"""Refund details"""
     
 

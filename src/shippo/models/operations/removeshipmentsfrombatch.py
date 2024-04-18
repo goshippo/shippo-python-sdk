@@ -17,8 +17,6 @@ class RemoveShipmentsFromBatchGlobals:
 class RemoveShipmentsFromBatchRequest:
     batch_id: str = dataclasses.field(metadata={'path_param': { 'field_name': 'BatchId', 'style': 'simple', 'explode': False }})
     r"""Object ID of the batch"""
-    shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
-    r"""String used to pick a non-default API version to use"""
     request_body: Optional[List[str]] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     r"""Array of shipments object ids to remove from the batch"""
     

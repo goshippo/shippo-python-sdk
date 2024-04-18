@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import customsdeclarationcreaterequest as components_customsdeclarationcreaterequest
 from typing import Optional
 
 
@@ -10,15 +9,5 @@ from typing import Optional
 class CreateCustomsDeclarationGlobals:
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""
-    
-
-
-
-@dataclasses.dataclass
-class CreateCustomsDeclarationRequest:
-    shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
-    r"""String used to pick a non-default API version to use"""
-    customs_declaration_create_request: Optional[components_customsdeclarationcreaterequest.CustomsDeclarationCreateRequest] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
-    r"""CustomsDeclaration details."""
     
 

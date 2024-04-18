@@ -34,19 +34,13 @@ s = shippo.Shippo(
 )
 
 
-res = s.user_parcel_templates.list(shippo_api_version='2018-02-08')
+res = s.user_parcel_templates.list()
 
 if res is not None:
     # handle response
     pass
 
 ```
-
-### Parameters
-
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
 
 
 ### Response
@@ -79,11 +73,12 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
-res = s.user_parcel_templates.create(shippo_api_version='2018-02-08', user_parcel_template_create_request=components.UserParcelTemplateWithCarrierTemplateCreateRequest(
+req = components.UserParcelTemplateWithCarrierTemplateCreateRequest(
     weight='12',
     weight_unit=components.WeightUnitEnum.LB,
-))
+)
+
+res = s.user_parcel_templates.create(req)
 
 if res is not None:
     # handle response
@@ -93,10 +88,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                                      | Type                                                                                                                                                                                                           | Required                                                                                                                                                                                                       | Description                                                                                                                                                                                                    | Example                                                                                                                                                                                                        |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `shippo_api_version`                                                                                                                                                                                           | *Optional[str]*                                                                                                                                                                                                | :heavy_minus_sign:                                                                                                                                                                                             | String used to pick a non-default API version to use                                                                                                                                                           | 2018-02-08                                                                                                                                                                                                     |
-| `user_parcel_template_create_request`                                                                                                                                                                          | [Optional[Union[components.UserParcelTemplateWithCarrierTemplateCreateRequest, components.UserParcelTemplateWithoutCarrierTemplateCreateRequest]]](../../models/components/userparceltemplatecreaterequest.md) | :heavy_minus_sign:                                                                                                                                                                                             | N/A                                                                                                                                                                                                            |                                                                                                                                                                                                                |
+| Parameter                                                                                                                                                                                            | Type                                                                                                                                                                                                 | Required                                                                                                                                                                                             | Description                                                                                                                                                                                          |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `request`                                                                                                                                                                                            | [Union[components.UserParcelTemplateWithCarrierTemplateCreateRequest, components.UserParcelTemplateWithoutCarrierTemplateCreateRequest]](../../models/components/userparceltemplatecreaterequest.md) | :heavy_check_mark:                                                                                                                                                                                   | The request object to use for the request.                                                                                                                                                           |
 
 
 ### Response
@@ -123,7 +117,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.user_parcel_templates.delete(user_parcel_template_object_id='<value>', shippo_api_version='2018-02-08')
+res = s.user_parcel_templates.delete(user_parcel_template_object_id='<value>')
 
 if res is not None:
     # handle response
@@ -133,10 +127,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `user_parcel_template_object_id`                     | *str*                                                | :heavy_check_mark:                                   | Object ID of the user parcel template                |                                                      |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
+| Parameter                             | Type                                  | Required                              | Description                           |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| `user_parcel_template_object_id`      | *str*                                 | :heavy_check_mark:                    | Object ID of the user parcel template |
 
 
 ### Response
@@ -164,7 +157,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.user_parcel_templates.get(user_parcel_template_object_id='<value>', shippo_api_version='2018-02-08')
+res = s.user_parcel_templates.get(user_parcel_template_object_id='<value>')
 
 if res is not None:
     # handle response
@@ -174,10 +167,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `user_parcel_template_object_id`                     | *str*                                                | :heavy_check_mark:                                   | Object ID of the user parcel template                |                                                      |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
+| Parameter                             | Type                                  | Required                              | Description                           |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| `user_parcel_template_object_id`      | *str*                                 | :heavy_check_mark:                    | Object ID of the user parcel template |
 
 
 ### Response
@@ -205,7 +197,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.user_parcel_templates.update(user_parcel_template_object_id='<value>', shippo_api_version='2018-02-08', user_parcel_template_update_request=components.UserParcelTemplateUpdateRequest(
+res = s.user_parcel_templates.update(user_parcel_template_object_id='<value>', user_parcel_template_update_request=components.UserParcelTemplateUpdateRequest(
     distance_unit=components.DistanceUnitEnum.IN,
     height='6',
     length='10',
@@ -223,11 +215,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                          | Type                                                                                                               | Required                                                                                                           | Description                                                                                                        | Example                                                                                                            |
-| ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
-| `user_parcel_template_object_id`                                                                                   | *str*                                                                                                              | :heavy_check_mark:                                                                                                 | Object ID of the user parcel template                                                                              |                                                                                                                    |
-| `shippo_api_version`                                                                                               | *Optional[str]*                                                                                                    | :heavy_minus_sign:                                                                                                 | String used to pick a non-default API version to use                                                               | 2018-02-08                                                                                                         |
-| `user_parcel_template_update_request`                                                                              | [Optional[components.UserParcelTemplateUpdateRequest]](../../models/components/userparceltemplateupdaterequest.md) | :heavy_minus_sign:                                                                                                 | N/A                                                                                                                |                                                                                                                    |
+| Parameter                                                                                                          | Type                                                                                                               | Required                                                                                                           | Description                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| `user_parcel_template_object_id`                                                                                   | *str*                                                                                                              | :heavy_check_mark:                                                                                                 | Object ID of the user parcel template                                                                              |
+| `user_parcel_template_update_request`                                                                              | [Optional[components.UserParcelTemplateUpdateRequest]](../../models/components/userparceltemplateupdaterequest.md) | :heavy_minus_sign:                                                                                                 | N/A                                                                                                                |
 
 
 ### Response

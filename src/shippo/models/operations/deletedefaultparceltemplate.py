@@ -15,10 +15,7 @@ class DeleteDefaultParcelTemplateGlobals:
 
 @dataclasses.dataclass
 class DeleteDefaultParcelTemplateRequest:
-    shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
-    r"""String used to pick a non-default API version to use"""
-    
-
+    pass
 
 
 @dataclasses.dataclass

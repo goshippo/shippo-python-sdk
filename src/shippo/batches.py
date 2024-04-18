@@ -26,16 +26,11 @@ class Batches:
         
     
     
-    def create(self, shippo_api_version: Optional[str] = None, batch_create_request: Optional[components.BatchCreateRequest] = None) -> components.Batch:
+    def create(self, request: Optional[components.BatchCreateRequest]) -> components.Batch:
         r"""Create a batch
         Creates a new batch object for purchasing shipping labels for many shipments at once. Batches are created asynchronously. This means that the API response won't include your batch shipments yet. You need to retrieve the batch later to verify that all batch shipments are valid.
         """
         hook_ctx = HookContext(operation_id='CreateBatch', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.CreateBatchRequest(
-            shippo_api_version=shippo_api_version,
-            batch_create_request=batch_create_request,
-        )
-        
         _globals = operations.CreateBatchGlobals(
             shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
         )
@@ -50,7 +45,7 @@ class Batches:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateBatchRequest, "batch_create_request", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, Optional[components.BatchCreateRequest], "request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }
@@ -93,7 +88,7 @@ class Batches:
 
     
     
-    def get(self, batch_id: str, shippo_api_version: Optional[str] = None) -> components.Batch:
+    def get(self, batch_id: str) -> components.Batch:
         r"""Retrieve a batch
         Returns a batch using an object ID. <br> Batch shipments are displayed 100 at a time.  You can iterate 
         through each `page` using the `?page= query` parameter.  You can also filter based on batch shipment 
@@ -103,7 +98,6 @@ class Batches:
         hook_ctx = HookContext(operation_id='GetBatch', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.GetBatchRequest(
             batch_id=batch_id,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.GetBatchGlobals(
@@ -160,14 +154,13 @@ class Batches:
 
     
     
-    def add_shipments(self, batch_id: str, shippo_api_version: Optional[str] = None, request_body: Optional[List[components.BatchShipmentBase]] = None) -> components.Batch:
+    def add_shipments(self, batch_id: str, request_body: Optional[List[components.BatchShipmentBase]] = None) -> components.Batch:
         r"""Add shipments to a batch
         Adds batch shipments to an existing batch.
         """
         hook_ctx = HookContext(operation_id='AddShipmentsToBatch', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.AddShipmentsToBatchRequest(
             batch_id=batch_id,
-            shippo_api_version=shippo_api_version,
             request_body=request_body,
         )
         
@@ -228,7 +221,7 @@ class Batches:
 
     
     
-    def purchase(self, batch_id: str, shippo_api_version: Optional[str] = None) -> components.Batch:
+    def purchase(self, batch_id: str) -> components.Batch:
         r"""Purchase a batch
         Purchases an existing batch with a status of `VALID`. 
         Once you send a POST request to the purchase endpoint the batch status will change to `PURCHASING`. 
@@ -238,7 +231,6 @@ class Batches:
         hook_ctx = HookContext(operation_id='PurchaseBatch', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.PurchaseBatchRequest(
             batch_id=batch_id,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.PurchaseBatchGlobals(
@@ -295,14 +287,13 @@ class Batches:
 
     
     
-    def remove_shipments(self, batch_id: str, shippo_api_version: Optional[str] = None, request_body: Optional[List[str]] = None) -> components.Batch:
+    def remove_shipments(self, batch_id: str, request_body: Optional[List[str]] = None) -> components.Batch:
         r"""Remove shipments from a batch
         Removes shipments from an existing batch shipment.
         """
         hook_ctx = HookContext(operation_id='RemoveShipmentsFromBatch', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.RemoveShipmentsFromBatchRequest(
             batch_id=batch_id,
-            shippo_api_version=shippo_api_version,
             request_body=request_body,
         )
         

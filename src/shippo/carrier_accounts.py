@@ -82,16 +82,11 @@ class CarrierAccounts:
 
     
     
-    def create(self, shippo_api_version: Optional[str] = None, connect_existing_own_account_request: Optional[components.ConnectExistingOwnAccountRequest] = None) -> components.CarrierAccount:
+    def create(self, request: Optional[components.ConnectExistingOwnAccountRequest]) -> components.CarrierAccount:
         r"""Create a new carrier account
         Creates a new carrier account or connects an existing carrier account to the Shippo account.
         """
         hook_ctx = HookContext(operation_id='CreateCarrierAccount', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.CreateCarrierAccountRequest(
-            shippo_api_version=shippo_api_version,
-            connect_existing_own_account_request=connect_existing_own_account_request,
-        )
-        
         _globals = operations.CreateCarrierAccountGlobals(
             shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
         )
@@ -106,7 +101,7 @@ class CarrierAccounts:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateCarrierAccountRequest, "connect_existing_own_account_request", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, Optional[components.ConnectExistingOwnAccountRequest], "request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }
@@ -149,14 +144,13 @@ class CarrierAccounts:
 
     
     
-    def get(self, carrier_account_id: str, shippo_api_version: Optional[str] = None) -> components.CarrierAccount:
+    def get(self, carrier_account_id: str) -> components.CarrierAccount:
         r"""Retrieve a carrier account
         Returns an existing carrier account using an object ID.
         """
         hook_ctx = HookContext(operation_id='GetCarrierAccount', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.GetCarrierAccountRequest(
             carrier_account_id=carrier_account_id,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.GetCarrierAccountGlobals(
@@ -213,14 +207,13 @@ class CarrierAccounts:
 
     
     
-    def update(self, carrier_account_id: str, shippo_api_version: Optional[str] = None, carrier_account_base: Optional[components.CarrierAccountBase] = None) -> components.CarrierAccount:
+    def update(self, carrier_account_id: str, carrier_account_base: Optional[components.CarrierAccountBase] = None) -> components.CarrierAccount:
         r"""Update a carrier account
         Updates an existing carrier account object. The account_id and carrier can't be updated. This is because they form the unique identifier together.
         """
         hook_ctx = HookContext(operation_id='UpdateCarrierAccount', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.UpdateCarrierAccountRequest(
             carrier_account_id=carrier_account_id,
-            shippo_api_version=shippo_api_version,
             carrier_account_base=carrier_account_base,
         )
         
@@ -281,7 +274,7 @@ class CarrierAccounts:
 
     
     
-    def initiate_oauth2_signin(self, carrier_account_object_id: str, redirect_uri: str, state: Optional[str] = None, shippo_api_version: Optional[str] = None) -> operations.InitiateOauth2SigninResponse:
+    def initiate_oauth2_signin(self, carrier_account_object_id: str, redirect_uri: str, state: Optional[str] = None) -> operations.InitiateOauth2SigninResponse:
         r"""Connect an existing carrier account using OAuth 2.0
         Used by client applications to setup or reconnect an existing carrier account with carriers that support OAuth 2.0
         """
@@ -290,7 +283,6 @@ class CarrierAccounts:
             carrier_account_object_id=carrier_account_object_id,
             redirect_uri=redirect_uri,
             state=state,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.InitiateOauth2SigninGlobals(
@@ -367,16 +359,11 @@ class CarrierAccounts:
 
     
     
-    def register(self, shippo_api_version: Optional[str] = None, request_body: Optional[Union[components.CarrierAccountCanadaPostCreateRequest, components.CarrierAccountChronopostCreateRequest, components.CarrierAccountColissimoCreateRequest, components.CarrierAccountCorreosCreateRequest, components.CarrierAccountDeutschePostCreateRequest, components.CarrierAccountDHLExpressCreateRequest, components.CarrierAccountDpdDeCreateRequest, components.CarrierAccountDPDUKCreateRequest, components.CarrierAccountFedExCreateRequest, components.CarrierAccountHermesUKCreateRequest, components.CarrierAccountMondialRelayCreateRequest, components.CarrierAccountPosteItalianeCreateRequest, components.CarrierAccountUPSCreateRequest, components.CarrierAccountUSPSCreateRequest]] = None) -> components.CarrierAccount:
+    def register(self, request: Optional[Union[components.CarrierAccountCanadaPostCreateRequest, components.CarrierAccountChronopostCreateRequest, components.CarrierAccountColissimoCreateRequest, components.CarrierAccountCorreosCreateRequest, components.CarrierAccountDeutschePostCreateRequest, components.CarrierAccountDHLExpressCreateRequest, components.CarrierAccountDpdDeCreateRequest, components.CarrierAccountDPDUKCreateRequest, components.CarrierAccountFedExCreateRequest, components.CarrierAccountHermesUKCreateRequest, components.CarrierAccountMondialRelayCreateRequest, components.CarrierAccountPosteItalianeCreateRequest, components.CarrierAccountUPSCreateRequest, components.CarrierAccountUSPSCreateRequest]]) -> components.CarrierAccount:
         r"""Add a Shippo carrier account
         Adds a Shippo carrier account
         """
         hook_ctx = HookContext(operation_id='RegisterCarrierAccount', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.RegisterCarrierAccountRequest(
-            shippo_api_version=shippo_api_version,
-            request_body=request_body,
-        )
-        
         _globals = operations.RegisterCarrierAccountGlobals(
             shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
         )
@@ -391,7 +378,7 @@ class CarrierAccounts:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.RegisterCarrierAccountRequest, "request_body", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, Optional[Union[components.CarrierAccountCanadaPostCreateRequest, components.CarrierAccountChronopostCreateRequest, components.CarrierAccountColissimoCreateRequest, components.CarrierAccountCorreosCreateRequest, components.CarrierAccountDeutschePostCreateRequest, components.CarrierAccountDHLExpressCreateRequest, components.CarrierAccountDpdDeCreateRequest, components.CarrierAccountDPDUKCreateRequest, components.CarrierAccountFedExCreateRequest, components.CarrierAccountHermesUKCreateRequest, components.CarrierAccountMondialRelayCreateRequest, components.CarrierAccountPosteItalianeCreateRequest, components.CarrierAccountUPSCreateRequest, components.CarrierAccountUSPSCreateRequest]], "request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }
@@ -434,14 +421,13 @@ class CarrierAccounts:
 
     
     
-    def get_registration_status(self, carrier: operations.Carrier, shippo_api_version: Optional[str] = None) -> components.CarrierAccountRegistrationStatus:
+    def get_registration_status(self, carrier: operations.Carrier) -> components.CarrierAccountRegistrationStatus:
         r"""Get Carrier Registration status
         Returns the registration status for the given account for the given carrier
         """
         hook_ctx = HookContext(operation_id='GetCarrierRegistrationStatus', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.GetCarrierRegistrationStatusRequest(
             carrier=carrier,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.GetCarrierRegistrationStatusGlobals(

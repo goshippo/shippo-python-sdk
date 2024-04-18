@@ -27,8 +27,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
-res = s.pickups.create(shippo_api_version='2018-02-08', pickup_base=components.PickupBase(
+req = components.PickupBase(
     carrier_account='adcfdddf8ec64b84ad22772bce3ea37a',
     location=components.Location(
         address=components.AddressCompleteCreateRequest(
@@ -56,7 +55,9 @@ res = s.pickups.create(shippo_api_version='2018-02-08', pickup_base=components.P
     transactions=[
         'adcfdddf8ec64b84ad22772bce3ea37a',
     ],
-))
+)
+
+res = s.pickups.create(req)
 
 if res is not None:
     # handle response
@@ -66,10 +67,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                                                | Type                                                                                                                                     | Required                                                                                                                                 | Description                                                                                                                              | Example                                                                                                                                  |
-| ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| `shippo_api_version`                                                                                                                     | *Optional[str]*                                                                                                                          | :heavy_minus_sign:                                                                                                                       | String used to pick a non-default API version to use                                                                                     | 2018-02-08                                                                                                                               |
-| `pickup_base`                                                                                                                            | [Optional[components.PickupBase]](../../models/components/pickupbase.md)                                                                 | :heavy_minus_sign:                                                                                                                       | Shippo’s pickups endpoint allows you to schedule pickups with USPS and DHL Express for eligible shipments that you have already created. |                                                                                                                                          |
+| Parameter                                                      | Type                                                           | Required                                                       | Description                                                    |
+| -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- |
+| `request`                                                      | [components.PickupBase](../../models/components/pickupbase.md) | :heavy_check_mark:                                             | The request object to use for the request.                     |
 
 
 ### Response

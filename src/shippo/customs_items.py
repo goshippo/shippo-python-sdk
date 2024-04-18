@@ -18,7 +18,7 @@ class CustomsItems:
         
     
     
-    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> components.CustomsItemPaginatedList:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None) -> components.CustomsItemPaginatedList:
         r"""List all customs items
         Returns a list all customs items objects.
         """
@@ -26,7 +26,6 @@ class CustomsItems:
         request = operations.ListCustomsItemsRequest(
             page=page,
             results=results,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.ListCustomsItemsGlobals(
@@ -83,16 +82,11 @@ class CustomsItems:
 
     
     
-    def create(self, shippo_api_version: Optional[str] = None, customs_item_create_request: Optional[components.CustomsItemCreateRequest] = None) -> components.CustomsItem:
+    def create(self, request: Optional[components.CustomsItemCreateRequest]) -> components.CustomsItem:
         r"""Create a new customs item
         Creates a new customs item object.
         """
         hook_ctx = HookContext(operation_id='CreateCustomsItem', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.CreateCustomsItemRequest(
-            shippo_api_version=shippo_api_version,
-            customs_item_create_request=customs_item_create_request,
-        )
-        
         _globals = operations.CreateCustomsItemGlobals(
             shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
         )
@@ -107,7 +101,7 @@ class CustomsItems:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateCustomsItemRequest, "customs_item_create_request", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, Optional[components.CustomsItemCreateRequest], "request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }
@@ -150,7 +144,7 @@ class CustomsItems:
 
     
     
-    def get(self, customs_item_id: str, page: Optional[int] = None, shippo_api_version: Optional[str] = None) -> components.CustomsItem:
+    def get(self, customs_item_id: str, page: Optional[int] = None) -> components.CustomsItem:
         r"""Retrieve a customs item
         Returns an existing customs item using an object ID
         """
@@ -158,7 +152,6 @@ class CustomsItems:
         request = operations.GetCustomsItemRequest(
             customs_item_id=customs_item_id,
             page=page,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.GetCustomsItemGlobals(
