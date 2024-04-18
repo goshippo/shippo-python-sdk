@@ -4,6 +4,8 @@ sources:
     openapi:
         inputs:
             - location: https://docs.goshippo.com/spec/shippoapi/public-api.yaml
+        overlays:
+            - location: https://docs.goshippo.com/spec/shippoapi/client-sdk-overlay.yaml
 targets:
     first-target:
         target: python

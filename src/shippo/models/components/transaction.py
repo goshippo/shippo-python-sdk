@@ -9,6 +9,7 @@ from .trackingstatusenum import TrackingStatusEnum
 from .transactionstatusenum import TransactionStatusEnum
 from dataclasses_json import Undefined, dataclass_json
 from datetime import datetime
+from enum import Enum
 from shippo import utils
 from typing import List, Optional
 
@@ -16,6 +17,9 @@ from typing import List, Optional
 @dataclasses.dataclass
 class TransactionMessages:
     pass
+
+class ResponseType(str, Enum):
+    STANDARD = 'standard'
 
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
@@ -76,5 +80,6 @@ class Transaction:
     r"""ID of the Rate object for which a Label has to be obtained.
     Please note that only rates that are not older than 7 days can be purchased in order to ensure up-to-date pricing.
     """
+    response_type: Optional[ResponseType] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('responseType'), 'exclude': lambda f: f is None }})
     
 
