@@ -1,6 +1,6 @@
 import shippo
 from shippo.models.components import CarriersEnum, ParcelRequest, DistanceUnitEnum, WeightUnitEnum, \
-    AddressCreateRequest, ShipmentCreateRequest, TransactionCreateRequest, ParcelCreateRequest
+    AddressCreateRequest, ShipmentCreateRequest, TransactionCreateRequest, ParcelCreateRequest, Transaction
 from tests.helpers_custom import get_carrier_accounts
 
 
@@ -104,3 +104,5 @@ class TestPurchaseLabel:
             request_body=TransactionCreateRequest(rate=shipment.rates[0].object_id)
         )
         assert transaction is not None
+        assert isinstance(transaction, Transaction)
+        assert transaction.rate is not None
