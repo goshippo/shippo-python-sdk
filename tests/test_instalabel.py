@@ -12,7 +12,7 @@ class TestInstalabel:
         carrier_account = get_carrier_account(api, CarriersEnum.USPS)
 
         transaction = api.transactions.create(
-            request_body=InstantTransactionCreateRequest(
+            InstantTransactionCreateRequest(
                 carrier_account=carrier_account.object_id,
                 servicelevel_token="usps_ground_advantage",
                 shipment=ShipmentCreateRequest(

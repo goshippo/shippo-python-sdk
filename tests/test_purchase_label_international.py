@@ -13,7 +13,7 @@ class TestPurchaseLabelInternational:
     @pytest.mark.skip(reason="API returns '' for documented enum values and this test will always fail - need to update the spec")
     def test_purchase_label_international(self, api: shippo.Shippo):
         address = api.addresses.create(
-            address_create_request=AddressCreateRequest(
+            AddressCreateRequest(
                 name="Sarah",
                 company="We Sell Guitars",
                 street1="215 Clayton St.",
@@ -26,10 +26,10 @@ class TestPurchaseLabelInternational:
                 is_residential=False,
                 metadata="We Sell Guitars HQ"
             ))
-        assert address.address is not None
+        assert address is not None
 
         customs_declaration = api.customs_declarations.create(
-            customs_declaration_create_request=CustomsDeclarationCreateRequest(
+            CustomsDeclarationCreateRequest(
                 contents_type=CustomsDeclarationContentsTypeEnum.MERCHANDISE,
                 non_delivery_option=CustomsDeclarationNonDeliveryOptionEnum.RETURN,
                 certify=True,
@@ -50,7 +50,7 @@ class TestPurchaseLabelInternational:
         assert customs_declaration is not None
 
         shipment = api.shipments.create(
-            shipment_create_request=ShipmentCreateRequest(
+            ShipmentCreateRequest(
                 address_from=address.object_id,
                 address_to=AddressCreateRequest(
                     name="Tom Marks",
