@@ -2,7 +2,7 @@ import pytest
 
 import shippo
 from shippo.models.components import AddressCreateRequest, CustomsDeclarationCreateRequest, \
-    CustomsDeclarationIncotermEnum, CustomsItemBase, WeightUnitEnum, CustomsDeclarationContentsTypeEnum, \
+    CustomsDeclarationIncotermEnum, CustomsItemCreateRequest, WeightUnitEnum, CustomsDeclarationContentsTypeEnum, \
     CustomsDeclarationNonDeliveryOptionEnum, ShipmentCreateRequest, ParcelCreateRequest, DistanceUnitEnum, \
     ShipmentExtra, Insurance
 
@@ -36,7 +36,7 @@ class TestPurchaseLabelInternational:
                 certify_signer="Tom Marks",
                 incoterm=CustomsDeclarationIncotermEnum.DDP,
                 items=[
-                    CustomsItemBase(
+                    CustomsItemCreateRequest(
                         description="Guitar Pedal",
                         quantity=1,
                         net_weight="5",
