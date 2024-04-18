@@ -1,0 +1,21 @@
+speakeasyVersion: 1.258.2
+sources:
+    openapi: {}
+targets:
+    first-target:
+        source: openapi
+        outLocation: /github/workspace/repo
+workflow:
+    workflowVersion: 1.0.0
+    speakeasyVersion: latest
+    sources:
+        openapi:
+            inputs:
+                - location: https://docs.goshippo.com/spec/shippoapi/public-api.yaml
+    targets:
+        first-target:
+            target: python
+            source: openapi
+            publish:
+                pypi:
+                    token: $pypi_token

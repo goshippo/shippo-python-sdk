@@ -83,14 +83,14 @@ class CustomsItems:
 
     
     
-    def create(self, shippo_api_version: Optional[str] = None, customs_item_base: Optional[components.CustomsItemBase] = None) -> components.CustomsItem:
+    def create(self, shippo_api_version: Optional[str] = None, customs_item_create_request: Optional[components.CustomsItemCreateRequest] = None) -> components.CustomsItem:
         r"""Create a new customs item
         Creates a new customs item object.
         """
         hook_ctx = HookContext(operation_id='CreateCustomsItem', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.CreateCustomsItemRequest(
             shippo_api_version=shippo_api_version,
-            customs_item_base=customs_item_base,
+            customs_item_create_request=customs_item_create_request,
         )
         
         _globals = operations.CreateCustomsItemGlobals(
@@ -107,7 +107,7 @@ class CustomsItems:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateCustomsItemRequest, "customs_item_base", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateCustomsItemRequest, "customs_item_create_request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }

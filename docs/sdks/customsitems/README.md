@@ -69,7 +69,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_items.create(shippo_api_version='2018-02-08', customs_item_base=components.CustomsItemBase(
+res = s.customs_items.create(shippo_api_version='2018-02-08', customs_item_create_request=components.CustomsItemCreateRequest(
     description='T-Shirt',
     mass_unit=components.WeightUnitEnum.LB,
     net_weight='5',
@@ -89,10 +89,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                          | Type                                                                               | Required                                                                           | Description                                                                        | Example                                                                            |
-| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| `shippo_api_version`                                                               | *Optional[str]*                                                                    | :heavy_minus_sign:                                                                 | String used to pick a non-default API version to use                               | 2018-02-08                                                                         |
-| `customs_item_base`                                                                | [Optional[components.CustomsItemBase]](../../models/components/customsitembase.md) | :heavy_minus_sign:                                                                 | CustomsItem details.                                                               |                                                                                    |
+| Parameter                                                                                            | Type                                                                                                 | Required                                                                                             | Description                                                                                          | Example                                                                                              |
+| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `shippo_api_version`                                                                                 | *Optional[str]*                                                                                      | :heavy_minus_sign:                                                                                   | String used to pick a non-default API version to use                                                 | 2018-02-08                                                                                           |
+| `customs_item_create_request`                                                                        | [Optional[components.CustomsItemCreateRequest]](../../models/components/customsitemcreaterequest.md) | :heavy_minus_sign:                                                                                   | CustomsItem details.                                                                                 |                                                                                                      |
 
 
 ### Response

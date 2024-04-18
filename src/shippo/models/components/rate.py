@@ -24,12 +24,6 @@ class Rate:
     r"""Final Rate price, expressed in the currency used in the sender's country."""
     amount_local: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('amount_local') }})
     r"""Final Rate price, expressed in the currency used in the recipient's country."""
-    attributes: List[Attributes] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('attributes') }})
-    r"""An array containing specific attributes of this Rate in context of the entire shipment.
-    Attributes can be assigned `CHEAPEST`, `FASTEST`, or `BESTVALUE`.
-    """
-    carrier_account: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('carrier_account') }})
-    r"""Object ID of the carrier account that has been used to retrieve the rate."""
     currency: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('currency') }})
     r"""Currency used in the sender's country, refers to `amount`.
     The <a href=\"http://www.xe.com/iso4217.php\">official ISO 4217</a> currency codes are used, e.g. `USD` or `EUR`.
@@ -38,6 +32,12 @@ class Rate:
     r"""Currency used in the recipient's country, refers to `amount_local`.
     The <a href=\"http://www.xe.com/iso4217.php\">official ISO 4217</a> currency codes are used, e.g. `USD` or \"EUR\".
     """
+    attributes: List[Attributes] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('attributes') }})
+    r"""An array containing specific attributes of this Rate in context of the entire shipment.
+    Attributes can be assigned `CHEAPEST`, `FASTEST`, or `BESTVALUE`.
+    """
+    carrier_account: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('carrier_account') }})
+    r"""Object ID of the carrier account that has been used to retrieve the rate."""
     object_created: datetime = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_created'), 'encoder': utils.datetimeisoformat(False), 'decoder': dateutil.parser.isoparse }})
     r"""Date and time of Rate creation."""
     object_id: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_id') }})

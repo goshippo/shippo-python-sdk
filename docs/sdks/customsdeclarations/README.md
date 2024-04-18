@@ -76,7 +76,7 @@ res = s.customs_declarations.create(shippo_api_version='2018-02-08', customs_dec
     contents_type=components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,
     non_delivery_option=components.CustomsDeclarationNonDeliveryOptionEnum.ABANDON,
     items=[
-        components.CustomsItemBase(
+        components.CustomsItemCreateRequest(
             description='T-Shirt',
             mass_unit=components.WeightUnitEnum.LB,
             net_weight='5',
