@@ -25,7 +25,7 @@ class RatesAtCheckout:
         
     
     
-    def create(self, shippo_api_version: Optional[str] = None, live_rate_create_request: Optional[components.LiveRateCreateRequest] = None) -> components.LiveRatePaginatedList:
+    def create(self, request: Optional[components.LiveRateCreateRequest]) -> components.LiveRatePaginatedList:
         r"""Generate a live rates request
         Initiates a live rates request. Include either the object ID for
         an existing address record or a fully formed address object when entering
@@ -33,11 +33,6 @@ class RatesAtCheckout:
         template or a fully formed user parcel template object as the parcel value.
         """
         hook_ctx = HookContext(operation_id='CreateLiveRate', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.CreateLiveRateRequest(
-            shippo_api_version=shippo_api_version,
-            live_rate_create_request=live_rate_create_request,
-        )
-        
         _globals = operations.CreateLiveRateGlobals(
             shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
         )
@@ -52,7 +47,7 @@ class RatesAtCheckout:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateLiveRateRequest, "live_rate_create_request", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, Optional[components.LiveRateCreateRequest], "request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }
@@ -95,13 +90,12 @@ class RatesAtCheckout:
 
     
     
-    def get_default_parcel_template(self, shippo_api_version: Optional[str] = None) -> components.DefaultParcelTemplate:
+    def get_default_parcel_template(self) -> components.DefaultParcelTemplate:
         r"""Show current default parcel template
         Retrieve and display the currently configured default parcel template for live rates.
         """
         hook_ctx = HookContext(operation_id='GetDefaultParcelTemplate', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.GetDefaultParcelTemplateRequest(
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.GetDefaultParcelTemplateGlobals(
@@ -158,14 +152,13 @@ class RatesAtCheckout:
 
     
     
-    def update_default_parcel_template(self, shippo_api_version: Optional[str] = None, default_parcel_template_update_request: Optional[components.DefaultParcelTemplateUpdateRequest] = None) -> components.DefaultParcelTemplate:
+    def update_default_parcel_template(self, object_id: Optional[str] = None) -> components.DefaultParcelTemplate:
         r"""Update default parcel template
         Update the currently configured default parcel template for live rates. The object_id in the request payload should identify the user parcel template to be the new default.
         """
         hook_ctx = HookContext(operation_id='UpdateDefaultParcelTemplate', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.UpdateDefaultParcelTemplateRequest(
-            shippo_api_version=shippo_api_version,
-            default_parcel_template_update_request=default_parcel_template_update_request,
+        request = components.DefaultParcelTemplateUpdateRequest(
+            object_id=object_id,
         )
         
         _globals = operations.UpdateDefaultParcelTemplateGlobals(
@@ -182,7 +175,7 @@ class RatesAtCheckout:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.UpdateDefaultParcelTemplateRequest, "default_parcel_template_update_request", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, Optional[components.DefaultParcelTemplateUpdateRequest], "request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }
@@ -225,13 +218,12 @@ class RatesAtCheckout:
 
     
     
-    def delete_default_parcel_template(self, shippo_api_version: Optional[str] = None) -> operations.DeleteDefaultParcelTemplateResponse:
+    def delete_default_parcel_template(self) -> operations.DeleteDefaultParcelTemplateResponse:
         r"""Clear current default parcel template
         Clears the currently configured default parcel template for live rates.
         """
         hook_ctx = HookContext(operation_id='DeleteDefaultParcelTemplate', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.DeleteDefaultParcelTemplateRequest(
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.DeleteDefaultParcelTemplateGlobals(

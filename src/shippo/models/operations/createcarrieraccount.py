@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 import dataclasses
-from ...models.components import connectexistingownaccountrequest as components_connectexistingownaccountrequest
 from typing import Optional
 
 
@@ -10,15 +9,5 @@ from typing import Optional
 class CreateCarrierAccountGlobals:
     shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
     r"""String used to pick a non-default API version to use"""
-    
-
-
-
-@dataclasses.dataclass
-class CreateCarrierAccountRequest:
-    shippo_api_version: Optional[str] = dataclasses.field(default=None, metadata={'header': { 'field_name': 'SHIPPO-API-VERSION', 'style': 'simple', 'explode': False }})
-    r"""String used to pick a non-default API version to use"""
-    connect_existing_own_account_request: Optional[components_connectexistingownaccountrequest.ConnectExistingOwnAccountRequest] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
-    r"""Examples."""
     
 

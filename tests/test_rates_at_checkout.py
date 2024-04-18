@@ -32,7 +32,7 @@ class TestRatesAtCheckout:
         ]
 
         service_group = api.service_groups.create(
-            service_group_create_request=ServiceGroupCreateRequest(
+            ServiceGroupCreateRequest(
                 name="UPS shipping",
                 description="UPS shipping options",
                 flat_rate="5",
@@ -43,7 +43,7 @@ class TestRatesAtCheckout:
         assert service_group is not None
 
         live_rates = api.rates_at_checkout.create(
-            live_rate_create_request=LiveRateCreateRequest(
+            LiveRateCreateRequest(
                 address_from=AddressCompleteCreateRequest(
                     name="S. Hippo",
                     company="Shippo",

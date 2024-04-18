@@ -19,13 +19,12 @@ class ServiceGroups:
         
     
     
-    def list(self, shippo_api_version: Optional[str] = None) -> List[components.ServiceGroup]:
+    def list(self) -> List[components.ServiceGroup]:
         r"""List all service groups
         Returns a list of service group objects.
         """
         hook_ctx = HookContext(operation_id='ListServiceGroups', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.ListServiceGroupsRequest(
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.ListServiceGroupsGlobals(
@@ -82,16 +81,11 @@ class ServiceGroups:
 
     
     
-    def create(self, shippo_api_version: Optional[str] = None, service_group_create_request: Optional[components.ServiceGroupCreateRequest] = None) -> components.ServiceGroup:
+    def create(self, request: Optional[components.ServiceGroupCreateRequest]) -> components.ServiceGroup:
         r"""Create a new service group
         Creates a new service group.
         """
         hook_ctx = HookContext(operation_id='CreateServiceGroup', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.CreateServiceGroupRequest(
-            shippo_api_version=shippo_api_version,
-            service_group_create_request=service_group_create_request,
-        )
-        
         _globals = operations.CreateServiceGroupGlobals(
             shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
         )
@@ -106,7 +100,7 @@ class ServiceGroups:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateServiceGroupRequest, "service_group_create_request", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, Optional[components.ServiceGroupCreateRequest], "request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }
@@ -149,16 +143,11 @@ class ServiceGroups:
 
     
     
-    def update(self, shippo_api_version: Optional[str] = None, service_group_update_request: Optional[components.ServiceGroupUpdateRequest] = None) -> components.ServiceGroup:
+    def update(self, request: Optional[components.ServiceGroupUpdateRequest]) -> components.ServiceGroup:
         r"""Update an existing service group
         Updates an existing service group object. <br>The object_id cannot be updated as it is the unique identifier for the object.
         """
         hook_ctx = HookContext(operation_id='UpdateServiceGroup', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.UpdateServiceGroupRequest(
-            shippo_api_version=shippo_api_version,
-            service_group_update_request=service_group_update_request,
-        )
-        
         _globals = operations.UpdateServiceGroupGlobals(
             shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
         )
@@ -173,7 +162,7 @@ class ServiceGroups:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.UpdateServiceGroupRequest, "service_group_update_request", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, Optional[components.ServiceGroupUpdateRequest], "request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }
@@ -216,14 +205,13 @@ class ServiceGroups:
 
     
     
-    def delete(self, service_group_id: str, shippo_api_version: Optional[str] = None) -> operations.DeleteServiceGroupResponse:
+    def delete(self, service_group_id: str) -> operations.DeleteServiceGroupResponse:
         r"""Delete a service group
         Deletes an existing service group using an object ID.
         """
         hook_ctx = HookContext(operation_id='DeleteServiceGroup', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.DeleteServiceGroupRequest(
             service_group_id=service_group_id,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.DeleteServiceGroupGlobals(

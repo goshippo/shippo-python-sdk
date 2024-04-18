@@ -18,14 +18,13 @@ class Rates:
         
     
     
-    def get(self, rate_id: str, shippo_api_version: Optional[str] = None) -> components.Rate:
+    def get(self, rate_id: str) -> components.Rate:
         r"""Retrieve a rate
         Returns an existing rate using a rate object ID.
         """
         hook_ctx = HookContext(operation_id='GetRate', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.GetRateRequest(
             rate_id=rate_id,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.GetRateGlobals(
@@ -82,7 +81,7 @@ class Rates:
 
     
     
-    def list_shipment_rates(self, shipment_id: str, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> components.RatePaginatedList:
+    def list_shipment_rates(self, shipment_id: str, page: Optional[int] = None, results: Optional[int] = None) -> components.RatePaginatedList:
         r"""Retrieve shipment rates
         Returns a paginated list of rates associated with a shipment
         """
@@ -91,7 +90,6 @@ class Rates:
             shipment_id=shipment_id,
             page=page,
             results=results,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.ListShipmentRatesGlobals(

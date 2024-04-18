@@ -48,7 +48,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.shipments.list(page=1, results=25, shippo_api_version='2018-02-08')
+res = s.shipments.list(page=1, results=25)
 
 if res is not None:
     # handle response
@@ -58,11 +58,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `page`                                               | *Optional[int]*                                      | :heavy_minus_sign:                                   | The page number you want to select                   |                                                      |
-| `results`                                            | *Optional[int]*                                      | :heavy_minus_sign:                                   | The number of results to return per page (max 100)   |                                                      |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
+| Parameter                                          | Type                                               | Required                                           | Description                                        |
+| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |
+| `page`                                             | *Optional[int]*                                    | :heavy_minus_sign:                                 | The page number you want to select                 |
+| `results`                                          | *Optional[int]*                                    | :heavy_minus_sign:                                 | The number of results to return per page (max 100) |
 
 
 ### Response
@@ -89,8 +88,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
-res = s.shipments.create(shippo_api_version='2018-02-08', shipment_create_request=components.ShipmentCreateRequest(
+req = components.ShipmentCreateRequest(
     address_from=components.AddressCreateRequest(
         country='US',
         name='Shwan Ippotle',
@@ -133,7 +131,9 @@ res = s.shipments.create(shippo_api_version='2018-02-08', shipment_create_reques
         '065a4a8c10d24a34ab932163a1b87f52',
         '73f706f4bdb94b54a337563840ce52b0',
     ],
-))
+)
+
+res = s.shipments.create(req)
 
 if res is not None:
     # handle response
@@ -143,10 +143,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                      | Type                                                                                           | Required                                                                                       | Description                                                                                    | Example                                                                                        |
-| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `shippo_api_version`                                                                           | *Optional[str]*                                                                                | :heavy_minus_sign:                                                                             | String used to pick a non-default API version to use                                           | 2018-02-08                                                                                     |
-| `shipment_create_request`                                                                      | [Optional[components.ShipmentCreateRequest]](../../models/components/shipmentcreaterequest.md) | :heavy_minus_sign:                                                                             | Shipment details and contact info.                                                             |                                                                                                |
+| Parameter                                                                            | Type                                                                                 | Required                                                                             | Description                                                                          |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| `request`                                                                            | [components.ShipmentCreateRequest](../../models/components/shipmentcreaterequest.md) | :heavy_check_mark:                                                                   | The request object to use for the request.                                           |
 
 
 ### Response
@@ -173,7 +172,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.shipments.get(shipment_id='<value>', shippo_api_version='2018-02-08')
+res = s.shipments.get(shipment_id='<value>')
 
 if res is not None:
     # handle response
@@ -183,10 +182,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `shipment_id`                                        | *str*                                                | :heavy_check_mark:                                   | Object ID of the shipment to update                  |                                                      |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
+| Parameter                           | Type                                | Required                            | Description                         |
+| ----------------------------------- | ----------------------------------- | ----------------------------------- | ----------------------------------- |
+| `shipment_id`                       | *str*                               | :heavy_check_mark:                  | Object ID of the shipment to update |
 
 
 ### Response

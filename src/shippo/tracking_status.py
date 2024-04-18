@@ -27,14 +27,15 @@ class TrackingStatus:
         
     
     
-    def create(self, shippo_api_version: Optional[str] = None, tracks_request: Optional[components.TracksRequest] = None) -> components.Track:
+    def create(self, carrier: str, tracking_number: str, metadata: Optional[str] = None) -> components.Track:
         r"""Register a tracking webhook
         Registers a webhook that will send HTTP notifications to you when the status of your tracked package changes. For more details on creating a webhook, see our guides on <a href=\"https://docs.goshippo.com/docs/tracking/webhooks/\">Webhooks</a> and <a href=\"https://docs.goshippo.com/docs/tracking/tracking/\">Tracking</a>.
         """
         hook_ctx = HookContext(operation_id='CreateTrack', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.CreateTrackRequest(
-            shippo_api_version=shippo_api_version,
-            tracks_request=tracks_request,
+        request = components.TracksRequest(
+            carrier=carrier,
+            tracking_number=tracking_number,
+            metadata=metadata,
         )
         
         _globals = operations.CreateTrackGlobals(
@@ -51,7 +52,7 @@ class TrackingStatus:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateTrackRequest, "tracks_request", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, Optional[components.TracksRequest], "request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }
@@ -94,7 +95,7 @@ class TrackingStatus:
 
     
     
-    def get(self, tracking_number: str, carrier: str, shippo_api_version: Optional[str] = None) -> components.Track:
+    def get(self, tracking_number: str, carrier: str) -> components.Track:
         r"""Get a tracking status
         Returns the tracking status of a shipment using a carrier name and a tracking number.
         """
@@ -102,7 +103,6 @@ class TrackingStatus:
         request = operations.GetTrackRequest(
             tracking_number=tracking_number,
             carrier=carrier,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.GetTrackGlobals(

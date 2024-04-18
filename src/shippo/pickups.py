@@ -19,16 +19,11 @@ class Pickups:
         
     
     
-    def create(self, shippo_api_version: Optional[str] = None, pickup_base: Optional[components.PickupBase] = None) -> components.Pickup:
+    def create(self, request: Optional[components.PickupBase]) -> components.Pickup:
         r"""Create a pickup
         Creates a pickup object. This request is for a carrier to come to a specified location to take a package for shipping.
         """
         hook_ctx = HookContext(operation_id='CreatePickup', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.CreatePickupRequest(
-            shippo_api_version=shippo_api_version,
-            pickup_base=pickup_base,
-        )
-        
         _globals = operations.CreatePickupGlobals(
             shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
         )
@@ -43,7 +38,7 @@ class Pickups:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.CreatePickupRequest, "pickup_base", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, Optional[components.PickupBase], "request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }

@@ -22,7 +22,7 @@ class Parcels:
         
     
     
-    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> components.ParcelPaginatedList:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None) -> components.ParcelPaginatedList:
         r"""List all parcels
         Returns a list of all parcel objects.
         """
@@ -30,7 +30,6 @@ class Parcels:
         request = operations.ListParcelsRequest(
             page=page,
             results=results,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.ListParcelsGlobals(
@@ -87,16 +86,11 @@ class Parcels:
 
     
     
-    def create(self, shippo_api_version: Optional[str] = None, parcel_request: Optional[components.ParcelRequest] = None) -> components.Parcel:
+    def create(self, request: Optional[components.ParcelRequest]) -> components.Parcel:
         r"""Create a new parcel
         Creates a new parcel object.
         """
         hook_ctx = HookContext(operation_id='CreateParcel', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.CreateParcelRequest(
-            shippo_api_version=shippo_api_version,
-            parcel_request=parcel_request,
-        )
-        
         _globals = operations.CreateParcelGlobals(
             shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
         )
@@ -111,7 +105,7 @@ class Parcels:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateParcelRequest, "parcel_request", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, Optional[components.ParcelRequest], "request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }
@@ -154,14 +148,13 @@ class Parcels:
 
     
     
-    def get(self, parcel_id: str, shippo_api_version: Optional[str] = None) -> components.Parcel:
+    def get(self, parcel_id: str) -> components.Parcel:
         r"""Retrieve an existing parcel
         Returns parcel details using an existing parcel object ID (this will not return parcel details associated with un-purchased shipment/rate parcel object IDs).
         """
         hook_ctx = HookContext(operation_id='GetParcel', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.GetParcelRequest(
             parcel_id=parcel_id,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.GetParcelGlobals(

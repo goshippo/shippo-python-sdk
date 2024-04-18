@@ -26,10 +26,10 @@ class TestDebugClient:
     def invoke_api_and_verify_request_and_response_are_set(
             debug_session: DebugSession, debug_api: shippo.Shippo
     ):
-        version = f"{randint(1, 10000)}"
-        debug_api.addresses.list(shippo_api_version=version)
+        page = randint(1, 100)
+        debug_api.addresses.list(page=page)
         assert debug_session.last_request is not None
-        assert debug_session.last_request.headers["SHIPPO-API-VERSION"] == version
+        assert str(debug_session.last_request.url).endswith(f"?page={page}")
         assert debug_session.last_response is not None
 
     @httpretty.activate(allow_net_connect=False)
@@ -66,10 +66,10 @@ class TestDebugClient:
     async def async_invoke_api_and_verify_request_and_response_are_set(
             debug_session: DebugSession, debug_api: shippo.Shippo
     ):
-        version = f"{randint(1, 10000)}"
-        debug_api.addresses.list(shippo_api_version=version)
+        page = randint(1, 100)
+        debug_api.addresses.list(page=page)
         assert debug_session.last_request is not None
-        assert debug_session.last_request.headers["SHIPPO-API-VERSION"] == version
+        assert str(debug_session.last_request.url).endswith(f"?page={page}")
         assert debug_session.last_response is not None
 
     @httpretty.activate(allow_net_connect=False)

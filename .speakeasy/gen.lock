@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: c1432566bb0f190d84ea60211789b4e9
+  docChecksum: ecc238b3d1973c8ec75b082ab651b755
   docVersion: "2018-02-08"
   speakeasyVersion: 1.259.0
   generationVersion: 2.310.0
-  releaseVersion: 3.2.8
-  configChecksum: 7e72c6b5e6163d4a3085d6fce09bb1ca
+  releaseVersion: 3.3.1
+  configChecksum: 4990d90f965121569c1fee99a28feccf
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
@@ -18,6 +18,7 @@ features:
     globalSecurity: 2.83.5
     globalServerURLs: 2.82.2
     globals: 2.82.1
+    hiddenGlobals: 0.1.0
     includes: 2.81.1
     nameOverrides: 2.81.2
     responseFormat: 0.1.0
@@ -188,70 +189,70 @@ generatedFiles:
   - src/shippo/models/components/security.py
   - src/shippo/models/components/servicelevelenumset.py
   - src/shippo/models/operations/listaddresses.py
-  - src/shippo/models/operations/createaddress.py
   - src/shippo/models/operations/getaddress.py
   - src/shippo/models/operations/validateaddress.py
-  - src/shippo/models/operations/createbatch.py
   - src/shippo/models/operations/getbatch.py
   - src/shippo/models/operations/addshipmentstobatch.py
   - src/shippo/models/operations/purchasebatch.py
   - src/shippo/models/operations/removeshipmentsfrombatch.py
   - src/shippo/models/operations/listcarrieraccounts.py
-  - src/shippo/models/operations/createcarrieraccount.py
   - src/shippo/models/operations/getcarrieraccount.py
   - src/shippo/models/operations/updatecarrieraccount.py
   - src/shippo/models/operations/initiateoauth2signin.py
   - src/shippo/models/operations/registercarrieraccount.py
   - src/shippo/models/operations/getcarrierregistrationstatus.py
   - src/shippo/models/operations/listcustomsdeclarations.py
-  - src/shippo/models/operations/createcustomsdeclaration.py
   - src/shippo/models/operations/getcustomsdeclaration.py
   - src/shippo/models/operations/listcustomsitems.py
-  - src/shippo/models/operations/createcustomsitem.py
   - src/shippo/models/operations/getcustomsitem.py
-  - src/shippo/models/operations/createliverate.py
   - src/shippo/models/operations/getdefaultparceltemplate.py
-  - src/shippo/models/operations/updatedefaultparceltemplate.py
   - src/shippo/models/operations/deletedefaultparceltemplate.py
   - src/shippo/models/operations/listmanifests.py
-  - src/shippo/models/operations/createmanifest.py
   - src/shippo/models/operations/getmanifest.py
   - src/shippo/models/operations/listorders.py
-  - src/shippo/models/operations/createorder.py
   - src/shippo/models/operations/getorder.py
   - src/shippo/models/operations/listcarrierparceltemplates.py
   - src/shippo/models/operations/getcarrierparceltemplate.py
   - src/shippo/models/operations/listparcels.py
-  - src/shippo/models/operations/createparcel.py
   - src/shippo/models/operations/getparcel.py
-  - src/shippo/models/operations/createpickup.py
   - src/shippo/models/operations/getrate.py
   - src/shippo/models/operations/listshipmentrates.py
   - src/shippo/models/operations/listshipmentratesbycurrencycode.py
-  - src/shippo/models/operations/createrefund.py
   - src/shippo/models/operations/listrefunds.py
   - src/shippo/models/operations/getrefund.py
   - src/shippo/models/operations/listservicegroups.py
-  - src/shippo/models/operations/createservicegroup.py
-  - src/shippo/models/operations/updateservicegroup.py
   - src/shippo/models/operations/deleteservicegroup.py
   - src/shippo/models/operations/listshipments.py
-  - src/shippo/models/operations/createshipment.py
   - src/shippo/models/operations/getshipment.py
-  - src/shippo/models/operations/createtrack.py
   - src/shippo/models/operations/gettrack.py
   - src/shippo/models/operations/listtransactions.py
   - src/shippo/models/operations/createtransaction.py
   - src/shippo/models/operations/gettransaction.py
   - src/shippo/models/operations/listuserparceltemplates.py
-  - src/shippo/models/operations/createuserparceltemplate.py
   - src/shippo/models/operations/deleteuserparceltemplate.py
   - src/shippo/models/operations/getuserparceltemplate.py
   - src/shippo/models/operations/updateuserparceltemplate.py
   - src/shippo/models/operations/listshippoaccounts.py
-  - src/shippo/models/operations/createshippoaccount.py
   - src/shippo/models/operations/getshippoaccount.py
   - src/shippo/models/operations/updateshippoaccount.py
+  - src/shippo/models/operations/createaddress.py
+  - src/shippo/models/operations/createbatch.py
+  - src/shippo/models/operations/createcarrieraccount.py
+  - src/shippo/models/operations/createcustomsdeclaration.py
+  - src/shippo/models/operations/createcustomsitem.py
+  - src/shippo/models/operations/createliverate.py
+  - src/shippo/models/operations/updatedefaultparceltemplate.py
+  - src/shippo/models/operations/createmanifest.py
+  - src/shippo/models/operations/createorder.py
+  - src/shippo/models/operations/createparcel.py
+  - src/shippo/models/operations/createpickup.py
+  - src/shippo/models/operations/createrefund.py
+  - src/shippo/models/operations/createservicegroup.py
+  - src/shippo/models/operations/updateservicegroup.py
+  - src/shippo/models/operations/createshipment.py
+  - src/shippo/models/operations/createtrack.py
+  - src/shippo/models/operations/createuserparceltemplate.py
+  - src/shippo/models/operations/createshippoaccount.py
   - src/shippo/models/errors/initiateoauth2signin.py
   - src/shippo/models/internal/globals.py
   - src/shippo/models/__init__.py
@@ -504,14 +505,10 @@ generatedFiles:
   - docs/models/components/servicelevelenumset.md
   - docs/models/operations/listaddressesglobals.md
   - docs/models/operations/listaddressesrequest.md
-  - docs/models/operations/createaddressglobals.md
-  - docs/models/operations/createaddressrequest.md
   - docs/models/operations/getaddressglobals.md
   - docs/models/operations/getaddressrequest.md
   - docs/models/operations/validateaddressglobals.md
   - docs/models/operations/validateaddressrequest.md
-  - docs/models/operations/createbatchglobals.md
-  - docs/models/operations/createbatchrequest.md
   - docs/models/operations/getbatchglobals.md
   - docs/models/operations/getbatchrequest.md
   - docs/models/operations/addshipmentstobatchglobals.md
@@ -522,8 +519,6 @@ generatedFiles:
   - docs/models/operations/removeshipmentsfrombatchrequest.md
   - docs/models/operations/listcarrieraccountsglobals.md
   - docs/models/operations/listcarrieraccountsrequest.md
-  - docs/models/operations/createcarrieraccountglobals.md
-  - docs/models/operations/createcarrieraccountrequest.md
   - docs/models/operations/getcarrieraccountglobals.md
   - docs/models/operations/getcarrieraccountrequest.md
   - docs/models/operations/updatecarrieraccountglobals.md
@@ -533,41 +528,28 @@ generatedFiles:
   - docs/models/operations/initiateoauth2signinresponse.md
   - docs/models/operations/registercarrieraccountglobals.md
   - docs/models/operations/registercarrieraccountrequestbody.md
-  - docs/models/operations/registercarrieraccountrequest.md
   - docs/models/operations/getcarrierregistrationstatusglobals.md
   - docs/models/operations/carrier.md
   - docs/models/operations/getcarrierregistrationstatusrequest.md
   - docs/models/operations/listcustomsdeclarationsglobals.md
   - docs/models/operations/listcustomsdeclarationsrequest.md
-  - docs/models/operations/createcustomsdeclarationglobals.md
-  - docs/models/operations/createcustomsdeclarationrequest.md
   - docs/models/operations/getcustomsdeclarationglobals.md
   - docs/models/operations/getcustomsdeclarationrequest.md
   - docs/models/operations/listcustomsitemsglobals.md
   - docs/models/operations/listcustomsitemsrequest.md
-  - docs/models/operations/createcustomsitemglobals.md
-  - docs/models/operations/createcustomsitemrequest.md
   - docs/models/operations/getcustomsitemglobals.md
   - docs/models/operations/getcustomsitemrequest.md
-  - docs/models/operations/createliverateglobals.md
-  - docs/models/operations/createliveraterequest.md
   - docs/models/operations/getdefaultparceltemplateglobals.md
   - docs/models/operations/getdefaultparceltemplaterequest.md
-  - docs/models/operations/updatedefaultparceltemplateglobals.md
-  - docs/models/operations/updatedefaultparceltemplaterequest.md
   - docs/models/operations/deletedefaultparceltemplateglobals.md
   - docs/models/operations/deletedefaultparceltemplaterequest.md
   - docs/models/operations/deletedefaultparceltemplateresponse.md
   - docs/models/operations/listmanifestsglobals.md
   - docs/models/operations/listmanifestsrequest.md
-  - docs/models/operations/createmanifestglobals.md
-  - docs/models/operations/createmanifestrequest.md
   - docs/models/operations/getmanifestglobals.md
   - docs/models/operations/getmanifestrequest.md
   - docs/models/operations/listordersglobals.md
   - docs/models/operations/listordersrequest.md
-  - docs/models/operations/createorderglobals.md
-  - docs/models/operations/createorderrequest.md
   - docs/models/operations/getorderglobals.md
   - docs/models/operations/getorderrequest.md
   - docs/models/operations/listcarrierparceltemplatesglobals.md
@@ -577,54 +559,37 @@ generatedFiles:
   - docs/models/operations/getcarrierparceltemplaterequest.md
   - docs/models/operations/listparcelsglobals.md
   - docs/models/operations/listparcelsrequest.md
-  - docs/models/operations/createparcelglobals.md
-  - docs/models/operations/createparcelrequest.md
   - docs/models/operations/getparcelglobals.md
   - docs/models/operations/getparcelrequest.md
-  - docs/models/operations/createpickupglobals.md
-  - docs/models/operations/createpickuprequest.md
   - docs/models/operations/getrateglobals.md
   - docs/models/operations/getraterequest.md
   - docs/models/operations/listshipmentratesglobals.md
   - docs/models/operations/listshipmentratesrequest.md
   - docs/models/operations/listshipmentratesbycurrencycodeglobals.md
   - docs/models/operations/listshipmentratesbycurrencycoderequest.md
-  - docs/models/operations/createrefundglobals.md
-  - docs/models/operations/createrefundrequest.md
   - docs/models/operations/listrefundsglobals.md
   - docs/models/operations/listrefundsrequest.md
   - docs/models/operations/getrefundglobals.md
   - docs/models/operations/getrefundrequest.md
   - docs/models/operations/listservicegroupsglobals.md
   - docs/models/operations/listservicegroupsrequest.md
-  - docs/models/operations/createservicegroupglobals.md
-  - docs/models/operations/createservicegrouprequest.md
-  - docs/models/operations/updateservicegroupglobals.md
-  - docs/models/operations/updateservicegrouprequest.md
   - docs/models/operations/deleteservicegroupglobals.md
   - docs/models/operations/deleteservicegrouprequest.md
   - docs/models/operations/deleteservicegroupresponse.md
   - docs/models/operations/listshipmentsglobals.md
   - docs/models/operations/listshipmentsrequest.md
-  - docs/models/operations/createshipmentglobals.md
-  - docs/models/operations/createshipmentrequest.md
   - docs/models/operations/getshipmentglobals.md
   - docs/models/operations/getshipmentrequest.md
-  - docs/models/operations/createtrackglobals.md
-  - docs/models/operations/createtrackrequest.md
   - docs/models/operations/gettrackglobals.md
   - docs/models/operations/gettrackrequest.md
   - docs/models/operations/listtransactionsglobals.md
   - docs/models/operations/listtransactionsrequest.md
   - docs/models/operations/createtransactionglobals.md
   - docs/models/operations/createtransactionrequestbody.md
-  - docs/models/operations/createtransactionrequest.md
   - docs/models/operations/gettransactionglobals.md
   - docs/models/operations/gettransactionrequest.md
   - docs/models/operations/listuserparceltemplatesglobals.md
   - docs/models/operations/listuserparceltemplatesrequest.md
-  - docs/models/operations/createuserparceltemplateglobals.md
-  - docs/models/operations/createuserparceltemplaterequest.md
   - docs/models/operations/deleteuserparceltemplateglobals.md
   - docs/models/operations/deleteuserparceltemplaterequest.md
   - docs/models/operations/deleteuserparceltemplateresponse.md
@@ -634,12 +599,28 @@ generatedFiles:
   - docs/models/operations/updateuserparceltemplaterequest.md
   - docs/models/operations/listshippoaccountsglobals.md
   - docs/models/operations/listshippoaccountsrequest.md
-  - docs/models/operations/createshippoaccountglobals.md
-  - docs/models/operations/createshippoaccountrequest.md
   - docs/models/operations/getshippoaccountglobals.md
   - docs/models/operations/getshippoaccountrequest.md
   - docs/models/operations/updateshippoaccountglobals.md
   - docs/models/operations/updateshippoaccountrequest.md
+  - docs/models/operations/createaddressglobals.md
+  - docs/models/operations/createbatchglobals.md
+  - docs/models/operations/createcarrieraccountglobals.md
+  - docs/models/operations/createcustomsdeclarationglobals.md
+  - docs/models/operations/createcustomsitemglobals.md
+  - docs/models/operations/createliverateglobals.md
+  - docs/models/operations/updatedefaultparceltemplateglobals.md
+  - docs/models/operations/createmanifestglobals.md
+  - docs/models/operations/createorderglobals.md
+  - docs/models/operations/createparcelglobals.md
+  - docs/models/operations/createpickupglobals.md
+  - docs/models/operations/createrefundglobals.md
+  - docs/models/operations/createservicegroupglobals.md
+  - docs/models/operations/updateservicegroupglobals.md
+  - docs/models/operations/createshipmentglobals.md
+  - docs/models/operations/createtrackglobals.md
+  - docs/models/operations/createuserparceltemplateglobals.md
+  - docs/models/operations/createshippoaccountglobals.md
   - docs/models/errors/initiateoauth2signincarrieraccountsresponseresponsebody.md
   - docs/models/errors/initiateoauth2signincarrieraccountsresponsebody.md
   - docs/models/errors/initiateoauth2signinresponsebody.md

@@ -28,7 +28,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.addresses.list(page=1, results=5, shippo_api_version='2018-02-08')
+res = s.addresses.list(page=1, results=5)
 
 if res is not None:
     # handle response
@@ -38,11 +38,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                     | Type                                                          | Required                                                      | Description                                                   | Example                                                       |
-| ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- |
-| `page`                                                        | *Optional[int]*                                               | :heavy_minus_sign:                                            | The page number you want to select                            |                                                               |
-| `results`                                                     | *Optional[int]*                                               | :heavy_minus_sign:                                            | The number of results to return per page (max 100, default 5) |                                                               |
-| `shippo_api_version`                                          | *Optional[str]*                                               | :heavy_minus_sign:                                            | String used to pick a non-default API version to use          | 2018-02-08                                                    |
+| Parameter                                                     | Type                                                          | Required                                                      | Description                                                   |
+| ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- |
+| `page`                                                        | *Optional[int]*                                               | :heavy_minus_sign:                                            | The page number you want to select                            |
+| `results`                                                     | *Optional[int]*                                               | :heavy_minus_sign:                                            | The number of results to return per page (max 100, default 5) |
 
 
 ### Response
@@ -69,8 +68,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
-res = s.addresses.create(shippo_api_version='2018-02-08', address_create_request=components.AddressCreateRequest(
+req = components.AddressCreateRequest(
     country='US',
     name='Shwan Ippotle',
     company='Shippo',
@@ -85,7 +83,9 @@ res = s.addresses.create(shippo_api_version='2018-02-08', address_create_request
     is_residential=True,
     metadata='Customer ID 123456',
     validate=True,
-))
+)
+
+res = s.addresses.create(req)
 
 if res is not None:
     # handle response
@@ -95,10 +95,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                    | Type                                                                                         | Required                                                                                     | Description                                                                                  | Example                                                                                      |
-| -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `shippo_api_version`                                                                         | *Optional[str]*                                                                              | :heavy_minus_sign:                                                                           | String used to pick a non-default API version to use                                         | 2018-02-08                                                                                   |
-| `address_create_request`                                                                     | [Optional[components.AddressCreateRequest]](../../models/components/addresscreaterequest.md) | :heavy_minus_sign:                                                                           | Address details.                                                                             |                                                                                              |
+| Parameter                                                                          | Type                                                                               | Required                                                                           | Description                                                                        |
+| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `request`                                                                          | [components.AddressCreateRequest](../../models/components/addresscreaterequest.md) | :heavy_check_mark:                                                                 | The request object to use for the request.                                         |
 
 
 ### Response
@@ -125,7 +124,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.addresses.get(address_id='<value>', shippo_api_version='2018-02-08')
+res = s.addresses.get(address_id='<value>')
 
 if res is not None:
     # handle response
@@ -135,10 +134,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `address_id`                                         | *str*                                                | :heavy_check_mark:                                   | Object ID of the address                             |                                                      |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
+| Parameter                | Type                     | Required                 | Description              |
+| ------------------------ | ------------------------ | ------------------------ | ------------------------ |
+| `address_id`             | *str*                    | :heavy_check_mark:       | Object ID of the address |
 
 
 ### Response
@@ -165,7 +163,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.addresses.validate(address_id='<value>', shippo_api_version='2018-02-08')
+res = s.addresses.validate(address_id='<value>')
 
 if res is not None:
     # handle response
@@ -175,10 +173,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `address_id`                                         | *str*                                                | :heavy_check_mark:                                   | Object ID of the address                             |                                                      |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
+| Parameter                | Type                     | Required                 | Description              |
+| ------------------------ | ------------------------ | ------------------------ | ------------------------ |
+| `address_id`             | *str*                    | :heavy_check_mark:       | Object ID of the address |
 
 
 ### Response

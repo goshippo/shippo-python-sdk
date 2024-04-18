@@ -18,7 +18,7 @@ class Addresses:
         
     
     
-    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> components.AddressPaginatedList:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None) -> components.AddressPaginatedList:
         r"""List all addresses
         Returns a list of all address objects that have been created in this account.
         """
@@ -26,7 +26,6 @@ class Addresses:
         request = operations.ListAddressesRequest(
             page=page,
             results=results,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.ListAddressesGlobals(
@@ -83,16 +82,11 @@ class Addresses:
 
     
     
-    def create(self, shippo_api_version: Optional[str] = None, address_create_request: Optional[components.AddressCreateRequest] = None) -> components.Address:
+    def create(self, request: Optional[components.AddressCreateRequest]) -> components.Address:
         r"""Create a new address
         Creates a new address object. You can use address objects to create new shipments, calculate rates, and to create orders.
         """
         hook_ctx = HookContext(operation_id='CreateAddress', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.CreateAddressRequest(
-            shippo_api_version=shippo_api_version,
-            address_create_request=address_create_request,
-        )
-        
         _globals = operations.CreateAddressGlobals(
             shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
         )
@@ -107,7 +101,7 @@ class Addresses:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateAddressRequest, "address_create_request", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, Optional[components.AddressCreateRequest], "request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }
@@ -150,14 +144,13 @@ class Addresses:
 
     
     
-    def get(self, address_id: str, shippo_api_version: Optional[str] = None) -> components.Address:
+    def get(self, address_id: str) -> components.Address:
         r"""Retrieve an address
         Returns an existing address using an object ID.
         """
         hook_ctx = HookContext(operation_id='GetAddress', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.GetAddressRequest(
             address_id=address_id,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.GetAddressGlobals(
@@ -214,14 +207,13 @@ class Addresses:
 
     
     
-    def validate(self, address_id: str, shippo_api_version: Optional[str] = None) -> components.Address:
+    def validate(self, address_id: str) -> components.Address:
         r"""Validate an address
         Validates an existing address using an object ID
         """
         hook_ctx = HookContext(operation_id='ValidateAddress', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.ValidateAddressRequest(
             address_id=address_id,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.ValidateAddressGlobals(

@@ -12,7 +12,7 @@ class TestPurchaseLabel:
         carrier_account_ids = [carrier_account.object_id for carrier_account in carrier_accounts]
 
         shipment = api.shipments.create(
-            shipment_create_request=ShipmentCreateRequest(
+            ShipmentCreateRequest(
                 address_from=AddressCreateRequest(
                     name="Rachael",
                     street1="1092 Indian Summer Ct",
@@ -48,13 +48,13 @@ class TestPurchaseLabel:
         assert shipment is not None
 
         transaction = api.transactions.create(
-            request_body=TransactionCreateRequest(rate=shipment.rates[0].object_id)
+            TransactionCreateRequest(rate=shipment.rates[0].object_id)
         )
         assert transaction is not None
 
     def test_purchase_label_using_reference_ids(self, api: shippo.Shippo):
         address_from = api.addresses.create(
-            address_create_request=AddressCreateRequest(
+            AddressCreateRequest(
                 name="Rachael",
                 street1="1092 Indian Summer Ct",
                 city="San Jose",
@@ -66,7 +66,7 @@ class TestPurchaseLabel:
             ))
 
         address_to = api.addresses.create(
-            address_create_request=AddressCreateRequest(
+            AddressCreateRequest(
                 name="Mr Hippo",
                 street1="965 Mission St #572",
                 city="San Francisco",
@@ -78,7 +78,7 @@ class TestPurchaseLabel:
             ))
 
         parcel = api.parcels.create(
-            parcel_request=ParcelRequest(
+            ParcelRequest(
                 length="5",
                 width="5",
                 height="5",
@@ -89,7 +89,7 @@ class TestPurchaseLabel:
             ))
 
         shipment = api.shipments.create(
-            shipment_create_request=ShipmentCreateRequest(
+            ShipmentCreateRequest(
                 address_from=address_from.object_id,
                 address_return=address_from.object_id,
                 address_to=address_to.object_id,
@@ -101,7 +101,7 @@ class TestPurchaseLabel:
         assert shipment.address_return.object_id == address_from.object_id
 
         transaction = api.transactions.create(
-            request_body=TransactionCreateRequest(rate=shipment.rates[0].object_id)
+            TransactionCreateRequest(rate=shipment.rates[0].object_id)
         )
         assert transaction is not None
         assert isinstance(transaction, Transaction)

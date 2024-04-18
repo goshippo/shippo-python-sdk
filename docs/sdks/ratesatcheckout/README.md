@@ -39,8 +39,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
-res = s.rates_at_checkout.create(shippo_api_version='2018-02-08', live_rate_create_request=components.LiveRateCreateRequest(
+req = components.LiveRateCreateRequest(
     address_to='<value>',
     line_items=[
         components.LineItem(
@@ -59,7 +58,9 @@ res = s.rates_at_checkout.create(shippo_api_version='2018-02-08', live_rate_crea
         ),
     ],
     parcel='5df144dca289442cv7a06',
-))
+)
+
+res = s.rates_at_checkout.create(req)
 
 if res is not None:
     # handle response
@@ -69,10 +70,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                      | Type                                                                                           | Required                                                                                       | Description                                                                                    | Example                                                                                        |
-| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `shippo_api_version`                                                                           | *Optional[str]*                                                                                | :heavy_minus_sign:                                                                             | String used to pick a non-default API version to use                                           | 2018-02-08                                                                                     |
-| `live_rate_create_request`                                                                     | [Optional[components.LiveRateCreateRequest]](../../models/components/liveratecreaterequest.md) | :heavy_minus_sign:                                                                             | Generate rates at checkout                                                                     |                                                                                                |
+| Parameter                                                                            | Type                                                                                 | Required                                                                             | Description                                                                          |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| `request`                                                                            | [components.LiveRateCreateRequest](../../models/components/liveratecreaterequest.md) | :heavy_check_mark:                                                                   | The request object to use for the request.                                           |
 
 
 ### Response
@@ -99,19 +99,13 @@ s = shippo.Shippo(
 )
 
 
-res = s.rates_at_checkout.get_default_parcel_template(shippo_api_version='2018-02-08')
+res = s.rates_at_checkout.get_default_parcel_template()
 
 if res is not None:
     # handle response
     pass
 
 ```
-
-### Parameters
-
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
 
 
 ### Response
@@ -131,7 +125,6 @@ Update the currently configured default parcel template for live rates. The obje
 
 ```python
 import shippo
-from shippo.models import components
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
@@ -139,9 +132,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.rates_at_checkout.update_default_parcel_template(shippo_api_version='2018-02-08', default_parcel_template_update_request=components.DefaultParcelTemplateUpdateRequest(
-    object_id='b958d3690bb04bb8b2986724872750f5',
-))
+res = s.rates_at_checkout.update_default_parcel_template(object_id='b958d3690bb04bb8b2986724872750f5')
 
 if res is not None:
     # handle response
@@ -151,10 +142,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                                | Type                                                                                                                     | Required                                                                                                                 | Description                                                                                                              | Example                                                                                                                  |
-| ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
-| `shippo_api_version`                                                                                                     | *Optional[str]*                                                                                                          | :heavy_minus_sign:                                                                                                       | String used to pick a non-default API version to use                                                                     | 2018-02-08                                                                                                               |
-| `default_parcel_template_update_request`                                                                                 | [Optional[components.DefaultParcelTemplateUpdateRequest]](../../models/components/defaultparceltemplateupdaterequest.md) | :heavy_minus_sign:                                                                                                       | N/A                                                                                                                      |                                                                                                                          |
+| Parameter                        | Type                             | Required                         | Description                      | Example                          |
+| -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- |
+| `object_id`                      | *Optional[str]*                  | :heavy_minus_sign:               | N/A                              | b958d3690bb04bb8b2986724872750f5 |
 
 
 ### Response
@@ -181,19 +171,13 @@ s = shippo.Shippo(
 )
 
 
-res = s.rates_at_checkout.delete_default_parcel_template(shippo_api_version='2018-02-08')
+res = s.rates_at_checkout.delete_default_parcel_template()
 
 if res is not None:
     # handle response
     pass
 
 ```
-
-### Parameters
-
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
 
 
 ### Response

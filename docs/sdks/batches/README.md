@@ -37,8 +37,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
-res = s.batches.create(shippo_api_version='2018-02-08', batch_create_request=components.BatchCreateRequest(
+req = components.BatchCreateRequest(
     default_carrier_account='078870331023437cb917f5187429b093',
     default_servicelevel_token='usps_priority',
     batch_shipments=[
@@ -94,7 +93,9 @@ res = s.batches.create(shippo_api_version='2018-02-08', batch_create_request=com
     ],
     label_filetype=components.LabelFileTypeEnum.PDF_4X6,
     metadata='BATCH #1',
-))
+)
+
+res = s.batches.create(req)
 
 if res is not None:
     # handle response
@@ -104,10 +105,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                | Type                                                                                     | Required                                                                                 | Description                                                                              | Example                                                                                  |
-| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `shippo_api_version`                                                                     | *Optional[str]*                                                                          | :heavy_minus_sign:                                                                       | String used to pick a non-default API version to use                                     | 2018-02-08                                                                               |
-| `batch_create_request`                                                                   | [Optional[components.BatchCreateRequest]](../../models/components/batchcreaterequest.md) | :heavy_minus_sign:                                                                       | Batch details.                                                                           |                                                                                          |
+| Parameter                                                                      | Type                                                                           | Required                                                                       | Description                                                                    |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `request`                                                                      | [components.BatchCreateRequest](../../models/components/batchcreaterequest.md) | :heavy_check_mark:                                                             | The request object to use for the request.                                     |
 
 
 ### Response
@@ -137,7 +137,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.batches.get(batch_id='<value>', shippo_api_version='2018-02-08')
+res = s.batches.get(batch_id='<value>')
 
 if res is not None:
     # handle response
@@ -147,10 +147,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `batch_id`                                           | *str*                                                | :heavy_check_mark:                                   | Object ID of the batch                               |                                                      |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
+| Parameter              | Type                   | Required               | Description            |
+| ---------------------- | ---------------------- | ---------------------- | ---------------------- |
+| `batch_id`             | *str*                  | :heavy_check_mark:     | Object ID of the batch |
 
 
 ### Response
@@ -178,7 +177,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.batches.add_shipments(batch_id='<value>', shippo_api_version='2018-02-08', request_body=[
+res = s.batches.add_shipments(batch_id='<value>', request_body=[
     components.BatchShipmentBase(
         shipment=components.ShipmentCreateRequest(
             address_from='<value>',
@@ -216,11 +215,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                          | Type                                                                               | Required                                                                           | Description                                                                        | Example                                                                            |
-| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| `batch_id`                                                                         | *str*                                                                              | :heavy_check_mark:                                                                 | Object ID of the batch                                                             |                                                                                    |
-| `shippo_api_version`                                                               | *Optional[str]*                                                                    | :heavy_minus_sign:                                                                 | String used to pick a non-default API version to use                               | 2018-02-08                                                                         |
-| `request_body`                                                                     | List[[components.BatchShipmentBase](../../models/components/batchshipmentbase.md)] | :heavy_minus_sign:                                                                 | Array of shipments to add to the batch                                             |                                                                                    |
+| Parameter                                                                          | Type                                                                               | Required                                                                           | Description                                                                        |
+| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `batch_id`                                                                         | *str*                                                                              | :heavy_check_mark:                                                                 | Object ID of the batch                                                             |
+| `request_body`                                                                     | List[[components.BatchShipmentBase](../../models/components/batchshipmentbase.md)] | :heavy_minus_sign:                                                                 | Array of shipments to add to the batch                                             |
 
 
 ### Response
@@ -250,7 +248,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.batches.purchase(batch_id='<value>', shippo_api_version='2018-02-08')
+res = s.batches.purchase(batch_id='<value>')
 
 if res is not None:
     # handle response
@@ -260,10 +258,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                            | Type                                                 | Required                                             | Description                                          | Example                                              |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| `batch_id`                                           | *str*                                                | :heavy_check_mark:                                   | Object ID of the batch                               |                                                      |
-| `shippo_api_version`                                 | *Optional[str]*                                      | :heavy_minus_sign:                                   | String used to pick a non-default API version to use | 2018-02-08                                           |
+| Parameter              | Type                   | Required               | Description            |
+| ---------------------- | ---------------------- | ---------------------- | ---------------------- |
+| `batch_id`             | *str*                  | :heavy_check_mark:     | Object ID of the batch |
 
 
 ### Response
@@ -290,7 +287,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.batches.remove_shipments(batch_id='<value>', shippo_api_version='2018-02-08', request_body=[
+res = s.batches.remove_shipments(batch_id='<value>', request_body=[
     '<value>',
 ])
 
@@ -302,11 +299,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                              | Type                                                   | Required                                               | Description                                            | Example                                                |
-| ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ |
-| `batch_id`                                             | *str*                                                  | :heavy_check_mark:                                     | Object ID of the batch                                 |                                                        |
-| `shippo_api_version`                                   | *Optional[str]*                                        | :heavy_minus_sign:                                     | String used to pick a non-default API version to use   | 2018-02-08                                             |
-| `request_body`                                         | List[*str*]                                            | :heavy_minus_sign:                                     | Array of shipments object ids to remove from the batch |                                                        |
+| Parameter                                              | Type                                                   | Required                                               | Description                                            |
+| ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ |
+| `batch_id`                                             | *str*                                                  | :heavy_check_mark:                                     | Object ID of the batch                                 |
+| `request_body`                                         | List[*str*]                                            | :heavy_minus_sign:                                     | Array of shipments object ids to remove from the batch |
 
 
 ### Response

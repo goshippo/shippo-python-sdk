@@ -29,7 +29,7 @@ class Orders:
         
     
     
-    def list(self, page: Optional[int] = None, results: Optional[int] = None, shippo_api_version: Optional[str] = None) -> components.OrderPaginatedList:
+    def list(self, page: Optional[int] = None, results: Optional[int] = None) -> components.OrderPaginatedList:
         r"""List all orders
         Returns a list of all order objects.
         """
@@ -37,7 +37,6 @@ class Orders:
         request = operations.ListOrdersRequest(
             page=page,
             results=results,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.ListOrdersGlobals(
@@ -94,16 +93,11 @@ class Orders:
 
     
     
-    def create(self, shippo_api_version: Optional[str] = None, order_create_request: Optional[components.OrderCreateRequest] = None) -> components.Order:
+    def create(self, request: Optional[components.OrderCreateRequest]) -> components.Order:
         r"""Create a new order
         Creates a new order object.
         """
         hook_ctx = HookContext(operation_id='CreateOrder', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.CreateOrderRequest(
-            shippo_api_version=shippo_api_version,
-            order_create_request=order_create_request,
-        )
-        
         _globals = operations.CreateOrderGlobals(
             shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
         )
@@ -118,7 +112,7 @@ class Orders:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateOrderRequest, "order_create_request", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, Optional[components.OrderCreateRequest], "request", False, True, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         query_params = { **utils.get_query_params(request, _globals), **query_params }
@@ -161,14 +155,13 @@ class Orders:
 
     
     
-    def get(self, order_id: str, shippo_api_version: Optional[str] = None) -> components.Order:
+    def get(self, order_id: str) -> components.Order:
         r"""Retrieve an order
         Retrieves an existing order using an object ID.
         """
         hook_ctx = HookContext(operation_id='GetOrder', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.GetOrderRequest(
             order_id=order_id,
-            shippo_api_version=shippo_api_version,
         )
         
         _globals = operations.GetOrderGlobals(
