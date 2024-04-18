@@ -32,7 +32,7 @@ python:
       shared: models/components
       webhooks: models/webhooks
   inputModelSuffix: input
-  maxMethodParams: 4
+  maxMethodParams: 3
   outputModelSuffix: output
   packageName: shippo
   projectUrls: {}
