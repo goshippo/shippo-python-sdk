@@ -10,6 +10,7 @@ from .trackingstatusenum import TrackingStatusEnum
 from .transactionstatusenum import TransactionStatusEnum
 from dataclasses_json import Undefined, dataclass_json
 from datetime import datetime
+from enum import Enum
 from shippo import utils
 from typing import List, Optional
 
@@ -17,6 +18,9 @@ from typing import List, Optional
 @dataclasses.dataclass
 class InstantTransactionCreateResponseMessages:
     pass
+
+class InstantTransactionCreateResponseResponseType(str, Enum):
+    INSTANT = 'instant'
 
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
@@ -74,5 +78,6 @@ class InstantTransactionCreateResponse:
     A value will only be returned if tracking is available and the carrier provides such a service.
     """
     rate: Optional[InstantTransactionRate] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('rate'), 'exclude': lambda f: f is None }})
+    response_type: Optional[InstantTransactionCreateResponseResponseType] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('responseType'), 'exclude': lambda f: f is None }})
     
 
