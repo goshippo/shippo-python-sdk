@@ -106,14 +106,19 @@ Note: re-requesting the rates with a different currency code will re-queue the s
 
 ```python
 import shippo
+from shippo.models import operations
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
 
+req = operations.ListShipmentRatesByCurrencyCodeRequest(
+    shipment_id='<value>',
+    currency_code='USD',
+)
 
-res = s.rates.list_shipment_rates_by_currency_code(shipment_id='<value>', currency_code='USD', page=1, results=25)
+res = s.rates.list_shipment_rates_by_currency_code(req)
 
 if res is not None:
     # handle response
@@ -123,12 +128,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                          | Type                                               | Required                                           | Description                                        |
-| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |
-| `shipment_id`                                      | *str*                                              | :heavy_check_mark:                                 | Object ID of the shipment to update                |
-| `currency_code`                                    | *str*                                              | :heavy_check_mark:                                 | ISO currency code for the rates                    |
-| `page`                                             | *Optional[int]*                                    | :heavy_minus_sign:                                 | The page number you want to select                 |
-| `results`                                          | *Optional[int]*                                    | :heavy_minus_sign:                                 | The number of results to return per page (max 100) |
+| Parameter                                                                                                              | Type                                                                                                                   | Required                                                                                                               | Description                                                                                                            |
+| ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `request`                                                                                                              | [operations.ListShipmentRatesByCurrencyCodeRequest](../../models/operations/listshipmentratesbycurrencycoderequest.md) | :heavy_check_mark:                                                                                                     | The request object to use for the request.                                                                             |
 
 
 ### Response

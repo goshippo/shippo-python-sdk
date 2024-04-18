@@ -146,7 +146,7 @@ class Rates:
 
     
     
-    def list_shipment_rates_by_currency_code(self, shipment_id: str, currency_code: str, page: Optional[int] = None, results: Optional[int] = None) -> components.RatePaginatedList:
+    def list_shipment_rates_by_currency_code(self, request: operations.ListShipmentRatesByCurrencyCodeRequest) -> components.RatePaginatedList:
         r"""Retrieve shipment rates in currency
         Returns all available shipping rates for a shipment object.
 
@@ -157,13 +157,6 @@ class Rates:
         Note: re-requesting the rates with a different currency code will re-queue the shipment (i.e. set the Shipment's `status` to `QUEUED`) and the converted currency rates will only be available when the Shipment's `status` is set to `SUCCESS`.
         """
         hook_ctx = HookContext(operation_id='ListShipmentRatesByCurrencyCode', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.ListShipmentRatesByCurrencyCodeRequest(
-            shipment_id=shipment_id,
-            currency_code=currency_code,
-            page=page,
-            results=results,
-        )
-        
         _globals = operations.ListShipmentRatesByCurrencyCodeGlobals(
             shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
         )

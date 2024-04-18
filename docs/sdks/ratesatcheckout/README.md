@@ -39,23 +39,28 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+req = components.LiveRateCreateRequest(
+    address_to='<value>',
+    line_items=[
+        components.LineItem(
+            currency='USD',
+            manufacture_country='US',
+            max_delivery_time=dateutil.parser.isoparse('2016-07-23T00:00:00Z'),
+            max_ship_time=dateutil.parser.isoparse('2016-07-23T00:00:00Z'),
+            quantity=20,
+            sku='HM-123',
+            title='Hippo Magazines',
+            total_price='12.1',
+            variant_title='June Edition',
+            weight='0.4',
+            weight_unit=components.WeightUnitEnum.LB,
+            object_id='abf7d5675d744b6ea9fdb6f796b28f28',
+        ),
+    ],
+    parcel='5df144dca289442cv7a06',
+)
 
-res = s.rates_at_checkout.create(address_to='<value>', line_items=[
-    components.LineItem(
-        currency='USD',
-        manufacture_country='US',
-        max_delivery_time=dateutil.parser.isoparse('2016-07-23T00:00:00Z'),
-        max_ship_time=dateutil.parser.isoparse('2016-07-23T00:00:00Z'),
-        quantity=20,
-        sku='HM-123',
-        title='Hippo Magazines',
-        total_price='12.1',
-        variant_title='June Edition',
-        weight='0.4',
-        weight_unit=components.WeightUnitEnum.LB,
-        object_id='abf7d5675d744b6ea9fdb6f796b28f28',
-    ),
-], address_from='<value>', parcel='5df144dca289442cv7a06')
+res = s.rates_at_checkout.create(req)
 
 if res is not None:
     # handle response
@@ -65,12 +70,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                                                                                                     | Type                                                                                                                                                                                                                                                                          | Required                                                                                                                                                                                                                                                                      | Description                                                                                                                                                                                                                                                                   | Example                                                                                                                                                                                                                                                                       |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `address_to`                                                                                                                                                                                                                                                                  | [Union[str, components.AddressCompleteCreateRequest]](../../models/components/liveratecreaterequestaddressto.md)                                                                                                                                                              | :heavy_check_mark:                                                                                                                                                                                                                                                            | The recipient address, which includes the recipient's name, company name, street address, city, state, zip code, <br/>country, phone number, and email address (strings). Special characters should not be included in <br/>any address element, especially name, company, and email. |                                                                                                                                                                                                                                                                               |
-| `line_items`                                                                                                                                                                                                                                                                  | List[[components.LineItem](../../models/components/lineitem.md)]                                                                                                                                                                                                              | :heavy_check_mark:                                                                                                                                                                                                                                                            | Array of Line Item objects                                                                                                                                                                                                                                                    |                                                                                                                                                                                                                                                                               |
-| `address_from`                                                                                                                                                                                                                                                                | [Optional[Union[str, components.AddressCompleteCreateRequest]]](../../models/components/liveratecreaterequestaddressfrom.md)                                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                                                                                                                            | The sender address, which includes your name, company name, street address, city, state, zip code, <br/>country, phone number, and email address (strings). Special characters should not be included in <br/>any address element, especially name, company, and email.       |                                                                                                                                                                                                                                                                               |
-| `parcel`                                                                                                                                                                                                                                                                      | [Optional[Union[str, components.Parcel]]](../../models/components/liveratecreaterequestparcel.md)                                                                                                                                                                             | :heavy_minus_sign:                                                                                                                                                                                                                                                            | Object ID for an existing User Parcel Template OR a fully formed Parcel object.                                                                                                                                                                                               | 5df144dca289442cv7a06                                                                                                                                                                                                                                                         |
+| Parameter                                                                            | Type                                                                                 | Required                                                                             | Description                                                                          |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| `request`                                                                            | [components.LiveRateCreateRequest](../../models/components/liveratecreaterequest.md) | :heavy_check_mark:                                                                   | The request object to use for the request.                                           |
 
 
 ### Response

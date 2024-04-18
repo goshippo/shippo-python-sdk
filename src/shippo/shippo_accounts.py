@@ -84,18 +84,11 @@ class ShippoAccounts:
 
     
     
-    def create(self, email: str, first_name: str, last_name: str, company_name: str) -> components.ShippoAccount:
+    def create(self, request: Optional[components.ShippoAccountUpdateRequest]) -> components.ShippoAccount:
         r"""Create a Shippo Account
         Creates a Shippo Account object
         """
         hook_ctx = HookContext(operation_id='CreateShippoAccount', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = components.ShippoAccountUpdateRequest(
-            email=email,
-            first_name=first_name,
-            last_name=last_name,
-            company_name=company_name,
-        )
-        
         _globals = operations.CreateShippoAccountGlobals(
             shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
         )

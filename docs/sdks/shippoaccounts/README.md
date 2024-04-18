@@ -63,14 +63,21 @@ Creates a Shippo Account object
 
 ```python
 import shippo
+from shippo.models import components
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
 
+req = components.ShippoAccountUpdateRequest(
+    email='hippo@shippo.com',
+    first_name='Shippo',
+    last_name='Meister',
+    company_name='Acme',
+)
 
-res = s.shippo_accounts.create(email='hippo@shippo.com', first_name='Shippo', last_name='Meister', company_name='Acme')
+res = s.shippo_accounts.create(req)
 
 if res is not None:
     # handle response
@@ -80,12 +87,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter          | Type               | Required           | Description        | Example            |
-| ------------------ | ------------------ | ------------------ | ------------------ | ------------------ |
-| `email`            | *str*              | :heavy_check_mark: | N/A                | hippo@shippo.com   |
-| `first_name`       | *str*              | :heavy_check_mark: | N/A                | Shippo             |
-| `last_name`        | *str*              | :heavy_check_mark: | N/A                | Meister            |
-| `company_name`     | *str*              | :heavy_check_mark: | N/A                | Acme               |
+| Parameter                                                                                      | Type                                                                                           | Required                                                                                       | Description                                                                                    |
+| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `request`                                                                                      | [components.ShippoAccountUpdateRequest](../../models/components/shippoaccountupdaterequest.md) | :heavy_check_mark:                                                                             | The request object to use for the request.                                                     |
 
 
 ### Response

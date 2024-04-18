@@ -5,7 +5,7 @@ from .sdkconfiguration import SDKConfiguration
 from shippo import utils
 from shippo._hooks import AfterErrorContext, AfterSuccessContext, BeforeRequestContext, HookContext
 from shippo.models import components, errors, operations
-from typing import List, Optional, Union
+from typing import Optional
 
 class RatesAtCheckout:
     r"""Rates at checkout is a tool for merchants to display up-to-date shipping estimates based on what's in their customers cart and where they’re shipping to.
@@ -25,7 +25,7 @@ class RatesAtCheckout:
         
     
     
-    def create(self, address_to: Union[str, components.AddressCompleteCreateRequest], line_items: List[components.LineItem], address_from: Optional[Union[str, components.AddressCompleteCreateRequest]] = None, parcel: Optional[Union[str, components.Parcel]] = None) -> components.LiveRatePaginatedList:
+    def create(self, request: Optional[components.LiveRateCreateRequest]) -> components.LiveRatePaginatedList:
         r"""Generate a live rates request
         Initiates a live rates request. Include either the object ID for
         an existing address record or a fully formed address object when entering
@@ -33,13 +33,6 @@ class RatesAtCheckout:
         template or a fully formed user parcel template object as the parcel value.
         """
         hook_ctx = HookContext(operation_id='CreateLiveRate', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = components.LiveRateCreateRequest(
-            address_to=address_to,
-            line_items=line_items,
-            address_from=address_from,
-            parcel=parcel,
-        )
-        
         _globals = operations.CreateLiveRateGlobals(
             shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
         )
