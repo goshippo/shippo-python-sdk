@@ -54,7 +54,7 @@ class TransactionCreateResponseAddDiscriminatorAfterSuccessHook(AfterSuccessHook
                 if response_type is not None:
                     content["responseType"] = response_type
                     updated_content = json.dumps(content)
-                    response._content = updated_content.encode(response.encoding)
+                    response._content = updated_content.encode(response.encoding)  # pylint: disable=protected-access
         return response
 
 def init_hooks(hooks: Hooks):
