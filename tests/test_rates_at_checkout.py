@@ -19,7 +19,7 @@ class TestRatesAtCheckout:
             api.service_groups.delete(sg.object_id)
 
     def test_rates_at_checkout(self, api: shippo.Shippo):
-        carrier_account = get_carrier_account(api, CarriersEnum.USPS)
+        carrier_account = get_carrier_account(api, CarriersEnum.UPS)
         ups_account_id = carrier_account.object_id
 
         available_service_levels = [ServiceLevelUPSEnum.UPS_GROUND, ServiceLevelUPSEnum.UPS_NEXT_DAY_AIR_SAVER]
