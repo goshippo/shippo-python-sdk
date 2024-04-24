@@ -8,7 +8,7 @@ To use the API, you must generate an [API Token](https://docs.goshippo.com/docs/
 
 For example.
 ```
-api_key_header="ShippoToken shippo_test_595d9cb0c0e14497bf07e75ecfec6c6d"
+api_key_header="shippo_test_595d9cb0c0e14497bf07e75ecfec6c6d"
 ```
 
 
