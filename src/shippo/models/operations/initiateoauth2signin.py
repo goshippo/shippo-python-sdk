@@ -16,7 +16,7 @@ class InitiateOauth2SigninGlobals:
 @dataclasses.dataclass
 class InitiateOauth2SigninRequest:
     carrier_account_object_id: str = dataclasses.field(metadata={'path_param': { 'field_name': 'CarrierAccountObjectId', 'style': 'simple', 'explode': False }})
-    r"""The carrier account ID to start a signin process"""
+    r"""The carrier account ID (UUID) to start a signin process."""
     redirect_uri: str = dataclasses.field(metadata={'query_param': { 'field_name': 'redirect_uri', 'style': 'form', 'explode': True }})
     r"""Callback URL. The URL that tells the authorization server where to send the user back to after they approve the request."""
     state: Optional[str] = dataclasses.field(default=None, metadata={'query_param': { 'field_name': 'state', 'style': 'form', 'explode': True }})
