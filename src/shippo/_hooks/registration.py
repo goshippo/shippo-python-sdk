@@ -26,19 +26,6 @@ class ShippoAuthBeforeRequestHook(BeforeRequestHook):
         return request
 
 
-class ShippoAuthTokenInitHook(SDKInitHook):
-
-    def sdk_init(self, base_url: str, client: requests.Session) -> Tuple[str, requests.Session]:
-        send_delegate = client.send
-
-        def custom_send(request, **kwargs):
-            add_shippo_token_to_auth_header_if_missing(request)
-            return send_delegate(request, **kwargs)
-
-        client.send = custom_send
-        return base_url, client
-
-
 class TransactionCreateResponseAddDiscriminatorAfterSuccessHook(AfterSuccessHook):
 
     def after_success(self, hook_ctx: AfterSuccessContext, response: requests.Response) -> Union[requests.Response, Exception]:
@@ -62,5 +49,5 @@ def init_hooks(hooks: Hooks):
     """Add hooks by calling hooks.register{sdk_init/before_request/after_success/after_error}Hook 
     with an instance of a hook that implements that specific Hook interface
     Hooks are registered per SDK instance, and are valid for the lifetime of the SDK instance"""
-    hooks.register_sdk_init_hook(ShippoAuthTokenInitHook())
+    hooks.register_before_request_hook(ShippoAuthBeforeRequestHook())
     hooks.register_after_success_hook(TransactionCreateResponseAddDiscriminatorAfterSuccessHook())
