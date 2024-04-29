@@ -6,6 +6,8 @@ sources:
             - location: https://docs.goshippo.com/spec/shippoapi/public-api.yaml
         overlays:
             - location: https://docs.goshippo.com/spec/shippoapi/client-sdk-overlay.yaml
+        registry:
+            location: registry.speakeasyapi.dev/shippo/shippo/openapi
 targets:
     first-target:
         target: python
