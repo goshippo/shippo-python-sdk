@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 import dataclasses
+from .fedexconnectexistingownaccountparameters import FedExConnectExistingOwnAccountParameters
 from .upsconnectexistingownaccountparameters import UPSConnectExistingOwnAccountParameters
 from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
@@ -24,6 +25,6 @@ class CarrierAccountBase:
     r"""Determines whether the account is active. When creating a shipment, if no `carrier_accounts` are explicitly
     passed Shippo will query all carrier accounts that have this field set. By default, this is set to True.
     """
-    parameters: Optional[Union[Dict[str, Any], UPSConnectExistingOwnAccountParameters]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parameters'), 'exclude': lambda f: f is None }})
+    parameters: Optional[Union[Dict[str, Any], FedExConnectExistingOwnAccountParameters, UPSConnectExistingOwnAccountParameters]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parameters'), 'exclude': lambda f: f is None }})
     
 

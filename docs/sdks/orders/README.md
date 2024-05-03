@@ -70,6 +70,7 @@ Creates a new order object.
 ### Example Usage
 
 ```python
+import dateutil.parser
 import shippo
 from shippo.models import components
 
@@ -108,6 +109,37 @@ req = components.OrderCreateRequest(
     total_tax='0.0',
     weight='0.4',
     weight_unit=components.WeightUnitEnum.LB,
+    from_address=components.AddressCreateRequest(
+        country='US',
+        name='Shwan Ippotle',
+        company='Shippo',
+        street1='215 Clayton St.',
+        street3='',
+        street_no='',
+        city='San Francisco',
+        state='CA',
+        zip='94117',
+        phone='+1 555 341 9393',
+        email='shippotle@shippo.com',
+        is_residential=True,
+        metadata='Customer ID 123456',
+        validate=True,
+    ),
+    line_items=[
+        components.LineItemBase(
+            currency='USD',
+            manufacture_country='US',
+            max_delivery_time=dateutil.parser.isoparse('2016-07-23T00:00:00Z'),
+            max_ship_time=dateutil.parser.isoparse('2016-07-23T00:00:00Z'),
+            quantity=20,
+            sku='HM-123',
+            title='Hippo Magazines',
+            total_price='12.1',
+            variant_title='June Edition',
+            weight='0.4',
+            weight_unit=components.WeightUnitEnum.LB,
+        ),
+    ],
 )
 
 res = s.orders.create(req)
