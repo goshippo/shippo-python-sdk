@@ -91,6 +91,20 @@ req = components.CustomsDeclarationCreateRequest(
     incoterm=components.CustomsDeclarationIncotermEnum.DDP,
     invoice='#123123',
     metadata='Order ID #123123',
+    address_importer=components.AddressImporter(
+        name='Shwan Ippotle',
+        company='Shippo',
+        street1='Blumenstraße',
+        street3='',
+        street_no='22',
+        city='München',
+        state='CA',
+        zip='80331',
+        country='DE',
+        phone='80331',
+        email='shippotle@shippo.com',
+        is_residential=True,
+    ),
     test=True,
 )
 

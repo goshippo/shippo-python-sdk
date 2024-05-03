@@ -9,6 +9,12 @@
 connectExistingOwnAccountRequestParameters: Dict[str, Any] = /* values here */
 ```
 
+### FedExConnectExistingOwnAccountParameters
+
+```python
+connectExistingOwnAccountRequestParameters: components.FedExConnectExistingOwnAccountParameters = /* values here */
+```
+
 ### UPSConnectExistingOwnAccountParameters
 
 ```python

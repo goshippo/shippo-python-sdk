@@ -78,6 +78,19 @@ req = components.ParcelRequest(
     mass_unit=components.WeightUnitEnum.LB,
     weight='1',
     width='1',
+    extra=components.ParcelExtra(
+        cod=components.Cod(
+            amount='5.5',
+            currency='USD',
+            payment_method=components.PaymentMethod.CASH,
+        ),
+        insurance=components.ParcelInsurance(
+            amount='5.5',
+            content='Laptop',
+            currency='USD',
+            provider=components.ParcelInsuranceProvider.UPS,
+        ),
+    ),
 )
 
 res = s.parcels.create(req)

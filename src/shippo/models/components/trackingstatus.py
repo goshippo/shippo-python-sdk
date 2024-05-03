@@ -16,8 +16,6 @@ from typing import Optional
 @dataclasses.dataclass
 class TrackingStatus:
     r"""The latest tracking information of this shipment."""
-    location: TrackingStatusLocationBase = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('location') }})
-    r"""An object containing zip, city, state and country information of the tracking event."""
     object_created: datetime = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_created'), 'encoder': utils.datetimeisoformat(False), 'decoder': dateutil.parser.isoparse }})
     object_id: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_id') }})
     object_updated: datetime = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_updated'), 'encoder': utils.datetimeisoformat(False), 'decoder': dateutil.parser.isoparse }})
@@ -27,6 +25,8 @@ class TrackingStatus:
     r"""Date and time when the carrier scanned this tracking event. This is displayed in UTC."""
     status_details: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('status_details') }})
     r"""The human-readable description of the status."""
+    location: Optional[TrackingStatusLocationBase] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('location'), 'exclude': lambda f: f is None }})
+    r"""An object containing zip, city, state and country information of the tracking event."""
     substatus: Optional[TrackingStatusSubstatus] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('substatus'), 'exclude': lambda f: f is None }})
     r"""A finer-grained classification of the tracking event."""
     

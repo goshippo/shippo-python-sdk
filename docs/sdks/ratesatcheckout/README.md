@@ -57,6 +57,7 @@ req = components.LiveRateCreateRequest(
             object_id='abf7d5675d744b6ea9fdb6f796b28f28',
         ),
     ],
+    address_from='<value>',
     parcel='5df144dca289442cv7a06',
 )
 

@@ -28,7 +28,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.carrier_parcel_templates.list(include=operations.Include.ENABLED, carrier='<value>')
+res = s.carrier_parcel_templates.list(include=operations.Include.ENABLED, carrier='fedex')
 
 if res is not None:
     # handle response
@@ -38,10 +38,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                          | Type                                                               | Required                                                           | Description                                                        |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
-| `include`                                                          | [Optional[operations.Include]](../../models/operations/include.md) | :heavy_minus_sign:                                                 | filter by user or enabled                                          |
-| `carrier`                                                          | *Optional[str]*                                                    | :heavy_minus_sign:                                                 | filter by specific carrier                                         |
+| Parameter                                                          | Type                                                               | Required                                                           | Description                                                        | Example                                                            |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| `include`                                                          | [Optional[operations.Include]](../../models/operations/include.md) | :heavy_minus_sign:                                                 | filter by user or enabled                                          |                                                                    |
+| `carrier`                                                          | *Optional[str]*                                                    | :heavy_minus_sign:                                                 | filter by specific carrier                                         | fedex                                                              |
 
 
 ### Response

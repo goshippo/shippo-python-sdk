@@ -79,8 +79,20 @@ req = components.BatchCreateRequest(
                     '<value>',
                 ],
                 customs_declaration='adcfdddf8ec64b84ad22772bce3ea37a',
+                extra=components.ShipmentExtra(
+                    cod=components.Cod(
+                        amount='5.5',
+                        currency='USD',
+                        payment_method=components.PaymentMethod.CASH,
+                    ),
+                    insurance=components.Insurance(
+                        amount='5.5',
+                        currency='USD',
+                    ),
+                ),
                 metadata='Customer ID 123456',
                 shipment_date='2021-03-22T12:00:00Z',
+                address_return='<value>',
                 carrier_accounts=[
                     '065a4a8c10d24a34ab932163a1b87f52',
                     '73f706f4bdb94b54a337563840ce52b0',
@@ -194,8 +206,20 @@ res = s.batches.add_shipments(batch_id='<value>', request_body=[
                 ),
             ],
             customs_declaration='adcfdddf8ec64b84ad22772bce3ea37a',
+            extra=components.ShipmentExtra(
+                cod=components.Cod(
+                    amount='5.5',
+                    currency='USD',
+                    payment_method=components.PaymentMethod.CASH,
+                ),
+                insurance=components.Insurance(
+                    amount='5.5',
+                    currency='USD',
+                ),
+            ),
             metadata='Customer ID 123456',
             shipment_date='2021-03-22T12:00:00Z',
+            address_return='<value>',
             carrier_accounts=[
                 '065a4a8c10d24a34ab932163a1b87f52',
                 '73f706f4bdb94b54a337563840ce52b0',
