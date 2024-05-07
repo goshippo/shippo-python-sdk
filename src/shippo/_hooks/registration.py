@@ -1,9 +1,9 @@
-from typing import Union, Tuple
+from typing import Union
 
 import json
 import requests
 
-from .types import Hooks, BeforeRequestHook, BeforeRequestContext, SDKInitHook, AfterSuccessHook, AfterSuccessContext
+from .types import Hooks, BeforeRequestHook, BeforeRequestContext, AfterSuccessHook, AfterSuccessContext
 
 
 # This file is only ever generated once on the first generation and then is free to be modified.
