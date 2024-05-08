@@ -26,7 +26,7 @@ class Batches:
         
     
     
-    def create(self, request: Optional[components.BatchCreateRequest]) -> components.Batch:
+    def create(self, request: components.BatchCreateRequest) -> components.Batch:
         r"""Create a batch
         Creates a new batch object for purchasing shipping labels for many shipments at once. Batches are created asynchronously. This means that the API response won't include your batch shipments yet. You need to retrieve the batch later to verify that all batch shipments are valid.
         """
@@ -45,9 +45,11 @@ class Batches:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, Optional[components.BatchCreateRequest], "request", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, components.BatchCreateRequest, "request", False, False, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
+        if data is None and form is None:
+            raise Exception('request body is required')
         query_params = { **utils.get_query_params(request, _globals), **query_params }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
@@ -75,6 +77,7 @@ class Batches:
         
         
         if http_res.status_code == 200:
+            # pylint: disable=no-else-return
             if utils.match_content_type(http_res.headers.get('Content-Type') or '', 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Batch])
                 return out
@@ -141,6 +144,7 @@ class Batches:
         
         
         if http_res.status_code == 200:
+            # pylint: disable=no-else-return
             if utils.match_content_type(http_res.headers.get('Content-Type') or '', 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Batch])
                 return out
@@ -154,7 +158,7 @@ class Batches:
 
     
     
-    def add_shipments(self, batch_id: str, request_body: Optional[List[components.BatchShipmentBase]] = None) -> components.Batch:
+    def add_shipments(self, batch_id: str, request_body: List[components.BatchShipmentBase]) -> components.Batch:
         r"""Add shipments to a batch
         Adds batch shipments to an existing batch.
         """
@@ -178,9 +182,11 @@ class Batches:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.AddShipmentsToBatchRequest, "request_body", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, operations.AddShipmentsToBatchRequest, "request_body", False, False, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
+        if data is None and form is None:
+            raise Exception('request body is required')
         query_params = { **utils.get_query_params(request, _globals), **query_params }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
@@ -208,6 +214,7 @@ class Batches:
         
         
         if http_res.status_code == 200:
+            # pylint: disable=no-else-return
             if utils.match_content_type(http_res.headers.get('Content-Type') or '', 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Batch])
                 return out
@@ -274,6 +281,7 @@ class Batches:
         
         
         if http_res.status_code == 200:
+            # pylint: disable=no-else-return
             if utils.match_content_type(http_res.headers.get('Content-Type') or '', 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Batch])
                 return out
@@ -287,7 +295,7 @@ class Batches:
 
     
     
-    def remove_shipments(self, batch_id: str, request_body: Optional[List[str]] = None) -> components.Batch:
+    def remove_shipments(self, batch_id: str, request_body: List[str]) -> components.Batch:
         r"""Remove shipments from a batch
         Removes shipments from an existing batch shipment.
         """
@@ -311,9 +319,11 @@ class Batches:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, operations.RemoveShipmentsFromBatchRequest, "request_body", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, operations.RemoveShipmentsFromBatchRequest, "request_body", False, False, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
+        if data is None and form is None:
+            raise Exception('request body is required')
         query_params = { **utils.get_query_params(request, _globals), **query_params }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
@@ -341,6 +351,7 @@ class Batches:
         
         
         if http_res.status_code == 200:
+            # pylint: disable=no-else-return
             if utils.match_content_type(http_res.headers.get('Content-Type') or '', 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Batch])
                 return out

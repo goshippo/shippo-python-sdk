@@ -18,7 +18,7 @@ class AddShipmentsToBatchGlobals:
 class AddShipmentsToBatchRequest:
     batch_id: str = dataclasses.field(metadata={'path_param': { 'field_name': 'BatchId', 'style': 'simple', 'explode': False }})
     r"""Object ID of the batch"""
-    request_body: Optional[List[components_batchshipmentbase.BatchShipmentBase]] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
+    request_body: List[components_batchshipmentbase.BatchShipmentBase] = dataclasses.field(metadata={'request': { 'media_type': 'application/json' }})
     r"""Array of shipments to add to the batch"""
     
 
