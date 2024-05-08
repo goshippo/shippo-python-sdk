@@ -75,6 +75,7 @@ class Manifests:
         
         
         if http_res.status_code == 200:
+            # pylint: disable=no-else-return
             if utils.match_content_type(http_res.headers.get('Content-Type') or '', 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.ManifestPaginatedList])
                 return out
@@ -88,7 +89,7 @@ class Manifests:
 
     
     
-    def create(self, request: Optional[components.ManifestCreateRequest]) -> components.Manifest:
+    def create(self, request: components.ManifestCreateRequest) -> components.Manifest:
         r"""Create a new manifest
         Creates a new manifest object.
         """
@@ -107,9 +108,11 @@ class Manifests:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, Optional[components.ManifestCreateRequest], "request", False, True, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, components.ManifestCreateRequest, "request", False, False, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
+        if data is None and form is None:
+            raise Exception('request body is required')
         query_params = { **utils.get_query_params(request, _globals), **query_params }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
@@ -137,6 +140,7 @@ class Manifests:
         
         
         if http_res.status_code == 201:
+            # pylint: disable=no-else-return
             if utils.match_content_type(http_res.headers.get('Content-Type') or '', 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Manifest])
                 return out
@@ -200,6 +204,7 @@ class Manifests:
         
         
         if http_res.status_code == 200:
+            # pylint: disable=no-else-return
             if utils.match_content_type(http_res.headers.get('Content-Type') or '', 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Manifest])
                 return out
