@@ -37,3 +37,4 @@ python:
   packageName: shippo
   projectUrls: {}
   responseFormat: flat
+  license: MIT License
