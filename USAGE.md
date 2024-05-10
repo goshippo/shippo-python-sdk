@@ -7,7 +7,6 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
 res = s.addresses.list(page=1, results=5)
 
 if res is not None:

@@ -36,9 +36,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-req = operations.ListCarrierAccountsRequest()
-
-res = s.carrier_accounts.list(req)
+res = s.carrier_accounts.list(request=operations.ListCarrierAccountsRequest())
 
 if res is not None:
     # handle response
@@ -77,7 +75,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-req = components.ConnectExistingOwnAccountRequest(
+res = s.carrier_accounts.create(request=components.ConnectExistingOwnAccountRequest(
     account_id='321123',
     carrier='fedex',
     parameters=components.FedExConnectExistingOwnAccountParameters(
@@ -92,9 +90,7 @@ req = components.ConnectExistingOwnAccountRequest(
     ),
     metadata='FEDEX Account',
     test=False,
-)
-
-res = s.carrier_accounts.create(req)
+))
 
 if res is not None:
     # handle response
@@ -131,7 +127,6 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
-
 
 res = s.carrier_accounts.get(carrier_account_id='<value>')
 
@@ -171,7 +166,6 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
-
 
 res = s.carrier_accounts.update(carrier_account_id='<value>', carrier_account_base=components.CarrierAccountBase(
     account_id='****',
@@ -239,7 +233,6 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
 res = s.carrier_accounts.initiate_oauth2_signin(carrier_account_object_id='<value>', redirect_uri='http://fine-cummerbund.biz', state='<value>')
 
 if res is not None:
@@ -284,12 +277,10 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-req = components.CarrierAccountColissimoCreateRequest(
+res = s.carrier_accounts.register(request=components.CarrierAccountColissimoCreateRequest(
     carrier='colissimo',
     parameters=components.CarrierAccountColissimoCreateRequestParameters(),
-)
-
-res = s.carrier_accounts.register(req)
+))
 
 if res is not None:
     # handle response
@@ -327,7 +318,6 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
-
 
 res = s.carrier_accounts.get_registration_status(carrier=operations.Carrier.USPS)
 

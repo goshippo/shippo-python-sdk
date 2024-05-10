@@ -9,9 +9,15 @@ from typing import Optional
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
-class RateMessage:
+class ResponseMessage:
+    r"""Message returned with supporting information from a request. In some cases this can be an error message,
+    for example a timeout from a carrier. If available, the origin of the message is displayed in `source`.
+    """
     source: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('source'), 'exclude': lambda f: f is None }})
+    r"""Origin of message"""
     code: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('code'), 'exclude': lambda f: f is None }})
+    r"""Classification of message"""
     text: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('text'), 'exclude': lambda f: f is None }})
+    r"""Message content"""
     
 

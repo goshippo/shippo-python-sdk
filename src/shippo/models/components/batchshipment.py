@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 import dataclasses
-from .errormessage import ErrorMessage
+from .batchshipmenterrormessage import BatchShipmentErrorMessage
 from .shipmentcreaterequest import ShipmentCreateRequest
 from dataclasses_json import Undefined, dataclass_json
 from enum import Enum
@@ -44,7 +44,7 @@ class BatchShipment:
     Servicelevel tokens can be found <a href=\"#tag/Service-Levels\">in this list</a> 
     or <a href=\"#operation/ListCarrierAccounts\">at this endpoint</a>.
     """
-    messages: Optional[List[ErrorMessage]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('messages'), 'exclude': lambda f: f is None }})
+    messages: Optional[List[BatchShipmentErrorMessage]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('messages'), 'exclude': lambda f: f is None }})
     r"""List of Shipment and Transaction error messages."""
     transaction: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('transaction'), 'exclude': lambda f: f is None }})
     r"""Object ID of the transaction object created for this batch shipment."""

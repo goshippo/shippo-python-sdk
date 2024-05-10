@@ -37,7 +37,6 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
 res = s.orders.list(page=1, results=25)
 
 if res is not None:
@@ -79,7 +78,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-req = components.OrderCreateRequest(
+res = s.orders.create(request=components.OrderCreateRequest(
     placed_at='2016-09-23T01:28:12Z',
     to_address=components.AddressCreateRequest(
         country='US',
@@ -140,9 +139,7 @@ req = components.OrderCreateRequest(
             weight_unit=components.WeightUnitEnum.LB,
         ),
     ],
-)
-
-res = s.orders.create(req)
+))
 
 if res is not None:
     # handle response
@@ -179,7 +176,6 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
-
 
 res = s.orders.get(order_id='<value>')
 

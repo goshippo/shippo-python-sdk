@@ -3,7 +3,7 @@
 from __future__ import annotations
 import dataclasses
 import dateutil.parser
-from .ratemessage import RateMessage
+from .responsemessage import ResponseMessage
 from .servicelevel import ServiceLevel
 from dataclasses_json import Undefined, dataclass_json
 from datetime import datetime
@@ -65,12 +65,7 @@ class Rate:
     Expressed in the currency used in the sender's country. Will be null if no insurance coverage was requested, or if insurance is requested from a non-standard insurance provider. 
     Please note this price is already included in the `amount` and `amount_local` fields on the Rate. Do not add this field to them.
     """
-    messages: Optional[List[RateMessage]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('messages'), 'exclude': lambda f: f is None }})
-    r"""An array containing elements of the following schema: <br>
-    `source`(string): the name of the carrier sending the message. <br>
-    `code` (string): carrier specific identifier code for the corresponding message (not always available).<br>
-    `text` (string): a publishable message containing further information (not always available).
-    """
+    messages: Optional[List[ResponseMessage]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('messages'), 'exclude': lambda f: f is None }})
     provider_image_75: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('provider_image_75'), 'exclude': lambda f: f is None }})
     r"""URL to the provider logo with max. dimensions of 75*75px.
     Please refer to the provider's Logo Usage Guidelines before using the logo.

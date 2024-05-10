@@ -26,7 +26,6 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
 res = s.customs_items.list(page=1, results=25)
 
 if res is not None:
@@ -67,7 +66,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-req = components.CustomsItemCreateRequest(
+res = s.customs_items.create(request=components.CustomsItemCreateRequest(
     description='T-Shirt',
     mass_unit=components.WeightUnitEnum.LB,
     net_weight='5',
@@ -77,9 +76,7 @@ req = components.CustomsItemCreateRequest(
     value_currency='USD',
     metadata='Order ID "123454"',
     sku_code='HM-123',
-)
-
-res = s.customs_items.create(req)
+))
 
 if res is not None:
     # handle response
@@ -116,7 +113,6 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
-
 
 res = s.customs_items.get(customs_item_id='<value>', page=1)
 

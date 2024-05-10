@@ -37,7 +37,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-req = components.BatchCreateRequest(
+res = s.batches.create(request=components.BatchCreateRequest(
     default_carrier_account='078870331023437cb917f5187429b093',
     default_servicelevel_token='usps_priority',
     batch_shipments=[
@@ -78,7 +78,6 @@ req = components.BatchCreateRequest(
                 parcels=[
                     '<value>',
                 ],
-                customs_declaration='adcfdddf8ec64b84ad22772bce3ea37a',
                 extra=components.ShipmentExtra(
                     cod=components.Cod(
                         amount='5.5',
@@ -92,7 +91,46 @@ req = components.BatchCreateRequest(
                 ),
                 metadata='Customer ID 123456',
                 shipment_date='2021-03-22T12:00:00Z',
-                address_return='<value>',
+                address_return='d799c2679e644279b59fe661ac8fa488',
+                customs_declaration=components.CustomsDeclarationCreateRequest(
+                    certify=True,
+                    certify_signer='Shawn Ippotle',
+                    contents_type=components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,
+                    non_delivery_option=components.CustomsDeclarationNonDeliveryOptionEnum.ABANDON,
+                    items=[
+                        components.CustomsItemCreateRequest(
+                            description='T-Shirt',
+                            mass_unit=components.WeightUnitEnum.LB,
+                            net_weight='5',
+                            origin_country='<value>',
+                            quantity=20,
+                            value_amount='200',
+                            value_currency='USD',
+                            metadata='Order ID "123454"',
+                            sku_code='HM-123',
+                        ),
+                    ],
+                    contents_explanation='T-Shirt purchase',
+                    eel_pfc=components.CustomsDeclarationEelPfcEnum.NOEEI_30_37_A,
+                    incoterm=components.CustomsDeclarationIncotermEnum.DDP,
+                    invoice='#123123',
+                    metadata='Order ID #123123',
+                    address_importer=components.AddressImporter(
+                        name='Shwan Ippotle',
+                        company='Shippo',
+                        street1='Blumenstraße',
+                        street3='',
+                        street_no='22',
+                        city='München',
+                        state='CA',
+                        zip='80331',
+                        country='DE',
+                        phone='80331',
+                        email='shippotle@shippo.com',
+                        is_residential=True,
+                    ),
+                    test=True,
+                ),
                 carrier_accounts=[
                     '065a4a8c10d24a34ab932163a1b87f52',
                     '73f706f4bdb94b54a337563840ce52b0',
@@ -105,9 +143,7 @@ req = components.BatchCreateRequest(
     ],
     label_filetype=components.LabelFileTypeEnum.PDF_4X6,
     metadata='BATCH #1',
-)
-
-res = s.batches.create(req)
+))
 
 if res is not None:
     # handle response
@@ -148,7 +184,6 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
 res = s.batches.get(batch_id='<value>')
 
 if res is not None:
@@ -188,12 +223,11 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
 res = s.batches.add_shipments(batch_id='<value>', request_body=[
     components.BatchShipmentBase(
         shipment=components.ShipmentCreateRequest(
-            address_from='<value>',
-            address_to='<value>',
+            address_from='d799c2679e644279b59fe661ac8fa488',
+            address_to='d799c2679e644279b59fe661ac8fa489',
             parcels=[
                 components.ParcelCreateRequest(
                     distance_unit=components.DistanceUnitEnum.IN,
@@ -205,7 +239,6 @@ res = s.batches.add_shipments(batch_id='<value>', request_body=[
                     metadata='Customer ID 123456',
                 ),
             ],
-            customs_declaration='adcfdddf8ec64b84ad22772bce3ea37a',
             extra=components.ShipmentExtra(
                 cod=components.Cod(
                     amount='5.5',
@@ -219,7 +252,46 @@ res = s.batches.add_shipments(batch_id='<value>', request_body=[
             ),
             metadata='Customer ID 123456',
             shipment_date='2021-03-22T12:00:00Z',
-            address_return='<value>',
+            address_return='d799c2679e644279b59fe661ac8fa488',
+            customs_declaration=components.CustomsDeclarationCreateRequest(
+                certify=True,
+                certify_signer='Shawn Ippotle',
+                contents_type=components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,
+                non_delivery_option=components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
+                items=[
+                    components.CustomsItemCreateRequest(
+                        description='T-Shirt',
+                        mass_unit=components.WeightUnitEnum.LB,
+                        net_weight='5',
+                        origin_country='<value>',
+                        quantity=20,
+                        value_amount='200',
+                        value_currency='USD',
+                        metadata='Order ID "123454"',
+                        sku_code='HM-123',
+                    ),
+                ],
+                contents_explanation='T-Shirt purchase',
+                eel_pfc=components.CustomsDeclarationEelPfcEnum.NOEEI_30_37_A,
+                incoterm=components.CustomsDeclarationIncotermEnum.DDP,
+                invoice='#123123',
+                metadata='Order ID #123123',
+                address_importer=components.AddressImporter(
+                    name='Shwan Ippotle',
+                    company='Shippo',
+                    street1='Blumenstraße',
+                    street3='',
+                    street_no='22',
+                    city='München',
+                    state='CA',
+                    zip='80331',
+                    country='DE',
+                    phone='80331',
+                    email='shippotle@shippo.com',
+                    is_residential=True,
+                ),
+                test=True,
+            ),
             carrier_accounts=[
                 '065a4a8c10d24a34ab932163a1b87f52',
                 '73f706f4bdb94b54a337563840ce52b0',
@@ -271,7 +343,6 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
 res = s.batches.purchase(batch_id='<value>')
 
 if res is not None:
@@ -309,7 +380,6 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
-
 
 res = s.batches.remove_shipments(batch_id='<value>', request_body=[
     '<value>',

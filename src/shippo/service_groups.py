@@ -147,7 +147,7 @@ class ServiceGroups:
 
     
     
-    def update(self, request: Optional[components.ServiceGroupUpdateRequest]) -> components.ServiceGroup:
+    def update(self, request: Optional[components.ServiceGroupUpdateRequest] = None) -> components.ServiceGroup:
         r"""Update an existing service group
         Updates an existing service group object. <br>The object_id cannot be updated as it is the unique identifier for the object.
         """

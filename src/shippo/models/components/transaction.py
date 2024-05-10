@@ -5,6 +5,7 @@ import dataclasses
 import dateutil.parser
 from .labelfiletypeenum import LabelFileTypeEnum
 from .objectstateenum import ObjectStateEnum
+from .responsemessage import ResponseMessage
 from .trackingstatusenum import TrackingStatusEnum
 from .transactionstatusenum import TransactionStatusEnum
 from dataclasses_json import Undefined, dataclass_json
@@ -12,11 +13,6 @@ from datetime import datetime
 from enum import Enum
 from shippo import utils
 from typing import List, Optional
-
-
-@dataclasses.dataclass
-class TransactionMessages:
-    pass
 
 class ResponseType(str, Enum):
     STANDARD = 'standard'
@@ -39,11 +35,7 @@ class Transaction:
     r"""A URL pointing directly to the label in the format you've set in your settings.
     A value will only be returned if the Transactions has been processed successfully.
     """
-    messages: Optional[List[TransactionMessages]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('messages'), 'exclude': lambda f: f is None }})
-    r"""An array containing elements of the following schema:<br>
-    `code` (string): an identifier for the corresponding message (not always available)<br>
-    `message` (string): a publishable message containing further information.
-    """
+    messages: Optional[List[ResponseMessage]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('messages'), 'exclude': lambda f: f is None }})
     metadata: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('metadata'), 'exclude': lambda f: f is None }})
     r"""A string of up to 100 characters that can be filled with any additional information you want to
     attach to the object.
