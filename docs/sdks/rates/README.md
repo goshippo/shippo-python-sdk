@@ -26,7 +26,6 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
 res = s.rates.get(rate_id='<value>')
 
 if res is not None:
@@ -64,7 +63,6 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
-
 
 res = s.rates.list_shipment_rates(shipment_id='<value>', page=1, results=25)
 
@@ -113,12 +111,10 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-req = operations.ListShipmentRatesByCurrencyCodeRequest(
+res = s.rates.list_shipment_rates_by_currency_code(request=operations.ListShipmentRatesByCurrencyCodeRequest(
     shipment_id='<value>',
     currency_code='USD',
-)
-
-res = s.rates.list_shipment_rates_by_currency_code(req)
+))
 
 if res is not None:
     # handle response

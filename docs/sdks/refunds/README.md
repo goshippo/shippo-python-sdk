@@ -26,7 +26,6 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
 res = s.refunds.create(transaction='915d94940ea54c3a80cbfa328722f5a1', async_=False)
 
 if res is not None:
@@ -66,7 +65,6 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
 res = s.refunds.list()
 
 if res is not None:
@@ -98,7 +96,6 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
-
 
 res = s.refunds.get(refund_id='<value>')
 

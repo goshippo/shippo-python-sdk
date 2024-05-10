@@ -27,7 +27,6 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
 res = s.carrier_parcel_templates.list(include=operations.Include.ENABLED, carrier='fedex')
 
 if res is not None:
@@ -66,7 +65,6 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
-
 
 res = s.carrier_parcel_templates.get(carrier_parcel_template_token='<value>')
 

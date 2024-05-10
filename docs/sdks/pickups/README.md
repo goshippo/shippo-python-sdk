@@ -27,7 +27,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-req = components.PickupBase(
+res = s.pickups.create(request=components.PickupBase(
     carrier_account='adcfdddf8ec64b84ad22772bce3ea37a',
     location=components.Location(
         address=components.AddressCompleteCreateRequest(
@@ -55,9 +55,7 @@ req = components.PickupBase(
     transactions=[
         'adcfdddf8ec64b84ad22772bce3ea37a',
     ],
-)
-
-res = s.pickups.create(req)
+))
 
 if res is not None:
     # handle response

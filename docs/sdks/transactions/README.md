@@ -27,12 +27,10 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-req = operations.ListTransactionsRequest(
+res = s.transactions.list(request=operations.ListTransactionsRequest(
     object_status=components.TransactionStatusEnum.SUCCESS,
     tracking_status=components.TrackingStatusEnum.DELIVERED,
-)
-
-res = s.transactions.list(req)
+))
 
 if res is not None:
     # handle response
@@ -71,14 +69,12 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-req = components.TransactionCreateRequest(
+res = s.transactions.create(request=components.TransactionCreateRequest(
     rate='ec9f0d3adc9441449c85d315f0997fd5',
     async_=False,
     label_file_type=components.LabelFileTypeEnum.PDF_4X6,
     metadata='Order ID #12345',
-)
-
-res = s.transactions.create(req)
+))
 
 if res is not None:
     # handle response
@@ -115,7 +111,6 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
-
 
 res = s.transactions.get(transaction_id='<value>')
 

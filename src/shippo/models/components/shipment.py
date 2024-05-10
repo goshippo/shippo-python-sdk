@@ -4,24 +4,16 @@ from __future__ import annotations
 import dataclasses
 import dateutil.parser
 from .address import Address
+from .customsdeclaration import CustomsDeclaration
 from .parcel import Parcel
 from .rate import Rate
+from .responsemessage import ResponseMessage
 from .shipmentextra import ShipmentExtra
 from dataclasses_json import Undefined, dataclass_json
 from datetime import datetime
 from enum import Enum
 from shippo import utils
 from typing import List, Optional
-
-
-@dataclass_json(undefined=Undefined.EXCLUDE)
-@dataclasses.dataclass
-class Messages:
-    code: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('code'), 'exclude': lambda f: f is None }})
-    source: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('source'), 'exclude': lambda f: f is None }})
-    text: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('text'), 'exclude': lambda f: f is None }})
-    
-
 
 class ShipmentStatus(str, Enum):
     r"""`Waiting` shipments have been successfully submitted but not yet been processed.
@@ -50,10 +42,7 @@ class Shipment:
     If no carrier account object_ids are set in this field, Shippo will attempt to generate rates using all the 
     carrier accounts that have the `active` field set.
     """
-    messages: List[Messages] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('messages') }})
-    r"""An array containing elements of the following schema:<br>`code` (string): an identifier for the corresponding message
-    (not always available)<br>`message` (string): a publishable message containing further information.
-    """
+    messages: List[ResponseMessage] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('messages') }})
     object_created: datetime = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_created'), 'encoder': utils.datetimeisoformat(False), 'decoder': dateutil.parser.isoparse }})
     r"""Date and time of Shipment creation."""
     object_id: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_id') }})
@@ -75,8 +64,6 @@ class Shipment:
     `Success` shipments have been processed successfully, meaning that rate generation has concluded. 
     `Error` does not occur currently and is reserved for future use.
     """
-    customs_declaration: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('customs_declaration'), 'exclude': lambda f: f is None }})
-    r"""ID of the Customs Declarations object for an international shipment."""
     extra: Optional[ShipmentExtra] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('extra'), 'exclude': lambda f: f is None }})
     r"""An object holding optional extra services to be requested."""
     shipment_date: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('shipment_date'), 'exclude': lambda f: f is None }})
@@ -89,6 +76,7 @@ class Shipment:
     (Only available for UPS, USPS, and Fedex shipments). <br/> 
     If this field is not set, your shipments will be returned to the address_from.
     """
+    customs_declaration: Optional[CustomsDeclaration] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('customs_declaration'), 'exclude': lambda f: f is None }})
     test: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('test'), 'exclude': lambda f: f is None }})
     r"""Indicates whether the object has been created in test mode."""
     

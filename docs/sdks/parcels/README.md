@@ -30,7 +30,6 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
 res = s.parcels.list(page=1, results=25)
 
 if res is not None:
@@ -71,7 +70,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-req = components.ParcelRequest(
+res = s.parcels.create(request=components.ParcelRequest(
     distance_unit=components.DistanceUnitEnum.IN,
     height='1',
     length='1',
@@ -91,9 +90,7 @@ req = components.ParcelRequest(
             provider=components.ParcelInsuranceProvider.UPS,
         ),
     ),
-)
-
-res = s.parcels.create(req)
+))
 
 if res is not None:
     # handle response
@@ -130,7 +127,6 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
-
 
 res = s.parcels.get(parcel_id='<value>')
 

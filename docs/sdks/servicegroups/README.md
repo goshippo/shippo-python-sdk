@@ -28,7 +28,6 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-
 res = s.service_groups.list()
 
 if res is not None:
@@ -62,7 +61,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-req = components.ServiceGroupCreateRequest(
+res = s.service_groups.create(request=components.ServiceGroupCreateRequest(
     description='USPS shipping options',
     name='USPS Shipping',
     type=components.ServiceGroupTypeEnum.FLAT_RATE,
@@ -77,9 +76,7 @@ req = components.ServiceGroupCreateRequest(
     free_shipping_threshold_currency='USD',
     free_shipping_threshold_min='5',
     rate_adjustment=15,
-)
-
-res = s.service_groups.create(req)
+))
 
 if res is not None:
     # handle response
@@ -118,7 +115,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-req = components.ServiceGroupUpdateRequest(
+res = s.service_groups.update(request=components.ServiceGroupUpdateRequest(
     description='USPS shipping options',
     name='USPS Shipping',
     type=components.ServiceGroupTypeEnum.FLAT_RATE,
@@ -135,9 +132,7 @@ req = components.ServiceGroupUpdateRequest(
     free_shipping_threshold_currency='USD',
     free_shipping_threshold_min='5',
     rate_adjustment=15,
-)
-
-res = s.service_groups.update(req)
+))
 
 if res is not None:
     # handle response
@@ -174,7 +169,6 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
-
 
 res = s.service_groups.delete(service_group_id='<value>')
 

@@ -1,27 +1,31 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: d62820c03783a98d936dcb8ec292e50f
+  docChecksum: 53a065d9c2bd7f9f3d4a2c3335d2cbee
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.283.1
-  generationVersion: 2.324.0
-  releaseVersion: 3.3.5
-  configChecksum: 3ee388204d900b0b57c8d5515f60063f
+  speakeasyVersion: 1.285.3
+  generationVersion: 2.326.3
+  releaseVersion: 3.4.0
+  configChecksum: 5edc905561a7d715686db1c17d2f9390
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
 features:
   python:
+    additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.3
     core: 4.6.7
     flattening: 2.81.1
     globalSecurity: 2.83.5
+    globalSecurityCallbacks: 0.1.0
+    globalSecurityFlattening: 0.1.0
     globalServerURLs: 2.82.2
     globals: 2.82.1
     hiddenGlobals: 0.1.0
     includes: 2.81.1
     nameOverrides: 2.81.2
     responseFormat: 0.1.0
+    sdkHooks: 0.1.0
     unions: 2.82.6
 generatedFiles:
   - src/shippo/sdkconfiguration.py
@@ -61,12 +65,20 @@ generatedFiles:
   - src/shippo/models/components/batch.py
   - src/shippo/models/components/batchshipmentpaginatedlist.py
   - src/shippo/models/components/batchshipment.py
-  - src/shippo/models/components/errormessage.py
+  - src/shippo/models/components/batchshipmenterrormessage.py
   - src/shippo/models/components/shipmentcreaterequest.py
   - src/shippo/models/components/parcelcreaterequest.py
   - src/shippo/models/components/parceltemplateenumset.py
   - src/shippo/models/components/weightunitenum.py
   - src/shippo/models/components/distanceunitenum.py
+  - src/shippo/models/components/customsdeclarationcreaterequest.py
+  - src/shippo/models/components/customsitemcreaterequest.py
+  - src/shippo/models/components/addressimporter.py
+  - src/shippo/models/components/customsdeclarationnondeliveryoptionenum.py
+  - src/shippo/models/components/customsdeclarationincotermenum.py
+  - src/shippo/models/components/customsdeclarationeelpfcenum.py
+  - src/shippo/models/components/customsdeclarationcontentstypeenum.py
+  - src/shippo/models/components/customsdeclarationb13afilingoptionenum.py
   - src/shippo/models/components/shipmentextra.py
   - src/shippo/models/components/rmanumber.py
   - src/shippo/models/components/ponumber.py
@@ -117,14 +129,6 @@ generatedFiles:
   - src/shippo/models/components/customsinvoicedcharges.py
   - src/shippo/models/components/customsexporteridentification.py
   - src/shippo/models/components/customstaxidentification.py
-  - src/shippo/models/components/customsdeclarationnondeliveryoptionenum.py
-  - src/shippo/models/components/customsdeclarationincotermenum.py
-  - src/shippo/models/components/customsdeclarationeelpfcenum.py
-  - src/shippo/models/components/customsdeclarationcontentstypeenum.py
-  - src/shippo/models/components/customsdeclarationb13afilingoptionenum.py
-  - src/shippo/models/components/customsdeclarationcreaterequest.py
-  - src/shippo/models/components/customsitemcreaterequest.py
-  - src/shippo/models/components/addressimporter.py
   - src/shippo/models/components/customsitempaginatedlist.py
   - src/shippo/models/components/customsitem.py
   - src/shippo/models/components/liveratepaginatedlist.py
@@ -154,7 +158,7 @@ generatedFiles:
   - src/shippo/models/components/pickupbase.py
   - src/shippo/models/components/rate.py
   - src/shippo/models/components/servicelevel.py
-  - src/shippo/models/components/ratemessage.py
+  - src/shippo/models/components/responsemessage.py
   - src/shippo/models/components/ratepaginatedlist.py
   - src/shippo/models/components/refund.py
   - src/shippo/models/components/refundrequestbody.py
@@ -272,10 +276,11 @@ generatedFiles:
   - docs/models/components/batchshipmentpaginatedlist.md
   - docs/models/components/status.md
   - docs/models/components/batchshipment.md
-  - docs/models/components/errormessage.md
+  - docs/models/components/batchshipmenterrormessage.md
   - docs/models/components/addressfrom.md
   - docs/models/components/addressreturn.md
   - docs/models/components/addressto.md
+  - docs/models/components/shipmentcreaterequestcustomsdeclaration.md
   - docs/models/components/parcels.md
   - docs/models/components/shipmentcreaterequest.md
   - docs/models/components/parcelcreaterequest.md
@@ -289,6 +294,14 @@ generatedFiles:
   - docs/models/components/parceltemplateenumset.md
   - docs/models/components/weightunitenum.md
   - docs/models/components/distanceunitenum.md
+  - docs/models/components/customsdeclarationcreaterequest.md
+  - docs/models/components/customsitemcreaterequest.md
+  - docs/models/components/addressimporter.md
+  - docs/models/components/customsdeclarationnondeliveryoptionenum.md
+  - docs/models/components/customsdeclarationincotermenum.md
+  - docs/models/components/customsdeclarationeelpfcenum.md
+  - docs/models/components/customsdeclarationcontentstypeenum.md
+  - docs/models/components/customsdeclarationb13afilingoptionenum.md
   - docs/models/components/ancillaryendorsement.md
   - docs/models/components/dangerousgoodscode.md
   - docs/models/components/lasershipattrs.md
@@ -370,14 +383,6 @@ generatedFiles:
   - docs/models/components/customsexporteridentification.md
   - docs/models/components/customstaxidentificationtype.md
   - docs/models/components/customstaxidentification.md
-  - docs/models/components/customsdeclarationnondeliveryoptionenum.md
-  - docs/models/components/customsdeclarationincotermenum.md
-  - docs/models/components/customsdeclarationeelpfcenum.md
-  - docs/models/components/customsdeclarationcontentstypeenum.md
-  - docs/models/components/customsdeclarationb13afilingoptionenum.md
-  - docs/models/components/customsdeclarationcreaterequest.md
-  - docs/models/components/customsitemcreaterequest.md
-  - docs/models/components/addressimporter.md
   - docs/models/components/customsitempaginatedlist.md
   - docs/models/components/customsitem.md
   - docs/models/components/liveratepaginatedlist.md
@@ -419,7 +424,7 @@ generatedFiles:
   - docs/models/components/attributes.md
   - docs/models/components/rate.md
   - docs/models/components/servicelevel.md
-  - docs/models/components/ratemessage.md
+  - docs/models/components/responsemessage.md
   - docs/models/components/ratepaginatedlist.md
   - docs/models/components/refundstatus.md
   - docs/models/components/refund.md
@@ -431,7 +436,6 @@ generatedFiles:
   - docs/models/components/servicegroupaccountandservicelevel.md
   - docs/models/components/servicegroupupdaterequest.md
   - docs/models/components/shipmentpaginatedlist.md
-  - docs/models/components/messages.md
   - docs/models/components/shipmentstatus.md
   - docs/models/components/shipment.md
   - docs/models/components/track.md
@@ -441,12 +445,10 @@ generatedFiles:
   - docs/models/components/trackingstatuslocationbase.md
   - docs/models/components/tracksrequest.md
   - docs/models/components/transactionpaginatedlist.md
-  - docs/models/components/transactionmessages.md
   - docs/models/components/responsetype.md
   - docs/models/components/transaction.md
   - docs/models/components/transactionstatusenum.md
   - docs/models/components/transactioncreateresponse.md
-  - docs/models/components/instanttransactioncreateresponsemessages.md
   - docs/models/components/instanttransactioncreateresponseresponsetype.md
   - docs/models/components/instanttransactioncreateresponse.md
   - docs/models/components/instanttransactionrate.md

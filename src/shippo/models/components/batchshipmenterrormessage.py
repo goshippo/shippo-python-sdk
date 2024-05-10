@@ -9,7 +9,7 @@ from typing import Dict, List, Optional
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
-class ErrorMessage:
+class BatchShipmentErrorMessage:
     shipment: Optional[List[Dict[str, List[str]]]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('shipment'), 'exclude': lambda f: f is None }})
     
 
