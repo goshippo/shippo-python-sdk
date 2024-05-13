@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: 53a065d9c2bd7f9f3d4a2c3335d2cbee
+  docChecksum: 39e10349affb3dc3eb679b2b5a3bd921
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.285.3
-  generationVersion: 2.326.3
-  releaseVersion: 3.4.0
-  configChecksum: 5edc905561a7d715686db1c17d2f9390
+  speakeasyVersion: 1.286.3
+  generationVersion: 2.329.0
+  releaseVersion: 3.4.1
+  configChecksum: 1ac15bdccfcc3d14ee59b9b40e49fa96
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
@@ -72,12 +72,12 @@ generatedFiles:
   - src/shippo/models/components/weightunitenum.py
   - src/shippo/models/components/distanceunitenum.py
   - src/shippo/models/components/customsdeclarationcreaterequest.py
-  - src/shippo/models/components/customsitemcreaterequest.py
-  - src/shippo/models/components/addressimporter.py
   - src/shippo/models/components/customsdeclarationnondeliveryoptionenum.py
+  - src/shippo/models/components/customsitemcreaterequest.py
   - src/shippo/models/components/customsdeclarationincotermenum.py
   - src/shippo/models/components/customsdeclarationeelpfcenum.py
   - src/shippo/models/components/customsdeclarationcontentstypeenum.py
+  - src/shippo/models/components/addressimporter.py
   - src/shippo/models/components/customsdeclarationb13afilingoptionenum.py
   - src/shippo/models/components/shipmentextra.py
   - src/shippo/models/components/rmanumber.py
@@ -295,12 +295,12 @@ generatedFiles:
   - docs/models/components/weightunitenum.md
   - docs/models/components/distanceunitenum.md
   - docs/models/components/customsdeclarationcreaterequest.md
-  - docs/models/components/customsitemcreaterequest.md
-  - docs/models/components/addressimporter.md
   - docs/models/components/customsdeclarationnondeliveryoptionenum.md
+  - docs/models/components/customsitemcreaterequest.md
   - docs/models/components/customsdeclarationincotermenum.md
   - docs/models/components/customsdeclarationeelpfcenum.md
   - docs/models/components/customsdeclarationcontentstypeenum.md
+  - docs/models/components/addressimporter.md
   - docs/models/components/customsdeclarationb13afilingoptionenum.md
   - docs/models/components/ancillaryendorsement.md
   - docs/models/components/dangerousgoodscode.md

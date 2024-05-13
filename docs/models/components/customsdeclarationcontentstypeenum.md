@@ -1,6 +1,7 @@
 # CustomsDeclarationContentsTypeEnum
 
-Type of goods of the shipment.
+Type of goods of the shipment.  
+Allowed values available <a href="#tag/Customs-Declaration-Contents-Type">here</a>
 
 
 ## Values

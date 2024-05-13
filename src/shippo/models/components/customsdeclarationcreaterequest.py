@@ -24,18 +24,13 @@ class CustomsDeclarationCreateRequest:
     information provided.
     """
     contents_type: CustomsDeclarationContentsTypeEnum = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('contents_type') }})
-    r"""Type of goods of the shipment."""
-    non_delivery_option: CustomsDeclarationNonDeliveryOptionEnum = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('non_delivery_option') }})
-    r"""Indicates how the carrier should proceed in case the shipment can't be delivered."""
     items: List[CustomsItemCreateRequest] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('items') }})
+    non_delivery_option: CustomsDeclarationNonDeliveryOptionEnum = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('non_delivery_option') }})
     aes_itn: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('aes_itn'), 'exclude': lambda f: f is None }})
     r"""**required if eel_pfc is `AES_ITN`**<br>
     AES / ITN reference of the shipment.
     """
     b13a_filing_option: Optional[CustomsDeclarationB13AFilingOptionEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('b13a_filing_option'), 'exclude': lambda f: f is None }})
-    r"""B13A Option details are obtained by filing a B13A Canada Export Declaration via the Canadian Export Reporting System (CERS).
-    <a href=\"https://www.cbsa-asfc.gc.ca/services/export/guide-eng.html\" target=\"_blank\" rel=\"noopener noreferrer\"> More information on reporting commercial exports from Canada. </a>
-    """
     b13a_number: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('b13a_number'), 'exclude': lambda f: f is None }})
     r"""**must be provided if and only if b13a_filing_option is provided**<br>
     Represents:<br> the Proof of Report (POR) Number when b13a_filing_option is `FILED_ELECTRONICALLY`;<br> 
@@ -44,26 +39,17 @@ class CustomsDeclarationCreateRequest:
     """
     certificate: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('certificate'), 'exclude': lambda f: f is None }})
     r"""Certificate reference of the shipment."""
-    commercial_invoice: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('commercial_invoice'), 'exclude': lambda f: f is None }})
+    commercial_invoice: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('commercial_invoice'), 'exclude': lambda f: f is None }})
     contents_explanation: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('contents_explanation'), 'exclude': lambda f: f is None }})
     r"""**required if contents_type is `OTHER`**<br>
     Explanation of the type of goods of the shipment.
     """
     disclaimer: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('disclaimer'), 'exclude': lambda f: f is None }})
     r"""Disclaimer for the shipment and customs information that have been provided."""
-    eel_pfc: Optional[CustomsDeclarationEelPfcEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('eel_pfc'), 'exclude': lambda f: f is None }})
-    r"""EEL / PFC type of the shipment. For most shipments from the US to CA, `NOEEI_30_36` is applicable; for most
-    other shipments from the US, `NOEEI_30_37_a` is applicable.
-    """
     exporter_reference: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('exporter_reference'), 'exclude': lambda f: f is None }})
     r"""Exporter reference of an export shipment."""
     importer_reference: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('importer_reference'), 'exclude': lambda f: f is None }})
     r"""Importer reference of an import shipment."""
-    incoterm: Optional[CustomsDeclarationIncotermEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('incoterm'), 'exclude': lambda f: f is None }})
-    r"""The incoterm reference of the shipment. FCA is available for DHL Express and FedEx only.
-    eDAP is available for DPD UK only. DAP is available for DHL Express and DPD UK.
-    If expecting DAP for other carriers, please use DDU.
-    """
     is_vat_collected: Optional[Any] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('is_vat_collected'), 'exclude': lambda f: f is None }})
     r"""Indicates whether the shipment's destination VAT has been collected. May be required for some destinations."""
     invoice: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('invoice'), 'exclude': lambda f: f is None }})
@@ -78,6 +64,8 @@ class CustomsDeclarationCreateRequest:
     r"""Additional notes to be included in the customs declaration."""
     address_importer: Optional[AddressImporter] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_importer'), 'exclude': lambda f: f is None }})
     r"""Object that represents the address of the importer"""
+    eel_pfc: Optional[CustomsDeclarationEelPfcEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('eel_pfc'), 'exclude': lambda f: f is None }})
+    incoterm: Optional[CustomsDeclarationIncotermEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('incoterm'), 'exclude': lambda f: f is None }})
     test: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('test'), 'exclude': lambda f: f is None }})
     
 
