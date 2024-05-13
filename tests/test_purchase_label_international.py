@@ -10,7 +10,6 @@ from shippo.models.components import AddressCreateRequest, CustomsDeclarationCre
 # https://docs.goshippo.com/docs/stories/intl_rating_guide/
 class TestPurchaseLabelInternational:
 
-    @pytest.mark.skip(reason="API returns '' for documented enum values and this test will always fail - need to update the spec")
     def test_purchase_label_international(self, api: shippo.Shippo):
         address = api.addresses.create(
             AddressCreateRequest(
