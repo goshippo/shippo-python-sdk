@@ -141,7 +141,6 @@ res = s.shipments.create(request=components.ShipmentCreateRequest(
         certify=True,
         certify_signer='Shawn Ippotle',
         contents_type=components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,
-        non_delivery_option=components.CustomsDeclarationNonDeliveryOptionEnum.ABANDON,
         items=[
             components.CustomsItemCreateRequest(
                 description='T-Shirt',
@@ -155,9 +154,9 @@ res = s.shipments.create(request=components.ShipmentCreateRequest(
                 sku_code='HM-123',
             ),
         ],
+        non_delivery_option=components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
+        b13a_filing_option=components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,
         contents_explanation='T-Shirt purchase',
-        eel_pfc=components.CustomsDeclarationEelPfcEnum.NOEEI_30_37_A,
-        incoterm=components.CustomsDeclarationIncotermEnum.DDP,
         invoice='#123123',
         metadata='Order ID #123123',
         address_importer=components.AddressImporter(
@@ -174,6 +173,8 @@ res = s.shipments.create(request=components.ShipmentCreateRequest(
             email='shippotle@shippo.com',
             is_residential=True,
         ),
+        eel_pfc=components.CustomsDeclarationEelPfcEnum.NOEEI_30_37_A,
+        incoterm=components.CustomsDeclarationIncotermEnum.DDP,
         test=True,
     ),
     carrier_accounts=[

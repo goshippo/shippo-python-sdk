@@ -3,11 +3,6 @@
 from __future__ import annotations
 import dataclasses
 import dateutil.parser
-from .customsdeclarationb13afilingoptionenum import CustomsDeclarationB13AFilingOptionEnum
-from .customsdeclarationcontentstypeenum import CustomsDeclarationContentsTypeEnum
-from .customsdeclarationeelpfcenum import CustomsDeclarationEelPfcEnum
-from .customsdeclarationincotermenum import CustomsDeclarationIncotermEnum
-from .customsdeclarationnondeliveryoptionenum import CustomsDeclarationNonDeliveryOptionEnum
 from .customsexporteridentification import CustomsExporterIdentification
 from .customsinvoicedcharges import CustomsInvoicedCharges
 from .objectstateenum import ObjectStateEnum
@@ -33,19 +28,24 @@ class CustomsDeclaration:
     r"""Name of the person who created the customs declaration and is responsible for the validity of all
     information provided.
     """
-    contents_type: CustomsDeclarationContentsTypeEnum = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('contents_type') }})
-    r"""Type of goods of the shipment."""
-    non_delivery_option: CustomsDeclarationNonDeliveryOptionEnum = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('non_delivery_option') }})
-    r"""Indicates how the carrier should proceed in case the shipment can't be delivered."""
+    contents_type: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('contents_type') }})
+    r"""Type of goods of the shipment.
+    Allowed values available <a href=\"#tag/Customs-Declaration-Contents-Type\">here</a>
+    """
     items: List[str] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('items') }})
     r"""Distinct Parcel content items as Customs Items object_ids."""
+    non_delivery_option: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('non_delivery_option') }})
+    r"""Indicates how the carrier should proceed in case the shipment can't be delivered.
+    Allowed values available <a href=\"#tag/Customs-Declaration-Non-Delivery-Option\">here</a>
+    """
     aes_itn: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('aes_itn'), 'exclude': lambda f: f is None }})
     r"""**required if eel_pfc is `AES_ITN`**<br>
     AES / ITN reference of the shipment.
     """
-    b13a_filing_option: Optional[CustomsDeclarationB13AFilingOptionEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('b13a_filing_option'), 'exclude': lambda f: f is None }})
+    b13a_filing_option: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('b13a_filing_option'), 'exclude': lambda f: f is None }})
     r"""B13A Option details are obtained by filing a B13A Canada Export Declaration via the Canadian Export Reporting System (CERS).
     <a href=\"https://www.cbsa-asfc.gc.ca/services/export/guide-eng.html\" target=\"_blank\" rel=\"noopener noreferrer\"> More information on reporting commercial exports from Canada. </a>
+    Allowed values available <a href=\"#tag/Customs-Declaration-B13A-Filing-Option\">here</a>
     """
     b13a_number: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('b13a_number'), 'exclude': lambda f: f is None }})
     r"""**must be provided if and only if b13a_filing_option is provided**<br>
@@ -55,26 +55,17 @@ class CustomsDeclaration:
     """
     certificate: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('certificate'), 'exclude': lambda f: f is None }})
     r"""Certificate reference of the shipment."""
-    commercial_invoice: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('commercial_invoice'), 'exclude': lambda f: f is None }})
+    commercial_invoice: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('commercial_invoice'), 'exclude': lambda f: f is None }})
     contents_explanation: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('contents_explanation'), 'exclude': lambda f: f is None }})
     r"""**required if contents_type is `OTHER`**<br>
     Explanation of the type of goods of the shipment.
     """
     disclaimer: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('disclaimer'), 'exclude': lambda f: f is None }})
     r"""Disclaimer for the shipment and customs information that have been provided."""
-    eel_pfc: Optional[CustomsDeclarationEelPfcEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('eel_pfc'), 'exclude': lambda f: f is None }})
-    r"""EEL / PFC type of the shipment. For most shipments from the US to CA, `NOEEI_30_36` is applicable; for most
-    other shipments from the US, `NOEEI_30_37_a` is applicable.
-    """
     exporter_reference: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('exporter_reference'), 'exclude': lambda f: f is None }})
     r"""Exporter reference of an export shipment."""
     importer_reference: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('importer_reference'), 'exclude': lambda f: f is None }})
     r"""Importer reference of an import shipment."""
-    incoterm: Optional[CustomsDeclarationIncotermEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('incoterm'), 'exclude': lambda f: f is None }})
-    r"""The incoterm reference of the shipment. FCA is available for DHL Express and FedEx only.
-    eDAP is available for DPD UK only. DAP is available for DHL Express and DPD UK.
-    If expecting DAP for other carriers, please use DDU.
-    """
     is_vat_collected: Optional[Any] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('is_vat_collected'), 'exclude': lambda f: f is None }})
     r"""Indicates whether the shipment's destination VAT has been collected. May be required for some destinations."""
     invoice: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('invoice'), 'exclude': lambda f: f is None }})
@@ -89,8 +80,19 @@ class CustomsDeclaration:
     r"""Additional notes to be included in the customs declaration."""
     address_importer: Optional[CustomsDeclarationAddressImporter] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_importer'), 'exclude': lambda f: f is None }})
     r"""Object ID of the Importer address."""
+    eel_pfc: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('eel_pfc'), 'exclude': lambda f: f is None }})
+    r"""EEL / PFC type of the shipment. For most shipments from the US to CA, `NOEEI_30_36` is applicable; for most
+    other shipments from the US, `NOEEI_30_37_a` is applicable.
+    Allowed values available <a href=\"#tag/Customs-Declaration-EELPFC\">here</a>
+    """
     exporter_identification: Optional[CustomsExporterIdentification] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('exporter_identification'), 'exclude': lambda f: f is None }})
     r"""Additional exporter identification that may be required to ship in certain countries"""
+    incoterm: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('incoterm'), 'exclude': lambda f: f is None }})
+    r"""The incoterm reference of the shipment. FCA is available for DHL Express and FedEx only.
+    eDAP is available for DPD UK only. DAP is available for DHL Express and DPD UK.
+    If expecting DAP for other carriers, please use DDU.
+    Allowed values available <a href=\"#tag/Customs-Declaration-Incoterm\">here</a>
+    """
     invoiced_charges: Optional[CustomsInvoicedCharges] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('invoiced_charges'), 'exclude': lambda f: f is None }})
     r"""Additional invoiced charges to be shown on the Customs Declaration Commercial Invoice."""
     object_created: Optional[datetime] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_created'), 'encoder': utils.datetimeisoformat(True), 'decoder': dateutil.parser.isoparse, 'exclude': lambda f: f is None }})
