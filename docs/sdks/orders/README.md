@@ -37,6 +37,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.orders.list(page=1, results=25)
 
 if res is not None:
@@ -77,6 +78,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.orders.create(request=components.OrderCreateRequest(
     placed_at='2016-09-23T01:28:12Z',
@@ -176,6 +178,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.orders.get(order_id='<value>')
 

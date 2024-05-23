@@ -13,6 +13,7 @@ class GetCarrierRegistrationStatusGlobals:
     
 
 
+
 class Carrier(str, Enum):
     r"""filter by specific carrier"""
     UPS = 'ups'

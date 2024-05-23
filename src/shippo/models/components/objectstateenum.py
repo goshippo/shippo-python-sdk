@@ -3,6 +3,7 @@
 from __future__ import annotations
 from enum import Enum
 
+
 class ObjectStateEnum(str, Enum):
     r"""Indicates the validity of the enclosing object"""
     VALID = 'VALID'

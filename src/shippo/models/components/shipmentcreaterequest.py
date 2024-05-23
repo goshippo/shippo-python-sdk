@@ -10,13 +10,23 @@ from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
 from typing import List, Optional, Union
 
+AddressFrom = Union[AddressCreateRequest, str]
+
+AddressReturn = Union[AddressCreateRequest, str]
+
+AddressTo = Union[AddressCreateRequest, str]
+
+ShipmentCreateRequestCustomsDeclaration = Union[CustomsDeclarationCreateRequest, str]
+
+Parcels = Union[ParcelCreateRequest, str]
+
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class ShipmentCreateRequest:
-    address_from: Union[AddressCreateRequest, str] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_from') }})
-    address_to: Union[AddressCreateRequest, str] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_to') }})
-    parcels: List[Union[ParcelCreateRequest, str]] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parcels') }})
+    address_from: AddressFrom = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_from') }})
+    address_to: AddressTo = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_to') }})
+    parcels: List[Parcels] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parcels') }})
     extra: Optional[ShipmentExtra] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('extra'), 'exclude': lambda f: f is None }})
     r"""An object holding optional extra services to be requested."""
     metadata: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('metadata'), 'exclude': lambda f: f is None }})
@@ -26,8 +36,8 @@ class ShipmentCreateRequest:
     Defaults to current date and time if no value is provided. Please note that some carriers require this value to
     be in the future, on a working day, or similar.
     """
-    address_return: Optional[Union[AddressCreateRequest, str]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_return'), 'exclude': lambda f: f is None }})
-    customs_declaration: Optional[Union[CustomsDeclarationCreateRequest, str]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('customs_declaration'), 'exclude': lambda f: f is None }})
+    address_return: Optional[AddressReturn] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_return'), 'exclude': lambda f: f is None }})
+    customs_declaration: Optional[ShipmentCreateRequestCustomsDeclaration] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('customs_declaration'), 'exclude': lambda f: f is None }})
     async_: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('async'), 'exclude': lambda f: f is None }})
     carrier_accounts: Optional[List[str]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('carrier_accounts'), 'exclude': lambda f: f is None }})
     r"""List of <a href=\\"#tag/Carrier-Accounts/\\">Carrier Accounts</a> `object_id`s used to filter

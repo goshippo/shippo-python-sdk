@@ -3,6 +3,7 @@
 from __future__ import annotations
 from enum import Enum
 
+
 class CarriersEnum(str, Enum):
     r"""|Token | Carrier name|
     |:---|:---|

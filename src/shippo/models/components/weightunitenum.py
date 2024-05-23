@@ -3,6 +3,7 @@
 from __future__ import annotations
 from enum import Enum
 
+
 class WeightUnitEnum(str, Enum):
     r"""The unit used for weight."""
     G = 'g'

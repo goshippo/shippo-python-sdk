@@ -11,17 +11,21 @@
 | fedex_standard_overnight | FedEx Standard Overnight®|
 | fedex_priority_overnight | FedEx Priority Overnight®|
 | fedex_first_overnight | FedEx First Overnight®|
-| fedex_freight_priority | FedEx Freight® Priority|
-| fedex_next_day_freight | FedEx Next Day Freight|
-| fedex_freight_economy | FedEx Freight® Economy|
-| fedex_first_freight | FedEx First Freight|
 | fedex_international_economy | FedEx International Economy®|
 | fedex_international_priority | FedEx International Priority®|
 | fedex_international_first | FedEx International First®|
 | fedex_europe_first_international_priority | FedEx International First®|
 | fedex_international_connect_plus | FedEx International Connect Plus|
-| international_economy_freight | FedEx International Economy® Freight|
-| international_priority_freight | FedEx International Priority® Freight|
+| fedex_first | FedEx First |
+| fedex_priority | FedEx Priority |
+| fedex_priority_express | FedEx Priority Express|
+| fedex_economy_select | FedEx® Economy |
+| fedex_regional_economy | FedEx® Regional Economy |
+| fedex_first_overnight_extra_hours | First Overnight® EH |
+| fedex_international_priority_express | International Priority® Express |
+| fedex_next_day_mid_morning | Next Day Mid Morning |
+| fedex_priority_overnight_extra_hours | Priority Overnight® EH |
+| fedex_standard_overnight_extra_hours | Standard Overnight® EH |
 
 
 
@@ -39,14 +43,18 @@
 | `FEDEX_STANDARD_OVERNIGHT`                  | fedex_standard_overnight                    |
 | `FEDEX_PRIORITY_OVERNIGHT`                  | fedex_priority_overnight                    |
 | `FEDEX_FIRST_OVERNIGHT`                     | fedex_first_overnight                       |
-| `FEDEX_FREIGHT_PRIORITY`                    | fedex_freight_priority                      |
-| `FEDEX_NEXT_DAY_FREIGHT`                    | fedex_next_day_freight                      |
-| `FEDEX_FREIGHT_ECONOMY`                     | fedex_freight_economy                       |
-| `FEDEX_FIRST_FREIGHT`                       | fedex_first_freight                         |
 | `FEDEX_INTERNATIONAL_ECONOMY`               | fedex_international_economy                 |
 | `FEDEX_INTERNATIONAL_PRIORITY`              | fedex_international_priority                |
 | `FEDEX_INTERNATIONAL_FIRST`                 | fedex_international_first                   |
 | `FEDEX_EUROPE_FIRST_INTERNATIONAL_PRIORITY` | fedex_europe_first_international_priority   |
 | `FEDEX_INTERNATIONAL_CONNECT_PLUS`          | fedex_international_connect_plus            |
-| `INTERNATIONAL_ECONOMY_FREIGHT`             | international_economy_freight               |
-| `INTERNATIONAL_PRIORITY_FREIGHT`            | international_priority_freight              |
+| `FEDEX_FIRST`                               | fedex_first                                 |
+| `FEDEX_PRIORITY`                            | fedex_priority                              |
+| `FEDEX_PRIORITY_EXPRESS`                    | fedex_priority_express                      |
+| `FEDEX_ECONOMY_SELECT`                      | fedex_economy_select                        |
+| `FEDEX_REGIONAL_ECONOMY`                    | fedex_regional_economy                      |
+| `FEDEX_FIRST_OVERNIGHT_EXTRA_HOURS`         | fedex_first_overnight_extra_hours           |
+| `FEDEX_INTERNATIONAL_PRIORITY_EXPRESS`      | fedex_international_priority_express        |
+| `FEDEX_NEXT_DAY_MID_MORNING`                | fedex_next_day_mid_morning                  |
+| `FEDEX_PRIORITY_OVERNIGHT_EXTRA_HOURS`      | fedex_priority_overnight_extra_hours        |
+| `FEDEX_STANDARD_OVERNIGHT_EXTRA_HOURS`      | fedex_standard_overnight_extra_hours        |

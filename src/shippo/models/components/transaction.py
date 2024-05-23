@@ -14,6 +14,7 @@ from enum import Enum
 from shippo import utils
 from typing import List, Optional
 
+
 class ResponseType(str, Enum):
     STANDARD = 'standard'
 

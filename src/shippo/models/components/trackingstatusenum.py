@@ -3,6 +3,7 @@
 from __future__ import annotations
 from enum import Enum
 
+
 class TrackingStatusEnum(str, Enum):
     r"""Indicates the high level status of the shipment."""
     UNKNOWN = 'UNKNOWN'

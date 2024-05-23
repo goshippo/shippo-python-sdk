@@ -3,7 +3,7 @@
 from __future__ import annotations
 import dataclasses
 from .servicegrouptypeenum import ServiceGroupTypeEnum
-from .servicelevel import ServiceLevel
+from .servicelevelwithparent import ServiceLevelWithParent
 from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
 from typing import List, Optional
@@ -20,7 +20,7 @@ class ServiceGroup:
     r"""The type of the service group.<br> `LIVE_RATE` - Shippo will make a rating request and return real-time rates for the shipping group, only falling back to the specified flat rate amount if no rates match a service level in the service group.<br> `FLAT_RATE` - Returns a shipping option with the specified flat rate amount.<br> `FREE_SHIPPING` - Returns a shipping option with a price of $0 only if the total cost of items exceeds the amount defined by `free_shipping_threshold_min`"""
     object_id: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_id') }})
     r"""The unique identifier of the given Service Group object."""
-    service_levels: List[ServiceLevel] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('service_levels') }})
+    service_levels: List[ServiceLevelWithParent] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('service_levels') }})
     flat_rate: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('flat_rate'), 'exclude': lambda f: f is None }})
     r"""String representation of an amount to be returned as the flat rate
     if 1. The service group is of type `LIVE_RATE` and no matching rates

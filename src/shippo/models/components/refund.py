@@ -9,6 +9,7 @@ from enum import Enum
 from shippo import utils
 from typing import Optional
 
+
 class RefundStatus(str, Enum):
     r"""Indicates the status of the Refund."""
     QUEUED = 'QUEUED'

@@ -210,7 +210,7 @@ class ServiceGroups:
 
     
     
-    def delete(self, service_group_id: str) -> operations.DeleteServiceGroupResponse:
+    def delete(self, service_group_id: str):
         r"""Delete a service group
         Deletes an existing service group using an object ID.
         """
@@ -258,7 +258,6 @@ class ServiceGroups:
             
         
         
-        res = operations.DeleteServiceGroupResponse()
         
         if http_res.status_code == 204:
             pass
@@ -266,8 +265,6 @@ class ServiceGroups:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
-
-        return res
 
     
 

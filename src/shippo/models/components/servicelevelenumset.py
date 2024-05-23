@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 from enum import Enum
+from typing import Union
+
 
 class ServiceLevelSwyftEnum(str, Enum):
     r"""|Token | Service name|
@@ -12,6 +14,7 @@ class ServiceLevelSwyftEnum(str, Enum):
     SAME_DAY = 'same_day'
     NEXT_DAY = 'next_day'
 
+
 class ServiceLevelVehoEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
@@ -19,12 +22,14 @@ class ServiceLevelVehoEnum(str, Enum):
     """
     VEHO_NEXT_DAY = 'veho_next_day'
 
+
 class ServiceLevelUDSEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
     | uds_next_day | Next Day|
     """
     UDS_NEXT_DAY = 'uds_next_day'
+
 
 class ServiceLevelEvriUKEnum(str, Enum):
     r"""|Token | Service name|
@@ -41,12 +46,14 @@ class ServiceLevelEvriUKEnum(str, Enum):
     HERMES_UK_POSTABLE = 'hermes_uk_postable'
     HERMES_UK_POSTABLE_NEXTDAY = 'hermes_uk_postable_nextday'
 
+
 class ServiceLevelLasershipEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
     | lasership_routed_delivery | Routed Delivery|
     """
     LASERSHIP_ROUTED_DELIVERY = 'lasership_routed_delivery'
+
 
 class ServiceLevelOnTracEnum(str, Enum):
     r"""|Token | Service name|
@@ -59,12 +66,14 @@ class ServiceLevelOnTracEnum(str, Enum):
     ONTRAC_SUNRISE_GOLD = 'ontrac_sunrise_gold'
     ONTRAC_SUNRISE = 'ontrac_sunrise'
 
+
 class ServiceLevelSendleEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
     | sendle_parcel | Sendle Parcel|
     """
     SENDLE_PARCEL = 'sendle_parcel'
+
 
 class ServiceLevelRoyalMailEnum(str, Enum):
     r"""|Token | Service name|
@@ -111,6 +120,7 @@ class ServiceLevelRoyalMailEnum(str, Enum):
     ROYAL_MAIL_24_FLAT_RATE = 'royal_mail_24_flat_rate'
     ROYAL_MAIL_48_FLAT_RATE = 'royal_mail_48_flat_rate'
 
+
 class ServiceLevelePostGlobalEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
@@ -142,12 +152,14 @@ class ServiceLevelePostGlobalEnum(str, Enum):
     RR_DONNELLEY_PMI = 'rr_donnelley_pmi'
     RR_DONNELLEY_EMI = 'rr_donnelley_emi'
 
+
 class ServiceLevelPostItalianeEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
     | poste_italiane_delivery_business_express | Poste Delivery Business Express|
     """
     POSTE_ITALIANE_DELIVERY_BUSINESS_EXPRESS = 'poste_italiane_delivery_business_express'
+
 
 class ServiceLevelParcelforceEnum(str, Enum):
     r"""|Token | Service name|
@@ -160,6 +172,7 @@ class ServiceLevelParcelforceEnum(str, Enum):
     PARCELFORCE_EXPRESS24 = 'parcelforce_express24'
     PARCELFORCE_EXPRESSAM = 'parcelforce_expressam'
 
+
 class ServiceLevelMaergoEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
@@ -167,12 +180,14 @@ class ServiceLevelMaergoEnum(str, Enum):
     """
     X_DELIVERY_EXPEDITED = 'x_delivery_expedited'
 
+
 class ServiceLevelMondialRelayEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
     | mondial_relay_pointrelais | Point Relais|
     """
     MONDIAL_RELAY_POINTRELAIS = 'mondial_relay_pointrelais'
+
 
 class ServiceLevelLSOEnum(str, Enum):
     r"""|Token | Service name|
@@ -191,6 +206,7 @@ class ServiceLevelLSOEnum(str, Enum):
     LSO_PRIORITY_NEXT_DAY = 'lso_priority_next_day'
     LSO_EARLY_OVERNIGHT = 'lso_early_overnight'
 
+
 class ServiceLevelGLSUSEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
@@ -207,6 +223,7 @@ class ServiceLevelGLSUSEnum(str, Enum):
     GLS_US_NPS = 'gls_us_nps'
     GLS_US_PDS = 'gls_us_pds'
     GLS_US_SDS = 'gls_us_sds'
+
 
 class ServiceLevelGlobegisticsEnum(str, Enum):
     r"""|Token | Service name|
@@ -237,6 +254,7 @@ class ServiceLevelGlobegisticsEnum(str, Enum):
     GLOBEGISTICS_ECOM_INTERNATIONAL_PRIORITY_AIRMAIL = 'globegistics_ecom_international_priority_airmail'
     GLOBEGISTICS_ECOM_INTERNATIONAL_SURFACE_AIRLIFT = 'globegistics_ecom_international_surface_airlift'
 
+
 class ServiceLevelAramexAustraliaEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
@@ -251,6 +269,7 @@ class ServiceLevelAramexAustraliaEnum(str, Enum):
     FASTWAY_AUSTRALIA_BOX_SMALL = 'fastway_australia_box_small'
     FASTWAY_AUSTRALIA_BOX_MEDIUM = 'fastway_australia_box_medium'
     FASTWAY_AUSTRALIA_BOX_LARGE = 'fastway_australia_box_large'
+
 
 class ServiceLevelDeutschePostEnum(str, Enum):
     r"""|Token | Service name|
@@ -276,6 +295,7 @@ class ServiceLevelDeutschePostEnum(str, Enum):
     DEUTSCHE_POST_WARENPOST_INTERNATIONAL_S = 'deutsche_post_warenpost_international_s'
     DEUTSCHE_POST_WARENPOST_INTERNATIONAL_M = 'deutsche_post_warenpost_international_m'
     DEUTSCHE_POST_WARENPOST_INTERNATIONAL_L = 'deutsche_post_warenpost_international_l'
+
 
 class ServiceLevelDPDUKEnum(str, Enum):
     r"""|Token | Service name|
@@ -316,12 +336,14 @@ class ServiceLevelDPDUKEnum(str, Enum):
     DPD_UK_DIRECT_TRACKED_MAIL = 'dpd_uk_direct_tracked_mail'
     DPD_UK_PICKUP_RETURNS = 'dpd_uk_pickup_returns'
 
+
 class ServiceLevelDPDDEEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
     | dpd_de_classic | DPD Classic|
     """
     DPD_DE_CLASSIC = 'dpd_de_classic'
+
 
 class ServiceLevelDHLGermanyEnum(str, Enum):
     r"""|Token | Service name|
@@ -339,6 +361,7 @@ class ServiceLevelDHLGermanyEnum(str, Enum):
     DHL_GERMANY_PAKET_INTERNATIONAL = 'dhl_germany_paket_international'
     DHL_GERMANY_PAKET_PRIORITY = 'dhl_germany_paket_priority'
     DHL_GERMANY_PAKET_SAMEDAY = 'dhl_germany_paket_sameday'
+
 
 class ServiceLevelDHLeCommerceEnum(str, Enum):
     r"""|Token | Service name|
@@ -401,6 +424,7 @@ class ServiceLevelDHLeCommerceEnum(str, Enum):
     DHL_ECOMMERCE_GROUND = 'dhl_ecommerce_ground'
     DHL_ECOMMERCE_GLOBALMAIL_PACKET_STANDARD = 'dhl_ecommerce_globalmail_packet_standard'
 
+
 class ServiceLevelDHLExpressEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
@@ -450,6 +474,7 @@ class ServiceLevelDHLExpressEnum(str, Enum):
     DHL_EXPRESS_MEDICAL_EXPRESS = 'dhl_express_medical_express'
     DHL_EXPRESS_EXPRESS_EASY_NONDOC = 'dhl_express_express_easy_nondoc'
 
+
 class ServiceLevelPurolatorEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
@@ -491,6 +516,7 @@ class ServiceLevelPurolatorEnum(str, Enum):
     PUROLATOR_EXPRESS_INTERNATIONAL1030_AM = 'purolator_express_international1030_am'
     PUROLATOR_EXPRESS_INTERNATIONAL1200 = 'purolator_express_international1200'
 
+
 class ServiceLevelColissimoEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
@@ -502,6 +528,7 @@ class ServiceLevelColissimoEnum(str, Enum):
     COLISSIMO_PICK_UP_POINT = 'colissimo_pick_up_point'
     COLISSIMO_RETURN_MAINLAND_FRANCE = 'colissimo_return_mainland_france'
 
+
 class ServiceLevelCorreosEspanaEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
@@ -510,6 +537,7 @@ class ServiceLevelCorreosEspanaEnum(str, Enum):
     """
     CORREOS_STANDARD_HOME = 'correos_standard_home'
     CORREOS_PREMIUM_HOME = 'correos_premium_home'
+
 
 class ServiceLevelCouriersPleaseEnum(str, Enum):
     r"""|Token | Service name|
@@ -538,6 +566,7 @@ class ServiceLevelCouriersPleaseEnum(str, Enum):
     COURIERSPLEASE_SATCHEL_AUTH_TO_LEAVE = 'couriersplease_satchel_auth_to_leave'
     COURIERSPLEASE_SATCHEL_SIGN_REQUIRED = 'couriersplease_satchel_sign_required'
 
+
 class ServiceLevelChronopostEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
@@ -555,12 +584,14 @@ class ServiceLevelChronopostEnum(str, Enum):
     CHRONOPOST_CLASSIC = 'chronopost_classic'
     CHRONOPOST_EXPRESS = 'chronopost_express'
 
+
 class ServiceLevelCDLEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
     | cdl_next_day | Next Day|
     """
     CDL_NEXT_DAY = 'cdl_next_day'
+
 
 class ServiceLevelCanadaPostEnum(str, Enum):
     r"""|Token | Service name|
@@ -589,6 +620,7 @@ class ServiceLevelCanadaPostEnum(str, Enum):
     CANADA_POST_TRACKED_PACKET_INTERNATIONAL = 'canada_post_tracked_packet_international'
     CANADA_POST_SMALL_PACKET_INTERNATIONAL_AIR = 'canada_post_small_packet_international_air'
 
+
 class ServiceLevelBetterTrucksEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
@@ -597,6 +629,7 @@ class ServiceLevelBetterTrucksEnum(str, Enum):
     """
     BETTER_TRUCKS_SAME_DAY = 'better_trucks_same_day'
     BETTER_TRUCKS_NEXT_DAY = 'better_trucks_next_day'
+
 
 class ServiceLevelAPGEnum(str, Enum):
     r"""|Token | Service name|
@@ -611,6 +644,7 @@ class ServiceLevelAPGEnum(str, Enum):
     EPARCEL_PREMIUM = 'eparcel_premium'
     APG_EPARCEL_EXPEDITED = 'apg_eparcel_expedited'
 
+
 class ServiceLevelAxleHireEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
@@ -619,6 +653,7 @@ class ServiceLevelAxleHireEnum(str, Enum):
     """
     AXLEHIRE_SAME_DAY = 'axlehire_same_day'
     AXLEHIRE_NEXT_DAY = 'axlehire_next_day'
+
 
 class ServiceLevelAustraliaPostEnum(str, Enum):
     r"""|Token | Service name|
@@ -645,6 +680,7 @@ class ServiceLevelAustraliaPostEnum(str, Enum):
     AUSTRALIA_POST_INTERNATIONAL_ECONOMY = 'australia_post_international_economy'
     AUSTRALIA_POST_PARCEL_POST_RETURN = 'australia_post_parcel_post_return'
 
+
 class ServiceLevelAsendiaEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
@@ -665,6 +701,7 @@ class ServiceLevelAsendiaEnum(str, Enum):
     ASENDIA_US_PRIORITY_MAIL_EXPRESS_INTERNATIONAL = 'asendia_us_priority_mail_express_international'
     ASENDIA_US_EPACKET = 'asendia_us_epacket'
     ASENDIA_US_OTHER = 'asendia_us_other'
+
 
 class ServiceLevelAPCPostalEnum(str, Enum):
     r"""|Token | Service name|
@@ -689,6 +726,7 @@ class ServiceLevelAPCPostalEnum(str, Enum):
     APC_POSTAL_PARCELCONNECT_EPACKET = 'apc_postal_parcelconnect_epacket'
     APC_POSTAL_PARCELCONNECT_EPMEI = 'apc_postal_parcelconnect_epmei'
 
+
 class ServiceLevelAirterraEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
@@ -697,6 +735,7 @@ class ServiceLevelAirterraEnum(str, Enum):
     """
     AIRTERRA_GROUND = 'airterra_ground'
     AIRTERRA_POSTAL = 'airterra_postal'
+
 
 class ServiceLevelUPSEnum(str, Enum):
     r"""|Token | Service name|
@@ -753,6 +792,7 @@ class ServiceLevelUPSEnum(str, Enum):
     UPS_EXPRESS_EARLY = 'ups_express_early'
     UPS_ACCESS_POINT_ECONOMY = 'ups_access_point_economy'
 
+
 class ServiceLevelFedExEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
@@ -765,17 +805,21 @@ class ServiceLevelFedExEnum(str, Enum):
     | fedex_standard_overnight | FedEx Standard Overnight®|
     | fedex_priority_overnight | FedEx Priority Overnight®|
     | fedex_first_overnight | FedEx First Overnight®|
-    | fedex_freight_priority | FedEx Freight® Priority|
-    | fedex_next_day_freight | FedEx Next Day Freight|
-    | fedex_freight_economy | FedEx Freight® Economy|
-    | fedex_first_freight | FedEx First Freight|
     | fedex_international_economy | FedEx International Economy®|
     | fedex_international_priority | FedEx International Priority®|
     | fedex_international_first | FedEx International First®|
     | fedex_europe_first_international_priority | FedEx International First®|
     | fedex_international_connect_plus | FedEx International Connect Plus|
-    | international_economy_freight | FedEx International Economy® Freight|
-    | international_priority_freight | FedEx International Priority® Freight|
+    | fedex_first | FedEx First |
+    | fedex_priority | FedEx Priority |
+    | fedex_priority_express | FedEx Priority Express|
+    | fedex_economy_select | FedEx® Economy |
+    | fedex_regional_economy | FedEx® Regional Economy |
+    | fedex_first_overnight_extra_hours | First Overnight® EH |
+    | fedex_international_priority_express | International Priority® Express |
+    | fedex_next_day_mid_morning | Next Day Mid Morning |
+    | fedex_priority_overnight_extra_hours | Priority Overnight® EH |
+    | fedex_standard_overnight_extra_hours | Standard Overnight® EH |
     """
     FEDEX_GROUND = 'fedex_ground'
     FEDEX_HOME_DELIVERY = 'fedex_home_delivery'
@@ -787,17 +831,22 @@ class ServiceLevelFedExEnum(str, Enum):
     FEDEX_STANDARD_OVERNIGHT = 'fedex_standard_overnight'
     FEDEX_PRIORITY_OVERNIGHT = 'fedex_priority_overnight'
     FEDEX_FIRST_OVERNIGHT = 'fedex_first_overnight'
-    FEDEX_FREIGHT_PRIORITY = 'fedex_freight_priority'
-    FEDEX_NEXT_DAY_FREIGHT = 'fedex_next_day_freight'
-    FEDEX_FREIGHT_ECONOMY = 'fedex_freight_economy'
-    FEDEX_FIRST_FREIGHT = 'fedex_first_freight'
     FEDEX_INTERNATIONAL_ECONOMY = 'fedex_international_economy'
     FEDEX_INTERNATIONAL_PRIORITY = 'fedex_international_priority'
     FEDEX_INTERNATIONAL_FIRST = 'fedex_international_first'
     FEDEX_EUROPE_FIRST_INTERNATIONAL_PRIORITY = 'fedex_europe_first_international_priority'
     FEDEX_INTERNATIONAL_CONNECT_PLUS = 'fedex_international_connect_plus'
-    INTERNATIONAL_ECONOMY_FREIGHT = 'international_economy_freight'
-    INTERNATIONAL_PRIORITY_FREIGHT = 'international_priority_freight'
+    FEDEX_FIRST = 'fedex_first'
+    FEDEX_PRIORITY = 'fedex_priority'
+    FEDEX_PRIORITY_EXPRESS = 'fedex_priority_express'
+    FEDEX_ECONOMY_SELECT = 'fedex_economy_select'
+    FEDEX_REGIONAL_ECONOMY = 'fedex_regional_economy'
+    FEDEX_FIRST_OVERNIGHT_EXTRA_HOURS = 'fedex_first_overnight_extra_hours'
+    FEDEX_INTERNATIONAL_PRIORITY_EXPRESS = 'fedex_international_priority_express'
+    FEDEX_NEXT_DAY_MID_MORNING = 'fedex_next_day_mid_morning'
+    FEDEX_PRIORITY_OVERNIGHT_EXTRA_HOURS = 'fedex_priority_overnight_extra_hours'
+    FEDEX_STANDARD_OVERNIGHT_EXTRA_HOURS = 'fedex_standard_overnight_extra_hours'
+
 
 class ServiceLevelUSPSEnum(str, Enum):
     r"""|Token | Service name|
@@ -817,3 +866,5 @@ class ServiceLevelUSPSEnum(str, Enum):
     USPS_PRIORITY_MAIL_EXPRESS_INTERNATIONAL = 'usps_priority_mail_express_international'
     USPS_FIRST_CLASS_PACKAGE_INTERNATIONAL_SERVICE = 'usps_first_class_package_international_service'
     USPS_GROUND_ADVANTAGE = 'usps_ground_advantage'
+
+ServiceLevelEnumSet = Union['ServiceLevelUSPSEnum', 'ServiceLevelFedExEnum', 'ServiceLevelUPSEnum', 'ServiceLevelAirterraEnum', 'ServiceLevelAPCPostalEnum', 'ServiceLevelAsendiaEnum', 'ServiceLevelAustraliaPostEnum', 'ServiceLevelAxleHireEnum', 'ServiceLevelAPGEnum', 'ServiceLevelBetterTrucksEnum', 'ServiceLevelCanadaPostEnum', 'ServiceLevelCDLEnum', 'ServiceLevelChronopostEnum', 'ServiceLevelCouriersPleaseEnum', 'ServiceLevelCorreosEspanaEnum', 'ServiceLevelColissimoEnum', 'ServiceLevelPurolatorEnum', 'ServiceLevelDHLExpressEnum', 'ServiceLevelDHLeCommerceEnum', 'ServiceLevelDHLGermanyEnum', 'ServiceLevelDPDDEEnum', 'ServiceLevelDPDUKEnum', 'ServiceLevelDeutschePostEnum', 'ServiceLevelAramexAustraliaEnum', 'ServiceLevelGlobegisticsEnum', 'ServiceLevelGLSUSEnum', 'ServiceLevelLSOEnum', 'ServiceLevelMondialRelayEnum', 'ServiceLevelMaergoEnum', 'ServiceLevelParcelforceEnum', 'ServiceLevelPostItalianeEnum', 'ServiceLevelePostGlobalEnum', 'ServiceLevelRoyalMailEnum', 'ServiceLevelSendleEnum', 'ServiceLevelOnTracEnum', 'ServiceLevelLasershipEnum', 'ServiceLevelEvriUKEnum', 'ServiceLevelUDSEnum', 'ServiceLevelVehoEnum', 'ServiceLevelSwyftEnum']

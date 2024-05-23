@@ -10,6 +10,7 @@ from enum import Enum
 from shippo import utils
 from typing import List, Optional
 
+
 class PickupStatus(str, Enum):
     r"""Indicates the status of the pickup."""
     PENDING = 'PENDING'

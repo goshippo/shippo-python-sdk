@@ -34,8 +34,8 @@ class TrackingStatus:
         hook_ctx = HookContext(operation_id='CreateTrack', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = components.TracksRequest(
             carrier=carrier,
-            tracking_number=tracking_number,
             metadata=metadata,
+            tracking_number=tracking_number,
         )
         
         _globals = operations.CreateTrackGlobals(

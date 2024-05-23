@@ -7,6 +7,7 @@ from enum import Enum
 from shippo import utils
 from typing import Optional
 
+
 class PaymentMethod(str, Enum):
     r"""Secured funds include money orders, certified cheques and others (see
     <a href=\"https://www.ups.com/content/us/en/shipping/time/service/value_added/cod.html\">UPS</a> for details). 

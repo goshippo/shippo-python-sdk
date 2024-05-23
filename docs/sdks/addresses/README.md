@@ -27,6 +27,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.addresses.list(page=1, results=5)
 
 if res is not None:
@@ -66,6 +67,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.addresses.create(request=components.AddressCreateRequest(
     country='US',
@@ -120,6 +122,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.addresses.get(address_id='<value>')
 
 if res is not None:
@@ -157,6 +160,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.addresses.validate(address_id='<value>')
 

@@ -39,6 +39,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.rates_at_checkout.create(request=components.LiveRateCreateRequest(
     address_to='<value>',
     line_items=[
@@ -97,6 +98,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.rates_at_checkout.get_default_parcel_template()
 
 if res is not None:
@@ -128,6 +130,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.rates_at_checkout.update_default_parcel_template(object_id='b958d3690bb04bb8b2986724872750f5')
 
@@ -167,18 +170,13 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-res = s.rates_at_checkout.delete_default_parcel_template()
 
-if res is not None:
-    # handle response
-    pass
+s.rates_at_checkout.delete_default_parcel_template()
+
+# Use the SDK ...
 
 ```
 
-
-### Response
-
-**[operations.DeleteDefaultParcelTemplateResponse](../../models/operations/deletedefaultparceltemplateresponse.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

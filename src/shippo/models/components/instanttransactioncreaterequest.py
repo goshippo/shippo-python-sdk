@@ -8,6 +8,7 @@ from enum import Enum
 from shippo import utils
 from typing import Optional
 
+
 class LabelFileType(str, Enum):
     PNG = 'PNG'
     PNG_2_3X7_5 = 'PNG_2.3x7.5'

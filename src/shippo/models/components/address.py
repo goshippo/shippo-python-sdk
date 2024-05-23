@@ -67,15 +67,15 @@ class Address:
     r"""A string of up to 100 characters that can be filled with any additional information you want
     to attach to the object.
     """
-    latitude: Optional[float] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('latitude'), 'exclude': lambda f: f is None }})
-    r"""Latitude of address"""
-    longitude: Optional[float] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('longitude'), 'exclude': lambda f: f is None }})
-    r"""Longitude of address"""
     is_complete: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('is_complete'), 'exclude': lambda f: f is None }})
     r"""Complete addresses contain all required values.<br><br>Incomplete addresses have failed one or multiple
     validations.<br>Incomplete Addresses are eligible for requesting rates but lack at least one required 
     value for purchasing labels.
     """
+    latitude: Optional[float] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('latitude'), 'exclude': lambda f: f is None }})
+    r"""Latitude of address"""
+    longitude: Optional[float] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('longitude'), 'exclude': lambda f: f is None }})
+    r"""Longitude of address"""
     object_created: Optional[datetime] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_created'), 'encoder': utils.datetimeisoformat(True), 'decoder': dateutil.parser.isoparse, 'exclude': lambda f: f is None }})
     r"""Date and time of Address creation."""
     object_id: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_id'), 'exclude': lambda f: f is None }})

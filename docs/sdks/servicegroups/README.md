@@ -28,6 +28,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.service_groups.list()
 
 if res is not None:
@@ -60,6 +61,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.service_groups.create(request=components.ServiceGroupCreateRequest(
     description='USPS shipping options',
@@ -114,6 +116,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.service_groups.update(request=components.ServiceGroupUpdateRequest(
     description='USPS shipping options',
@@ -170,11 +173,10 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-res = s.service_groups.delete(service_group_id='<value>')
 
-if res is not None:
-    # handle response
-    pass
+s.service_groups.delete(service_group_id='<value>')
+
+# Use the SDK ...
 
 ```
 
@@ -184,10 +186,6 @@ if res is not None:
 | ------------------------------ | ------------------------------ | ------------------------------ | ------------------------------ |
 | `service_group_id`             | *str*                          | :heavy_check_mark:             | Object ID of the service group |
 
-
-### Response
-
-**[operations.DeleteServiceGroupResponse](../../models/operations/deleteservicegroupresponse.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

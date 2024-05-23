@@ -64,10 +64,6 @@ class AddressCompleteCreateRequest:
     r"""A string of up to 100 characters that can be filled with any additional information you want
     to attach to the object.
     """
-    latitude: Optional[float] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('latitude'), 'exclude': lambda f: f is None }})
-    r"""Latitude of address"""
-    longitude: Optional[float] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('longitude'), 'exclude': lambda f: f is None }})
-    r"""Longitude of address"""
     validate: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('validate'), 'exclude': lambda f: f is None }})
     
 

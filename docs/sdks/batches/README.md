@@ -37,6 +37,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.batches.create(request=components.BatchCreateRequest(
     default_carrier_account='078870331023437cb917f5187429b093',
     default_servicelevel_token='usps_priority',
@@ -79,14 +80,104 @@ res = s.batches.create(request=components.BatchCreateRequest(
                     '<value>',
                 ],
                 extra=components.ShipmentExtra(
+                    accounts_receivable_customer_account=components.UPSReferenceFields(
+                        prefix='ABC',
+                        value='value',
+                        ref_sort=1,
+                    ),
+                    appropriation_number=components.UPSReferenceFields(
+                        prefix='ABC',
+                        value='value',
+                        ref_sort=1,
+                    ),
+                    bill_of_lading_number=components.UPSReferenceFields(
+                        prefix='ABC',
+                        value='value',
+                        ref_sort=1,
+                    ),
                     cod=components.Cod(
                         amount='5.5',
                         currency='USD',
                         payment_method=components.PaymentMethod.CASH,
                     ),
+                    cod_number=components.UPSReferenceFields(
+                        prefix='ABC',
+                        value='value',
+                        ref_sort=1,
+                    ),
+                    customer_reference=components.CustomerReference(
+                        ref_sort=1,
+                    ),
+                    dealer_order_number=components.UPSReferenceFields(
+                        prefix='ABC',
+                        value='value',
+                        ref_sort=1,
+                    ),
+                    dept_number=components.DepartmentNumber(
+                        ref_sort=3,
+                    ),
+                    fda_product_code=components.UPSReferenceFields(
+                        prefix='ABC',
+                        value='value',
+                        ref_sort=1,
+                    ),
                     insurance=components.Insurance(
                         amount='5.5',
                         currency='USD',
+                    ),
+                    invoice_number=components.InvoiceNumber(
+                        ref_sort=2,
+                    ),
+                    manifest_number=components.UPSReferenceFields(
+                        prefix='ABC',
+                        value='value',
+                        ref_sort=1,
+                    ),
+                    model_number=components.UPSReferenceFields(
+                        prefix='ABC',
+                        value='value',
+                        ref_sort=1,
+                    ),
+                    part_number=components.UPSReferenceFields(
+                        prefix='ABC',
+                        value='value',
+                        ref_sort=1,
+                    ),
+                    po_number=components.PoNumber(
+                        ref_sort=2,
+                    ),
+                    production_code=components.UPSReferenceFields(
+                        prefix='ABC',
+                        value='value',
+                        ref_sort=1,
+                    ),
+                    purchase_request_number=components.UPSReferenceFields(
+                        prefix='ABC',
+                        value='value',
+                        ref_sort=1,
+                    ),
+                    rma_number=components.RmaNumber(
+                        ref_sort=1,
+                    ),
+                    salesperson_number=components.UPSReferenceFields(
+                        prefix='ABC',
+                        value='value',
+                        ref_sort=1,
+                    ),
+                    serial_number=components.UPSReferenceFields(
+                        prefix='ABC',
+                        value='value',
+                        ref_sort=1,
+                    ),
+                    store_number=components.UPSReferenceFields(
+                        prefix='ABC',
+                        value='value',
+                        ref_sort=1,
+                    ),
+                    transaction_reference_number=components.UPSReferenceFields(
+                        prefix='ABC',
+                        value='value',
+                        ref_sort=1,
                     ),
                 ),
                 metadata='Customer ID 123456',
@@ -185,6 +276,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.batches.get(batch_id='<value>')
 
 if res is not None:
@@ -224,6 +316,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.batches.add_shipments(batch_id='<value>', request_body=[
     components.BatchShipmentBase(
         shipment=components.ShipmentCreateRequest(
@@ -241,14 +334,104 @@ res = s.batches.add_shipments(batch_id='<value>', request_body=[
                 ),
             ],
             extra=components.ShipmentExtra(
+                accounts_receivable_customer_account=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                appropriation_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                bill_of_lading_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
                 cod=components.Cod(
                     amount='5.5',
                     currency='USD',
                     payment_method=components.PaymentMethod.CASH,
                 ),
+                cod_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                customer_reference=components.CustomerReference(
+                    ref_sort=1,
+                ),
+                dealer_order_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                dept_number=components.DepartmentNumber(
+                    ref_sort=3,
+                ),
+                fda_product_code=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
                 insurance=components.Insurance(
                     amount='5.5',
                     currency='USD',
+                ),
+                invoice_number=components.InvoiceNumber(
+                    ref_sort=2,
+                ),
+                manifest_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                model_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                part_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                po_number=components.PoNumber(
+                    ref_sort=2,
+                ),
+                production_code=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                purchase_request_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                rma_number=components.RmaNumber(
+                    ref_sort=1,
+                ),
+                salesperson_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                serial_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                store_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                transaction_reference_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
                 ),
             ),
             metadata='Customer ID 123456',
@@ -345,6 +528,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.batches.purchase(batch_id='<value>')
 
 if res is not None:
@@ -382,6 +566,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.batches.remove_shipments(batch_id='<value>', request_body=[
     '<value>',

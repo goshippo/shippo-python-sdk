@@ -32,6 +32,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.manifests.list(page=1, results=5)
 
 if res is not None:
@@ -71,6 +72,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.manifests.create(request=components.ManifestCreateRequest(
     carrier_account='adcfdddf8ec64b84ad22772bce3ea37a',
@@ -131,6 +133,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.manifests.get(manifest_id='<value>')
 

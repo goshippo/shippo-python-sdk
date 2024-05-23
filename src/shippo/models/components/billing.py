@@ -7,6 +7,7 @@ from enum import Enum
 from shippo import utils
 from typing import Optional
 
+
 class Type(str, Enum):
     r"""Party to be billed. (Leave blank for DHL Germany.)"""
     SENDER = 'SENDER'

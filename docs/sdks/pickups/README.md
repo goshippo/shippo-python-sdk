@@ -27,6 +27,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.pickups.create(request=components.PickupBase(
     carrier_account='adcfdddf8ec64b84ad22772bce3ea37a',
     location=components.Location(

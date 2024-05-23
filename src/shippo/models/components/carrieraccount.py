@@ -9,6 +9,8 @@ from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
 from typing import Any, Dict, List, Optional, Union
 
+CarrierAccountParameters = Union[Dict[str, Any], FedExConnectExistingOwnAccountParameters, UPSConnectExistingOwnAccountParameters]
+
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
@@ -26,7 +28,7 @@ class CarrierAccount:
     r"""Determines whether the account is active. When creating a shipment, if no `carrier_accounts` are explicitly
     passed Shippo will query all carrier accounts that have this field set. By default, this is set to True.
     """
-    parameters: Optional[Union[Dict[str, Any], FedExConnectExistingOwnAccountParameters, UPSConnectExistingOwnAccountParameters]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parameters'), 'exclude': lambda f: f is None }})
+    parameters: Optional[CarrierAccountParameters] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parameters'), 'exclude': lambda f: f is None }})
     carrier_name: Optional[Any] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('carrier_name'), 'exclude': lambda f: f is None }})
     r"""Carrier name, see <a href=\\"#tag/Carriers\\">Carriers</a><br>"""
     is_shippo_account: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('is_shippo_account'), 'exclude': lambda f: f is None }})

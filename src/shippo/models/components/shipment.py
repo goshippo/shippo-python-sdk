@@ -15,6 +15,7 @@ from enum import Enum
 from shippo import utils
 from typing import List, Optional
 
+
 class ShipmentStatus(str, Enum):
     r"""`Waiting` shipments have been successfully submitted but not yet been processed.
     `Queued` shipments are currently being processed. 

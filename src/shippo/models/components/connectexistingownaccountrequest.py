@@ -8,13 +8,15 @@ from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
 from typing import Any, Dict, Optional, Union
 
+ConnectExistingOwnAccountRequestParameters = Union[Dict[str, Any], FedExConnectExistingOwnAccountParameters, UPSConnectExistingOwnAccountParameters]
+
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class ConnectExistingOwnAccountRequest:
     account_id: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('account_id') }})
     carrier: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('carrier') }})
-    parameters: Union[Dict[str, Any], FedExConnectExistingOwnAccountParameters, UPSConnectExistingOwnAccountParameters] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parameters') }})
+    parameters: ConnectExistingOwnAccountRequestParameters = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parameters') }})
     active: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('active'), 'exclude': lambda f: f is None }})
     metadata: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('metadata'), 'exclude': lambda f: f is None }})
     test: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('test'), 'exclude': lambda f: f is None }})
