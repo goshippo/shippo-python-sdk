@@ -5,13 +5,14 @@ import dataclasses
 import dateutil.parser
 from .distanceunitenum import DistanceUnitEnum
 from .parcelextra import ParcelExtra
-from .parceltemplateenumset import ParcelTemplateAramexAustraliaEnum, ParcelTemplateCouriersPleaseEnum, ParcelTemplateDHLeCommerceEnum, ParcelTemplateDPDUKEnum, ParcelTemplateFedExEnum, ParcelTemplateUPSEnum, ParcelTemplateUSPSEnum
+from .parceltemplateenumset import ParcelTemplateEnumSet
 from .weightunitenum import WeightUnitEnum
 from dataclasses_json import Undefined, dataclass_json
 from datetime import datetime
 from enum import Enum
 from shippo import utils
-from typing import Optional, Union
+from typing import Optional
+
 
 class ObjectState(str, Enum):
     r"""A Parcel will only be valid when all required values have been sent and validated successfully."""
@@ -55,7 +56,7 @@ class Parcel:
     r"""A Parcel will only be valid when all required values have been sent and validated successfully."""
     object_updated: Optional[datetime] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_updated'), 'encoder': utils.datetimeisoformat(True), 'decoder': dateutil.parser.isoparse, 'exclude': lambda f: f is None }})
     r"""Date and time of last Parcel update. Since you cannot update Parcels after they were created, this time stamp reflects the time when the Parcel was changed by Shippo's systems for the last time, e.g., during sorting the dimensions given."""
-    template: Optional[Union[ParcelTemplateFedExEnum, ParcelTemplateUPSEnum, ParcelTemplateUSPSEnum, ParcelTemplateDHLeCommerceEnum, ParcelTemplateDPDUKEnum, ParcelTemplateCouriersPleaseEnum, ParcelTemplateAramexAustraliaEnum]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('template'), 'exclude': lambda f: f is None }})
+    template: Optional[ParcelTemplateEnumSet] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('template'), 'exclude': lambda f: f is None }})
     r"""If template is passed, `length`, `width`, `height`, and `distance_unit` are not required"""
     test: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('test'), 'exclude': lambda f: f is None }})
     r"""Indicates whether the object has been created in test mode."""

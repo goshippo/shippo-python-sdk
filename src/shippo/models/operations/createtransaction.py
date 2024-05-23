@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 import dataclasses
-from typing import Optional
+from ...models.components import instanttransactioncreaterequest as components_instanttransactioncreaterequest
+from ...models.components import transactioncreaterequest as components_transactioncreaterequest
+from typing import Optional, Union
 
 
 @dataclasses.dataclass
@@ -11,3 +13,5 @@ class CreateTransactionGlobals:
     r"""String used to pick a non-default API version to use"""
     
 
+
+CreateTransactionRequestBody = Union[components_transactioncreaterequest.TransactionCreateRequest, components_instanttransactioncreaterequest.InstantTransactionCreateRequest]

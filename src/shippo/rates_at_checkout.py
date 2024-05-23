@@ -223,7 +223,7 @@ class RatesAtCheckout:
 
     
     
-    def delete_default_parcel_template(self) -> operations.DeleteDefaultParcelTemplateResponse:
+    def delete_default_parcel_template(self):
         r"""Clear current default parcel template
         Clears the currently configured default parcel template for live rates.
         """
@@ -270,7 +270,6 @@ class RatesAtCheckout:
             
         
         
-        res = operations.DeleteDefaultParcelTemplateResponse()
         
         if http_res.status_code == 204:
             pass
@@ -278,8 +277,6 @@ class RatesAtCheckout:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
-
-        return res
 
     
 

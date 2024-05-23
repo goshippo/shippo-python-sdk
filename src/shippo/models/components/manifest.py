@@ -9,6 +9,7 @@ from enum import Enum
 from shippo import utils
 from typing import List, Optional
 
+
 class ManifestStatus(str, Enum):
     r"""Indicates the status of the manifest."""
     QUEUED = 'QUEUED'

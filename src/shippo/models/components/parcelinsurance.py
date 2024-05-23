@@ -7,6 +7,7 @@ from enum import Enum
 from shippo import utils
 from typing import Optional
 
+
 class ParcelInsuranceProvider(str, Enum):
     r"""To have insurance cover provided by a carrier directly instead of Shippo's provider (XCover), set provider to `FEDEX`, `UPS`, or `ONTRAC`."""
     FEDEX = 'FEDEX'

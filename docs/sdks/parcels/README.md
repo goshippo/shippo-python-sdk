@@ -30,6 +30,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.parcels.list(page=1, results=25)
 
 if res is not None:
@@ -69,6 +70,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.parcels.create(request=components.ParcelRequest(
     distance_unit=components.DistanceUnitEnum.IN,
@@ -127,6 +129,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.parcels.get(parcel_id='<value>')
 

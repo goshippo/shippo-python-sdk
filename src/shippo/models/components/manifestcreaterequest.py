@@ -7,6 +7,8 @@ from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
 from typing import List, Optional, Union
 
+ManifestCreateRequestAddressFrom = Union[AddressCreateRequest, str]
+
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
@@ -17,7 +19,7 @@ class ManifestCreateRequest:
     r"""All shipments to be submitted on this day will be closed out.
     Must be in the format `2014-01-18T00:35:03.463Z` (ISO 8601 date).
     """
-    address_from: Union[AddressCreateRequest, str] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_from') }})
+    address_from: ManifestCreateRequestAddressFrom = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_from') }})
     transactions: Optional[List[str]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('transactions'), 'exclude': lambda f: f is None }})
     r"""IDs transactions to use. If you set this to null or not send this parameter,
     Shippo will automatically assign all applicable transactions.

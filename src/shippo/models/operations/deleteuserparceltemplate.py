@@ -19,8 +19,3 @@ class DeleteUserParcelTemplateRequest:
     r"""Object ID of the user parcel template"""
     
 
-
-
-@dataclasses.dataclass
-class DeleteUserParcelTemplateResponse:
-    pass

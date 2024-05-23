@@ -27,6 +27,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.carrier_parcel_templates.list(include=operations.Include.ENABLED, carrier='fedex')
 
 if res is not None:
@@ -45,7 +46,7 @@ if res is not None:
 
 ### Response
 
-**[List[components.CarrierParcelTemplate]](../../models/.md)**
+**[components.CarrierParcelTemplateList](../../models/components/carrierparceltemplatelist.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
@@ -65,6 +66,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.carrier_parcel_templates.get(carrier_parcel_template_token='<value>')
 

@@ -4,11 +4,11 @@ from __future__ import annotations
 import dataclasses
 from .distanceunitenum import DistanceUnitEnum
 from .parcelextra import ParcelExtra
-from .parceltemplateenumset import ParcelTemplateAramexAustraliaEnum, ParcelTemplateCouriersPleaseEnum, ParcelTemplateDHLeCommerceEnum, ParcelTemplateDPDUKEnum, ParcelTemplateFedExEnum, ParcelTemplateUPSEnum, ParcelTemplateUSPSEnum
+from .parceltemplateenumset import ParcelTemplateEnumSet
 from .weightunitenum import WeightUnitEnum
 from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
-from typing import Optional, Union
+from typing import Optional
 
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
@@ -32,7 +32,7 @@ class ParcelRequest:
     """
     metadata: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('metadata'), 'exclude': lambda f: f is None }})
     r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
-    template: Optional[Union[ParcelTemplateFedExEnum, ParcelTemplateUPSEnum, ParcelTemplateUSPSEnum, ParcelTemplateDHLeCommerceEnum, ParcelTemplateDPDUKEnum, ParcelTemplateCouriersPleaseEnum, ParcelTemplateAramexAustraliaEnum]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('template'), 'exclude': lambda f: f is None }})
+    template: Optional[ParcelTemplateEnumSet] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('template'), 'exclude': lambda f: f is None }})
     r"""If template is passed, `length`, `width`, `height`, and `distance_unit` are not required"""
     test: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('test'), 'exclude': lambda f: f is None }})
     r"""Indicates whether the object has been created in test mode."""

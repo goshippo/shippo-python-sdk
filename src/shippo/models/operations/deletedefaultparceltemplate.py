@@ -16,8 +16,3 @@ class DeleteDefaultParcelTemplateGlobals:
 @dataclasses.dataclass
 class DeleteDefaultParcelTemplateRequest:
     pass
-
-
-@dataclasses.dataclass
-class DeleteDefaultParcelTemplateResponse:
-    pass

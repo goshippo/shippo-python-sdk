@@ -15,6 +15,7 @@ from enum import Enum
 from shippo import utils
 from typing import List, Optional
 
+
 class InstantTransactionCreateResponseResponseType(str, Enum):
     INSTANT = 'instant'
 

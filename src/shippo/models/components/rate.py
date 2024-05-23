@@ -4,12 +4,13 @@ from __future__ import annotations
 import dataclasses
 import dateutil.parser
 from .responsemessage import ResponseMessage
-from .servicelevel import ServiceLevel
+from .servicelevelwithparent import ServiceLevelWithParent
 from dataclasses_json import Undefined, dataclass_json
 from datetime import datetime
 from enum import Enum
 from shippo import utils
 from typing import List, Optional
+
 
 class Attributes(str, Enum):
     BESTVALUE = 'BESTVALUE'
@@ -46,8 +47,7 @@ class Rate:
     r"""Username of the user who created the rate object."""
     provider: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('provider') }})
     r"""Carrier offering the rate, e.g., `FedEx` or `Deutsche Post DHL`."""
-    servicelevel: ServiceLevel = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('servicelevel') }})
-    r"""Contains details regarding the service level for the given rate."""
+    servicelevel: ServiceLevelWithParent = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('servicelevel') }})
     shipment: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('shipment') }})
     arrives_by: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('arrives_by'), 'exclude': lambda f: f is None }})
     r"""Predicted time the carrier will deliver the package in the destination's local time zone. In the format `HH:MM:SS`."""

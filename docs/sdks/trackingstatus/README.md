@@ -34,6 +34,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.tracking_status.create(carrier='usps', tracking_number='9205590164917312751089', metadata='Order 000123')
 
 if res is not None:
@@ -73,6 +74,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.tracking_status.get(tracking_number='<value>', carrier='<value>')
 

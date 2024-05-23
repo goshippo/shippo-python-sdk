@@ -7,6 +7,7 @@ from enum import Enum
 from shippo import utils
 from typing import Optional
 
+
 class RecipientType(str, Enum):
     r"""Mandatory for Fedex only. License type of the recipient of the Alcohol Package."""
     LICENSEE = 'licensee'

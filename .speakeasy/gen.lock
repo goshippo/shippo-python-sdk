@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: 39e10349affb3dc3eb679b2b5a3bd921
+  docChecksum: 18bd9f6fc3ead5fbd58a70075c171f3c
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.286.3
-  generationVersion: 2.329.0
-  releaseVersion: 3.4.1
-  configChecksum: 1ac15bdccfcc3d14ee59b9b40e49fa96
+  speakeasyVersion: 1.295.1
+  generationVersion: 2.335.5
+  releaseVersion: 3.4.2
+  configChecksum: 4636d0debb1cb12d62a25eadfb0de208
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
@@ -14,7 +14,7 @@ features:
   python:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.3
-    core: 4.6.7
+    core: 4.6.8
     flattening: 2.81.1
     globalSecurity: 2.83.5
     globalSecurityCallbacks: 0.1.0
@@ -26,7 +26,7 @@ features:
     nameOverrides: 2.81.2
     responseFormat: 0.1.0
     sdkHooks: 0.1.0
-    unions: 2.82.6
+    unions: 2.82.7
 generatedFiles:
   - src/shippo/sdkconfiguration.py
   - src/shippo/addresses.py
@@ -80,6 +80,7 @@ generatedFiles:
   - src/shippo/models/components/addressimporter.py
   - src/shippo/models/components/customsdeclarationb13afilingoptionenum.py
   - src/shippo/models/components/shipmentextra.py
+  - src/shippo/models/components/upsreferencefields.py
   - src/shippo/models/components/rmanumber.py
   - src/shippo/models/components/ponumber.py
   - src/shippo/models/components/invoicenumber.py
@@ -151,13 +152,14 @@ generatedFiles:
   - src/shippo/models/components/orderstatusenum.py
   - src/shippo/models/components/ordercreaterequest.py
   - src/shippo/models/components/lineitembase.py
+  - src/shippo/models/components/carrierparceltemplatelist.py
   - src/shippo/models/components/parcelpaginatedlist.py
   - src/shippo/models/components/parcelrequest.py
   - src/shippo/models/components/pickup.py
   - src/shippo/models/components/location.py
   - src/shippo/models/components/pickupbase.py
   - src/shippo/models/components/rate.py
-  - src/shippo/models/components/servicelevel.py
+  - src/shippo/models/components/servicelevelwithparent.py
   - src/shippo/models/components/responsemessage.py
   - src/shippo/models/components/ratepaginatedlist.py
   - src/shippo/models/components/refund.py
@@ -179,10 +181,13 @@ generatedFiles:
   - src/shippo/models/components/transactionpaginatedlist.py
   - src/shippo/models/components/transaction.py
   - src/shippo/models/components/transactionstatusenum.py
+  - src/shippo/models/components/transactioncreateresponse.py
   - src/shippo/models/components/instanttransactioncreateresponse.py
   - src/shippo/models/components/instanttransactionrate.py
   - src/shippo/models/components/transactioncreaterequest.py
   - src/shippo/models/components/instanttransactioncreaterequest.py
+  - src/shippo/models/components/userparceltemplatelist.py
+  - src/shippo/models/components/userparceltemplatecreaterequest.py
   - src/shippo/models/components/userparceltemplatewithcarriertemplatecreaterequest.py
   - src/shippo/models/components/userparceltemplatewithoutcarriertemplatecreaterequest.py
   - src/shippo/models/components/userparceltemplateupdaterequest.py
@@ -190,6 +195,7 @@ generatedFiles:
   - src/shippo/models/components/shippoaccount.py
   - src/shippo/models/components/shippoaccountupdaterequest.py
   - src/shippo/models/components/security.py
+  - src/shippo/models/components/servicelevel.py
   - src/shippo/models/components/servicelevelenumset.py
   - src/shippo/models/operations/listaddresses.py
   - src/shippo/models/operations/getaddress.py
@@ -309,6 +315,7 @@ generatedFiles:
   - docs/models/components/returnservicetype.md
   - docs/models/components/signatureconfirmation.md
   - docs/models/components/shipmentextra.md
+  - docs/models/components/upsreferencefields.md
   - docs/models/components/rmanumber.md
   - docs/models/components/ponumber.md
   - docs/models/components/invoicenumber.md
@@ -413,6 +420,7 @@ generatedFiles:
   - docs/models/components/orderstatusenum.md
   - docs/models/components/ordercreaterequest.md
   - docs/models/components/lineitembase.md
+  - docs/models/components/carrierparceltemplatelist.md
   - docs/models/components/parcelpaginatedlist.md
   - docs/models/components/parcelrequest.md
   - docs/models/components/pickupstatus.md
@@ -423,7 +431,8 @@ generatedFiles:
   - docs/models/components/pickupbase.md
   - docs/models/components/attributes.md
   - docs/models/components/rate.md
-  - docs/models/components/servicelevel.md
+  - docs/models/components/parentservicelevel.md
+  - docs/models/components/servicelevelwithparent.md
   - docs/models/components/responsemessage.md
   - docs/models/components/ratepaginatedlist.md
   - docs/models/components/refundstatus.md
@@ -455,6 +464,7 @@ generatedFiles:
   - docs/models/components/transactioncreaterequest.md
   - docs/models/components/labelfiletype.md
   - docs/models/components/instanttransactioncreaterequest.md
+  - docs/models/components/userparceltemplatelist.md
   - docs/models/components/userparceltemplatecreaterequest.md
   - docs/models/components/userparceltemplatewithcarriertemplatecreaterequest.md
   - docs/models/components/userparceltemplatewithoutcarriertemplatecreaterequest.md
@@ -463,6 +473,7 @@ generatedFiles:
   - docs/models/components/shippoaccount.md
   - docs/models/components/shippoaccountupdaterequest.md
   - docs/models/components/security.md
+  - docs/models/components/servicelevel.md
   - docs/models/components/servicelevelswyftenum.md
   - docs/models/components/servicelevelvehoenum.md
   - docs/models/components/serviceleveludsenum.md
@@ -544,7 +555,6 @@ generatedFiles:
   - docs/models/operations/getdefaultparceltemplaterequest.md
   - docs/models/operations/deletedefaultparceltemplateglobals.md
   - docs/models/operations/deletedefaultparceltemplaterequest.md
-  - docs/models/operations/deletedefaultparceltemplateresponse.md
   - docs/models/operations/listmanifestsglobals.md
   - docs/models/operations/listmanifestsrequest.md
   - docs/models/operations/getmanifestglobals.md
@@ -576,7 +586,6 @@ generatedFiles:
   - docs/models/operations/listservicegroupsrequest.md
   - docs/models/operations/deleteservicegroupglobals.md
   - docs/models/operations/deleteservicegrouprequest.md
-  - docs/models/operations/deleteservicegroupresponse.md
   - docs/models/operations/listshipmentsglobals.md
   - docs/models/operations/listshipmentsrequest.md
   - docs/models/operations/getshipmentglobals.md
@@ -593,7 +602,6 @@ generatedFiles:
   - docs/models/operations/listuserparceltemplatesrequest.md
   - docs/models/operations/deleteuserparceltemplateglobals.md
   - docs/models/operations/deleteuserparceltemplaterequest.md
-  - docs/models/operations/deleteuserparceltemplateresponse.md
   - docs/models/operations/getuserparceltemplateglobals.md
   - docs/models/operations/getuserparceltemplaterequest.md
   - docs/models/operations/updateuserparceltemplateglobals.md

@@ -5,7 +5,7 @@ from .sdkconfiguration import SDKConfiguration
 from shippo import utils
 from shippo._hooks import AfterErrorContext, AfterSuccessContext, BeforeRequestContext, HookContext
 from shippo.models import components, errors, operations
-from typing import List, Optional, Union
+from typing import Optional
 
 class UserParcelTemplates:
     r"""A user parcel template represents a package used for shipping that has preset dimensions and attributes defined
@@ -23,7 +23,7 @@ class UserParcelTemplates:
         
     
     
-    def list(self) -> List[components.UserParcelTemplate]:
+    def list(self) -> components.UserParcelTemplateList:
         r"""List all user parcel templates
         Returns a list all of all user parcel template objects.
         """
@@ -74,7 +74,7 @@ class UserParcelTemplates:
         if http_res.status_code == 200:
             # pylint: disable=no-else-return
             if utils.match_content_type(http_res.headers.get('Content-Type') or '', 'application/json'):                
-                out = utils.unmarshal_json(http_res.text, Optional[List[components.UserParcelTemplate]])
+                out = utils.unmarshal_json(http_res.text, Optional[components.UserParcelTemplateList])
                 return out
             
             content_type = http_res.headers.get('Content-Type')
@@ -86,7 +86,7 @@ class UserParcelTemplates:
 
     
     
-    def create(self, request: Union[components.UserParcelTemplateWithCarrierTemplateCreateRequest, components.UserParcelTemplateWithoutCarrierTemplateCreateRequest]) -> components.UserParcelTemplate:
+    def create(self, request: components.UserParcelTemplateCreateRequest) -> components.UserParcelTemplate:
         r"""Create a new user parcel template
         Creates a new user parcel template. <br>You can choose to create a
         parcel template using a preset carrier template as a starting point, or
@@ -111,7 +111,7 @@ class UserParcelTemplates:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, Union[components.UserParcelTemplateWithCarrierTemplateCreateRequest, components.UserParcelTemplateWithoutCarrierTemplateCreateRequest], "request", False, False, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, components.UserParcelTemplateCreateRequest, "request", False, False, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         if data is None and form is None:
@@ -157,7 +157,7 @@ class UserParcelTemplates:
 
     
     
-    def delete(self, user_parcel_template_object_id: str) -> operations.DeleteUserParcelTemplateResponse:
+    def delete(self, user_parcel_template_object_id: str):
         r"""Delete a user parcel template
         Deletes a user parcel template using an object ID.
         """
@@ -205,7 +205,6 @@ class UserParcelTemplates:
             
         
         
-        res = operations.DeleteUserParcelTemplateResponse()
         
         if http_res.status_code == 204:
             pass
@@ -213,8 +212,6 @@ class UserParcelTemplates:
             raise errors.SDKError('API error occurred', http_res.status_code, http_res.text, http_res)
         else:
             raise errors.SDKError('unknown status code received', http_res.status_code, http_res.text, http_res)
-
-        return res
 
     
     

@@ -36,6 +36,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.carrier_accounts.list(request=operations.ListCarrierAccountsRequest())
 
 if res is not None:
@@ -74,6 +75,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.carrier_accounts.create(request=components.ConnectExistingOwnAccountRequest(
     account_id='321123',
@@ -128,6 +130,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.carrier_accounts.get(carrier_account_id='<value>')
 
 if res is not None:
@@ -166,6 +169,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.carrier_accounts.update(carrier_account_id='<value>', carrier_account_base=components.CarrierAccountBase(
     account_id='****',
@@ -233,6 +237,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.carrier_accounts.initiate_oauth2_signin(carrier_account_object_id='<value>', redirect_uri='http://fine-cummerbund.biz', state='<value>')
 
 if res is not None:
@@ -277,6 +282,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.carrier_accounts.register(request=components.CarrierAccountColissimoCreateRequest(
     carrier='colissimo',
     parameters=components.CarrierAccountColissimoCreateRequestParameters(),
@@ -290,9 +296,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Required                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `request`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | [Union[components.CarrierAccountCanadaPostCreateRequest, components.CarrierAccountChronopostCreateRequest, components.CarrierAccountColissimoCreateRequest, components.CarrierAccountCorreosCreateRequest, components.CarrierAccountDeutschePostCreateRequest, components.CarrierAccountDHLExpressCreateRequest, components.CarrierAccountDpdDeCreateRequest, components.CarrierAccountDPDUKCreateRequest, components.CarrierAccountFedExCreateRequest, components.CarrierAccountHermesUKCreateRequest, components.CarrierAccountMondialRelayCreateRequest, components.CarrierAccountPosteItalianeCreateRequest, components.CarrierAccountUPSCreateRequest, components.CarrierAccountUSPSCreateRequest]](../../models/operations/registercarrieraccountrequestbody.md) | :heavy_check_mark:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | The request object to use for the request.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Parameter                                                                                                    | Type                                                                                                         | Required                                                                                                     | Description                                                                                                  |
+| ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                    | [operations.RegisterCarrierAccountRequestBody](../../models/operations/registercarrieraccountrequestbody.md) | :heavy_check_mark:                                                                                           | The request object to use for the request.                                                                   |
 
 
 ### Response
@@ -318,6 +324,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.carrier_accounts.get_registration_status(carrier=operations.Carrier.USPS)
 

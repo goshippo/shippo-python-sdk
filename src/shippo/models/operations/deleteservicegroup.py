@@ -19,8 +19,3 @@ class DeleteServiceGroupRequest:
     r"""Object ID of the service group"""
     
 
-
-
-@dataclasses.dataclass
-class DeleteServiceGroupResponse:
-    pass

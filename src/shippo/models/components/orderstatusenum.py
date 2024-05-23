@@ -3,6 +3,7 @@
 from __future__ import annotations
 from enum import Enum
 
+
 class OrderStatusEnum(str, Enum):
     r"""Current state of the order. See the <a href=\\"https://docs.goshippo.com/docs/orders/orders/\\">orders tutorial</a>
     for the logic of how the status is handled.

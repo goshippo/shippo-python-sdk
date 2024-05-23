@@ -3,6 +3,7 @@
 from __future__ import annotations
 from enum import Enum
 
+
 class CustomsDeclarationEelPfcEnum(str, Enum):
     r"""EEL / PFC type of the shipment. For most shipments from the US to CA, `NOEEI_30_36` is applicable; for most
     other shipments from the US, `NOEEI_30_37_a` is applicable.

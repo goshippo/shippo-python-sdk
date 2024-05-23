@@ -11,6 +11,7 @@ from enum import Enum
 from shippo import utils
 from typing import List, Optional
 
+
 class ShopApp(str, Enum):
     r"""Platform the order was created on and, if applicable, imported from.
     Orders created via the Shippo API or dashboard will have the value \"Shippo\".

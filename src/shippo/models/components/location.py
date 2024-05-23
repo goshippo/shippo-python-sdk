@@ -8,6 +8,7 @@ from enum import Enum
 from shippo import utils
 from typing import Optional
 
+
 class BuildingLocationType(str, Enum):
     r"""Where your parcels will be available for pickup. \\"Security Deck\\" and \\"Shipping Dock\\" are only
     supported for DHL Express.
@@ -24,6 +25,7 @@ class BuildingLocationType(str, Enum):
     OTHER = 'Other'
     RECEPTION = 'Reception'
     SIDE_DOOR = 'Side Door'
+
 
 class BuildingType(str, Enum):
     r"""The type of building where the pickup is located."""

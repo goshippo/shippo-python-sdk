@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 from enum import Enum
+from typing import Union
+
 
 class ParcelTemplateAramexAustraliaEnum(str, Enum):
     r"""|Token | Name | Dimensions|
@@ -16,6 +18,7 @@ class ParcelTemplateAramexAustraliaEnum(str, Enum):
     FASTWAY_AUSTRALIA_SATCHEL_A4 = 'Fastway_Australia_Satchel_A4'
     FASTWAY_AUSTRALIA_SATCHEL_A5 = 'Fastway_Australia_Satchel_A5'
 
+
 class ParcelTemplateCouriersPleaseEnum(str, Enum):
     r"""|Token | Name | Dimensions|
     |:---|:---|:---|
@@ -29,12 +32,14 @@ class ParcelTemplateCouriersPleaseEnum(str, Enum):
     COURIERSPLEASE_3KG_SATCHEL = 'couriersplease_3kg_satchel'
     COURIERSPLEASE_5KG_SATCHEL = 'couriersplease_5kg_satchel'
 
+
 class ParcelTemplateDPDUKEnum(str, Enum):
     r"""|Token | Name | Dimensions|
     |:---|:---|:---|
     | DPD_UK_Express_Pak| DPD UK Express Pak | 530.00 x 400.00 x 100.00 mm|
     """
     DPD_UK_EXPRESS_PAK = 'DPD_UK_Express_Pak'
+
 
 class ParcelTemplateDHLeCommerceEnum(str, Enum):
     r"""|Token | Name | Dimensions|
@@ -44,6 +49,7 @@ class ParcelTemplateDHLeCommerceEnum(str, Enum):
     """
     DH_LE_C_IRREGULAR = 'DHLeC_Irregular'
     DH_LE_C_SM_FLATS = 'DHLeC_SM_Flats'
+
 
 class ParcelTemplateUSPSEnum(str, Enum):
     r"""|Token | Name | Dimensions|
@@ -89,6 +95,7 @@ class ParcelTemplateUSPSEnum(str, Enum):
     USPS_SMALL_FLAT_RATE_BOX = 'USPS_SmallFlatRateBox'
     USPS_SMALL_FLAT_RATE_ENVELOPE = 'USPS_SmallFlatRateEnvelope'
     USPS_SOFT_PACK = 'USPS_SoftPack'
+
 
 class ParcelTemplateUPSEnum(str, Enum):
     r"""|Token | Name | Dimensions|
@@ -145,6 +152,7 @@ class ParcelTemplateUPSEnum(str, Enum):
     UPS_PAD_PAK = 'UPS_Pad_Pak'
     UPS_PALLET = 'UPS_Pallet'
 
+
 class ParcelTemplateFedExEnum(str, Enum):
     r"""|Token | Name | Dimensions|
     |:---|:---|:---|
@@ -181,3 +189,5 @@ class ParcelTemplateFedExEnum(str, Enum):
     FED_EX_PAK_2 = 'FedEx_Pak_2'
     FED_EX_TUBE = 'FedEx_Tube'
     FED_EX_XL_PAK = 'FedEx_XL_Pak'
+
+ParcelTemplateEnumSet = Union['ParcelTemplateFedExEnum', 'ParcelTemplateUPSEnum', 'ParcelTemplateUSPSEnum', 'ParcelTemplateDHLeCommerceEnum', 'ParcelTemplateDPDUKEnum', 'ParcelTemplateCouriersPleaseEnum', 'ParcelTemplateAramexAustraliaEnum']

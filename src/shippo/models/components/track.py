@@ -3,7 +3,7 @@
 from __future__ import annotations
 import dataclasses
 import dateutil.parser
-from .servicelevel import ServiceLevel
+from .servicelevelwithparent import ServiceLevelWithParent
 from .trackingstatus import TrackingStatus
 from .trackingstatuslocationbase import TrackingStatusLocationBase
 from dataclasses_json import Undefined, dataclass_json
@@ -34,8 +34,7 @@ class Track:
     r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
     original_eta: Optional[datetime] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('original_eta'), 'encoder': utils.datetimeisoformat(True), 'decoder': dateutil.parser.isoparse, 'exclude': lambda f: f is None }})
     r"""The estimated time of arrival according to the carrier at the time the shipment first entered the system."""
-    servicelevel: Optional[ServiceLevel] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('servicelevel'), 'exclude': lambda f: f is None }})
-    r"""Contains details regarding the service level for the given rate."""
+    servicelevel: Optional[ServiceLevelWithParent] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('servicelevel'), 'exclude': lambda f: f is None }})
     tracking_status: Optional[TrackingStatus] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('tracking_status'), 'exclude': lambda f: f is None }})
     r"""The latest tracking information of this shipment."""
     transaction: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('transaction'), 'exclude': lambda f: f is None }})

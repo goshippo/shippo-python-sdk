@@ -5,7 +5,7 @@ from .sdkconfiguration import SDKConfiguration
 from shippo import utils
 from shippo._hooks import AfterErrorContext, AfterSuccessContext, BeforeRequestContext, HookContext
 from shippo.models import components, errors, operations
-from typing import Optional, Union
+from typing import Optional
 
 class Transactions:
     r"""A transaction is the purchase of a shipping label from a shipping provider for a specific service. You can print purchased labels and used them to ship a parcel with a carrier, such as USPS or FedEx.
@@ -78,7 +78,7 @@ class Transactions:
 
     
     
-    def create(self, request: Union[components.TransactionCreateRequest, components.InstantTransactionCreateRequest]) -> Union[components.Transaction, components.InstantTransactionCreateResponse]:
+    def create(self, request: operations.CreateTransactionRequestBody) -> components.TransactionCreateResponse:
         r"""Create a shipping label
         Creates a new transaction object and purchases the shipping label using a rate object that has previously been created. <br> OR <br> Creates a new transaction object and purchases the shipping label instantly using shipment details, an existing carrier account, and an existing service level token.
         """
@@ -97,7 +97,7 @@ class Transactions:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, Union[components.TransactionCreateRequest, components.InstantTransactionCreateRequest], "request", False, False, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateTransactionRequestBody, "request", False, False, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         if data is None and form is None:
@@ -131,7 +131,7 @@ class Transactions:
         if http_res.status_code == 201:
             # pylint: disable=no-else-return
             if utils.match_content_type(http_res.headers.get('Content-Type') or '', 'application/json'):                
-                out = utils.unmarshal_json(http_res.text, Optional[Union[components.Transaction, components.InstantTransactionCreateResponse]])
+                out = utils.unmarshal_json(http_res.text, Optional[components.TransactionCreateResponse])
                 return out
             
             content_type = http_res.headers.get('Content-Type')

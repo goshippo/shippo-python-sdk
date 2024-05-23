@@ -7,6 +7,7 @@ from enum import Enum
 from shippo import utils
 from typing import Optional
 
+
 class CustomsTaxIdentificationType(str, Enum):
     r"""Type of tax identification.
     * `EIN` - Employer Identification Number, also known as a Federal Tax Identification Number.

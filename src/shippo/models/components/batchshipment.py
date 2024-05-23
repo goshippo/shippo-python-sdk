@@ -9,6 +9,7 @@ from enum import Enum
 from shippo import utils
 from typing import List, Optional
 
+
 class Status(str, Enum):
     r"""`INVALID` batch shipments cannot be purchased and will have to be removed, fixed, and added to the batch again.<br>
     `VALID` batch shipments can be purchased. <br>

@@ -3,6 +3,7 @@
 from __future__ import annotations
 from enum import Enum
 
+
 class CustomsDeclarationContentsTypeEnum(str, Enum):
     r"""Type of goods of the shipment.
     Allowed values available <a href=\"#tag/Customs-Declaration-Contents-Type\">here</a>

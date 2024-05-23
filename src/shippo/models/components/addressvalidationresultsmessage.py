@@ -7,6 +7,7 @@ from enum import Enum
 from shippo import utils
 from typing import Optional
 
+
 class Code(str, Enum):
     VERIFICATION_ERROR = 'verification_error'
     UNKNOWN_STREET_LOWER = 'unknown_street'
@@ -68,6 +69,7 @@ class Code(str, Enum):
     INVALID_STATE = 'Invalid State'
     INVALID_CITY = 'Invalid City'
     AMBIGUOUS_ADDRESS = 'Ambiguous Address'
+
 
 class Source(str, Enum):
     SHIPPO_ADDRESS_VALIDATOR = 'Shippo Address Validator'

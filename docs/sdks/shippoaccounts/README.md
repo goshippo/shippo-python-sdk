@@ -29,6 +29,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.shippo_accounts.list(page=1, results=25)
 
 if res is not None:
@@ -68,6 +69,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.shippo_accounts.create(request=components.ShippoAccountUpdateRequest(
     email='hippo@shippo.com',
@@ -112,6 +114,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.shippo_accounts.get(shippo_account_id='<value>')
 
 if res is not None:
@@ -150,6 +153,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.shippo_accounts.update(shippo_account_id='<value>', shippo_account_update_request=components.ShippoAccountUpdateRequest(
     email='hippo@shippo.com',

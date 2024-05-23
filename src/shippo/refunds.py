@@ -24,8 +24,8 @@ class Refunds:
         """
         hook_ctx = HookContext(operation_id='CreateRefund', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = components.RefundRequestBody(
-            transaction=transaction,
             async_=async_,
+            transaction=transaction,
         )
         
         _globals = operations.CreateRefundGlobals(

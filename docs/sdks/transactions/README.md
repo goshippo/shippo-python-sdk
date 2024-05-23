@@ -27,6 +27,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.transactions.list(request=operations.ListTransactionsRequest(
     object_status=components.TransactionStatusEnum.SUCCESS,
     tracking_status=components.TrackingStatusEnum.DELIVERED,
@@ -69,6 +70,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.transactions.create(request=components.TransactionCreateRequest(
     rate='ec9f0d3adc9441449c85d315f0997fd5',
     async_=False,
@@ -84,14 +86,14 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                                                         | Type                                                                                                                                              | Required                                                                                                                                          | Description                                                                                                                                       |
-| ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `request`                                                                                                                                         | [Union[components.TransactionCreateRequest, components.InstantTransactionCreateRequest]](../../models/operations/createtransactionrequestbody.md) | :heavy_check_mark:                                                                                                                                | The request object to use for the request.                                                                                                        |
+| Parameter                                                                                          | Type                                                                                               | Required                                                                                           | Description                                                                                        |
+| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `request`                                                                                          | [operations.CreateTransactionRequestBody](../../models/operations/createtransactionrequestbody.md) | :heavy_check_mark:                                                                                 | The request object to use for the request.                                                         |
 
 
 ### Response
 
-**[Union[components.Transaction, components.InstantTransactionCreateResponse]](../../models/components/transactioncreateresponse.md)**
+**[components.TransactionCreateResponse](../../models/components/transactioncreateresponse.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
@@ -111,6 +113,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.transactions.get(transaction_id='<value>')
 

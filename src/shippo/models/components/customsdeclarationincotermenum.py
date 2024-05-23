@@ -3,6 +3,7 @@
 from __future__ import annotations
 from enum import Enum
 
+
 class CustomsDeclarationIncotermEnum(str, Enum):
     r"""The incoterm reference of the shipment. FCA is available for DHL Express and FedEx only.
     eDAP is available for DPD UK only. DAP is available for DHL Express and DPD UK.

@@ -3,11 +3,11 @@
 from __future__ import annotations
 import dataclasses
 from .distanceunitenum import DistanceUnitEnum
-from .parceltemplateenumset import ParcelTemplateAramexAustraliaEnum, ParcelTemplateCouriersPleaseEnum, ParcelTemplateDHLeCommerceEnum, ParcelTemplateDPDUKEnum, ParcelTemplateFedExEnum, ParcelTemplateUPSEnum, ParcelTemplateUSPSEnum
+from .parceltemplateenumset import ParcelTemplateEnumSet
 from .weightunitenum import WeightUnitEnum
 from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
-from typing import Optional, Union
+from typing import Optional
 
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
@@ -31,7 +31,7 @@ class ParcelCreateRequest:
     r"""**Required if template is not specified**<br>
     Width of the Parcel. Up to six digits in front and four digits after the decimal separator are accepted.
     """
-    template: Optional[Union[ParcelTemplateFedExEnum, ParcelTemplateUPSEnum, ParcelTemplateUSPSEnum, ParcelTemplateDHLeCommerceEnum, ParcelTemplateDPDUKEnum, ParcelTemplateCouriersPleaseEnum, ParcelTemplateAramexAustraliaEnum]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('template'), 'exclude': lambda f: f is None }})
+    template: Optional[ParcelTemplateEnumSet] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('template'), 'exclude': lambda f: f is None }})
     r"""If template is passed, `length`, `width`, `height`, and `distance_unit` are not required"""
     metadata: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('metadata'), 'exclude': lambda f: f is None }})
     

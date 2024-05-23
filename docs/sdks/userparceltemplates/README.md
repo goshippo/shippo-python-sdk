@@ -33,6 +33,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.user_parcel_templates.list()
 
 if res is not None:
@@ -44,7 +45,7 @@ if res is not None:
 
 ### Response
 
-**[List[components.UserParcelTemplate]](../../models/.md)**
+**[components.UserParcelTemplateList](../../models/components/userparceltemplatelist.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
@@ -72,6 +73,7 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
+
 res = s.user_parcel_templates.create(request=components.UserParcelTemplateWithCarrierTemplateCreateRequest(
     weight='12',
     weight_unit=components.WeightUnitEnum.LB,
@@ -85,9 +87,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                            | Type                                                                                                                                                                                                 | Required                                                                                                                                                                                             | Description                                                                                                                                                                                          |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `request`                                                                                                                                                                                            | [Union[components.UserParcelTemplateWithCarrierTemplateCreateRequest, components.UserParcelTemplateWithoutCarrierTemplateCreateRequest]](../../models/components/userparceltemplatecreaterequest.md) | :heavy_check_mark:                                                                                                                                                                                   | The request object to use for the request.                                                                                                                                                           |
+| Parameter                                                                                                | Type                                                                                                     | Required                                                                                                 | Description                                                                                              |
+| -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `request`                                                                                                | [components.UserParcelTemplateCreateRequest](../../models/components/userparceltemplatecreaterequest.md) | :heavy_check_mark:                                                                                       | The request object to use for the request.                                                               |
 
 
 ### Response
@@ -113,11 +115,10 @@ s = shippo.Shippo(
     shippo_api_version='2018-02-08',
 )
 
-res = s.user_parcel_templates.delete(user_parcel_template_object_id='<value>')
 
-if res is not None:
-    # handle response
-    pass
+s.user_parcel_templates.delete(user_parcel_template_object_id='<value>')
+
+# Use the SDK ...
 
 ```
 
@@ -127,10 +128,6 @@ if res is not None:
 | ------------------------------------- | ------------------------------------- | ------------------------------------- | ------------------------------------- |
 | `user_parcel_template_object_id`      | *str*                                 | :heavy_check_mark:                    | Object ID of the user parcel template |
 
-
-### Response
-
-**[operations.DeleteUserParcelTemplateResponse](../../models/operations/deleteuserparceltemplateresponse.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
@@ -151,6 +148,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.user_parcel_templates.get(user_parcel_template_object_id='<value>')
 
@@ -190,6 +188,7 @@ s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version='2018-02-08',
 )
+
 
 res = s.user_parcel_templates.update(user_parcel_template_object_id='<value>', user_parcel_template_update_request=components.UserParcelTemplateUpdateRequest(
     distance_unit=components.DistanceUnitEnum.IN,
