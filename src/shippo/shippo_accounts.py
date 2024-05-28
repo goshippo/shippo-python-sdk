@@ -135,7 +135,7 @@ class ShippoAccounts:
         
         
         
-        if http_res.status_code == 200:
+        if http_res.status_code == 201:
             # pylint: disable=no-else-return
             if utils.match_content_type(http_res.headers.get('Content-Type') or '', 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.ShippoAccount])
