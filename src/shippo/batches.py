@@ -76,7 +76,7 @@ class Batches:
         
         
         
-        if http_res.status_code == 200:
+        if http_res.status_code == 201:
             # pylint: disable=no-else-return
             if utils.match_content_type(http_res.headers.get('Content-Type') or '', 'application/json'):                
                 out = utils.unmarshal_json(http_res.text, Optional[components.Batch])
@@ -158,7 +158,7 @@ class Batches:
 
     
     
-    def add_shipments(self, batch_id: str, request_body: List[components.BatchShipmentBase]) -> components.Batch:
+    def add_shipments(self, batch_id: str, request_body: List[components.BatchShipmentCreateRequest]) -> components.Batch:
         r"""Add shipments to a batch
         Adds batch shipments to an existing batch.
         """

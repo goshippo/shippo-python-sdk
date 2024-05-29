@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 import dataclasses
-from .batchshipmentbase import BatchShipmentBase
+from .batchshipmentcreaterequest import BatchShipmentCreateRequest
 from .labelfiletypeenum import LabelFileTypeEnum
 from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
@@ -22,7 +22,7 @@ class BatchCreateRequest:
     The servicelevel can be changed on a per-shipment basis by changing the servicelevel_token in the 
     corresponding BatchShipment object. <a href=\"#tag/Service-Levels\">Servicelevel tokens can be found here.</a>
     """
-    batch_shipments: List[BatchShipmentBase] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('batch_shipments') }})
+    batch_shipments: List[BatchShipmentCreateRequest] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('batch_shipments') }})
     r"""Array of BatchShipment objects. The response keeps the same order as in the request array."""
     label_filetype: Optional[LabelFileTypeEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('label_filetype'), 'exclude': lambda f: f is None }})
     r"""Print format of the <a href=\\"https://docs.goshippo.com/docs/shipments/shippinglabelsizes/\\">label</a>. If empty, will use the default format set from

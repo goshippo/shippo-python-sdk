@@ -42,7 +42,7 @@ res = s.batches.create(request=components.BatchCreateRequest(
     default_carrier_account='078870331023437cb917f5187429b093',
     default_servicelevel_token='usps_priority',
     batch_shipments=[
-        components.BatchShipmentBase(
+        components.BatchShipmentCreateRequest(
             shipment=components.ShipmentCreateRequest(
                 address_from=components.AddressCreateRequest(
                     country='US',
@@ -318,7 +318,7 @@ s = shippo.Shippo(
 
 
 res = s.batches.add_shipments(batch_id='<value>', request_body=[
-    components.BatchShipmentBase(
+    components.BatchShipmentCreateRequest(
         shipment=components.ShipmentCreateRequest(
             address_from='d799c2679e644279b59fe661ac8fa488',
             address_to='d799c2679e644279b59fe661ac8fa489',
@@ -496,10 +496,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                          | Type                                                                               | Required                                                                           | Description                                                                        |
-| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| `batch_id`                                                                         | *str*                                                                              | :heavy_check_mark:                                                                 | Object ID of the batch                                                             |
-| `request_body`                                                                     | List[[components.BatchShipmentBase](../../models/components/batchshipmentbase.md)] | :heavy_check_mark:                                                                 | Array of shipments to add to the batch                                             |
+| Parameter                                                                                            | Type                                                                                                 | Required                                                                                             | Description                                                                                          |
+| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `batch_id`                                                                                           | *str*                                                                                                | :heavy_check_mark:                                                                                   | Object ID of the batch                                                                               |
+| `request_body`                                                                                       | List[[components.BatchShipmentCreateRequest](../../models/components/batchshipmentcreaterequest.md)] | :heavy_check_mark:                                                                                   | Array of shipments to add to the batch                                                               |
 
 
 ### Response
