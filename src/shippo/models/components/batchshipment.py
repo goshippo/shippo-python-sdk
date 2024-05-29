@@ -2,12 +2,10 @@
 
 from __future__ import annotations
 import dataclasses
-from .batchshipmenterrormessage import BatchShipmentErrorMessage
-from .shipmentcreaterequest import ShipmentCreateRequest
 from dataclasses_json import Undefined, dataclass_json
 from enum import Enum
 from shippo import utils
-from typing import List, Optional
+from typing import Any, List, Optional
 
 
 class Status(str, Enum):
@@ -25,9 +23,10 @@ class Status(str, Enum):
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class BatchShipment:
-    shipment: ShipmentCreateRequest = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('shipment') }})
     object_id: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_id') }})
     r"""Object ID of this batch shipment. Can be used in the remove_shipments endpoint."""
+    shipment: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('shipment') }})
+    r"""Object ID of the shipment object created for this batch shipment."""
     status: Status = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('status') }})
     r"""`INVALID` batch shipments cannot be purchased and will have to be removed, fixed, and added to the batch again.<br>
     `VALID` batch shipments can be purchased. <br>
@@ -45,7 +44,7 @@ class BatchShipment:
     Servicelevel tokens can be found <a href=\"#tag/Service-Levels\">in this list</a> 
     or <a href=\"#operation/ListCarrierAccounts\">at this endpoint</a>.
     """
-    messages: Optional[List[BatchShipmentErrorMessage]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('messages'), 'exclude': lambda f: f is None }})
+    messages: Optional[List[Any]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('messages'), 'exclude': lambda f: f is None }})
     r"""List of Shipment and Transaction error messages."""
     transaction: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('transaction'), 'exclude': lambda f: f is None }})
     r"""Object ID of the transaction object created for this batch shipment."""

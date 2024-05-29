@@ -1,4 +1,4 @@
-# BatchShipmentBase
+# BatchShipmentCreateRequest
 
 
 ## Fields

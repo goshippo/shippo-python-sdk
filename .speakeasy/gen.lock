@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: 54b6bfd09a835223b9ae8bf36a4e47e6
+  docChecksum: d1d281c714996d3d8fc74912caace9c3
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.296.1
+  speakeasyVersion: 1.297.0
   generationVersion: 2.338.1
-  releaseVersion: 3.4.3
-  configChecksum: 80796579679c4ac534b1b4c58f87ba2f
+  releaseVersion: 3.4.4
+  configChecksum: 9db54534dbc6c0ef9c60596c0748a0b1
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
@@ -65,7 +65,9 @@ generatedFiles:
   - src/shippo/models/components/batch.py
   - src/shippo/models/components/batchshipmentpaginatedlist.py
   - src/shippo/models/components/batchshipment.py
-  - src/shippo/models/components/batchshipmenterrormessage.py
+  - src/shippo/models/components/labelfiletypeenum.py
+  - src/shippo/models/components/batchcreaterequest.py
+  - src/shippo/models/components/batchshipmentcreaterequest.py
   - src/shippo/models/components/shipmentcreaterequest.py
   - src/shippo/models/components/parcelcreaterequest.py
   - src/shippo/models/components/parceltemplateenumset.py
@@ -94,9 +96,6 @@ generatedFiles:
   - src/shippo/models/components/cod.py
   - src/shippo/models/components/billing.py
   - src/shippo/models/components/alcohol.py
-  - src/shippo/models/components/labelfiletypeenum.py
-  - src/shippo/models/components/batchcreaterequest.py
-  - src/shippo/models/components/batchshipmentbase.py
   - src/shippo/models/components/carrieraccountpaginatedlist.py
   - src/shippo/models/components/carrieraccountwithextrainfo.py
   - src/shippo/models/components/carrieraccountservicelevel.py
@@ -282,7 +281,9 @@ generatedFiles:
   - docs/models/components/batchshipmentpaginatedlist.md
   - docs/models/components/status.md
   - docs/models/components/batchshipment.md
-  - docs/models/components/batchshipmenterrormessage.md
+  - docs/models/components/labelfiletypeenum.md
+  - docs/models/components/batchcreaterequest.md
+  - docs/models/components/batchshipmentcreaterequest.md
   - docs/models/components/addressfrom.md
   - docs/models/components/addressreturn.md
   - docs/models/components/addressto.md
@@ -333,9 +334,6 @@ generatedFiles:
   - docs/models/components/billing.md
   - docs/models/components/recipienttype.md
   - docs/models/components/alcohol.md
-  - docs/models/components/labelfiletypeenum.md
-  - docs/models/components/batchcreaterequest.md
-  - docs/models/components/batchshipmentbase.md
   - docs/models/components/carrieraccountpaginatedlist.md
   - docs/models/components/parameters.md
   - docs/models/components/carrieraccountwithextrainfotype.md

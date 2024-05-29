@@ -10,7 +10,7 @@ from typing import Optional
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
-class BatchShipmentBase:
+class BatchShipmentCreateRequest:
     shipment: ShipmentCreateRequest = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('shipment') }})
     carrier_account: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('carrier_account'), 'exclude': lambda f: f is None }})
     r"""Object ID of the carrier account to be used for this shipment (will override batch default)"""
