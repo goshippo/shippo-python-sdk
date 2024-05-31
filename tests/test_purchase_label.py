@@ -105,4 +105,4 @@ class TestPurchaseLabel:
         )
         assert transaction is not None
         assert isinstance(transaction, Transaction)
-        assert transaction.rate is not None
+        assert isinstance(transaction.rate, str)

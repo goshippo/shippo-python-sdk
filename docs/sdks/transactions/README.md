@@ -93,7 +93,7 @@ if res is not None:
 
 ### Response
 
-**[components.TransactionCreateResponse](../../models/components/transactioncreateresponse.md)**
+**[components.Transaction](../../models/components/transaction.md)**
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
