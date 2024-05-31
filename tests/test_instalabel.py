@@ -1,7 +1,7 @@
 import shippo
 from shippo.models.components import CarriersEnum, DistanceUnitEnum, WeightUnitEnum, \
     AddressCreateRequest, ParcelCreateRequest, ShipmentCreateRequest, \
-    InstantTransactionCreateRequest, InstantTransactionCreateResponse
+    InstantTransactionCreateRequest, Transaction
 from tests.helpers_custom import get_carrier_account
 
 
@@ -49,5 +49,5 @@ class TestInstalabel:
                 )
             ))
         assert transaction is not None
-        assert isinstance(transaction, InstantTransactionCreateResponse)
+        assert isinstance(transaction, Transaction)
         assert transaction.rate.object_id is not None
