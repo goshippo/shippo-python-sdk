@@ -1,4 +1,4 @@
-# InstantTransactionRate
+# CoreRate
 
 
 ## Fields

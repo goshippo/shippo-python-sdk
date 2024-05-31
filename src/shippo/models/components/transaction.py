@@ -3,6 +3,7 @@
 from __future__ import annotations
 import dataclasses
 import dateutil.parser
+from .corerate import CoreRate
 from .labelfiletypeenum import LabelFileTypeEnum
 from .objectstateenum import ObjectStateEnum
 from .responsemessage import ResponseMessage
@@ -10,13 +11,10 @@ from .trackingstatusenum import TrackingStatusEnum
 from .transactionstatusenum import TransactionStatusEnum
 from dataclasses_json import Undefined, dataclass_json
 from datetime import datetime
-from enum import Enum
 from shippo import utils
-from typing import List, Optional
+from typing import List, Optional, Union
 
-
-class ResponseType(str, Enum):
-    STANDARD = 'standard'
+TransactionRate = Union[CoreRate, str]
 
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
@@ -55,6 +53,12 @@ class Transaction:
     r"""A URL pointing directly to the QR code in PNG format.
     A value will only be returned if requested using qr_code_requested flag and the carrier provides such an option.
     """
+    rate: Optional[TransactionRate] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('rate'), 'exclude': lambda f: f is None }})
+    r"""ID of the Rate object for which a Label has to be obtained.
+    If you purchase a label by calling the transaction endpoint without a rate (instalabel), 
+    this field will be a simplified Rate object in the Transaction model returned from the POST request.
+    </br>Note, only rates less than 7 days old can be purchased to ensure up-to-date pricing.
+    """
     status: Optional[TransactionStatusEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('status'), 'exclude': lambda f: f is None }})
     r"""Indicates the status of the Transaction."""
     test: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('test'), 'exclude': lambda f: f is None }})
@@ -69,10 +73,5 @@ class Transaction:
     r"""A link to track this item on the carrier-provided tracking website.
     A value will only be returned if tracking is available and the carrier provides such a service.
     """
-    rate: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('rate'), 'exclude': lambda f: f is None }})
-    r"""ID of the Rate object for which a Label has to be obtained.
-    Please note that only rates that are not older than 7 days can be purchased in order to ensure up-to-date pricing.
-    """
-    response_type: Optional[ResponseType] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('responseType'), 'exclude': lambda f: f is None }})
     
 

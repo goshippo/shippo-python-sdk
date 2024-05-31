@@ -78,7 +78,7 @@ class Transactions:
 
     
     
-    def create(self, request: operations.CreateTransactionRequestBody) -> components.TransactionCreateResponse:
+    def create(self, request: operations.CreateTransactionRequestBody) -> components.Transaction:
         r"""Create a shipping label
         Creates a new transaction object and purchases the shipping label using a rate object that has previously been created. <br> OR <br> Creates a new transaction object and purchases the shipping label instantly using shipment details, an existing carrier account, and an existing service level token.
         """
@@ -131,7 +131,7 @@ class Transactions:
         if http_res.status_code == 201:
             # pylint: disable=no-else-return
             if utils.match_content_type(http_res.headers.get('Content-Type') or '', 'application/json'):                
-                out = utils.unmarshal_json(http_res.text, Optional[components.TransactionCreateResponse])
+                out = utils.unmarshal_json(http_res.text, Optional[components.Transaction])
                 return out
             
             content_type = http_res.headers.get('Content-Type')
