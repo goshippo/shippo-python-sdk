@@ -190,4 +190,4 @@ class ParcelTemplateFedExEnum(str, Enum):
     FED_EX_TUBE = 'FedEx_Tube'
     FED_EX_XL_PAK = 'FedEx_XL_Pak'
 
-ParcelTemplateEnumSet = Union[ParcelTemplateFedExEnum, ParcelTemplateUPSEnum, ParcelTemplateUSPSEnum, ParcelTemplateDHLeCommerceEnum, ParcelTemplateDPDUKEnum, ParcelTemplateCouriersPleaseEnum, ParcelTemplateAramexAustraliaEnum]
+ParcelTemplateEnumSet = Union['ParcelTemplateFedExEnum', 'ParcelTemplateUPSEnum', 'ParcelTemplateUSPSEnum', 'ParcelTemplateDHLeCommerceEnum', 'ParcelTemplateDPDUKEnum', 'ParcelTemplateCouriersPleaseEnum', 'ParcelTemplateAramexAustraliaEnum']
