@@ -20,6 +20,12 @@ pip install shippo
 ```
 <!-- End SDK Installation [installation] -->
 
+## SDK Reinstallation to a specific version
+
+```bash
+pip install --force-reinstall -I shippo==3.4.4
+```
+
 ## SDK Example Usage
 
 ### Example
