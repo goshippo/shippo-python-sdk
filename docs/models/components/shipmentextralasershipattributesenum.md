@@ -1,6 +1,4 @@
-# LasershipAttrs
-
-Specify Lasership Attributes (Lasership only). Multiple options accepted.
+# ShipmentExtraLasershipAttributesEnum
 
 
 ## Values

@@ -22,6 +22,7 @@ from .tracking_status import TrackingStatus
 from .transactions import Transactions
 from .user_parcel_templates import UserParcelTemplates
 from .utils.retries import RetryConfig
+from .webhooks import Webhooks
 from shippo import utils
 from shippo._hooks import SDKHooks
 from shippo.models import components, internal
@@ -166,6 +167,10 @@ class Shippo:
     They can be used by marketplaces, e-commerce platforms, and third-party logistics providers who want to offer, seamless, built-in shipping functionality to their customers. 
     <SchemaDefinition schemaRef=\"#/components/schemas/ShippoAccount\"/>
     """
+    webhooks: Webhooks
+    r"""Webhooks are a way for Shippo to notify your application when a specific event occurs. For example, when a label is purchased or when a shipment tracking status has changed. You can use webhooks to trigger actions in your application, such as sending an email or updating a database.
+    <SchemaDefinition schemaRef=\"#/components/schemas/Webhook\"/>
+    """
 
     sdk_configuration: SDKConfiguration
 
@@ -254,3 +259,4 @@ class Shippo:
         self.transactions = Transactions(self.sdk_configuration)
         self.user_parcel_templates = UserParcelTemplates(self.sdk_configuration)
         self.shippo_accounts = ShippoAccounts(self.sdk_configuration)
+        self.webhooks = Webhooks(self.sdk_configuration)

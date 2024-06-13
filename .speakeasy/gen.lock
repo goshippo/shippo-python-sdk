@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: 609002aee5b1500e5e73ec2eb80f268d
+  docChecksum: 83260d88128c46673f69c31c772447dc
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.299.4
-  generationVersion: 2.338.7
-  releaseVersion: 3.4.6
-  configChecksum: 388c2fbc548b750a2b516e6885776722
+  speakeasyVersion: 1.307.1
+  generationVersion: 2.342.2
+  releaseVersion: 3.5.0
+  configChecksum: a4fdf73257bca76c4bd7c2b90496d152
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
@@ -14,7 +14,7 @@ features:
   python:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.3
-    core: 4.6.8
+    core: 4.6.10
     flattening: 2.81.1
     globalSecurity: 2.83.5
     globalSecurityCallbacks: 0.1.0
@@ -24,9 +24,10 @@ features:
     hiddenGlobals: 0.1.0
     includes: 2.81.1
     nameOverrides: 2.81.2
+    nullables: 0.1.0
     responseFormat: 0.1.0
     sdkHooks: 0.1.0
-    unions: 2.82.7
+    unions: 2.82.8
 generatedFiles:
   - src/shippo/sdkconfiguration.py
   - src/shippo/addresses.py
@@ -48,9 +49,12 @@ generatedFiles:
   - src/shippo/transactions.py
   - src/shippo/user_parcel_templates.py
   - src/shippo/shippo_accounts.py
+  - src/shippo/webhooks.py
   - src/shippo/sdk.py
+  - Makefile
   - py.typed
   - pylintrc
+  - scripts/publish.sh
   - setup.py
   - src/shippo/__init__.py
   - src/shippo/utils/__init__.py
@@ -85,6 +89,7 @@ generatedFiles:
   - src/shippo/models/components/upsreferencefields.py
   - src/shippo/models/components/rmanumber.py
   - src/shippo/models/components/ponumber.py
+  - src/shippo/models/components/shipmentextralasershipattributesenum.py
   - src/shippo/models/components/invoicenumber.py
   - src/shippo/models/components/insurance.py
   - src/shippo/models/components/dryice.py
@@ -191,7 +196,13 @@ generatedFiles:
   - src/shippo/models/components/shippoaccountpaginatedlist.py
   - src/shippo/models/components/shippoaccount.py
   - src/shippo/models/components/shippoaccountupdaterequest.py
+  - src/shippo/models/components/webhook.py
+  - src/shippo/models/components/webhookupdaterequest.py
+  - src/shippo/models/components/webhookeventtypeenum.py
+  - src/shippo/models/components/webhookpaginatedlist.py
   - src/shippo/models/components/security.py
+  - src/shippo/models/components/addressvalidationresultsmessagecodeenum.py
+  - src/shippo/models/components/addressvalidationresultsmessagesourceenum.py
   - src/shippo/models/components/servicelevel.py
   - src/shippo/models/components/servicelevelenumset.py
   - src/shippo/models/operations/listaddresses.py
@@ -241,6 +252,9 @@ generatedFiles:
   - src/shippo/models/operations/listshippoaccounts.py
   - src/shippo/models/operations/getshippoaccount.py
   - src/shippo/models/operations/updateshippoaccount.py
+  - src/shippo/models/operations/getwebhook.py
+  - src/shippo/models/operations/updatewebhook.py
+  - src/shippo/models/operations/deletewebhook.py
   - src/shippo/models/operations/createaddress.py
   - src/shippo/models/operations/createbatch.py
   - src/shippo/models/operations/createcarrieraccount.py
@@ -267,10 +281,10 @@ generatedFiles:
   - src/shippo/models/operations/__init__.py
   - src/shippo/models/internal/__init__.py
   - docs/models/components/addresspaginatedlist.md
+  - docs/models/components/latitude.md
+  - docs/models/components/longitude.md
   - docs/models/components/address.md
   - docs/models/components/addressvalidationresults.md
-  - docs/models/components/code.md
-  - docs/models/components/source.md
   - docs/models/components/addressvalidationresultsmessage.md
   - docs/models/components/addresscreaterequest.md
   - docs/models/components/objectresults.md
@@ -309,7 +323,6 @@ generatedFiles:
   - docs/models/components/customsdeclarationb13afilingoptionenum.md
   - docs/models/components/ancillaryendorsement.md
   - docs/models/components/dangerousgoodscode.md
-  - docs/models/components/lasershipattrs.md
   - docs/models/components/preferreddeliverytimeframe.md
   - docs/models/components/returnservicetype.md
   - docs/models/components/signatureconfirmation.md
@@ -317,6 +330,7 @@ generatedFiles:
   - docs/models/components/upsreferencefields.md
   - docs/models/components/rmanumber.md
   - docs/models/components/ponumber.md
+  - docs/models/components/shipmentextralasershipattributesenum.md
   - docs/models/components/invoicenumber.md
   - docs/models/components/provider.md
   - docs/models/components/insurance.md
@@ -450,6 +464,7 @@ generatedFiles:
   - docs/models/components/trackingstatuslocationbase.md
   - docs/models/components/tracksrequest.md
   - docs/models/components/transactionpaginatedlist.md
+  - docs/models/components/createdby.md
   - docs/models/components/transactionrate.md
   - docs/models/components/transaction.md
   - docs/models/components/transactionstatusenum.md
@@ -465,7 +480,13 @@ generatedFiles:
   - docs/models/components/shippoaccountpaginatedlist.md
   - docs/models/components/shippoaccount.md
   - docs/models/components/shippoaccountupdaterequest.md
+  - docs/models/components/webhook.md
+  - docs/models/components/webhookupdaterequest.md
+  - docs/models/components/webhookeventtypeenum.md
+  - docs/models/components/webhookpaginatedlist.md
   - docs/models/components/security.md
+  - docs/models/components/addressvalidationresultsmessagecodeenum.md
+  - docs/models/components/addressvalidationresultsmessagesourceenum.md
   - docs/models/components/servicelevel.md
   - docs/models/components/servicelevelswyftenum.md
   - docs/models/components/servicelevelvehoenum.md
@@ -605,6 +626,9 @@ generatedFiles:
   - docs/models/operations/getshippoaccountrequest.md
   - docs/models/operations/updateshippoaccountglobals.md
   - docs/models/operations/updateshippoaccountrequest.md
+  - docs/models/operations/getwebhookrequest.md
+  - docs/models/operations/updatewebhookrequest.md
+  - docs/models/operations/deletewebhookrequest.md
   - docs/models/operations/createaddressglobals.md
   - docs/models/operations/createbatchglobals.md
   - docs/models/operations/createcarrieraccountglobals.md
@@ -647,6 +671,7 @@ generatedFiles:
   - docs/sdks/transactions/README.md
   - docs/sdks/userparceltemplates/README.md
   - docs/sdks/shippoaccounts/README.md
+  - docs/sdks/webhooks/README.md
   - USAGE.md
   - .gitattributes
   - src/shippo/_hooks/sdkhooks.py

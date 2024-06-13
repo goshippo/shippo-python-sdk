@@ -13,11 +13,12 @@ from .insurance import Insurance
 from .invoicenumber import InvoiceNumber
 from .ponumber import PoNumber
 from .rmanumber import RmaNumber
+from .shipmentextralasershipattributesenum import ShipmentExtraLasershipAttributesEnum
 from .upsreferencefields import UPSReferenceFields
 from dataclasses_json import Undefined, dataclass_json
 from enum import Enum
 from shippo import utils
-from typing import Optional
+from typing import List, Optional
 
 
 class AncillaryEndorsement(str, Enum):
@@ -37,19 +38,6 @@ class DangerousGoodsCode(str, Enum):
     SEVEN = '07'
     EIGHT = '08'
     NINE = '09'
-
-
-class LasershipAttrs(str, Enum):
-    r"""Specify Lasership Attributes (Lasership only). Multiple options accepted."""
-    TWO_PERSON_DELIVERY = 'TwoPersonDelivery'
-    EXPLOSIVE = 'Explosive'
-    ALCOHOL = 'Alcohol'
-    HAZMAT = 'Hazmat'
-    CONTROLLED_SUBSTANCE = 'ControlledSubstance'
-    REFRIGERATED = 'Refrigerated'
-    DRY_ICE = 'DryIce'
-    PERISHABLE = 'Perishable'
-    NO_RTS = 'NoRTS'
 
 
 class PreferredDeliveryTimeframe(str, Enum):
@@ -143,7 +131,7 @@ class ShipmentExtra:
     r"""Specify the invoice number field on the label (FedEx and UPS only)."""
     is_return: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('is_return'), 'exclude': lambda f: f is None }})
     r"""This field specifies if it is a scan-based return shipment. See the <a href=\\"https://docs.goshippo.com/docs/shipments/returns/\\">Create a return shipment</a> section for more details."""
-    lasership_attrs: Optional[LasershipAttrs] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('lasership_attrs'), 'exclude': lambda f: f is None }})
+    lasership_attrs: Optional[List[ShipmentExtraLasershipAttributesEnum]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('lasership_attrs'), 'exclude': lambda f: f is None }})
     r"""Specify Lasership Attributes (Lasership only). Multiple options accepted."""
     lasership_declared_value: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('lasership_declared_value'), 'exclude': lambda f: f is None }})
     r"""Declared value (Lasership only). Defaults to `50.00`."""

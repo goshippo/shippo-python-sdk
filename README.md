@@ -218,6 +218,14 @@ Review our full guides and references at [https://docs.goshippo.com/](https://do
 * [create](docs/sdks/shippoaccounts/README.md#create) - Create a Shippo Account
 * [get](docs/sdks/shippoaccounts/README.md#get) - Retrieve a Shippo Account
 * [update](docs/sdks/shippoaccounts/README.md#update) - Update a Shippo Account
+
+### [webhooks](docs/sdks/webhooks/README.md)
+
+* [create_webhook](docs/sdks/webhooks/README.md#create_webhook) - Create a new webhook
+* [list_webhooks](docs/sdks/webhooks/README.md#list_webhooks) - List all webhooks
+* [get_webhook](docs/sdks/webhooks/README.md#get_webhook) - Retrieve a specific webhook
+* [update_webhook](docs/sdks/webhooks/README.md#update_webhook) - Update an existing webhook
+* [delete_webhook](docs/sdks/webhooks/README.md#delete_webhook) - Delete a specific webhook
 <!-- End Available Resources and Operations [operations] -->
 
 ## Maturity

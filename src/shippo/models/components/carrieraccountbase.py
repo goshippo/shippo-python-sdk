@@ -8,8 +8,6 @@ from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
 from typing import Any, Dict, Optional, Union
 
-CarrierAccountBaseParameters = Union[Dict[str, Any], FedExConnectExistingOwnAccountParameters, UPSConnectExistingOwnAccountParameters]
-
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
@@ -30,3 +28,5 @@ class CarrierAccountBase:
     parameters: Optional[CarrierAccountBaseParameters] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parameters'), 'exclude': lambda f: f is None }})
     
 
+
+CarrierAccountBaseParameters = Union[Dict[str, Any], FedExConnectExistingOwnAccountParameters, UPSConnectExistingOwnAccountParameters]
