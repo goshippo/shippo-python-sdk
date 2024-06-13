@@ -10,8 +10,6 @@ from enum import Enum
 from shippo import utils
 from typing import Any, Dict, List, Optional, Union
 
-Parameters = Union[Dict[str, Any], FedExConnectExistingOwnAccountParameters, UPSConnectExistingOwnAccountParameters]
-
 
 class CarrierAccountWithExtraInfoType(str, Enum):
     r"""Authentication method used by this account."""
@@ -78,3 +76,5 @@ class CarrierAccountWithExtraInfo:
     r"""Holds internal state relevant to users."""
     
 
+
+Parameters = Union[Dict[str, Any], FedExConnectExistingOwnAccountParameters, UPSConnectExistingOwnAccountParameters]

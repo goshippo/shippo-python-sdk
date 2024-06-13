@@ -10,16 +10,6 @@ from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
 from typing import List, Optional, Union
 
-AddressFrom = Union[AddressCreateRequest, str]
-
-AddressReturn = Union[AddressCreateRequest, str]
-
-AddressTo = Union[AddressCreateRequest, str]
-
-ShipmentCreateRequestCustomsDeclaration = Union[CustomsDeclarationCreateRequest, str]
-
-Parcels = Union[ParcelCreateRequest, str]
-
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
@@ -45,3 +35,13 @@ class ShipmentCreateRequest:
     """
     
 
+
+AddressFrom = Union[AddressCreateRequest, str]
+
+AddressReturn = Union[AddressCreateRequest, str]
+
+AddressTo = Union[AddressCreateRequest, str]
+
+ShipmentCreateRequestCustomsDeclaration = Union[CustomsDeclarationCreateRequest, str]
+
+Parcels = Union[ParcelCreateRequest, str]

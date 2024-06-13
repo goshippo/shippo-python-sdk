@@ -60,7 +60,7 @@ class Rate:
     Please note that this is not binding, but only an average value as given by the provider. 
     Shippo is not able to guarantee any transit times.
     """
-    included_insurance_price: Optional[float] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('included_insurance_price'), 'exclude': lambda f: f is None }})
+    included_insurance_price: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('included_insurance_price'), 'exclude': lambda f: f is None }})
     r"""Cost to the user to insure the Rate for the requested amount of coverage, if insurance coverage was requested.
     Expressed in the currency used in the sender's country. Will be null if no insurance coverage was requested, or if insurance is requested from a non-standard insurance provider. 
     Please note this price is already included in the `amount` and `amount_local` fields on the Rate. Do not add this field to them.

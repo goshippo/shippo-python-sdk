@@ -7,7 +7,7 @@ from .addressvalidationresults import AddressValidationResults
 from dataclasses_json import Undefined, dataclass_json
 from datetime import datetime
 from shippo import utils
-from typing import Optional
+from typing import Optional, Union
 
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
@@ -72,9 +72,9 @@ class Address:
     validations.<br>Incomplete Addresses are eligible for requesting rates but lack at least one required 
     value for purchasing labels.
     """
-    latitude: Optional[float] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('latitude'), 'exclude': lambda f: f is None }})
+    latitude: Optional[Latitude] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('latitude'), 'exclude': lambda f: f is None }})
     r"""Latitude of address"""
-    longitude: Optional[float] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('longitude'), 'exclude': lambda f: f is None }})
+    longitude: Optional[Longitude] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('longitude'), 'exclude': lambda f: f is None }})
     r"""Longitude of address"""
     object_created: Optional[datetime] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_created'), 'encoder': utils.datetimeisoformat(True), 'decoder': dateutil.parser.isoparse, 'exclude': lambda f: f is None }})
     r"""Date and time of Address creation."""
@@ -97,3 +97,7 @@ class Address:
     r"""Indicates whether the object has been created in test mode."""
     
 
+
+Latitude = Union[float, str]
+
+Longitude = Union[float, str]

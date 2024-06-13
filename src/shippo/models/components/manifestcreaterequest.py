@@ -7,8 +7,6 @@ from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
 from typing import List, Optional, Union
 
-ManifestCreateRequestAddressFrom = Union[AddressCreateRequest, str]
-
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
@@ -27,3 +25,5 @@ class ManifestCreateRequest:
     async_: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('async'), 'exclude': lambda f: f is None }})
     
 
+
+ManifestCreateRequestAddressFrom = Union[AddressCreateRequest, str]

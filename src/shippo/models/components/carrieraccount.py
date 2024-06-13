@@ -9,8 +9,6 @@ from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
 from typing import Any, Dict, List, Optional, Union
 
-CarrierAccountParameters = Union[Dict[str, Any], FedExConnectExistingOwnAccountParameters, UPSConnectExistingOwnAccountParameters]
-
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
@@ -42,3 +40,5 @@ class CarrierAccount:
     r"""Indicates whether the object has been created in test mode."""
     
 
+
+CarrierAccountParameters = Union[Dict[str, Any], FedExConnectExistingOwnAccountParameters, UPSConnectExistingOwnAccountParameters]

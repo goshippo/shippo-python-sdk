@@ -14,16 +14,31 @@ from datetime import datetime
 from shippo import utils
 from typing import List, Optional, Union
 
-TransactionRate = Union[CoreRate, str]
+
+@dataclass_json(undefined=Undefined.EXCLUDE)
+@dataclasses.dataclass
+class CreatedBy:
+    r"""An object with details about the user who created the Transaction (purchased the label).
+    A value will be returned only for Transactions that can be associated with a specific user, e.g. when a logged-in
+    user purchases a label via the Shippo Web application; but not for Transactions purchased e.g. via the API using a ShippoToken,
+    which is associated with the account but not any specific user.
+    """
+    first_name: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('first_name'), 'exclude': lambda f: f is None }})
+    last_name: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('last_name'), 'exclude': lambda f: f is None }})
+    username: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('username'), 'exclude': lambda f: f is None }})
+    
+
 
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class Transaction:
+    UNSET='__SPEAKEASY_UNSET__'
     commercial_invoice_url: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('commercial_invoice_url'), 'exclude': lambda f: f is None }})
     r"""A URL pointing to the commercial invoice as a 8.5x11 inch PDF file.
     A value will only be returned if the Transactions has been processed successfully and if the shipment is international.
     """
+    created_by: Optional[CreatedBy] = dataclasses.field(default=UNSET, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('created_by'), 'exclude': lambda f: f is Transaction.UNSET }})
     eta: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('eta'), 'exclude': lambda f: f is None }})
     r"""The estimated time of arrival according to the carrier."""
     label_file_type: Optional[LabelFileTypeEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('label_file_type'), 'exclude': lambda f: f is None }})
@@ -75,3 +90,5 @@ class Transaction:
     """
     
 
+
+TransactionRate = Union[CoreRate, str]

@@ -9,12 +9,6 @@ from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
 from typing import List, Optional, Union
 
-LiveRateCreateRequestAddressFrom = Union[str, AddressCompleteCreateRequest]
-
-LiveRateCreateRequestAddressTo = Union[str, AddressCompleteCreateRequest]
-
-LiveRateCreateRequestParcel = Union[str, Parcel]
-
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
@@ -35,3 +29,9 @@ class LiveRateCreateRequest:
     r"""Object ID for an existing User Parcel Template OR a fully formed Parcel object."""
     
 
+
+LiveRateCreateRequestAddressFrom = Union[str, AddressCompleteCreateRequest]
+
+LiveRateCreateRequestAddressTo = Union[str, AddressCompleteCreateRequest]
+
+LiveRateCreateRequestParcel = Union[str, Parcel]
