@@ -8,10 +8,11 @@ from .customsdeclarationcontentstypeenum import CustomsDeclarationContentsTypeEn
 from .customsdeclarationeelpfcenum import CustomsDeclarationEelPfcEnum
 from .customsdeclarationincotermenum import CustomsDeclarationIncotermEnum
 from .customsdeclarationnondeliveryoptionenum import CustomsDeclarationNonDeliveryOptionEnum
+from .customsexporteridentification import CustomsExporterIdentification
 from .customsitemcreaterequest import CustomsItemCreateRequest
 from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
-from typing import Any, List, Optional
+from typing import List, Optional
 
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
@@ -46,11 +47,13 @@ class CustomsDeclarationCreateRequest:
     """
     disclaimer: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('disclaimer'), 'exclude': lambda f: f is None }})
     r"""Disclaimer for the shipment and customs information that have been provided."""
+    exporter_identification: Optional[CustomsExporterIdentification] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('exporter_identification'), 'exclude': lambda f: f is None }})
+    r"""Additional exporter identification that may be required to ship in certain countries"""
     exporter_reference: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('exporter_reference'), 'exclude': lambda f: f is None }})
     r"""Exporter reference of an export shipment."""
     importer_reference: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('importer_reference'), 'exclude': lambda f: f is None }})
     r"""Importer reference of an import shipment."""
-    is_vat_collected: Optional[Any] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('is_vat_collected'), 'exclude': lambda f: f is None }})
+    is_vat_collected: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('is_vat_collected'), 'exclude': lambda f: f is None }})
     r"""Indicates whether the shipment's destination VAT has been collected. May be required for some destinations."""
     invoice: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('invoice'), 'exclude': lambda f: f is None }})
     r"""Invoice reference of the shipment."""

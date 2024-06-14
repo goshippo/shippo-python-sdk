@@ -84,11 +84,19 @@ res = s.customs_declarations.create(request=components.CustomsDeclarationCreateR
             value_currency='USD',
             metadata='Order ID "123454"',
             sku_code='HM-123',
+            hs_code='0901.21',
         ),
     ],
     non_delivery_option=components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
     b13a_filing_option=components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,
     contents_explanation='T-Shirt purchase',
+    exporter_identification=components.CustomsExporterIdentification(
+        eori_number='PL123456790ABCDE',
+        tax_id=components.CustomsTaxIdentification(
+            number='123456789',
+            type=components.CustomsTaxIdentificationType.EIN,
+        ),
+    ),
     invoice='#123123',
     metadata='Order ID #123123',
     address_importer=components.AddressImporter(

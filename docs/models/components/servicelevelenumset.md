@@ -45,12 +45,6 @@ serviceLevelEnumSet: components.ServiceLevelAsendiaEnum = /* values here */
 serviceLevelEnumSet: components.ServiceLevelAustraliaPostEnum = /* values here */
 ```
 
-### ServiceLevelAxleHireEnum
-
-```python
-serviceLevelEnumSet: components.ServiceLevelAxleHireEnum = /* values here */
-```
-
 ### ServiceLevelAPGEnum
 
 ```python
@@ -211,6 +205,12 @@ serviceLevelEnumSet: components.ServiceLevelSendleEnum = /* values here */
 
 ```python
 serviceLevelEnumSet: components.ServiceLevelOnTracEnum = /* values here */
+```
+
+### ServiceLevelJitsuEnum
+
+```python
+serviceLevelEnumSet: components.ServiceLevelJitsuEnum = /* values here */
 ```
 
 ### ServiceLevelLasershipEnum

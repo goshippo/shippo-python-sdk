@@ -55,6 +55,16 @@ class ServiceLevelLasershipEnum(str, Enum):
     LASERSHIP_ROUTED_DELIVERY = 'lasership_routed_delivery'
 
 
+class ServiceLevelJitsuEnum(str, Enum):
+    r"""|Token | Service name|
+    |:---|:---|
+    | axlehire_same_day | Same Day|
+    | axlehire_next_day | Next Day|
+    """
+    AXLEHIRE_SAME_DAY = 'axlehire_same_day'
+    AXLEHIRE_NEXT_DAY = 'axlehire_next_day'
+
+
 class ServiceLevelOnTracEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
@@ -645,16 +655,6 @@ class ServiceLevelAPGEnum(str, Enum):
     APG_EPARCEL_EXPEDITED = 'apg_eparcel_expedited'
 
 
-class ServiceLevelAxleHireEnum(str, Enum):
-    r"""|Token | Service name|
-    |:---|:---|
-    | axlehire_same_day | Same Day|
-    | axlehire_next_day | Next Day|
-    """
-    AXLEHIRE_SAME_DAY = 'axlehire_same_day'
-    AXLEHIRE_NEXT_DAY = 'axlehire_next_day'
-
-
 class ServiceLevelAustraliaPostEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
@@ -867,4 +867,4 @@ class ServiceLevelUSPSEnum(str, Enum):
     USPS_FIRST_CLASS_PACKAGE_INTERNATIONAL_SERVICE = 'usps_first_class_package_international_service'
     USPS_GROUND_ADVANTAGE = 'usps_ground_advantage'
 
-ServiceLevelEnumSet = Union[ServiceLevelUSPSEnum, ServiceLevelFedExEnum, ServiceLevelUPSEnum, ServiceLevelAirterraEnum, ServiceLevelAPCPostalEnum, ServiceLevelAsendiaEnum, ServiceLevelAustraliaPostEnum, ServiceLevelAxleHireEnum, ServiceLevelAPGEnum, ServiceLevelBetterTrucksEnum, ServiceLevelCanadaPostEnum, ServiceLevelCDLEnum, ServiceLevelChronopostEnum, ServiceLevelCouriersPleaseEnum, ServiceLevelCorreosEspanaEnum, ServiceLevelColissimoEnum, ServiceLevelPurolatorEnum, ServiceLevelDHLExpressEnum, ServiceLevelDHLeCommerceEnum, ServiceLevelDHLGermanyEnum, ServiceLevelDPDDEEnum, ServiceLevelDPDUKEnum, ServiceLevelDeutschePostEnum, ServiceLevelAramexAustraliaEnum, ServiceLevelGlobegisticsEnum, ServiceLevelGLSUSEnum, ServiceLevelLSOEnum, ServiceLevelMondialRelayEnum, ServiceLevelMaergoEnum, ServiceLevelParcelforceEnum, ServiceLevelPostItalianeEnum, ServiceLevelePostGlobalEnum, ServiceLevelRoyalMailEnum, ServiceLevelSendleEnum, ServiceLevelOnTracEnum, ServiceLevelLasershipEnum, ServiceLevelEvriUKEnum, ServiceLevelUDSEnum, ServiceLevelVehoEnum, ServiceLevelSwyftEnum]
+ServiceLevelEnumSet = Union[ServiceLevelUSPSEnum, ServiceLevelFedExEnum, ServiceLevelUPSEnum, ServiceLevelAirterraEnum, ServiceLevelAPCPostalEnum, ServiceLevelAsendiaEnum, ServiceLevelAustraliaPostEnum, ServiceLevelAPGEnum, ServiceLevelBetterTrucksEnum, ServiceLevelCanadaPostEnum, ServiceLevelCDLEnum, ServiceLevelChronopostEnum, ServiceLevelCouriersPleaseEnum, ServiceLevelCorreosEspanaEnum, ServiceLevelColissimoEnum, ServiceLevelPurolatorEnum, ServiceLevelDHLExpressEnum, ServiceLevelDHLeCommerceEnum, ServiceLevelDHLGermanyEnum, ServiceLevelDPDDEEnum, ServiceLevelDPDUKEnum, ServiceLevelDeutschePostEnum, ServiceLevelAramexAustraliaEnum, ServiceLevelGlobegisticsEnum, ServiceLevelGLSUSEnum, ServiceLevelLSOEnum, ServiceLevelMondialRelayEnum, ServiceLevelMaergoEnum, ServiceLevelParcelforceEnum, ServiceLevelPostItalianeEnum, ServiceLevelePostGlobalEnum, ServiceLevelRoyalMailEnum, ServiceLevelSendleEnum, ServiceLevelOnTracEnum, ServiceLevelJitsuEnum, ServiceLevelLasershipEnum, ServiceLevelEvriUKEnum, ServiceLevelUDSEnum, ServiceLevelVehoEnum, ServiceLevelSwyftEnum]
