@@ -78,6 +78,7 @@ res = s.customs_items.create(request=components.CustomsItemCreateRequest(
     value_currency='USD',
     metadata='Order ID "123454"',
     sku_code='HM-123',
+    hs_code='0901.21',
 ))
 
 if res is not None:

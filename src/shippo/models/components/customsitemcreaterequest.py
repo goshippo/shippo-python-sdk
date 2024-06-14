@@ -37,6 +37,8 @@ class CustomsItemCreateRequest:
     """
     sku_code: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('sku_code'), 'exclude': lambda f: f is None }})
     r"""SKU code of the item, which is required by some carriers."""
+    hs_code: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('hs_code'), 'exclude': lambda f: f is None }})
+    r"""HS code of the item, which is required by some carriers."""
     tariff_number: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('tariff_number'), 'exclude': lambda f: f is None }})
     r"""The tariff number of the item."""
     

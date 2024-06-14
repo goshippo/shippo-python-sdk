@@ -9,14 +9,7 @@ from .objectstateenum import ObjectStateEnum
 from dataclasses_json import Undefined, dataclass_json
 from datetime import datetime
 from shippo import utils
-from typing import Any, List, Optional
-
-
-@dataclasses.dataclass
-class CustomsDeclarationAddressImporter:
-    r"""Object ID of the Importer address."""
-    
-
+from typing import List, Optional
 
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
@@ -62,11 +55,13 @@ class CustomsDeclaration:
     """
     disclaimer: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('disclaimer'), 'exclude': lambda f: f is None }})
     r"""Disclaimer for the shipment and customs information that have been provided."""
+    exporter_identification: Optional[CustomsExporterIdentification] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('exporter_identification'), 'exclude': lambda f: f is None }})
+    r"""Additional exporter identification that may be required to ship in certain countries"""
     exporter_reference: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('exporter_reference'), 'exclude': lambda f: f is None }})
     r"""Exporter reference of an export shipment."""
     importer_reference: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('importer_reference'), 'exclude': lambda f: f is None }})
     r"""Importer reference of an import shipment."""
-    is_vat_collected: Optional[Any] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('is_vat_collected'), 'exclude': lambda f: f is None }})
+    is_vat_collected: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('is_vat_collected'), 'exclude': lambda f: f is None }})
     r"""Indicates whether the shipment's destination VAT has been collected. May be required for some destinations."""
     invoice: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('invoice'), 'exclude': lambda f: f is None }})
     r"""Invoice reference of the shipment."""
@@ -78,15 +73,13 @@ class CustomsDeclaration:
     """
     notes: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('notes'), 'exclude': lambda f: f is None }})
     r"""Additional notes to be included in the customs declaration."""
-    address_importer: Optional[CustomsDeclarationAddressImporter] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_importer'), 'exclude': lambda f: f is None }})
+    address_importer: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_importer'), 'exclude': lambda f: f is None }})
     r"""Object ID of the Importer address."""
     eel_pfc: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('eel_pfc'), 'exclude': lambda f: f is None }})
     r"""EEL / PFC type of the shipment. For most shipments from the US to CA, `NOEEI_30_36` is applicable; for most
     other shipments from the US, `NOEEI_30_37_a` is applicable.
     Allowed values available <a href=\"#tag/Customs-Declaration-EELPFC\">here</a>
     """
-    exporter_identification: Optional[CustomsExporterIdentification] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('exporter_identification'), 'exclude': lambda f: f is None }})
-    r"""Additional exporter identification that may be required to ship in certain countries"""
     incoterm: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('incoterm'), 'exclude': lambda f: f is None }})
     r"""The incoterm reference of the shipment. FCA is available for DHL Express and FedEx only.
     eDAP is available for DPD UK only. DAP is available for DHL Express and DPD UK.

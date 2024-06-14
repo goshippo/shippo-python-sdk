@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: 83260d88128c46673f69c31c772447dc
+  docChecksum: c1fbfc30ebe7e63d6f7b0d5603bf6099
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.307.1
-  generationVersion: 2.342.2
-  releaseVersion: 3.5.0
-  configChecksum: a4fdf73257bca76c4bd7c2b90496d152
+  speakeasyVersion: 1.308.1
+  generationVersion: 2.342.6
+  releaseVersion: 3.5.1
+  configChecksum: 5f5f04834a70b312b35db56812092ea0
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
@@ -14,7 +14,7 @@ features:
   python:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.3
-    core: 4.6.10
+    core: 4.6.11
     flattening: 2.81.1
     globalSecurity: 2.83.5
     globalSecurityCallbacks: 0.1.0
@@ -84,6 +84,8 @@ generatedFiles:
   - src/shippo/models/components/customsdeclarationeelpfcenum.py
   - src/shippo/models/components/customsdeclarationcontentstypeenum.py
   - src/shippo/models/components/addressimporter.py
+  - src/shippo/models/components/customsexporteridentification.py
+  - src/shippo/models/components/customstaxidentification.py
   - src/shippo/models/components/customsdeclarationb13afilingoptionenum.py
   - src/shippo/models/components/shipmentextra.py
   - src/shippo/models/components/upsreferencefields.py
@@ -132,8 +134,6 @@ generatedFiles:
   - src/shippo/models/components/customsdeclaration.py
   - src/shippo/models/components/objectstateenum.py
   - src/shippo/models/components/customsinvoicedcharges.py
-  - src/shippo/models/components/customsexporteridentification.py
-  - src/shippo/models/components/customstaxidentification.py
   - src/shippo/models/components/customsitempaginatedlist.py
   - src/shippo/models/components/customsitem.py
   - src/shippo/models/components/liveratepaginatedlist.py
@@ -320,6 +320,9 @@ generatedFiles:
   - docs/models/components/customsdeclarationeelpfcenum.md
   - docs/models/components/customsdeclarationcontentstypeenum.md
   - docs/models/components/addressimporter.md
+  - docs/models/components/customsexporteridentification.md
+  - docs/models/components/customstaxidentificationtype.md
+  - docs/models/components/customstaxidentification.md
   - docs/models/components/customsdeclarationb13afilingoptionenum.md
   - docs/models/components/ancillaryendorsement.md
   - docs/models/components/dangerousgoodscode.md
@@ -393,13 +396,9 @@ generatedFiles:
   - docs/models/components/carrieraccountuspscreaterequest.md
   - docs/models/components/carrieraccountregistrationstatus.md
   - docs/models/components/customsdeclarationpaginatedlist.md
-  - docs/models/components/customsdeclarationaddressimporter.md
   - docs/models/components/customsdeclaration.md
   - docs/models/components/objectstateenum.md
   - docs/models/components/customsinvoicedcharges.md
-  - docs/models/components/customsexporteridentification.md
-  - docs/models/components/customstaxidentificationtype.md
-  - docs/models/components/customstaxidentification.md
   - docs/models/components/customsitempaginatedlist.md
   - docs/models/components/customsitem.md
   - docs/models/components/liveratepaginatedlist.md
@@ -493,6 +492,7 @@ generatedFiles:
   - docs/models/components/serviceleveludsenum.md
   - docs/models/components/servicelevelevriukenum.md
   - docs/models/components/servicelevellasershipenum.md
+  - docs/models/components/serviceleveljitsuenum.md
   - docs/models/components/servicelevelontracenum.md
   - docs/models/components/servicelevelsendleenum.md
   - docs/models/components/servicelevelroyalmailenum.md
@@ -520,7 +520,6 @@ generatedFiles:
   - docs/models/components/servicelevelcanadapostenum.md
   - docs/models/components/servicelevelbettertrucksenum.md
   - docs/models/components/servicelevelapgenum.md
-  - docs/models/components/servicelevelaxlehireenum.md
   - docs/models/components/servicelevelaustraliapostenum.md
   - docs/models/components/servicelevelasendiaenum.md
   - docs/models/components/servicelevelapcpostalenum.md

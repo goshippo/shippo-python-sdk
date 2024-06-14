@@ -13,7 +13,7 @@ class CarriersEnum(str, Enum):
     | aramex | Aramex|
     | asendia_us | Asendia US|
     | australia_post | Australia Post (also used for Startrack)|
-    | axlehire | Axlehire|
+    | axlehire | Jitsu|
     | better_trucks | BetterTrucks|
     | borderguru | BorderGuru|
     | boxberry | Boxberry|

@@ -1,4 +1,4 @@
-# ServiceLevelAxleHireEnum
+# ServiceLevelJitsuEnum
 
 |Token | Service name|
 |:---|:---|
