@@ -5,87 +5,87 @@ Examples.
 
 ## Supported Types
 
-### CarrierAccountCanadaPostCreateRequest
+### `components.CarrierAccountCanadaPostCreateRequest`
 
 ```python
-registerCarrierAccountRequestBody: components.CarrierAccountCanadaPostCreateRequest = /* values here */
+value: components.CarrierAccountCanadaPostCreateRequest = /* values here */
 ```
 
-### CarrierAccountChronopostCreateRequest
+### `components.CarrierAccountChronopostCreateRequest`
 
 ```python
-registerCarrierAccountRequestBody: components.CarrierAccountChronopostCreateRequest = /* values here */
+value: components.CarrierAccountChronopostCreateRequest = /* values here */
 ```
 
-### CarrierAccountColissimoCreateRequest
+### `components.CarrierAccountColissimoCreateRequest`
 
 ```python
-registerCarrierAccountRequestBody: components.CarrierAccountColissimoCreateRequest = /* values here */
+value: components.CarrierAccountColissimoCreateRequest = /* values here */
 ```
 
-### CarrierAccountCorreosCreateRequest
+### `components.CarrierAccountCorreosCreateRequest`
 
 ```python
-registerCarrierAccountRequestBody: components.CarrierAccountCorreosCreateRequest = /* values here */
+value: components.CarrierAccountCorreosCreateRequest = /* values here */
 ```
 
-### CarrierAccountDeutschePostCreateRequest
+### `components.CarrierAccountDeutschePostCreateRequest`
 
 ```python
-registerCarrierAccountRequestBody: components.CarrierAccountDeutschePostCreateRequest = /* values here */
+value: components.CarrierAccountDeutschePostCreateRequest = /* values here */
 ```
 
-### CarrierAccountDHLExpressCreateRequest
+### `components.CarrierAccountDHLExpressCreateRequest`
 
 ```python
-registerCarrierAccountRequestBody: components.CarrierAccountDHLExpressCreateRequest = /* values here */
+value: components.CarrierAccountDHLExpressCreateRequest = /* values here */
 ```
 
-### CarrierAccountDpdDeCreateRequest
+### `components.CarrierAccountDpdDeCreateRequest`
 
 ```python
-registerCarrierAccountRequestBody: components.CarrierAccountDpdDeCreateRequest = /* values here */
+value: components.CarrierAccountDpdDeCreateRequest = /* values here */
 ```
 
-### CarrierAccountDPDUKCreateRequest
+### `components.CarrierAccountDPDUKCreateRequest`
 
 ```python
-registerCarrierAccountRequestBody: components.CarrierAccountDPDUKCreateRequest = /* values here */
+value: components.CarrierAccountDPDUKCreateRequest = /* values here */
 ```
 
-### CarrierAccountFedExCreateRequest
+### `components.CarrierAccountFedExCreateRequest`
 
 ```python
-registerCarrierAccountRequestBody: components.CarrierAccountFedExCreateRequest = /* values here */
+value: components.CarrierAccountFedExCreateRequest = /* values here */
 ```
 
-### CarrierAccountHermesUKCreateRequest
+### `components.CarrierAccountHermesUKCreateRequest`
 
 ```python
-registerCarrierAccountRequestBody: components.CarrierAccountHermesUKCreateRequest = /* values here */
+value: components.CarrierAccountHermesUKCreateRequest = /* values here */
 ```
 
-### CarrierAccountMondialRelayCreateRequest
+### `components.CarrierAccountMondialRelayCreateRequest`
 
 ```python
-registerCarrierAccountRequestBody: components.CarrierAccountMondialRelayCreateRequest = /* values here */
+value: components.CarrierAccountMondialRelayCreateRequest = /* values here */
 ```
 
-### CarrierAccountPosteItalianeCreateRequest
+### `components.CarrierAccountPosteItalianeCreateRequest`
 
 ```python
-registerCarrierAccountRequestBody: components.CarrierAccountPosteItalianeCreateRequest = /* values here */
+value: components.CarrierAccountPosteItalianeCreateRequest = /* values here */
 ```
 
-### CarrierAccountUPSCreateRequest
+### `components.CarrierAccountUPSCreateRequest`
 
 ```python
-registerCarrierAccountRequestBody: components.CarrierAccountUPSCreateRequest = /* values here */
+value: components.CarrierAccountUPSCreateRequest = /* values here */
 ```
 
-### CarrierAccountUSPSCreateRequest
+### `components.CarrierAccountUSPSCreateRequest`
 
 ```python
-registerCarrierAccountRequestBody: components.CarrierAccountUSPSCreateRequest = /* values here */
+value: components.CarrierAccountUSPSCreateRequest = /* values here */
 ```
 

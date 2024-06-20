@@ -22,30 +22,23 @@ class ObjectState(str, Enum):
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class Parcel:
-    distance_unit: DistanceUnitEnum = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('distance_unit') }})
-    r"""The measure unit used for length, width and height."""
-    height: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('height') }})
-    r"""**Required if template is not specified**<br>
-    Height of the parcel. Up to six digits in front and four digits after the decimal separator are accepted.
-    """
-    length: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('length') }})
-    r"""**Required if template is not specified**<br>
-    Length of the Parcel. Up to six digits in front and four digits after the decimal separator are accepted.
-    """
     mass_unit: WeightUnitEnum = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('mass_unit') }})
     r"""The unit used for weight."""
     weight: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('weight') }})
     r"""Weight of the parcel. Up to six digits in front and four digits after the decimal separator are accepted."""
+    distance_unit: DistanceUnitEnum = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('distance_unit') }})
+    r"""The measure unit used for length, width and height."""
+    height: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('height') }})
+    r"""Height of the parcel. Up to six digits in front and four digits after the decimal separator are accepted."""
+    length: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('length') }})
+    r"""Length of the Parcel. Up to six digits in front and four digits after the decimal separator are accepted."""
     width: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('width') }})
-    r"""**Required if template is not specified**<br>
-    Width of the Parcel. Up to six digits in front and four digits after the decimal separator are accepted.
-    """
+    r"""Width of the Parcel. Up to six digits in front and four digits after the decimal separator are accepted."""
     extra: Optional[ParcelExtra] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('extra'), 'exclude': lambda f: f is None }})
     r"""An object holding optional extra services to be requested for each parcel in a multi-piece shipment.
     See the <a href=\"#section/Parcel-Extras\">Parcel Extra table below</a> for all available services.
     """
     metadata: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('metadata'), 'exclude': lambda f: f is None }})
-    r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
     object_created: Optional[datetime] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_created'), 'encoder': utils.datetimeisoformat(True), 'decoder': dateutil.parser.isoparse, 'exclude': lambda f: f is None }})
     r"""Date and time of Parcel creation."""
     object_id: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_id'), 'exclude': lambda f: f is None }})

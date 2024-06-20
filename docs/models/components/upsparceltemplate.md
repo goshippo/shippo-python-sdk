@@ -1,4 +1,4 @@
-# ParcelTemplateUPSEnum
+# UPSParcelTemplate
 
 |Token | Name | Dimensions|
 |:---|:---|:---|

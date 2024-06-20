@@ -87,7 +87,7 @@ class Parcels:
 
     
     
-    def create(self, request: components.ParcelRequest) -> components.Parcel:
+    def create(self, request: operations.CreateParcelRequestBody) -> components.Parcel:
         r"""Create a new parcel
         Creates a new parcel object.
         """
@@ -106,7 +106,7 @@ class Parcels:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
-        req_content_type, data, form = utils.serialize_request_body(request, components.ParcelRequest, "request", False, False, 'json')
+        req_content_type, data, form = utils.serialize_request_body(request, operations.CreateParcelRequestBody, "request", False, False, 'json')
         if req_content_type is not None and req_content_type not in ('multipart/form-data', 'multipart/mixed'):
             headers['content-type'] = req_content_type
         if data is None and form is None:

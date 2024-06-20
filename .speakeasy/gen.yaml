@@ -12,7 +12,7 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: true
 python:
-  version: 3.5.1
+  version: 3.5.2
   additionalDependencies:
     dependencies: {}
     extraDependencies:
@@ -39,3 +39,4 @@ python:
   packageName: shippo
   projectUrls: {}
   responseFormat: flat
+  templateVersion: v1

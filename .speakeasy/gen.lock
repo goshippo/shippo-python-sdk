@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: c1fbfc30ebe7e63d6f7b0d5603bf6099
+  docChecksum: 41c0262ad846794c25bcac117519320e
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.308.1
-  generationVersion: 2.342.6
-  releaseVersion: 3.5.1
-  configChecksum: 5f5f04834a70b312b35db56812092ea0
+  speakeasyVersion: 1.310.0
+  generationVersion: 2.347.4
+  releaseVersion: 3.5.2
+  configChecksum: d21130000a36db6b79228f1b89cf7b4d
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
@@ -51,7 +51,6 @@ generatedFiles:
   - src/shippo/shippo_accounts.py
   - src/shippo/webhooks.py
   - src/shippo/sdk.py
-  - Makefile
   - py.typed
   - pylintrc
   - scripts/publish.sh
@@ -74,9 +73,13 @@ generatedFiles:
   - src/shippo/models/components/batchshipmentcreaterequest.py
   - src/shippo/models/components/shipmentcreaterequest.py
   - src/shippo/models/components/parcelcreaterequest.py
-  - src/shippo/models/components/parceltemplateenumset.py
-  - src/shippo/models/components/weightunitenum.py
   - src/shippo/models/components/distanceunitenum.py
+  - src/shippo/models/components/weightunitenum.py
+  - src/shippo/models/components/parcelextra.py
+  - src/shippo/models/components/parcelinsurance.py
+  - src/shippo/models/components/cod.py
+  - src/shippo/models/components/parcelcreatefromtemplaterequest.py
+  - src/shippo/models/components/parceltemplateenumset.py
   - src/shippo/models/components/customsdeclarationcreaterequest.py
   - src/shippo/models/components/customsdeclarationnondeliveryoptionenum.py
   - src/shippo/models/components/customsitemcreaterequest.py
@@ -90,6 +93,8 @@ generatedFiles:
   - src/shippo/models/components/shipmentextra.py
   - src/shippo/models/components/upsreferencefields.py
   - src/shippo/models/components/rmanumber.py
+  - src/shippo/models/components/shipmentextrareturnservicetypeupsenum.py
+  - src/shippo/models/components/shipmentextrareturnservicetypelasershipenum.py
   - src/shippo/models/components/ponumber.py
   - src/shippo/models/components/shipmentextralasershipattributesenum.py
   - src/shippo/models/components/invoicenumber.py
@@ -100,7 +105,6 @@ generatedFiles:
   - src/shippo/models/components/dangerousgoodslithiumbatteries.py
   - src/shippo/models/components/dangerousgoodsbiologicalmaterial.py
   - src/shippo/models/components/customerreference.py
-  - src/shippo/models/components/cod.py
   - src/shippo/models/components/billing.py
   - src/shippo/models/components/alcohol.py
   - src/shippo/models/components/carrieraccountpaginatedlist.py
@@ -140,8 +144,6 @@ generatedFiles:
   - src/shippo/models/components/liverate.py
   - src/shippo/models/components/liveratecreaterequest.py
   - src/shippo/models/components/parcel.py
-  - src/shippo/models/components/parcelextra.py
-  - src/shippo/models/components/parcelinsurance.py
   - src/shippo/models/components/lineitem.py
   - src/shippo/models/components/addresscompletecreaterequest.py
   - src/shippo/models/components/defaultparceltemplate.py
@@ -158,7 +160,6 @@ generatedFiles:
   - src/shippo/models/components/lineitembase.py
   - src/shippo/models/components/carrierparceltemplatelist.py
   - src/shippo/models/components/parcelpaginatedlist.py
-  - src/shippo/models/components/parcelrequest.py
   - src/shippo/models/components/pickup.py
   - src/shippo/models/components/location.py
   - src/shippo/models/components/pickupbase.py
@@ -231,6 +232,7 @@ generatedFiles:
   - src/shippo/models/operations/listcarrierparceltemplates.py
   - src/shippo/models/operations/getcarrierparceltemplate.py
   - src/shippo/models/operations/listparcels.py
+  - src/shippo/models/operations/createparcel.py
   - src/shippo/models/operations/getparcel.py
   - src/shippo/models/operations/getrate.py
   - src/shippo/models/operations/listshipmentrates.py
@@ -264,7 +266,6 @@ generatedFiles:
   - src/shippo/models/operations/updatedefaultparceltemplate.py
   - src/shippo/models/operations/createmanifest.py
   - src/shippo/models/operations/createorder.py
-  - src/shippo/models/operations/createparcel.py
   - src/shippo/models/operations/createpickup.py
   - src/shippo/models/operations/createrefund.py
   - src/shippo/models/operations/createservicegroup.py
@@ -303,16 +304,22 @@ generatedFiles:
   - docs/models/components/parcels.md
   - docs/models/components/shipmentcreaterequest.md
   - docs/models/components/parcelcreaterequest.md
-  - docs/models/components/parceltemplatearamexaustraliaenum.md
-  - docs/models/components/parceltemplatecourierspleaseenum.md
-  - docs/models/components/parceltemplatedpdukenum.md
-  - docs/models/components/parceltemplatedhlecommerceenum.md
-  - docs/models/components/parceltemplateuspsenum.md
-  - docs/models/components/parceltemplateupsenum.md
-  - docs/models/components/parceltemplatefedexenum.md
-  - docs/models/components/parceltemplateenumset.md
-  - docs/models/components/weightunitenum.md
   - docs/models/components/distanceunitenum.md
+  - docs/models/components/weightunitenum.md
+  - docs/models/components/parcelextra.md
+  - docs/models/components/parcelinsuranceprovider.md
+  - docs/models/components/parcelinsurance.md
+  - docs/models/components/paymentmethod.md
+  - docs/models/components/cod.md
+  - docs/models/components/parcelcreatefromtemplaterequest.md
+  - docs/models/components/aramexaustraliaparceltemplate.md
+  - docs/models/components/courierspleaseparceltemplate.md
+  - docs/models/components/dpdukparceltemplate.md
+  - docs/models/components/dhlecommerceparceltemplate.md
+  - docs/models/components/uspsparceltemplate.md
+  - docs/models/components/upsparceltemplate.md
+  - docs/models/components/fedexparceltemplate.md
+  - docs/models/components/parceltemplateenumset.md
   - docs/models/components/customsdeclarationcreaterequest.md
   - docs/models/components/customsdeclarationnondeliveryoptionenum.md
   - docs/models/components/customsitemcreaterequest.md
@@ -332,6 +339,8 @@ generatedFiles:
   - docs/models/components/shipmentextra.md
   - docs/models/components/upsreferencefields.md
   - docs/models/components/rmanumber.md
+  - docs/models/components/shipmentextrareturnservicetypeupsenum.md
+  - docs/models/components/shipmentextrareturnservicetypelasershipenum.md
   - docs/models/components/ponumber.md
   - docs/models/components/shipmentextralasershipattributesenum.md
   - docs/models/components/invoicenumber.md
@@ -343,8 +352,6 @@ generatedFiles:
   - docs/models/components/dangerousgoodslithiumbatteries.md
   - docs/models/components/dangerousgoodsbiologicalmaterial.md
   - docs/models/components/customerreference.md
-  - docs/models/components/paymentmethod.md
-  - docs/models/components/cod.md
   - docs/models/components/type.md
   - docs/models/components/billing.md
   - docs/models/components/recipienttype.md
@@ -409,9 +416,6 @@ generatedFiles:
   - docs/models/components/liveratecreaterequest.md
   - docs/models/components/objectstate.md
   - docs/models/components/parcel.md
-  - docs/models/components/parcelextra.md
-  - docs/models/components/parcelinsuranceprovider.md
-  - docs/models/components/parcelinsurance.md
   - docs/models/components/lineitem.md
   - docs/models/components/addresscompletecreaterequest.md
   - docs/models/components/defaultparceltemplate.md
@@ -431,7 +435,6 @@ generatedFiles:
   - docs/models/components/lineitembase.md
   - docs/models/components/carrierparceltemplatelist.md
   - docs/models/components/parcelpaginatedlist.md
-  - docs/models/components/parcelrequest.md
   - docs/models/components/pickupstatus.md
   - docs/models/components/pickup.md
   - docs/models/components/buildinglocationtype.md
@@ -583,6 +586,8 @@ generatedFiles:
   - docs/models/operations/getcarrierparceltemplaterequest.md
   - docs/models/operations/listparcelsglobals.md
   - docs/models/operations/listparcelsrequest.md
+  - docs/models/operations/createparcelglobals.md
+  - docs/models/operations/createparcelrequestbody.md
   - docs/models/operations/getparcelglobals.md
   - docs/models/operations/getparcelrequest.md
   - docs/models/operations/getrateglobals.md
@@ -637,7 +642,6 @@ generatedFiles:
   - docs/models/operations/updatedefaultparceltemplateglobals.md
   - docs/models/operations/createmanifestglobals.md
   - docs/models/operations/createorderglobals.md
-  - docs/models/operations/createparcelglobals.md
   - docs/models/operations/createpickupglobals.md
   - docs/models/operations/createrefundglobals.md
   - docs/models/operations/createservicegroupglobals.md

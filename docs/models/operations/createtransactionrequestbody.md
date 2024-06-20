@@ -5,15 +5,15 @@ Examples.
 
 ## Supported Types
 
-### TransactionCreateRequest
+### `components.TransactionCreateRequest`
 
 ```python
-createTransactionRequestBody: components.TransactionCreateRequest = /* values here */
+value: components.TransactionCreateRequest = /* values here */
 ```
 
-### InstantTransactionCreateRequest
+### `components.InstantTransactionCreateRequest`
 
 ```python
-createTransactionRequestBody: components.InstantTransactionCreateRequest = /* values here */
+value: components.InstantTransactionCreateRequest = /* values here */
 ```
 
