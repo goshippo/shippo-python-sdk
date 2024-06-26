@@ -77,7 +77,25 @@ res = s.batches.create(request=components.BatchCreateRequest(
                     validate=True,
                 ),
                 parcels=[
-                    '<value>',
+                    components.ParcelCreateFromTemplateRequest(
+                        mass_unit=components.WeightUnitEnum.LB,
+                        weight='1',
+                        template=components.AramexAustraliaParcelTemplate.FASTWAY_AUSTRALIA_SATCHEL_A3,
+                        extra=components.ParcelExtra(
+                            cod=components.Cod(
+                                amount='5.5',
+                                currency='USD',
+                                payment_method=components.PaymentMethod.CASH,
+                            ),
+                            insurance=components.ParcelInsurance(
+                                amount='5.5',
+                                content='Laptop',
+                                currency='USD',
+                                provider=components.ParcelInsuranceProvider.UPS,
+                            ),
+                        ),
+                        metadata='Customer ID 123456',
+                    ),
                 ],
                 extra=components.ShipmentExtra(
                     accounts_receivable_customer_account=components.UPSReferenceFields(
@@ -182,7 +200,22 @@ res = s.batches.create(request=components.BatchCreateRequest(
                 ),
                 metadata='Customer ID 123456',
                 shipment_date='2021-03-22T12:00:00Z',
-                address_return='d799c2679e644279b59fe661ac8fa488',
+                address_return=components.AddressCreateRequest(
+                    country='US',
+                    name='Shwan Ippotle',
+                    company='Shippo',
+                    street1='215 Clayton St.',
+                    street3='',
+                    street_no='',
+                    city='San Francisco',
+                    state='CA',
+                    zip='94117',
+                    phone='+1 555 341 9393',
+                    email='shippotle@shippo.com',
+                    is_residential=True,
+                    metadata='Customer ID 123456',
+                    validate=True,
+                ),
                 customs_declaration=components.CustomsDeclarationCreateRequest(
                     certify=True,
                     certify_signer='Shawn Ippotle',
@@ -332,12 +365,25 @@ res = s.batches.add_shipments(batch_id='<value>', request_body=[
             address_to='d799c2679e644279b59fe661ac8fa489',
             parcels=[
                 components.ParcelCreateRequest(
+                    mass_unit=components.WeightUnitEnum.LB,
+                    weight='1',
                     distance_unit=components.DistanceUnitEnum.IN,
                     height='1',
                     length='1',
-                    mass_unit=components.WeightUnitEnum.LB,
-                    weight='1',
                     width='1',
+                    extra=components.ParcelExtra(
+                        cod=components.Cod(
+                            amount='5.5',
+                            currency='USD',
+                            payment_method=components.PaymentMethod.CASH,
+                        ),
+                        insurance=components.ParcelInsurance(
+                            amount='5.5',
+                            content='Laptop',
+                            currency='USD',
+                            provider=components.ParcelInsuranceProvider.UPS,
+                        ),
+                    ),
                     metadata='Customer ID 123456',
                 ),
             ],

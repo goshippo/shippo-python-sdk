@@ -3,15 +3,15 @@
 
 ## Supported Types
 
-### 
+### `float`
 
 ```python
-latitude: float = /* values here */
+value: float = /* values here */
 ```
 
-### 
+### `str`
 
 ```python
-latitude: str = /* values here */
+value: str = /* values here */
 ```
 

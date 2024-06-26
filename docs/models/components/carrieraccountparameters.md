@@ -3,21 +3,21 @@
 
 ## Supported Types
 
-### 
+### `Dict[str, Any]`
 
 ```python
-carrierAccountParameters: Dict[str, Any] = /* values here */
+value: Dict[str, Any] = /* values here */
 ```
 
-### FedExConnectExistingOwnAccountParameters
+### `components.FedExConnectExistingOwnAccountParameters`
 
 ```python
-carrierAccountParameters: components.FedExConnectExistingOwnAccountParameters = /* values here */
+value: components.FedExConnectExistingOwnAccountParameters = /* values here */
 ```
 
-### UPSConnectExistingOwnAccountParameters
+### `components.UPSConnectExistingOwnAccountParameters`
 
 ```python
-carrierAccountParameters: components.UPSConnectExistingOwnAccountParameters = /* values here */
+value: components.UPSConnectExistingOwnAccountParameters = /* values here */
 ```
 

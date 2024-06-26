@@ -14,11 +14,13 @@ from .invoicenumber import InvoiceNumber
 from .ponumber import PoNumber
 from .rmanumber import RmaNumber
 from .shipmentextralasershipattributesenum import ShipmentExtraLasershipAttributesEnum
+from .shipmentextrareturnservicetypelasershipenum import ShipmentExtraReturnServiceTypeLasershipEnum
+from .shipmentextrareturnservicetypeupsenum import ShipmentExtraReturnServiceTypeUPSEnum
 from .upsreferencefields import UPSReferenceFields
 from dataclasses_json import Undefined, dataclass_json
 from enum import Enum
 from shippo import utils
-from typing import List, Optional
+from typing import List, Optional, Union
 
 
 class AncillaryEndorsement(str, Enum):
@@ -48,14 +50,6 @@ class PreferredDeliveryTimeframe(str, Enum):
     SIXTEEN_MILLION_ONE_THOUSAND_EIGHT_HUNDRED = '16001800'
     EIGHTEEN_MILLION_TWO_THOUSAND = '18002000'
     NINETEEN_MILLION_TWO_THOUSAND_ONE_HUNDRED = '19002100'
-
-
-class ReturnServiceType(str, Enum):
-    r"""Request additional return option for return shipments (UPS only)."""
-    PRINT_AND_MAIL = 'PRINT_AND_MAIL'
-    ATTEMPT_1 = 'ATTEMPT_1'
-    ATTEMPT_3 = 'ATTEMPT_3'
-    ELECTRONIC_LABEL = 'ELECTRONIC_LABEL'
 
 
 class SignatureConfirmation(str, Enum):
@@ -155,7 +149,7 @@ class ShipmentExtra:
     request_retail_rates: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('request_retail_rates'), 'exclude': lambda f: f is None }})
     r"""Returns retail rates instead of account-based rates (UPS and FedEx only)."""
     return_service_type: Optional[ReturnServiceType] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('return_service_type'), 'exclude': lambda f: f is None }})
-    r"""Request additional return option for return shipments (UPS only)."""
+    r"""Request additional return option for return shipments (UPS and Lasership only)."""
     rma_number: Optional[RmaNumber] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('rma_number'), 'exclude': lambda f: f is None }})
     r"""Specify the RMA number field on the label (FedEx and UPS only)."""
     saturday_delivery: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('saturday_delivery'), 'exclude': lambda f: f is None }})
@@ -170,3 +164,5 @@ class ShipmentExtra:
     transaction_reference_number: Optional[UPSReferenceFields] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('transaction_reference_number'), 'exclude': lambda f: f is None }})
     
 
+
+ReturnServiceType = Union[ShipmentExtraReturnServiceTypeUPSEnum, ShipmentExtraReturnServiceTypeLasershipEnum]
