@@ -3,15 +3,15 @@
 
 ## Supported Types
 
-### UserParcelTemplateWithCarrierTemplateCreateRequest
+### `components.UserParcelTemplateWithCarrierTemplateCreateRequest`
 
 ```python
-userParcelTemplateCreateRequest: components.UserParcelTemplateWithCarrierTemplateCreateRequest = /* values here */
+value: components.UserParcelTemplateWithCarrierTemplateCreateRequest = /* values here */
 ```
 
-### UserParcelTemplateWithoutCarrierTemplateCreateRequest
+### `components.UserParcelTemplateWithoutCarrierTemplateCreateRequest`
 
 ```python
-userParcelTemplateCreateRequest: components.UserParcelTemplateWithoutCarrierTemplateCreateRequest = /* values here */
+value: components.UserParcelTemplateWithoutCarrierTemplateCreateRequest = /* values here */
 ```
 

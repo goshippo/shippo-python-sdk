@@ -1,5 +1,5 @@
 import shippo
-from shippo.models.components import CarriersEnum, ParcelRequest, DistanceUnitEnum, WeightUnitEnum, \
+from shippo.models.components import CarriersEnum, DistanceUnitEnum, WeightUnitEnum, \
     AddressCreateRequest, ShipmentCreateRequest, TransactionCreateRequest, ParcelCreateRequest, Transaction
 from tests.helpers_custom import get_carrier_accounts
 
@@ -78,7 +78,7 @@ class TestPurchaseLabel:
             ))
 
         parcel = api.parcels.create(
-            ParcelRequest(
+            ParcelCreateRequest(
                 length="5",
                 width="5",
                 height="5",

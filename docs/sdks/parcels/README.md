@@ -72,12 +72,12 @@ s = shippo.Shippo(
 )
 
 
-res = s.parcels.create(request=components.ParcelRequest(
+res = s.parcels.create(request=components.ParcelCreateRequest(
+    mass_unit=components.WeightUnitEnum.LB,
+    weight='1',
     distance_unit=components.DistanceUnitEnum.IN,
     height='1',
     length='1',
-    mass_unit=components.WeightUnitEnum.LB,
-    weight='1',
     width='1',
     extra=components.ParcelExtra(
         cod=components.Cod(
@@ -92,6 +92,7 @@ res = s.parcels.create(request=components.ParcelRequest(
             provider=components.ParcelInsuranceProvider.UPS,
         ),
     ),
+    metadata='Customer ID 123456',
 ))
 
 if res is not None:
@@ -102,9 +103,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                            | Type                                                                 | Required                                                             | Description                                                          |
-| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| `request`                                                            | [components.ParcelRequest](../../models/components/parcelrequest.md) | :heavy_check_mark:                                                   | The request object to use for the request.                           |
+| Parameter                                                                                | Type                                                                                     | Required                                                                                 | Description                                                                              |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `request`                                                                                | [operations.CreateParcelRequestBody](../../models/operations/createparcelrequestbody.md) | :heavy_check_mark:                                                                       | The request object to use for the request.                                               |
 
 
 ### Response

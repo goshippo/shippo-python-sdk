@@ -4,6 +4,7 @@ from __future__ import annotations
 import dataclasses
 from .addresscreaterequest import AddressCreateRequest
 from .customsdeclarationcreaterequest import CustomsDeclarationCreateRequest
+from .parcelcreatefromtemplaterequest import ParcelCreateFromTemplateRequest
 from .parcelcreaterequest import ParcelCreateRequest
 from .shipmentextra import ShipmentExtra
 from dataclasses_json import Undefined, dataclass_json
@@ -44,4 +45,4 @@ AddressTo = Union[AddressCreateRequest, str]
 
 ShipmentCreateRequestCustomsDeclaration = Union[CustomsDeclarationCreateRequest, str]
 
-Parcels = Union[ParcelCreateRequest, str]
+Parcels = Union[ParcelCreateRequest, ParcelCreateFromTemplateRequest, str]
