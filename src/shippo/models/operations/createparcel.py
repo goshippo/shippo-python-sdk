@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 import dataclasses
-from typing import Optional
+from ...models.components import parcelcreatefromtemplaterequest as components_parcelcreatefromtemplaterequest
+from ...models.components import parcelcreaterequest as components_parcelcreaterequest
+from typing import Optional, Union
 
 
 @dataclasses.dataclass
@@ -11,3 +13,5 @@ class CreateParcelGlobals:
     r"""String used to pick a non-default API version to use"""
     
 
+
+CreateParcelRequestBody = Union[components_parcelcreaterequest.ParcelCreateRequest, components_parcelcreatefromtemplaterequest.ParcelCreateFromTemplateRequest]

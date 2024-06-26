@@ -1,4 +1,6 @@
-# Parcels
+# CreateParcelRequestBody
+
+Parcel details.
 
 
 ## Supported Types
@@ -13,11 +15,5 @@ value: components.ParcelCreateRequest = /* values here */
 
 ```python
 value: components.ParcelCreateFromTemplateRequest = /* values here */
-```
-
-### `str`
-
-```python
-value: str = /* values here */
 ```
 

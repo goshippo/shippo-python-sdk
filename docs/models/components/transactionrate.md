@@ -8,15 +8,15 @@ this field will be a simplified Rate object in the Transaction model returned fr
 
 ## Supported Types
 
-### CoreRate
+### `components.CoreRate`
 
 ```python
-transactionRate: components.CoreRate = /* values here */
+value: components.CoreRate = /* values here */
 ```
 
-### 
+### `str`
 
 ```python
-transactionRate: str = /* values here */
+value: str = /* values here */
 ```
 

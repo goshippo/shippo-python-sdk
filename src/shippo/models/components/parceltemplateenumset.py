@@ -5,7 +5,7 @@ from enum import Enum
 from typing import Union
 
 
-class ParcelTemplateAramexAustraliaEnum(str, Enum):
+class AramexAustraliaParcelTemplate(str, Enum):
     r"""|Token | Name | Dimensions|
     |:---|:---|:---|
     | Fastway_Australia_Satchel_A2 | Satchel A2 | 594.00 x 420.00 x 48.00 mm|
@@ -19,7 +19,7 @@ class ParcelTemplateAramexAustraliaEnum(str, Enum):
     FASTWAY_AUSTRALIA_SATCHEL_A5 = 'Fastway_Australia_Satchel_A5'
 
 
-class ParcelTemplateCouriersPleaseEnum(str, Enum):
+class CouriersPleaseParcelTemplate(str, Enum):
     r"""|Token | Name | Dimensions|
     |:---|:---|:---|
     | couriersplease_500g_satchel | 500g Satchel | 22.00 x 33.50 x 0.10 cm|
@@ -33,7 +33,7 @@ class ParcelTemplateCouriersPleaseEnum(str, Enum):
     COURIERSPLEASE_5KG_SATCHEL = 'couriersplease_5kg_satchel'
 
 
-class ParcelTemplateDPDUKEnum(str, Enum):
+class DPDUKParcelTemplate(str, Enum):
     r"""|Token | Name | Dimensions|
     |:---|:---|:---|
     | DPD_UK_Express_Pak| DPD UK Express Pak | 530.00 x 400.00 x 100.00 mm|
@@ -41,7 +41,7 @@ class ParcelTemplateDPDUKEnum(str, Enum):
     DPD_UK_EXPRESS_PAK = 'DPD_UK_Express_Pak'
 
 
-class ParcelTemplateDHLeCommerceEnum(str, Enum):
+class DHLECommerceParcelTemplate(str, Enum):
     r"""|Token | Name | Dimensions|
     |:---|:---|:---|
     | DHLeC_Irregular | Irregular Shipment | 10.00 x 10.00 x 10.00 in|
@@ -51,7 +51,7 @@ class ParcelTemplateDHLeCommerceEnum(str, Enum):
     DH_LE_C_SM_FLATS = 'DHLeC_SM_Flats'
 
 
-class ParcelTemplateUSPSEnum(str, Enum):
+class USPSParcelTemplate(str, Enum):
     r"""|Token | Name | Dimensions|
     |:---|:---|:---|
     | USPS_FlatRateCardboardEnvelope | Flat Rate Cardboard Envelope |  12.50 x 9.50 x 0.75 in |
@@ -97,7 +97,7 @@ class ParcelTemplateUSPSEnum(str, Enum):
     USPS_SOFT_PACK = 'USPS_SoftPack'
 
 
-class ParcelTemplateUPSEnum(str, Enum):
+class UPSParcelTemplate(str, Enum):
     r"""|Token | Name | Dimensions|
     |:---|:---|:---|
     | UPS_Box_10kg | Box 10kg | 410.00 x 335.00 x 265.00 mm|
@@ -153,7 +153,7 @@ class ParcelTemplateUPSEnum(str, Enum):
     UPS_PALLET = 'UPS_Pallet'
 
 
-class ParcelTemplateFedExEnum(str, Enum):
+class FedExParcelTemplate(str, Enum):
     r"""|Token | Name | Dimensions|
     |:---|:---|:---|
     | FedEx_Box_10kg | FedEx® 10kg Box | 15.81 x 12.94 x 10.19 in|
@@ -190,4 +190,4 @@ class ParcelTemplateFedExEnum(str, Enum):
     FED_EX_TUBE = 'FedEx_Tube'
     FED_EX_XL_PAK = 'FedEx_XL_Pak'
 
-ParcelTemplateEnumSet = Union[ParcelTemplateFedExEnum, ParcelTemplateUPSEnum, ParcelTemplateUSPSEnum, ParcelTemplateDHLeCommerceEnum, ParcelTemplateDPDUKEnum, ParcelTemplateCouriersPleaseEnum, ParcelTemplateAramexAustraliaEnum]
+ParcelTemplateEnumSet = Union[FedExParcelTemplate, UPSParcelTemplate, USPSParcelTemplate, DHLECommerceParcelTemplate, DPDUKParcelTemplate, CouriersPleaseParcelTemplate, AramexAustraliaParcelTemplate]

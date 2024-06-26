@@ -3,15 +3,15 @@
 
 ## Supported Types
 
-### AddressCreateRequest
+### `components.AddressCreateRequest`
 
 ```python
-addressTo: components.AddressCreateRequest = /* values here */
+value: components.AddressCreateRequest = /* values here */
 ```
 
-### 
+### `str`
 
 ```python
-addressTo: str = /* values here */
+value: str = /* values here */
 ```
 

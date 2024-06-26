@@ -10,3 +10,4 @@
 | `TRACK_UPDATED`       | track_updated         |
 | `BATCH_CREATED`       | batch_created         |
 | `BATCH_PURCHASED`     | batch_purchased       |
+| `ALL`                 | all                   |

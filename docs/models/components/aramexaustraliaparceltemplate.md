@@ -1,4 +1,4 @@
-# ParcelTemplateAramexAustraliaEnum
+# AramexAustraliaParcelTemplate
 
 |Token | Name | Dimensions|
 |:---|:---|:---|

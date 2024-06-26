@@ -5,15 +5,15 @@ Object ID for an existing User Parcel Template OR a fully formed Parcel object.
 
 ## Supported Types
 
-### 
+### `str`
 
 ```python
-liveRateCreateRequestParcel: str = /* values here */
+value: str = /* values here */
 ```
 
-### Parcel
+### `components.Parcel`
 
 ```python
-liveRateCreateRequestParcel: components.Parcel = /* values here */
+value: components.Parcel = /* values here */
 ```
 

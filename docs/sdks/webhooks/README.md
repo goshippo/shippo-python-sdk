@@ -31,7 +31,7 @@ s = shippo.Shippo(
 
 
 res = s.webhooks.create_webhook(request=components.WebhookUpdateRequest(
-    event=components.WebhookEventTypeEnum.TRACK_UPDATED,
+    event=components.WebhookEventTypeEnum.BATCH_CREATED,
     url='https://wobbly-marmalade.org',
 ))
 
@@ -146,7 +146,7 @@ s = shippo.Shippo(
 
 
 res = s.webhooks.update_webhook(webhook_id='<value>', webhook_update_request=components.WebhookUpdateRequest(
-    event=components.WebhookEventTypeEnum.TRACK_UPDATED,
+    event=components.WebhookEventTypeEnum.BATCH_CREATED,
     url='https://small-cock.info',
 ))
 
