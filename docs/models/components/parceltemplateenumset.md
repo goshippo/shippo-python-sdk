@@ -5,45 +5,45 @@ If template is passed, `length`, `width`, `height`, and `distance_unit` are not 
 
 ## Supported Types
 
-### ParcelTemplateFedExEnum
+### `components.FedExParcelTemplate`
 
 ```python
-parcelTemplateEnumSet: components.ParcelTemplateFedExEnum = /* values here */
+value: components.FedExParcelTemplate = /* values here */
 ```
 
-### ParcelTemplateUPSEnum
+### `components.UPSParcelTemplate`
 
 ```python
-parcelTemplateEnumSet: components.ParcelTemplateUPSEnum = /* values here */
+value: components.UPSParcelTemplate = /* values here */
 ```
 
-### ParcelTemplateUSPSEnum
+### `components.USPSParcelTemplate`
 
 ```python
-parcelTemplateEnumSet: components.ParcelTemplateUSPSEnum = /* values here */
+value: components.USPSParcelTemplate = /* values here */
 ```
 
-### ParcelTemplateDHLeCommerceEnum
+### `components.DHLECommerceParcelTemplate`
 
 ```python
-parcelTemplateEnumSet: components.ParcelTemplateDHLeCommerceEnum = /* values here */
+value: components.DHLECommerceParcelTemplate = /* values here */
 ```
 
-### ParcelTemplateDPDUKEnum
+### `components.DPDUKParcelTemplate`
 
 ```python
-parcelTemplateEnumSet: components.ParcelTemplateDPDUKEnum = /* values here */
+value: components.DPDUKParcelTemplate = /* values here */
 ```
 
-### ParcelTemplateCouriersPleaseEnum
+### `components.CouriersPleaseParcelTemplate`
 
 ```python
-parcelTemplateEnumSet: components.ParcelTemplateCouriersPleaseEnum = /* values here */
+value: components.CouriersPleaseParcelTemplate = /* values here */
 ```
 
-### ParcelTemplateAramexAustraliaEnum
+### `components.AramexAustraliaParcelTemplate`
 
 ```python
-parcelTemplateEnumSet: components.ParcelTemplateAramexAustraliaEnum = /* values here */
+value: components.AramexAustraliaParcelTemplate = /* values here */
 ```
 

@@ -7,15 +7,15 @@ any address element, especially name, company, and email.
 
 ## Supported Types
 
-### 
+### `str`
 
 ```python
-liveRateCreateRequestAddressFrom: str = /* values here */
+value: str = /* values here */
 ```
 
-### AddressCompleteCreateRequest
+### `components.AddressCompleteCreateRequest`
 
 ```python
-liveRateCreateRequestAddressFrom: components.AddressCompleteCreateRequest = /* values here */
+value: components.AddressCompleteCreateRequest = /* values here */
 ```
 
