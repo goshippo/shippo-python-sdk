@@ -170,6 +170,10 @@ class Shippo:
     webhooks: Webhooks
     r"""Webhooks are a way for Shippo to notify your application when a specific event occurs. For example, when a label is purchased or when a shipment tracking status has changed. You can use webhooks to trigger actions in your application, such as sending an email or updating a database.
     <SchemaDefinition schemaRef=\"#/components/schemas/Webhook\"/>
+
+    # Webhook Payload
+    The payload is the body of the POST request Shippo sends to the URL specified at the time of webhook registration.
+    <SchemaDefinition schemaRef=\"#/components/schemas/WebhookPayload\"/>
     """
 
     sdk_configuration: SDKConfiguration

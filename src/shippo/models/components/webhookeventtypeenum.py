@@ -5,6 +5,7 @@ from enum import Enum
 
 
 class WebhookEventTypeEnum(str, Enum):
+    r"""Type of event that triggered the webhook."""
     TRANSACTION_CREATED = 'transaction_created'
     TRANSACTION_UPDATED = 'transaction_updated'
     TRACK_UPDATED = 'track_updated'

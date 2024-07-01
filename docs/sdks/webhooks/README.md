@@ -6,6 +6,10 @@
 Webhooks are a way for Shippo to notify your application when a specific event occurs. For example, when a label is purchased or when a shipment tracking status has changed. You can use webhooks to trigger actions in your application, such as sending an email or updating a database.
 <SchemaDefinition schemaRef="#/components/schemas/Webhook"/>
 
+# Webhook Payload
+The payload is the body of the POST request Shippo sends to the URL specified at the time of webhook registration.
+<SchemaDefinition schemaRef="#/components/schemas/WebhookPayload"/>
+
 ### Available Operations
 
 * [create_webhook](#create_webhook) - Create a new webhook
@@ -147,7 +151,7 @@ s = shippo.Shippo(
 
 res = s.webhooks.update_webhook(webhook_id='<value>', webhook_update_request=components.WebhookUpdateRequest(
     event=components.WebhookEventTypeEnum.BATCH_CREATED,
-    url='https://small-cock.info',
+    url='http://crooked-acknowledgment.biz',
 ))
 
 if res is not None:

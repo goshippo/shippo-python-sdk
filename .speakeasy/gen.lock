@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: f8a55a9af3dcccda8c950270aef6ae0b
+  docChecksum: 7445f937979a0cde668af1a2056afb53
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.320.0
-  generationVersion: 2.354.1
-  releaseVersion: 3.5.2
-  configChecksum: d21130000a36db6b79228f1b89cf7b4d
+  speakeasyVersion: 1.324.0
+  generationVersion: 2.356.0
+  releaseVersion: 3.6.0
+  configChecksum: 11415c94d8f7069c29cfe47328426455
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
@@ -28,6 +28,7 @@ features:
     responseFormat: 0.1.0
     sdkHooks: 0.1.0
     unions: 2.82.8
+    webhooks: 1.0.0
 generatedFiles:
   - src/shippo/sdkconfiguration.py
   - src/shippo/addresses.py
@@ -202,6 +203,9 @@ generatedFiles:
   - src/shippo/models/components/webhookeventtypeenum.py
   - src/shippo/models/components/webhookpaginatedlist.py
   - src/shippo/models/components/security.py
+  - src/shippo/models/components/webhookpayloadbatch.py
+  - src/shippo/models/components/webhookpayloadtrack.py
+  - src/shippo/models/components/webhookpayloadtransaction.py
   - src/shippo/models/components/addressvalidationresultsmessagecodeenum.py
   - src/shippo/models/components/addressvalidationresultsmessagesourceenum.py
   - src/shippo/models/components/servicelevel.py
@@ -487,6 +491,9 @@ generatedFiles:
   - docs/models/components/webhookeventtypeenum.md
   - docs/models/components/webhookpaginatedlist.md
   - docs/models/components/security.md
+  - docs/models/components/webhookpayloadbatch.md
+  - docs/models/components/webhookpayloadtrack.md
+  - docs/models/components/webhookpayloadtransaction.md
   - docs/models/components/addressvalidationresultsmessagecodeenum.md
   - docs/models/components/addressvalidationresultsmessagesourceenum.md
   - docs/models/components/servicelevel.md
