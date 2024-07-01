@@ -22,7 +22,7 @@ class Shipments:
         
     
     
-    def list(self, page: Optional[int] = None, results: Optional[int] = None) -> components.ShipmentPaginatedList:
+    def list(self, request: operations.ListShipmentsRequest) -> components.ShipmentPaginatedList:
         r"""List all shipments
         Returns a list of all shipment objects.<br><br>
         In order to filter results, you must use the below path parameters. 
@@ -44,11 +44,6 @@ class Shipments:
             `https://api.goshippo.com/shipments/?object_created_gte=2017-01-01T00:00:30&object_created_lt=2017-04-01T00:00:30`
         """
         hook_ctx = HookContext(operation_id='ListShipments', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.ListShipmentsRequest(
-            page=page,
-            results=results,
-        )
-        
         _globals = operations.ListShipmentsGlobals(
             shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
         )

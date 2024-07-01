@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 import dataclasses
+from datetime import datetime
 from typing import Optional
 
 
@@ -19,5 +20,13 @@ class ListShipmentsRequest:
     r"""The page number you want to select"""
     results: Optional[int] = dataclasses.field(default=25, metadata={'query_param': { 'field_name': 'results', 'style': 'form', 'explode': True }})
     r"""The number of results to return per page (max 100)"""
+    object_created_gt: Optional[datetime] = dataclasses.field(default=None, metadata={'query_param': { 'field_name': 'object_created_gt', 'style': 'form', 'explode': True }})
+    r"""Object(s) created greater than a provided date and time."""
+    object_created_gte: Optional[datetime] = dataclasses.field(default=None, metadata={'query_param': { 'field_name': 'object_created_gte', 'style': 'form', 'explode': True }})
+    r"""Object(s) created greater than or equal to a provided date and time."""
+    object_created_lt: Optional[datetime] = dataclasses.field(default=None, metadata={'query_param': { 'field_name': 'object_created_lt', 'style': 'form', 'explode': True }})
+    r"""Object(s) created lesser than a provided date and time."""
+    object_created_lte: Optional[datetime] = dataclasses.field(default=None, metadata={'query_param': { 'field_name': 'object_created_lte', 'style': 'form', 'explode': True }})
+    r"""Object(s) created lesser than or equal to a provided date and time."""
     
 

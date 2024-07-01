@@ -1,5 +1,7 @@
 # WebhookEventTypeEnum
 
+Type of event that triggered the webhook.
+
 
 ## Values
 

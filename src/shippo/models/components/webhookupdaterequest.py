@@ -12,6 +12,7 @@ from typing import Optional
 @dataclasses.dataclass
 class WebhookUpdateRequest:
     event: WebhookEventTypeEnum = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('event') }})
+    r"""Type of event that triggered the webhook."""
     url: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('url') }})
     r"""URL webhook events are sent to."""
     active: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('active'), 'exclude': lambda f: f is None }})

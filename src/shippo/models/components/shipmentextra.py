@@ -120,7 +120,11 @@ class ShipmentExtra:
     fulfillment_center: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('fulfillment_center'), 'exclude': lambda f: f is None }})
     r"""The fulfilment center where the package originates from."""
     insurance: Optional[Insurance] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('insurance'), 'exclude': lambda f: f is None }})
-    r"""To add 3rd party insurance powered by <a href=\\"https://docs.goshippo.com/docs/shipments/shippinginsurance/\\">XCover</a>, specify <br> `amount`, `content`, and `currency`. <br> Alternatively, you can choose carrier provided insurance by additionally specifying `provider` (UPS, FedEx and OnTrac only). <br><br> If you do not want to add insurance to you shipment, do not set these parameters."""
+    r"""To add 3rd party insurance powered by <a href=\\"https://docs.goshippo.com/docs/shipments/shippinginsurance/\\">XCover</a>,
+    specify <br> `amount`, `content`, and `currency`. <br> Alternatively, you can choose carrier provided insurance 
+    by additionally specifying `provider` (UPS, FedEx and OnTrac only). <br><br> If you do not want to add insurance 
+    to your shipment, do not set these parameters.
+    """
     invoice_number: Optional[InvoiceNumber] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('invoice_number'), 'exclude': lambda f: f is None }})
     r"""Specify the invoice number field on the label (FedEx and UPS only)."""
     is_return: Optional[bool] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('is_return'), 'exclude': lambda f: f is None }})
