@@ -3,7 +3,7 @@
 from __future__ import annotations
 from .alcohol import Alcohol, AlcoholTypedDict
 from .billing import Billing, BillingTypedDict
-from .cod import CODTypedDict, Cod
+from .cod import CodTypedDict, Cod
 from .customerreference import CustomerReference, CustomerReferenceTypedDict
 from .dangerousgoodsobject import DangerousGoodsObject, DangerousGoodsObjectTypedDict
 from .departmentnumber import DepartmentNumber, DepartmentNumberTypedDict
