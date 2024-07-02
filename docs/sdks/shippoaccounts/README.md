@@ -22,11 +22,11 @@ Returns a list of Shippo Accounts objects
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
@@ -62,21 +62,20 @@ Creates a Shippo Account object
 ### Example Usage
 
 ```python
-import shippo
-from shippo.models import components
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.shippo_accounts.create(request=components.ShippoAccountUpdateRequest(
-    email='hippo@shippo.com',
-    first_name='Shippo',
-    last_name='Meister',
-    company_name='Acme',
-))
+res = s.shippo_accounts.create(request={
+    "email": "hippo@shippo.com",
+    "first_name": "Shippo",
+    "last_name": "Meister",
+    "company_name": "Acme",
+})
 
 if res is not None:
     # handle response
@@ -88,7 +87,7 @@ if res is not None:
 
 | Parameter                                                                                      | Type                                                                                           | Required                                                                                       | Description                                                                                    |
 | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `request`                                                                                      | [components.ShippoAccountUpdateRequest](../../models/components/shippoaccountupdaterequest.md) | :heavy_check_mark:                                                                             | The request object to use for the request.                                                     |
+| `request`                                                                                      | [components.ShippoAccountUpdateRequest](../../models/components/shippoaccountupdaterequest.md) | :heavy_check_mark:                                                                             | N/A                                                                                            |
 
 
 ### Response
@@ -107,15 +106,15 @@ Returns a Shippo Account using an object ID
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.shippo_accounts.get(shippo_account_id='<value>')
+res = s.shippo_accounts.get(shippo_account_id="<value>")
 
 if res is not None:
     # handle response
@@ -146,21 +145,20 @@ Updates a Shippo Account object
 ### Example Usage
 
 ```python
-import shippo
-from shippo.models import components
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.shippo_accounts.update(shippo_account_id='<value>', shippo_account_update_request=components.ShippoAccountUpdateRequest(
-    email='hippo@shippo.com',
-    first_name='Shippo',
-    last_name='Meister',
-    company_name='Acme',
-))
+res = s.shippo_accounts.update(shippo_account_id="<value>", shippo_account_update_request={
+    "email": "hippo@shippo.com",
+    "first_name": "Shippo",
+    "last_name": "Meister",
+    "company_name": "Acme",
+})
 
 if res is not None:
     # handle response

@@ -5,12 +5,13 @@ from enum import Enum
 
 
 class ShipmentExtraLasershipAttributesEnum(str, Enum):
-    TWO_PERSON_DELIVERY = 'TwoPersonDelivery'
-    EXPLOSIVE = 'Explosive'
-    ALCOHOL = 'Alcohol'
-    HAZMAT = 'Hazmat'
-    CONTROLLED_SUBSTANCE = 'ControlledSubstance'
-    REFRIGERATED = 'Refrigerated'
-    DRY_ICE = 'DryIce'
-    PERISHABLE = 'Perishable'
-    NO_RTS = 'NoRTS'
+    TWO_PERSON_DELIVERY = "TwoPersonDelivery"
+    EXPLOSIVE = "Explosive"
+    ALCOHOL = "Alcohol"
+    HAZMAT = "Hazmat"
+    CONTROLLED_SUBSTANCE = "ControlledSubstance"
+    REFRIGERATED = "Refrigerated"
+    DRY_ICE = "DryIce"
+    PERISHABLE = "Perishable"
+    NO_RTS = "NoRTS"
+

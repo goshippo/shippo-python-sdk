@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "shippo"
+version = "3.6.3"
+description = "Shipping API Python library (USPS, FedEx, UPS and more)"
+authors = ["Speakeasy",]
+readme = "README.md"
+repository = "https://github.com/goshippo/shippo-python-sdk.git"
+license = "MIT License"
+packages = [
+    { include = "shippo", from = "src" }
+]
+include = ["py.typed"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+httpx = "^0.27.0"
+jsonpath-python = "^1.0.6"
+pydantic = "~2.7.4"
+python-dateutil = "^2.9.0.post0"
+typing-inspect = "^0.9.0"
+
+[tool.poetry.group.dev.dependencies]
+pylint = "==3.2.3"
+
+[tool.poetry.group.dependencies.dependencies]
+
+[tool.poetry.group.extraDependencies.dependencies]
+dev = "[object Object]"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

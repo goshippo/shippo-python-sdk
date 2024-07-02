@@ -21,11 +21,11 @@ Returns a list of service group objects.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
@@ -54,31 +54,31 @@ Creates a new service group.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 from shippo.models import components
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.service_groups.create(request=components.ServiceGroupCreateRequest(
-    description='USPS shipping options',
-    name='USPS Shipping',
-    type=components.ServiceGroupTypeEnum.FLAT_RATE,
-    service_levels=[
-        components.ServiceGroupAccountAndServiceLevel(
-            account_object_id='80feb1633d4a43c898f0058506cfd82d',
-            service_level_token='ups_next_day_air_saver',
-        ),
+res = s.service_groups.create(request={
+    "description": "USPS shipping options",
+    "name": "USPS Shipping",
+    "type": components.ServiceGroupTypeEnum.FLAT_RATE,
+    "service_levels": [
+        {
+            "account_object_id": "80feb1633d4a43c898f0058506cfd82d",
+            "service_level_token": "ups_next_day_air_saver",
+        },
     ],
-    flat_rate='5',
-    flat_rate_currency='USD',
-    free_shipping_threshold_currency='USD',
-    free_shipping_threshold_min='5',
-    rate_adjustment=15,
-))
+    "flat_rate": "5",
+    "flat_rate_currency": "USD",
+    "free_shipping_threshold_currency": "USD",
+    "free_shipping_threshold_min": "5",
+    "rate_adjustment": 15,
+})
 
 if res is not None:
     # handle response
@@ -90,7 +90,7 @@ if res is not None:
 
 | Parameter                                                                                    | Type                                                                                         | Required                                                                                     | Description                                                                                  |
 | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `request`                                                                                    | [components.ServiceGroupCreateRequest](../../models/components/servicegroupcreaterequest.md) | :heavy_check_mark:                                                                           | The request object to use for the request.                                                   |
+| `request`                                                                                    | [components.ServiceGroupCreateRequest](../../models/components/servicegroupcreaterequest.md) | :heavy_check_mark:                                                                           | N/A                                                                                          |
 
 
 ### Response
@@ -109,33 +109,33 @@ Updates an existing service group object. <br>The object_id cannot be updated as
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 from shippo.models import components
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.service_groups.update(request=components.ServiceGroupUpdateRequest(
-    description='USPS shipping options',
-    name='USPS Shipping',
-    type=components.ServiceGroupTypeEnum.FLAT_RATE,
-    object_id='80feb1633d4a43c898f005850',
-    is_active=True,
-    service_levels=[
-        components.ServiceGroupAccountAndServiceLevel(
-            account_object_id='80feb1633d4a43c898f0058506cfd82d',
-            service_level_token='ups_next_day_air_saver',
-        ),
+res = s.service_groups.update(request={
+    "description": "USPS shipping options",
+    "name": "USPS Shipping",
+    "type": components.ServiceGroupTypeEnum.FLAT_RATE,
+    "object_id": "80feb1633d4a43c898f005850",
+    "is_active": True,
+    "service_levels": [
+        {
+            "account_object_id": "80feb1633d4a43c898f0058506cfd82d",
+            "service_level_token": "ups_next_day_air_saver",
+        },
     ],
-    flat_rate='5',
-    flat_rate_currency='USD',
-    free_shipping_threshold_currency='USD',
-    free_shipping_threshold_min='5',
-    rate_adjustment=15,
-))
+    "flat_rate": "5",
+    "flat_rate_currency": "USD",
+    "free_shipping_threshold_currency": "USD",
+    "free_shipping_threshold_min": "5",
+    "rate_adjustment": 15,
+})
 
 if res is not None:
     # handle response
@@ -145,9 +145,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                    | Type                                                                                         | Required                                                                                     | Description                                                                                  |
-| -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `request`                                                                                    | [components.ServiceGroupUpdateRequest](../../models/components/servicegroupupdaterequest.md) | :heavy_check_mark:                                                                           | The request object to use for the request.                                                   |
+| Parameter                                                                                              | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                              | [Optional[components.ServiceGroupUpdateRequest]](../../models/components/servicegroupupdaterequest.md) | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |
 
 
 ### Response
@@ -166,15 +166,15 @@ Deletes an existing service group using an object ID.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-s.service_groups.delete(service_group_id='<value>')
+s.service_groups.delete(service_group_id="<value>")
 
 # Use the SDK ...
 

@@ -27,15 +27,19 @@ Registers a webhook that will send HTTP notifications to you when the status of 
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.tracking_status.create(carrier='usps', tracking_number='9205590164917312751089', metadata='Order 000123')
+res = s.tracking_status.create(request={
+    "carrier": "usps",
+    "tracking_number": "9205590164917312751089",
+    "metadata": "Order 000123",
+})
 
 if res is not None:
     # handle response
@@ -45,11 +49,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                             | Type                                                                                                                  | Required                                                                                                              | Description                                                                                                           | Example                                                                                                               |
-| --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `carrier`                                                                                                             | *str*                                                                                                                 | :heavy_check_mark:                                                                                                    | Name of the carrier of the shipment to track.                                                                         | usps                                                                                                                  |
-| `tracking_number`                                                                                                     | *str*                                                                                                                 | :heavy_check_mark:                                                                                                    | Tracking number to track.                                                                                             | 9205590164917312751089                                                                                                |
-| `metadata`                                                                                                            | *Optional[str]*                                                                                                       | :heavy_minus_sign:                                                                                                    | A string of up to 100 characters that can be filled with any additional information you want to attach to the object. | Order 000123                                                                                                          |
+| Parameter                                                            | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `request`                                                            | [components.TracksRequest](../../models/components/tracksrequest.md) | :heavy_check_mark:                                                   | N/A                                                                  |
 
 
 ### Response
@@ -68,15 +70,15 @@ Returns the tracking status of a shipment using a carrier name and a tracking nu
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.tracking_status.get(tracking_number='<value>', carrier='<value>')
+res = s.tracking_status.get(tracking_number="<value>", carrier="<value>")
 
 if res is not None:
     # handle response

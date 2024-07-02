@@ -26,11 +26,11 @@ Returns a list all of all user parcel template objects.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
@@ -65,19 +65,19 @@ and depth, as well as their units."
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 from shippo.models import components
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.user_parcel_templates.create(request=components.UserParcelTemplateWithCarrierTemplateCreateRequest(
-    weight='12',
-    weight_unit=components.WeightUnitEnum.LB,
-))
+res = s.user_parcel_templates.create(request={
+    "weight": "12",
+    "weight_unit": components.WeightUnitEnum.LB,
+})
 
 if res is not None:
     # handle response
@@ -89,7 +89,7 @@ if res is not None:
 
 | Parameter                                                                                                | Type                                                                                                     | Required                                                                                                 | Description                                                                                              |
 | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `request`                                                                                                | [components.UserParcelTemplateCreateRequest](../../models/components/userparceltemplatecreaterequest.md) | :heavy_check_mark:                                                                                       | The request object to use for the request.                                                               |
+| `request`                                                                                                | [components.UserParcelTemplateCreateRequest](../../models/components/userparceltemplatecreaterequest.md) | :heavy_check_mark:                                                                                       | N/A                                                                                                      |
 
 
 ### Response
@@ -108,15 +108,15 @@ Deletes a user parcel template using an object ID.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-s.user_parcel_templates.delete(user_parcel_template_object_id='<value>')
+s.user_parcel_templates.delete(user_parcel_template_object_id="<value>")
 
 # Use the SDK ...
 
@@ -142,15 +142,15 @@ template, identified by the object ID.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.user_parcel_templates.get(user_parcel_template_object_id='<value>')
+res = s.user_parcel_templates.get(user_parcel_template_object_id="<value>")
 
 if res is not None:
     # handle response
@@ -181,24 +181,24 @@ Updates an existing user parcel template.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 from shippo.models import components
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.user_parcel_templates.update(user_parcel_template_object_id='<value>', user_parcel_template_update_request=components.UserParcelTemplateUpdateRequest(
-    distance_unit=components.DistanceUnitEnum.IN,
-    height='6',
-    length='10',
-    name='My Custom Template',
-    width='8',
-    weight='12',
-    weight_unit=components.WeightUnitEnum.LB,
-))
+res = s.user_parcel_templates.update(user_parcel_template_object_id="<value>", user_parcel_template_update_request={
+    "distance_unit": components.DistanceUnitEnum.IN,
+    "height": "6",
+    "length": "10",
+    "name": "My Custom Template",
+    "width": "8",
+    "weight": "12",
+    "weight_unit": components.WeightUnitEnum.LB,
+})
 
 if res is not None:
     # handle response

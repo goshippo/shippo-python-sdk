@@ -29,254 +29,254 @@ Creates a new batch object for purchasing shipping labels for many shipments at 
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 from shippo.models import components
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.batches.create(request=components.BatchCreateRequest(
-    default_carrier_account='078870331023437cb917f5187429b093',
-    default_servicelevel_token='usps_priority',
-    batch_shipments=[
-        components.BatchShipmentCreateRequest(
-            shipment=components.ShipmentCreateRequest(
-                address_from=components.AddressCreateRequest(
-                    country='US',
-                    name='Shwan Ippotle',
-                    company='Shippo',
-                    street1='215 Clayton St.',
-                    street3='',
-                    street_no='',
-                    city='San Francisco',
-                    state='CA',
-                    zip='94117',
-                    phone='+1 555 341 9393',
-                    email='shippotle@shippo.com',
-                    is_residential=True,
-                    metadata='Customer ID 123456',
-                    validate=True,
-                ),
-                address_to=components.AddressCreateRequest(
-                    country='US',
-                    name='Shwan Ippotle',
-                    company='Shippo',
-                    street1='215 Clayton St.',
-                    street3='',
-                    street_no='',
-                    city='San Francisco',
-                    state='CA',
-                    zip='94117',
-                    phone='+1 555 341 9393',
-                    email='shippotle@shippo.com',
-                    is_residential=True,
-                    metadata='Customer ID 123456',
-                    validate=True,
-                ),
-                parcels=[
-                    components.ParcelCreateFromTemplateRequest(
-                        mass_unit=components.WeightUnitEnum.LB,
-                        weight='1',
-                        template=components.AramexAustraliaParcelTemplate.FASTWAY_AUSTRALIA_SATCHEL_A3,
-                        extra=components.ParcelExtra(
-                            cod=components.Cod(
-                                amount='5.5',
-                                currency='USD',
-                                payment_method=components.PaymentMethod.CASH,
-                            ),
-                            insurance=components.ParcelInsurance(
-                                amount='5.5',
-                                content='Laptop',
-                                currency='USD',
-                                provider=components.ParcelInsuranceProvider.UPS,
-                            ),
-                        ),
-                        metadata='Customer ID 123456',
-                    ),
+res = s.batches.create(request={
+    "default_carrier_account": "078870331023437cb917f5187429b093",
+    "default_servicelevel_token": "usps_priority",
+    "batch_shipments": [
+        {
+            "shipment": {
+                "address_from": {
+                    "country": "US",
+                    "name": "Shwan Ippotle",
+                    "company": "Shippo",
+                    "street1": "215 Clayton St.",
+                    "street3": "",
+                    "street_no": "",
+                    "city": "San Francisco",
+                    "state": "CA",
+                    "zip": "94117",
+                    "phone": "+1 555 341 9393",
+                    "email": "shippotle@shippo.com",
+                    "is_residential": True,
+                    "metadata": "Customer ID 123456",
+                    "validate": True,
+                },
+                "address_to": {
+                    "country": "US",
+                    "name": "Shwan Ippotle",
+                    "company": "Shippo",
+                    "street1": "215 Clayton St.",
+                    "street3": "",
+                    "street_no": "",
+                    "city": "San Francisco",
+                    "state": "CA",
+                    "zip": "94117",
+                    "phone": "+1 555 341 9393",
+                    "email": "shippotle@shippo.com",
+                    "is_residential": True,
+                    "metadata": "Customer ID 123456",
+                    "validate": True,
+                },
+                "parcels": [
+                    {
+                        "mass_unit": components.WeightUnitEnum.LB,
+                        "weight": "1",
+                        "template": components.AramexAustraliaParcelTemplate.FASTWAY_AUSTRALIA_SATCHEL_A3,
+                        "extra": {
+                            "cod": {
+                                "amount": "5.5",
+                                "currency": "USD",
+                                "payment_method": components.PaymentMethod.CASH,
+                            },
+                            "insurance": {
+                                "amount": "5.5",
+                                "content": "Laptop",
+                                "currency": "USD",
+                                "provider": components.ParcelInsuranceProvider.UPS,
+                            },
+                        },
+                        "metadata": "Customer ID 123456",
+                    },
                 ],
-                extra=components.ShipmentExtra(
-                    accounts_receivable_customer_account=components.UPSReferenceFields(
-                        prefix='ABC',
-                        value='value',
-                        ref_sort=1,
-                    ),
-                    appropriation_number=components.UPSReferenceFields(
-                        prefix='ABC',
-                        value='value',
-                        ref_sort=1,
-                    ),
-                    bill_of_lading_number=components.UPSReferenceFields(
-                        prefix='ABC',
-                        value='value',
-                        ref_sort=1,
-                    ),
-                    cod=components.Cod(
-                        amount='5.5',
-                        currency='USD',
-                        payment_method=components.PaymentMethod.CASH,
-                    ),
-                    cod_number=components.UPSReferenceFields(
-                        prefix='ABC',
-                        value='value',
-                        ref_sort=1,
-                    ),
-                    customer_reference=components.CustomerReference(
-                        ref_sort=1,
-                    ),
-                    dealer_order_number=components.UPSReferenceFields(
-                        prefix='ABC',
-                        value='value',
-                        ref_sort=1,
-                    ),
-                    dept_number=components.DepartmentNumber(
-                        ref_sort=3,
-                    ),
-                    fda_product_code=components.UPSReferenceFields(
-                        prefix='ABC',
-                        value='value',
-                        ref_sort=1,
-                    ),
-                    insurance=components.Insurance(
-                        amount='5.5',
-                        currency='USD',
-                    ),
-                    invoice_number=components.InvoiceNumber(
-                        ref_sort=2,
-                    ),
-                    manifest_number=components.UPSReferenceFields(
-                        prefix='ABC',
-                        value='value',
-                        ref_sort=1,
-                    ),
-                    model_number=components.UPSReferenceFields(
-                        prefix='ABC',
-                        value='value',
-                        ref_sort=1,
-                    ),
-                    part_number=components.UPSReferenceFields(
-                        prefix='ABC',
-                        value='value',
-                        ref_sort=1,
-                    ),
-                    po_number=components.PoNumber(
-                        ref_sort=2,
-                    ),
-                    production_code=components.UPSReferenceFields(
-                        prefix='ABC',
-                        value='value',
-                        ref_sort=1,
-                    ),
-                    purchase_request_number=components.UPSReferenceFields(
-                        prefix='ABC',
-                        value='value',
-                        ref_sort=1,
-                    ),
-                    rma_number=components.RmaNumber(
-                        ref_sort=1,
-                    ),
-                    salesperson_number=components.UPSReferenceFields(
-                        prefix='ABC',
-                        value='value',
-                        ref_sort=1,
-                    ),
-                    serial_number=components.UPSReferenceFields(
-                        prefix='ABC',
-                        value='value',
-                        ref_sort=1,
-                    ),
-                    store_number=components.UPSReferenceFields(
-                        prefix='ABC',
-                        value='value',
-                        ref_sort=1,
-                    ),
-                    transaction_reference_number=components.UPSReferenceFields(
-                        prefix='ABC',
-                        value='value',
-                        ref_sort=1,
-                    ),
-                ),
-                metadata='Customer ID 123456',
-                shipment_date='2021-03-22T12:00:00Z',
-                address_return=components.AddressCreateRequest(
-                    country='US',
-                    name='Shwan Ippotle',
-                    company='Shippo',
-                    street1='215 Clayton St.',
-                    street3='',
-                    street_no='',
-                    city='San Francisco',
-                    state='CA',
-                    zip='94117',
-                    phone='+1 555 341 9393',
-                    email='shippotle@shippo.com',
-                    is_residential=True,
-                    metadata='Customer ID 123456',
-                    validate=True,
-                ),
-                customs_declaration=components.CustomsDeclarationCreateRequest(
-                    certify=True,
-                    certify_signer='Shawn Ippotle',
-                    contents_type=components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,
-                    items=[
-                        components.CustomsItemCreateRequest(
-                            description='T-Shirt',
-                            mass_unit=components.WeightUnitEnum.LB,
-                            net_weight='5',
-                            origin_country='<value>',
-                            quantity=20,
-                            value_amount='200',
-                            value_currency='USD',
-                            metadata='Order ID "123454"',
-                            sku_code='HM-123',
-                            hs_code='0901.21',
-                        ),
+                "extra": {
+                    "accounts_receivable_customer_account": {
+                        "prefix": "ABC",
+                        "value": "value",
+                        "ref_sort": 1,
+                    },
+                    "appropriation_number": {
+                        "prefix": "ABC",
+                        "value": "value",
+                        "ref_sort": 1,
+                    },
+                    "bill_of_lading_number": {
+                        "prefix": "ABC",
+                        "value": "value",
+                        "ref_sort": 1,
+                    },
+                    "cod": {
+                        "amount": "5.5",
+                        "currency": "USD",
+                        "payment_method": components.PaymentMethod.CASH,
+                    },
+                    "cod_number": {
+                        "prefix": "ABC",
+                        "value": "value",
+                        "ref_sort": 1,
+                    },
+                    "customer_reference": {
+                        "ref_sort": 1,
+                    },
+                    "dealer_order_number": {
+                        "prefix": "ABC",
+                        "value": "value",
+                        "ref_sort": 1,
+                    },
+                    "dept_number": {
+                        "ref_sort": 3,
+                    },
+                    "fda_product_code": {
+                        "prefix": "ABC",
+                        "value": "value",
+                        "ref_sort": 1,
+                    },
+                    "insurance": {
+                        "amount": "5.5",
+                        "currency": "USD",
+                    },
+                    "invoice_number": {
+                        "ref_sort": 2,
+                    },
+                    "manifest_number": {
+                        "prefix": "ABC",
+                        "value": "value",
+                        "ref_sort": 1,
+                    },
+                    "model_number": {
+                        "prefix": "ABC",
+                        "value": "value",
+                        "ref_sort": 1,
+                    },
+                    "part_number": {
+                        "prefix": "ABC",
+                        "value": "value",
+                        "ref_sort": 1,
+                    },
+                    "po_number": {
+                        "ref_sort": 2,
+                    },
+                    "production_code": {
+                        "prefix": "ABC",
+                        "value": "value",
+                        "ref_sort": 1,
+                    },
+                    "purchase_request_number": {
+                        "prefix": "ABC",
+                        "value": "value",
+                        "ref_sort": 1,
+                    },
+                    "rma_number": {
+                        "ref_sort": 1,
+                    },
+                    "salesperson_number": {
+                        "prefix": "ABC",
+                        "value": "value",
+                        "ref_sort": 1,
+                    },
+                    "serial_number": {
+                        "prefix": "ABC",
+                        "value": "value",
+                        "ref_sort": 1,
+                    },
+                    "store_number": {
+                        "prefix": "ABC",
+                        "value": "value",
+                        "ref_sort": 1,
+                    },
+                    "transaction_reference_number": {
+                        "prefix": "ABC",
+                        "value": "value",
+                        "ref_sort": 1,
+                    },
+                },
+                "metadata": "Customer ID 123456",
+                "shipment_date": "2021-03-22T12:00:00Z",
+                "address_return": {
+                    "country": "US",
+                    "name": "Shwan Ippotle",
+                    "company": "Shippo",
+                    "street1": "215 Clayton St.",
+                    "street3": "",
+                    "street_no": "",
+                    "city": "San Francisco",
+                    "state": "CA",
+                    "zip": "94117",
+                    "phone": "+1 555 341 9393",
+                    "email": "shippotle@shippo.com",
+                    "is_residential": True,
+                    "metadata": "Customer ID 123456",
+                    "validate": True,
+                },
+                "customs_declaration": {
+                    "certify": True,
+                    "certify_signer": "Shawn Ippotle",
+                    "contents_type": components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,
+                    "items": [
+                        {
+                            "description": "T-Shirt",
+                            "mass_unit": components.WeightUnitEnum.LB,
+                            "net_weight": "5",
+                            "origin_country": "<value>",
+                            "quantity": 20,
+                            "value_amount": "200",
+                            "value_currency": "USD",
+                            "metadata": "Order ID \"123454\"",
+                            "sku_code": "HM-123",
+                            "hs_code": "0901.21",
+                        },
                     ],
-                    non_delivery_option=components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
-                    b13a_filing_option=components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,
-                    contents_explanation='T-Shirt purchase',
-                    exporter_identification=components.CustomsExporterIdentification(
-                        eori_number='PL123456790ABCDE',
-                        tax_id=components.CustomsTaxIdentification(
-                            number='123456789',
-                            type=components.CustomsTaxIdentificationType.EIN,
-                        ),
-                    ),
-                    invoice='#123123',
-                    metadata='Order ID #123123',
-                    address_importer=components.AddressImporter(
-                        name='Shwan Ippotle',
-                        company='Shippo',
-                        street1='Blumenstraße',
-                        street3='',
-                        street_no='22',
-                        city='München',
-                        state='CA',
-                        zip='80331',
-                        country='DE',
-                        phone='80331',
-                        email='shippotle@shippo.com',
-                        is_residential=True,
-                    ),
-                    eel_pfc=components.CustomsDeclarationEelPfcEnum.NOEEI_30_37_A,
-                    incoterm=components.CustomsDeclarationIncotermEnum.DDP,
-                    test=True,
-                ),
-                carrier_accounts=[
-                    '065a4a8c10d24a34ab932163a1b87f52',
-                    '73f706f4bdb94b54a337563840ce52b0',
+                    "non_delivery_option": components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
+                    "b13a_filing_option": components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,
+                    "contents_explanation": "T-Shirt purchase",
+                    "exporter_identification": {
+                        "eori_number": "PL123456790ABCDE",
+                        "tax_id": {
+                            "number": "123456789",
+                            "type": components.CustomsTaxIdentificationType.EIN,
+                        },
+                    },
+                    "invoice": "#123123",
+                    "metadata": "Order ID #123123",
+                    "address_importer": {
+                        "name": "Shwan Ippotle",
+                        "company": "Shippo",
+                        "street1": "Blumenstraße",
+                        "street3": "",
+                        "street_no": "22",
+                        "city": "München",
+                        "state": "CA",
+                        "zip": "80331",
+                        "country": "DE",
+                        "phone": "80331",
+                        "email": "shippotle@shippo.com",
+                        "is_residential": True,
+                    },
+                    "eel_pfc": components.CustomsDeclarationEelPfcEnum.NOEEI_30_37_A,
+                    "incoterm": components.CustomsDeclarationIncotermEnum.DDP,
+                    "test": True,
+                },
+                "carrier_accounts": [
+                    "065a4a8c10d24a34ab932163a1b87f52",
+                    "73f706f4bdb94b54a337563840ce52b0",
                 ],
-            ),
-            carrier_account='a4391cd4ab974f478f55dc08b5c8e3b3',
-            metadata='SHIPMENT #1',
-            servicelevel_token='fedex_ground',
-        ),
+            },
+            "carrier_account": "a4391cd4ab974f478f55dc08b5c8e3b3",
+            "metadata": "SHIPMENT #1",
+            "servicelevel_token": "fedex_ground",
+        },
     ],
-    label_filetype=components.LabelFileTypeEnum.PDF_4X6,
-    metadata='BATCH #1',
-))
+    "label_filetype": components.LabelFileTypeEnum.PDF_4X6,
+    "metadata": "BATCH #1",
+})
 
 if res is not None:
     # handle response
@@ -288,7 +288,7 @@ if res is not None:
 
 | Parameter                                                                      | Type                                                                           | Required                                                                       | Description                                                                    |
 | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| `request`                                                                      | [components.BatchCreateRequest](../../models/components/batchcreaterequest.md) | :heavy_check_mark:                                                             | The request object to use for the request.                                     |
+| `request`                                                                      | [components.BatchCreateRequest](../../models/components/batchcreaterequest.md) | :heavy_check_mark:                                                             | Batch details.                                                                 |
 
 
 ### Response
@@ -310,15 +310,15 @@ For more details on filtering results, see our guide on <a href="https://docs.go
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.batches.get(batch_id='<value>')
+res = s.batches.get(batch_id="<value>")
 
 if res is not None:
     # handle response
@@ -349,205 +349,205 @@ Adds batch shipments to an existing batch.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 from shippo.models import components
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.batches.add_shipments(batch_id='<value>', request_body=[
-    components.BatchShipmentCreateRequest(
-        shipment=components.ShipmentCreateRequest(
-            address_from='d799c2679e644279b59fe661ac8fa488',
-            address_to='d799c2679e644279b59fe661ac8fa489',
-            parcels=[
-                components.ParcelCreateRequest(
-                    mass_unit=components.WeightUnitEnum.LB,
-                    weight='1',
-                    distance_unit=components.DistanceUnitEnum.IN,
-                    height='1',
-                    length='1',
-                    width='1',
-                    extra=components.ParcelExtra(
-                        cod=components.Cod(
-                            amount='5.5',
-                            currency='USD',
-                            payment_method=components.PaymentMethod.CASH,
-                        ),
-                        insurance=components.ParcelInsurance(
-                            amount='5.5',
-                            content='Laptop',
-                            currency='USD',
-                            provider=components.ParcelInsuranceProvider.UPS,
-                        ),
-                    ),
-                    metadata='Customer ID 123456',
-                ),
+res = s.batches.add_shipments(batch_id="<value>", request_body=[
+    {
+        "shipment": {
+            "address_from": "d799c2679e644279b59fe661ac8fa488",
+            "address_to": "d799c2679e644279b59fe661ac8fa489",
+            "parcels": [
+                {
+                    "mass_unit": components.WeightUnitEnum.LB,
+                    "weight": "1",
+                    "distance_unit": components.DistanceUnitEnum.IN,
+                    "height": "1",
+                    "length": "1",
+                    "width": "1",
+                    "extra": {
+                        "cod": {
+                            "amount": "5.5",
+                            "currency": "USD",
+                            "payment_method": components.PaymentMethod.CASH,
+                        },
+                        "insurance": {
+                            "amount": "5.5",
+                            "content": "Laptop",
+                            "currency": "USD",
+                            "provider": components.ParcelInsuranceProvider.UPS,
+                        },
+                    },
+                    "metadata": "Customer ID 123456",
+                },
             ],
-            extra=components.ShipmentExtra(
-                accounts_receivable_customer_account=components.UPSReferenceFields(
-                    prefix='ABC',
-                    value='value',
-                    ref_sort=1,
-                ),
-                appropriation_number=components.UPSReferenceFields(
-                    prefix='ABC',
-                    value='value',
-                    ref_sort=1,
-                ),
-                bill_of_lading_number=components.UPSReferenceFields(
-                    prefix='ABC',
-                    value='value',
-                    ref_sort=1,
-                ),
-                cod=components.Cod(
-                    amount='5.5',
-                    currency='USD',
-                    payment_method=components.PaymentMethod.CASH,
-                ),
-                cod_number=components.UPSReferenceFields(
-                    prefix='ABC',
-                    value='value',
-                    ref_sort=1,
-                ),
-                customer_reference=components.CustomerReference(
-                    ref_sort=1,
-                ),
-                dealer_order_number=components.UPSReferenceFields(
-                    prefix='ABC',
-                    value='value',
-                    ref_sort=1,
-                ),
-                dept_number=components.DepartmentNumber(
-                    ref_sort=3,
-                ),
-                fda_product_code=components.UPSReferenceFields(
-                    prefix='ABC',
-                    value='value',
-                    ref_sort=1,
-                ),
-                insurance=components.Insurance(
-                    amount='5.5',
-                    currency='USD',
-                ),
-                invoice_number=components.InvoiceNumber(
-                    ref_sort=2,
-                ),
-                manifest_number=components.UPSReferenceFields(
-                    prefix='ABC',
-                    value='value',
-                    ref_sort=1,
-                ),
-                model_number=components.UPSReferenceFields(
-                    prefix='ABC',
-                    value='value',
-                    ref_sort=1,
-                ),
-                part_number=components.UPSReferenceFields(
-                    prefix='ABC',
-                    value='value',
-                    ref_sort=1,
-                ),
-                po_number=components.PoNumber(
-                    ref_sort=2,
-                ),
-                production_code=components.UPSReferenceFields(
-                    prefix='ABC',
-                    value='value',
-                    ref_sort=1,
-                ),
-                purchase_request_number=components.UPSReferenceFields(
-                    prefix='ABC',
-                    value='value',
-                    ref_sort=1,
-                ),
-                rma_number=components.RmaNumber(
-                    ref_sort=1,
-                ),
-                salesperson_number=components.UPSReferenceFields(
-                    prefix='ABC',
-                    value='value',
-                    ref_sort=1,
-                ),
-                serial_number=components.UPSReferenceFields(
-                    prefix='ABC',
-                    value='value',
-                    ref_sort=1,
-                ),
-                store_number=components.UPSReferenceFields(
-                    prefix='ABC',
-                    value='value',
-                    ref_sort=1,
-                ),
-                transaction_reference_number=components.UPSReferenceFields(
-                    prefix='ABC',
-                    value='value',
-                    ref_sort=1,
-                ),
-            ),
-            metadata='Customer ID 123456',
-            shipment_date='2021-03-22T12:00:00Z',
-            address_return='d799c2679e644279b59fe661ac8fa488',
-            customs_declaration=components.CustomsDeclarationCreateRequest(
-                certify=True,
-                certify_signer='Shawn Ippotle',
-                contents_type=components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,
-                items=[
-                    components.CustomsItemCreateRequest(
-                        description='T-Shirt',
-                        mass_unit=components.WeightUnitEnum.LB,
-                        net_weight='5',
-                        origin_country='<value>',
-                        quantity=20,
-                        value_amount='200',
-                        value_currency='USD',
-                        metadata='Order ID "123454"',
-                        sku_code='HM-123',
-                        hs_code='0901.21',
-                    ),
+            "extra": {
+                "accounts_receivable_customer_account": {
+                    "prefix": "ABC",
+                    "value": "value",
+                    "ref_sort": 1,
+                },
+                "appropriation_number": {
+                    "prefix": "ABC",
+                    "value": "value",
+                    "ref_sort": 1,
+                },
+                "bill_of_lading_number": {
+                    "prefix": "ABC",
+                    "value": "value",
+                    "ref_sort": 1,
+                },
+                "cod": {
+                    "amount": "5.5",
+                    "currency": "USD",
+                    "payment_method": components.PaymentMethod.CASH,
+                },
+                "cod_number": {
+                    "prefix": "ABC",
+                    "value": "value",
+                    "ref_sort": 1,
+                },
+                "customer_reference": {
+                    "ref_sort": 1,
+                },
+                "dealer_order_number": {
+                    "prefix": "ABC",
+                    "value": "value",
+                    "ref_sort": 1,
+                },
+                "dept_number": {
+                    "ref_sort": 3,
+                },
+                "fda_product_code": {
+                    "prefix": "ABC",
+                    "value": "value",
+                    "ref_sort": 1,
+                },
+                "insurance": {
+                    "amount": "5.5",
+                    "currency": "USD",
+                },
+                "invoice_number": {
+                    "ref_sort": 2,
+                },
+                "manifest_number": {
+                    "prefix": "ABC",
+                    "value": "value",
+                    "ref_sort": 1,
+                },
+                "model_number": {
+                    "prefix": "ABC",
+                    "value": "value",
+                    "ref_sort": 1,
+                },
+                "part_number": {
+                    "prefix": "ABC",
+                    "value": "value",
+                    "ref_sort": 1,
+                },
+                "po_number": {
+                    "ref_sort": 2,
+                },
+                "production_code": {
+                    "prefix": "ABC",
+                    "value": "value",
+                    "ref_sort": 1,
+                },
+                "purchase_request_number": {
+                    "prefix": "ABC",
+                    "value": "value",
+                    "ref_sort": 1,
+                },
+                "rma_number": {
+                    "ref_sort": 1,
+                },
+                "salesperson_number": {
+                    "prefix": "ABC",
+                    "value": "value",
+                    "ref_sort": 1,
+                },
+                "serial_number": {
+                    "prefix": "ABC",
+                    "value": "value",
+                    "ref_sort": 1,
+                },
+                "store_number": {
+                    "prefix": "ABC",
+                    "value": "value",
+                    "ref_sort": 1,
+                },
+                "transaction_reference_number": {
+                    "prefix": "ABC",
+                    "value": "value",
+                    "ref_sort": 1,
+                },
+            },
+            "metadata": "Customer ID 123456",
+            "shipment_date": "2021-03-22T12:00:00Z",
+            "address_return": "d799c2679e644279b59fe661ac8fa488",
+            "customs_declaration": {
+                "certify": True,
+                "certify_signer": "Shawn Ippotle",
+                "contents_type": components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,
+                "items": [
+                    {
+                        "description": "T-Shirt",
+                        "mass_unit": components.WeightUnitEnum.LB,
+                        "net_weight": "5",
+                        "origin_country": "<value>",
+                        "quantity": 20,
+                        "value_amount": "200",
+                        "value_currency": "USD",
+                        "metadata": "Order ID \"123454\"",
+                        "sku_code": "HM-123",
+                        "hs_code": "0901.21",
+                    },
                 ],
-                non_delivery_option=components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
-                b13a_filing_option=components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,
-                contents_explanation='T-Shirt purchase',
-                exporter_identification=components.CustomsExporterIdentification(
-                    eori_number='PL123456790ABCDE',
-                    tax_id=components.CustomsTaxIdentification(
-                        number='123456789',
-                        type=components.CustomsTaxIdentificationType.EIN,
-                    ),
-                ),
-                invoice='#123123',
-                metadata='Order ID #123123',
-                address_importer=components.AddressImporter(
-                    name='Shwan Ippotle',
-                    company='Shippo',
-                    street1='Blumenstraße',
-                    street3='',
-                    street_no='22',
-                    city='München',
-                    state='CA',
-                    zip='80331',
-                    country='DE',
-                    phone='80331',
-                    email='shippotle@shippo.com',
-                    is_residential=True,
-                ),
-                eel_pfc=components.CustomsDeclarationEelPfcEnum.NOEEI_30_37_A,
-                incoterm=components.CustomsDeclarationIncotermEnum.DDP,
-                test=True,
-            ),
-            carrier_accounts=[
-                '065a4a8c10d24a34ab932163a1b87f52',
-                '73f706f4bdb94b54a337563840ce52b0',
+                "non_delivery_option": components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
+                "b13a_filing_option": components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,
+                "contents_explanation": "T-Shirt purchase",
+                "exporter_identification": {
+                    "eori_number": "PL123456790ABCDE",
+                    "tax_id": {
+                        "number": "123456789",
+                        "type": components.CustomsTaxIdentificationType.EIN,
+                    },
+                },
+                "invoice": "#123123",
+                "metadata": "Order ID #123123",
+                "address_importer": {
+                    "name": "Shwan Ippotle",
+                    "company": "Shippo",
+                    "street1": "Blumenstraße",
+                    "street3": "",
+                    "street_no": "22",
+                    "city": "München",
+                    "state": "CA",
+                    "zip": "80331",
+                    "country": "DE",
+                    "phone": "80331",
+                    "email": "shippotle@shippo.com",
+                    "is_residential": True,
+                },
+                "eel_pfc": components.CustomsDeclarationEelPfcEnum.NOEEI_30_37_A,
+                "incoterm": components.CustomsDeclarationIncotermEnum.DDP,
+                "test": True,
+            },
+            "carrier_accounts": [
+                "065a4a8c10d24a34ab932163a1b87f52",
+                "73f706f4bdb94b54a337563840ce52b0",
             ],
-        ),
-        carrier_account='a4391cd4ab974f478f55dc08b5c8e3b3',
-        metadata='SHIPMENT #1',
-        servicelevel_token='fedex_ground',
-    ),
+        },
+        "carrier_account": "a4391cd4ab974f478f55dc08b5c8e3b3",
+        "metadata": "SHIPMENT #1",
+        "servicelevel_token": "fedex_ground",
+    },
 ])
 
 if res is not None:
@@ -583,15 +583,15 @@ When all the shipments are purchased, the status will change to `PURCHASED` and 
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.batches.purchase(batch_id='<value>')
+res = s.batches.purchase(batch_id="<value>")
 
 if res is not None:
     # handle response
@@ -622,16 +622,16 @@ Removes shipments from an existing batch shipment.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.batches.remove_shipments(batch_id='<value>', request_body=[
-    '<value>',
+res = s.batches.remove_shipments(batch_id="<value>", request_body=[
+    "<value>",
 ])
 
 if res is not None:

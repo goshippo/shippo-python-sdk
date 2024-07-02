@@ -12,7 +12,7 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: true
 python:
-  version: 3.6.1
+  version: 3.6.3
   additionalDependencies:
     dependencies: {}
     extraDependencies:
@@ -20,9 +20,12 @@ python:
         httpretty: ==1.1.4
         pytest: ==8.1.1
   author: Shippo
+  authors:
+    - Speakeasy
   clientServerStatusCodesAsErrors: true
   description: Shipping API Python library (USPS, FedEx, UPS and more)
   flattenGlobalSecurity: true
+  flattenRequests: false
   imports:
     option: openapi
     paths:
@@ -39,4 +42,4 @@ python:
   packageName: shippo
   projectUrls: {}
   responseFormat: flat
-  templateVersion: v1
+  templateVersion: v2

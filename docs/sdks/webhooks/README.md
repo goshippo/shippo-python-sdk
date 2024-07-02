@@ -25,19 +25,21 @@ Creates a new webhook to send notifications to a URL when a specific event occur
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 from shippo.models import components
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.webhooks.create_webhook(request=components.WebhookUpdateRequest(
-    event=components.WebhookEventTypeEnum.BATCH_CREATED,
-    url='https://wobbly-marmalade.org',
-))
+res = s.webhooks.create_webhook(request={
+    "event": components.WebhookEventTypeEnum.BATCH_CREATED,
+    "url": "https://example.com/shippo-webhook",
+    "active": True,
+    "is_test": False,
+})
 
 if res is not None:
     # handle response
@@ -68,11 +70,11 @@ Returns a list of all webhooks you have created.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
@@ -101,15 +103,15 @@ Returns the details of a specific webhook using the webhook object ID.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.webhooks.get_webhook(webhook_id='<value>')
+res = s.webhooks.get_webhook(webhook_id="<value>")
 
 if res is not None:
     # handle response
@@ -140,19 +142,21 @@ Updates an existing webhook using the webhook object ID.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 from shippo.models import components
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.webhooks.update_webhook(webhook_id='<value>', webhook_update_request=components.WebhookUpdateRequest(
-    event=components.WebhookEventTypeEnum.BATCH_CREATED,
-    url='http://crooked-acknowledgment.biz',
-))
+res = s.webhooks.update_webhook(webhook_id="<value>", webhook_update_request={
+    "event": components.WebhookEventTypeEnum.BATCH_CREATED,
+    "url": "https://example.com/shippo-webhook",
+    "active": True,
+    "is_test": False,
+})
 
 if res is not None:
     # handle response
@@ -184,15 +188,15 @@ Deletes a specific webhook using the webhook object ID.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-s.webhooks.delete_webhook(webhook_id='<value>')
+s.webhooks.delete_webhook(webhook_id="<value>")
 
 # Use the SDK ...
 

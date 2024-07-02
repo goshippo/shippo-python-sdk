@@ -20,11 +20,11 @@ Returns a list of all address objects that have been created in this account.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
@@ -60,31 +60,30 @@ Creates a new address object. You can use address objects to create new shipment
 ### Example Usage
 
 ```python
-import shippo
-from shippo.models import components
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.addresses.create(request=components.AddressCreateRequest(
-    country='US',
-    name='Shwan Ippotle',
-    company='Shippo',
-    street1='215 Clayton St.',
-    street3='',
-    street_no='',
-    city='San Francisco',
-    state='CA',
-    zip='94117',
-    phone='+1 555 341 9393',
-    email='shippotle@shippo.com',
-    is_residential=True,
-    metadata='Customer ID 123456',
-    validate=True,
-))
+res = s.addresses.create(request={
+    "country": "US",
+    "name": "Shwan Ippotle",
+    "company": "Shippo",
+    "street1": "215 Clayton St.",
+    "street3": "",
+    "street_no": "",
+    "city": "San Francisco",
+    "state": "CA",
+    "zip": "94117",
+    "phone": "+1 555 341 9393",
+    "email": "shippotle@shippo.com",
+    "is_residential": True,
+    "metadata": "Customer ID 123456",
+    "validate": True,
+})
 
 if res is not None:
     # handle response
@@ -96,7 +95,7 @@ if res is not None:
 
 | Parameter                                                                          | Type                                                                               | Required                                                                           | Description                                                                        |
 | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| `request`                                                                          | [components.AddressCreateRequest](../../models/components/addresscreaterequest.md) | :heavy_check_mark:                                                                 | The request object to use for the request.                                         |
+| `request`                                                                          | [components.AddressCreateRequest](../../models/components/addresscreaterequest.md) | :heavy_check_mark:                                                                 | Address details.                                                                   |
 
 
 ### Response
@@ -115,15 +114,15 @@ Returns an existing address using an object ID.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.addresses.get(address_id='<value>')
+res = s.addresses.get(address_id="<value>")
 
 if res is not None:
     # handle response
@@ -154,15 +153,15 @@ Validates an existing address using an object ID
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.addresses.validate(address_id='<value>')
+res = s.addresses.validate(address_id="<value>")
 
 if res is not None:
     # handle response

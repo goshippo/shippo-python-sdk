@@ -25,16 +25,16 @@ List all carrier parcel template objects. <br> Use the following query string pa
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 from shippo.models import operations
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.carrier_parcel_templates.list(include=operations.Include.ENABLED, carrier='fedex')
+res = s.carrier_parcel_templates.list(include=operations.Include.ENABLED, carrier="fedex")
 
 if res is not None:
     # handle response
@@ -66,15 +66,15 @@ Fetches the parcel template information for a specific carrier parcel template, 
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.carrier_parcel_templates.get(carrier_parcel_template_token='<value>')
+res = s.carrier_parcel_templates.get(carrier_parcel_template_token="<value>")
 
 if res is not None:
     # handle response

@@ -12,11 +12,12 @@ class AramexAustraliaParcelTemplate(str, Enum):
     | Fastway_Australia_Satchel_A3 | Satchel A3 | 420.00 x 297.00 x 64.00 mm|
     | Fastway_Australia_Satchel_A4 | Satchel A4 | 297.00 x 210.00 x 64.00 mm|
     | Fastway_Australia_Satchel_A5 | Satchel A5 | 210.00 x 148.00 x 64.00 mm|
+
     """
-    FASTWAY_AUSTRALIA_SATCHEL_A2 = 'Fastway_Australia_Satchel_A2'
-    FASTWAY_AUSTRALIA_SATCHEL_A3 = 'Fastway_Australia_Satchel_A3'
-    FASTWAY_AUSTRALIA_SATCHEL_A4 = 'Fastway_Australia_Satchel_A4'
-    FASTWAY_AUSTRALIA_SATCHEL_A5 = 'Fastway_Australia_Satchel_A5'
+    FASTWAY_AUSTRALIA_SATCHEL_A2 = "Fastway_Australia_Satchel_A2"
+    FASTWAY_AUSTRALIA_SATCHEL_A3 = "Fastway_Australia_Satchel_A3"
+    FASTWAY_AUSTRALIA_SATCHEL_A4 = "Fastway_Australia_Satchel_A4"
+    FASTWAY_AUSTRALIA_SATCHEL_A5 = "Fastway_Australia_Satchel_A5"
 
 
 class CouriersPleaseParcelTemplate(str, Enum):
@@ -26,19 +27,21 @@ class CouriersPleaseParcelTemplate(str, Enum):
     | couriersplease_1kg_satchel | 1kg Satchel | 28.00 x 35.00 x 0.10 cm|
     | couriersplease_3kg_satchel | 3kg Satchel | 34.00 x 42.00 x 0.10 cm|
     | couriersplease_5kg_satchel | 5kg Satchel | 43.70 x 59.70 x 0.10 cm|
+
     """
-    COURIERSPLEASE_500G_SATCHEL = 'couriersplease_500g_satchel'
-    COURIERSPLEASE_1KG_SATCHEL = 'couriersplease_1kg_satchel'
-    COURIERSPLEASE_3KG_SATCHEL = 'couriersplease_3kg_satchel'
-    COURIERSPLEASE_5KG_SATCHEL = 'couriersplease_5kg_satchel'
+    COURIERSPLEASE_500G_SATCHEL = "couriersplease_500g_satchel"
+    COURIERSPLEASE_1KG_SATCHEL = "couriersplease_1kg_satchel"
+    COURIERSPLEASE_3KG_SATCHEL = "couriersplease_3kg_satchel"
+    COURIERSPLEASE_5KG_SATCHEL = "couriersplease_5kg_satchel"
 
 
 class DPDUKParcelTemplate(str, Enum):
     r"""|Token | Name | Dimensions|
     |:---|:---|:---|
     | DPD_UK_Express_Pak| DPD UK Express Pak | 530.00 x 400.00 x 100.00 mm|
+
     """
-    DPD_UK_EXPRESS_PAK = 'DPD_UK_Express_Pak'
+    DPD_UK_EXPRESS_PAK = "DPD_UK_Express_Pak"
 
 
 class DHLECommerceParcelTemplate(str, Enum):
@@ -46,9 +49,10 @@ class DHLECommerceParcelTemplate(str, Enum):
     |:---|:---|:---|
     | DHLeC_Irregular | Irregular Shipment | 10.00 x 10.00 x 10.00 in|
     | DHLeC_SM_Flats | Flats | 27.00 x 17.00 x 17.00 in|
+
     """
-    DH_LE_C_IRREGULAR = 'DHLeC_Irregular'
-    DH_LE_C_SM_FLATS = 'DHLeC_SM_Flats'
+    DH_LE_C_IRREGULAR = "DHLeC_Irregular"
+    DH_LE_C_SM_FLATS = "DHLeC_SM_Flats"
 
 
 class USPSParcelTemplate(str, Enum):
@@ -74,27 +78,28 @@ class USPSParcelTemplate(str, Enum):
     | USPS_SmallFlatRateBox | Small Flat Rate Box |  8.69 x 5.44 x 1.75 in |
     | USPS_SmallFlatRateEnvelope | Small Flat Rate Envelope |  10.00 x 6.00 x 4.00 in |
     | USPS_SoftPack | Soft Pack Padded Envelope |  Length and width defined in the Parcel|
+
     """
-    USPS_FLAT_RATE_CARDBOARD_ENVELOPE = 'USPS_FlatRateCardboardEnvelope'
-    USPS_FLAT_RATE_ENVELOPE = 'USPS_FlatRateEnvelope'
-    USPS_FLAT_RATE_GIFT_CARD_ENVELOPE = 'USPS_FlatRateGiftCardEnvelope'
-    USPS_FLAT_RATE_LEGAL_ENVELOPE = 'USPS_FlatRateLegalEnvelope'
-    USPS_FLAT_RATE_PADDED_ENVELOPE = 'USPS_FlatRatePaddedEnvelope'
-    USPS_FLAT_RATE_WINDOW_ENVELOPE = 'USPS_FlatRateWindowEnvelope'
-    USPS_IRREGULAR_PARCEL = 'USPS_IrregularParcel'
-    USPS_LARGE_FLAT_RATE_BOARD_GAME_BOX = 'USPS_LargeFlatRateBoardGameBox'
-    USPS_LARGE_FLAT_RATE_BOX = 'USPS_LargeFlatRateBox'
-    USPS_APO_FLAT_RATE_BOX = 'USPS_APOFlatRateBox'
-    USPS_LARGE_VIDEO_FLAT_RATE_BOX = 'USPS_LargeVideoFlatRateBox'
-    USPS_MEDIUM_FLAT_RATE_BOX1 = 'USPS_MediumFlatRateBox1'
-    USPS_MEDIUM_FLAT_RATE_BOX2 = 'USPS_MediumFlatRateBox2'
-    USPS_REGIONAL_RATE_BOX_A1 = 'USPS_RegionalRateBoxA1'
-    USPS_REGIONAL_RATE_BOX_A2 = 'USPS_RegionalRateBoxA2'
-    USPS_REGIONAL_RATE_BOX_B1 = 'USPS_RegionalRateBoxB1'
-    USPS_REGIONAL_RATE_BOX_B2 = 'USPS_RegionalRateBoxB2'
-    USPS_SMALL_FLAT_RATE_BOX = 'USPS_SmallFlatRateBox'
-    USPS_SMALL_FLAT_RATE_ENVELOPE = 'USPS_SmallFlatRateEnvelope'
-    USPS_SOFT_PACK = 'USPS_SoftPack'
+    USPS_FLAT_RATE_CARDBOARD_ENVELOPE = "USPS_FlatRateCardboardEnvelope"
+    USPS_FLAT_RATE_ENVELOPE = "USPS_FlatRateEnvelope"
+    USPS_FLAT_RATE_GIFT_CARD_ENVELOPE = "USPS_FlatRateGiftCardEnvelope"
+    USPS_FLAT_RATE_LEGAL_ENVELOPE = "USPS_FlatRateLegalEnvelope"
+    USPS_FLAT_RATE_PADDED_ENVELOPE = "USPS_FlatRatePaddedEnvelope"
+    USPS_FLAT_RATE_WINDOW_ENVELOPE = "USPS_FlatRateWindowEnvelope"
+    USPS_IRREGULAR_PARCEL = "USPS_IrregularParcel"
+    USPS_LARGE_FLAT_RATE_BOARD_GAME_BOX = "USPS_LargeFlatRateBoardGameBox"
+    USPS_LARGE_FLAT_RATE_BOX = "USPS_LargeFlatRateBox"
+    USPS_APO_FLAT_RATE_BOX = "USPS_APOFlatRateBox"
+    USPS_LARGE_VIDEO_FLAT_RATE_BOX = "USPS_LargeVideoFlatRateBox"
+    USPS_MEDIUM_FLAT_RATE_BOX1 = "USPS_MediumFlatRateBox1"
+    USPS_MEDIUM_FLAT_RATE_BOX2 = "USPS_MediumFlatRateBox2"
+    USPS_REGIONAL_RATE_BOX_A1 = "USPS_RegionalRateBoxA1"
+    USPS_REGIONAL_RATE_BOX_A2 = "USPS_RegionalRateBoxA2"
+    USPS_REGIONAL_RATE_BOX_B1 = "USPS_RegionalRateBoxB1"
+    USPS_REGIONAL_RATE_BOX_B2 = "USPS_RegionalRateBoxB2"
+    USPS_SMALL_FLAT_RATE_BOX = "USPS_SmallFlatRateBox"
+    USPS_SMALL_FLAT_RATE_ENVELOPE = "USPS_SmallFlatRateEnvelope"
+    USPS_SOFT_PACK = "USPS_SoftPack"
 
 
 class UPSParcelTemplate(str, Enum):
@@ -125,32 +130,33 @@ class UPSParcelTemplate(str, Enum):
     | UPS_MI_Standard_Flat | Standard Flat (Mail Innovations - Domestic only) | 0.00 x 0.00 x 0.00 in|
     | UPS_Pad_Pak | Pad Pak | 14.75 x 11.00 x 2.00 in|
     | UPS_Pallet | Pallet | 120.00 x 80.00 x 200.00 cm|
+
     """
-    UPS_BOX_10KG = 'UPS_Box_10kg'
-    UPS_BOX_25KG = 'UPS_Box_25kg'
-    UPS_EXPRESS_BOX = 'UPS_Express_Box'
-    UPS_EXPRESS_BOX_LARGE = 'UPS_Express_Box_Large'
-    UPS_EXPRESS_BOX_MEDIUM = 'UPS_Express_Box_Medium'
-    UPS_EXPRESS_BOX_SMALL = 'UPS_Express_Box_Small'
-    UPS_EXPRESS_ENVELOPE = 'UPS_Express_Envelope'
-    UPS_EXPRESS_HARD_PAK = 'UPS_Express_Hard_Pak'
-    UPS_EXPRESS_LEGAL_ENVELOPE = 'UPS_Express_Legal_Envelope'
-    UPS_EXPRESS_PAK = 'UPS_Express_Pak'
-    UPS_EXPRESS_TUBE = 'UPS_Express_Tube'
-    UPS_LABORATORY_PAK = 'UPS_Laboratory_Pak'
-    UPS_MI_BPM = 'UPS_MI_BPM'
-    UPS_MI_BPM_FLAT = 'UPS_MI_BPM_Flat'
-    UPS_MI_BPM_PARCEL = 'UPS_MI_BPM_Parcel'
-    UPS_MI_FIRST_CLASS = 'UPS_MI_First_Class'
-    UPS_MI_FLAT = 'UPS_MI_Flat'
-    UPS_MI_IRREGULAR = 'UPS_MI_Irregular'
-    UPS_MI_MACHINABLE = 'UPS_MI_Machinable'
-    UPS_MI_MEDIA_MAIL = 'UPS_MI_MEDIA_MAIL'
-    UPS_MI_PARCEL_POST = 'UPS_MI_Parcel_Post'
-    UPS_MI_PRIORITY = 'UPS_MI_Priority'
-    UPS_MI_STANDARD_FLAT = 'UPS_MI_Standard_Flat'
-    UPS_PAD_PAK = 'UPS_Pad_Pak'
-    UPS_PALLET = 'UPS_Pallet'
+    UPS_BOX_10KG = "UPS_Box_10kg"
+    UPS_BOX_25KG = "UPS_Box_25kg"
+    UPS_EXPRESS_BOX = "UPS_Express_Box"
+    UPS_EXPRESS_BOX_LARGE = "UPS_Express_Box_Large"
+    UPS_EXPRESS_BOX_MEDIUM = "UPS_Express_Box_Medium"
+    UPS_EXPRESS_BOX_SMALL = "UPS_Express_Box_Small"
+    UPS_EXPRESS_ENVELOPE = "UPS_Express_Envelope"
+    UPS_EXPRESS_HARD_PAK = "UPS_Express_Hard_Pak"
+    UPS_EXPRESS_LEGAL_ENVELOPE = "UPS_Express_Legal_Envelope"
+    UPS_EXPRESS_PAK = "UPS_Express_Pak"
+    UPS_EXPRESS_TUBE = "UPS_Express_Tube"
+    UPS_LABORATORY_PAK = "UPS_Laboratory_Pak"
+    UPS_MI_BPM = "UPS_MI_BPM"
+    UPS_MI_BPM_FLAT = "UPS_MI_BPM_Flat"
+    UPS_MI_BPM_PARCEL = "UPS_MI_BPM_Parcel"
+    UPS_MI_FIRST_CLASS = "UPS_MI_First_Class"
+    UPS_MI_FLAT = "UPS_MI_Flat"
+    UPS_MI_IRREGULAR = "UPS_MI_Irregular"
+    UPS_MI_MACHINABLE = "UPS_MI_Machinable"
+    UPS_MI_MEDIA_MAIL = "UPS_MI_MEDIA_MAIL"
+    UPS_MI_PARCEL_POST = "UPS_MI_Parcel_Post"
+    UPS_MI_PRIORITY = "UPS_MI_Priority"
+    UPS_MI_STANDARD_FLAT = "UPS_MI_Standard_Flat"
+    UPS_PAD_PAK = "UPS_Pad_Pak"
+    UPS_PALLET = "UPS_Pallet"
 
 
 class FedExParcelTemplate(str, Enum):
@@ -172,22 +178,30 @@ class FedExParcelTemplate(str, Enum):
     | FedEx_Pak_2 | FedEx® Small Pak | 12.75 x 10.25 x 0.80 in|
     | FedEx_Tube | FedEx® Tube | 38.00 x 6.00 x 6.00 in|
     | FedEx_XL_Pak | FedEx® Extra Large Pak | 17.50 x 20.75 x 2.00 in|
+
     """
-    FED_EX_BOX_10KG = 'FedEx_Box_10kg'
-    FED_EX_BOX_25KG = 'FedEx_Box_25kg'
-    FED_EX_BOX_EXTRA_LARGE_1 = 'FedEx_Box_Extra_Large_1'
-    FED_EX_BOX_EXTRA_LARGE_2 = 'FedEx_Box_Extra_Large_2'
-    FED_EX_BOX_LARGE_1 = 'FedEx_Box_Large_1'
-    FED_EX_BOX_LARGE_2 = 'FedEx_Box_Large_2'
-    FED_EX_BOX_MEDIUM_1 = 'FedEx_Box_Medium_1'
-    FED_EX_BOX_MEDIUM_2 = 'FedEx_Box_Medium_2'
-    FED_EX_BOX_SMALL_1 = 'FedEx_Box_Small_1'
-    FED_EX_BOX_SMALL_2 = 'FedEx_Box_Small_2'
-    FED_EX_ENVELOPE = 'FedEx_Envelope'
-    FED_EX_PADDED_PAK = 'FedEx_Padded_Pak'
-    FED_EX_PAK_1 = 'FedEx_Pak_1'
-    FED_EX_PAK_2 = 'FedEx_Pak_2'
-    FED_EX_TUBE = 'FedEx_Tube'
-    FED_EX_XL_PAK = 'FedEx_XL_Pak'
+    FED_EX_BOX_10KG = "FedEx_Box_10kg"
+    FED_EX_BOX_25KG = "FedEx_Box_25kg"
+    FED_EX_BOX_EXTRA_LARGE_1 = "FedEx_Box_Extra_Large_1"
+    FED_EX_BOX_EXTRA_LARGE_2 = "FedEx_Box_Extra_Large_2"
+    FED_EX_BOX_LARGE_1 = "FedEx_Box_Large_1"
+    FED_EX_BOX_LARGE_2 = "FedEx_Box_Large_2"
+    FED_EX_BOX_MEDIUM_1 = "FedEx_Box_Medium_1"
+    FED_EX_BOX_MEDIUM_2 = "FedEx_Box_Medium_2"
+    FED_EX_BOX_SMALL_1 = "FedEx_Box_Small_1"
+    FED_EX_BOX_SMALL_2 = "FedEx_Box_Small_2"
+    FED_EX_ENVELOPE = "FedEx_Envelope"
+    FED_EX_PADDED_PAK = "FedEx_Padded_Pak"
+    FED_EX_PAK_1 = "FedEx_Pak_1"
+    FED_EX_PAK_2 = "FedEx_Pak_2"
+    FED_EX_TUBE = "FedEx_Tube"
+    FED_EX_XL_PAK = "FedEx_XL_Pak"
+
+
+ParcelTemplateEnumSetTypedDict = Union[FedExParcelTemplate, UPSParcelTemplate, USPSParcelTemplate, DHLECommerceParcelTemplate, DPDUKParcelTemplate, CouriersPleaseParcelTemplate, AramexAustraliaParcelTemplate]
+r"""If template is passed, `length`, `width`, `height`, and `distance_unit` are not required"""
+
 
 ParcelTemplateEnumSet = Union[FedExParcelTemplate, UPSParcelTemplate, USPSParcelTemplate, DHLECommerceParcelTemplate, DPDUKParcelTemplate, CouriersPleaseParcelTemplate, AramexAustraliaParcelTemplate]
+r"""If template is passed, `length`, `width`, `height`, and `distance_unit` are not required"""
+

@@ -6,7 +6,8 @@ from enum import Enum
 
 class WeightUnitEnum(str, Enum):
     r"""The unit used for weight."""
-    G = 'g'
-    KG = 'kg'
-    LB = 'lb'
-    OZ = 'oz'
+    G = "g"
+    KG = "kg"
+    LB = "lb"
+    OZ = "oz"
+

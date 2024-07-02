@@ -19,11 +19,11 @@ Returns a list all customs items objects.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
@@ -59,27 +59,27 @@ Creates a new customs item object.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 from shippo.models import components
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.customs_items.create(request=components.CustomsItemCreateRequest(
-    description='T-Shirt',
-    mass_unit=components.WeightUnitEnum.LB,
-    net_weight='5',
-    origin_country='<value>',
-    quantity=20,
-    value_amount='200',
-    value_currency='USD',
-    metadata='Order ID "123454"',
-    sku_code='HM-123',
-    hs_code='0901.21',
-))
+res = s.customs_items.create(request={
+    "description": "T-Shirt",
+    "mass_unit": components.WeightUnitEnum.LB,
+    "net_weight": "5",
+    "origin_country": "<value>",
+    "quantity": 20,
+    "value_amount": "200",
+    "value_currency": "USD",
+    "metadata": "Order ID \"123454\"",
+    "sku_code": "HM-123",
+    "hs_code": "0901.21",
+})
 
 if res is not None:
     # handle response
@@ -91,7 +91,7 @@ if res is not None:
 
 | Parameter                                                                                  | Type                                                                                       | Required                                                                                   | Description                                                                                |
 | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
-| `request`                                                                                  | [components.CustomsItemCreateRequest](../../models/components/customsitemcreaterequest.md) | :heavy_check_mark:                                                                         | The request object to use for the request.                                                 |
+| `request`                                                                                  | [components.CustomsItemCreateRequest](../../models/components/customsitemcreaterequest.md) | :heavy_check_mark:                                                                         | CustomsItem details.                                                                       |
 
 
 ### Response
@@ -110,15 +110,15 @@ Returns an existing customs item using an object ID
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.customs_items.get(customs_item_id='<value>', page=1)
+res = s.customs_items.get(customs_item_id="<value>", page=1)
 
 if res is not None:
     # handle response

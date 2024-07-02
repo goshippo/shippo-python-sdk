@@ -19,44 +19,44 @@ Creates a pickup object. This request is for a carrier to come to a specified lo
 
 ```python
 import dateutil.parser
-import shippo
+from shippo import Shippo
 from shippo.models import components
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.pickups.create(request=components.PickupBase(
-    carrier_account='adcfdddf8ec64b84ad22772bce3ea37a',
-    location=components.Location(
-        address=components.AddressCompleteCreateRequest(
-            name='Shwan Ippotle',
-            street1='215 Clayton St.',
-            city='San Francisco',
-            state='CA',
-            zip='94117',
-            country='US',
-            company='Shippo',
-            street3='',
-            street_no='',
-            phone='+1 555 341 9393',
-            email='shippotle@shippo.com',
-            is_residential=True,
-            metadata='Customer ID 123456',
-            validate=True,
-        ),
-        building_location_type=components.BuildingLocationType.FRONT_DOOR,
-        building_type=components.BuildingType.APARTMENT,
-        instructions='Behind screen door',
-    ),
-    requested_end_time=dateutil.parser.isoparse('2023-06-18T07:14:55.676Z'),
-    requested_start_time=dateutil.parser.isoparse('2023-06-21T08:42:38.998Z'),
-    transactions=[
-        'adcfdddf8ec64b84ad22772bce3ea37a',
+res = s.pickups.create(request={
+    "carrier_account": "adcfdddf8ec64b84ad22772bce3ea37a",
+    "location": {
+        "address": {
+            "name": "Shwan Ippotle",
+            "street1": "215 Clayton St.",
+            "city": "San Francisco",
+            "state": "CA",
+            "zip": "94117",
+            "country": "US",
+            "company": "Shippo",
+            "street3": "",
+            "street_no": "",
+            "phone": "+1 555 341 9393",
+            "email": "shippotle@shippo.com",
+            "is_residential": True,
+            "metadata": "Customer ID 123456",
+            "validate": True,
+        },
+        "building_location_type": components.BuildingLocationType.FRONT_DOOR,
+        "building_type": components.BuildingType.APARTMENT,
+        "instructions": "Behind screen door",
+    },
+    "requested_end_time": dateutil.parser.isoparse("2023-06-18T07:14:55.676Z"),
+    "requested_start_time": dateutil.parser.isoparse("2023-06-21T08:42:38.998Z"),
+    "transactions": [
+        "adcfdddf8ec64b84ad22772bce3ea37a",
     ],
-))
+})
 
 if res is not None:
     # handle response
@@ -66,9 +66,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                      | Type                                                           | Required                                                       | Description                                                    |
-| -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- |
-| `request`                                                      | [components.PickupBase](../../models/components/pickupbase.md) | :heavy_check_mark:                                             | The request object to use for the request.                     |
+| Parameter                                                                                                                                | Type                                                                                                                                     | Required                                                                                                                                 | Description                                                                                                                              |
+| ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `request`                                                                                                                                | [components.PickupBase](../../models/components/pickupbase.md)                                                                           | :heavy_check_mark:                                                                                                                       | Shippo’s pickups endpoint allows you to schedule pickups with USPS and DHL Express for eligible shipments that you have already created. |
 
 
 ### Response

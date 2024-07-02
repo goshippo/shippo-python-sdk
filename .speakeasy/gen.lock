@@ -1,34 +1,34 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: 21e24cc6937caa9e711e620b7c454d02
+  docChecksum: 95f1ed5c5466e53246154c977b45d904
   docVersion: "2018-02-08"
   speakeasyVersion: 1.326.0
   generationVersion: 2.359.0
-  releaseVersion: 3.6.1
-  configChecksum: e79880146cfee697b232520b57bbc46b
+  releaseVersion: 3.6.3
+  configChecksum: e00c9d95290e9bb4926a8ed63a3a7ff1
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
 features:
   python:
     additionalDependencies: 0.1.0
-    constsAndDefaults: 0.1.3
-    core: 4.6.13
-    flattening: 2.81.1
-    globalSecurity: 2.83.5
+    constsAndDefaults: 0.1.0
+    core: 0.2.8
+    flattening: 0.1.0
+    globalSecurity: 0.1.0
     globalSecurityCallbacks: 0.1.0
     globalSecurityFlattening: 0.1.0
-    globalServerURLs: 2.82.2
-    globals: 2.82.1
+    globalServerURLs: 0.1.0
+    globals: 0.1.0
     hiddenGlobals: 0.1.0
-    includes: 2.81.1
-    nameOverrides: 2.81.2
+    includes: 0.1.0
+    nameOverrides: 0.1.0
     nullables: 0.1.0
     responseFormat: 0.1.0
     sdkHooks: 0.1.0
-    unions: 2.82.8
-    webhooks: 1.0.0
+    unions: 0.1.0
+    webhooks: 0.1.0
 generatedFiles:
   - src/shippo/sdkconfiguration.py
   - src/shippo/addresses.py
@@ -54,12 +54,26 @@ generatedFiles:
   - src/shippo/sdk.py
   - py.typed
   - pylintrc
+  - pyproject.toml
   - scripts/publish.sh
-  - setup.py
   - src/shippo/__init__.py
+  - src/shippo/basesdk.py
+  - src/shippo/httpclient.py
+  - src/shippo/types/__init__.py
+  - src/shippo/types/basemodel.py
   - src/shippo/utils/__init__.py
+  - src/shippo/utils/enums.py
+  - src/shippo/utils/eventstreaming.py
+  - src/shippo/utils/forms.py
+  - src/shippo/utils/headers.py
+  - src/shippo/utils/metadata.py
+  - src/shippo/utils/queryparams.py
+  - src/shippo/utils/requestbodies.py
   - src/shippo/utils/retries.py
-  - src/shippo/utils/utils.py
+  - src/shippo/utils/security.py
+  - src/shippo/utils/serializers.py
+  - src/shippo/utils/url.py
+  - src/shippo/utils/values.py
   - src/shippo/models/errors/sdkerror.py
   - src/shippo/models/components/addresspaginatedlist.py
   - src/shippo/models/components/address.py
@@ -657,8 +671,8 @@ generatedFiles:
   - docs/models/operations/createtrackglobals.md
   - docs/models/operations/createuserparceltemplateglobals.md
   - docs/models/operations/createshippoaccountglobals.md
-  - docs/models/errors/initiateoauth2signincarrieraccountsresponseresponsebody.md
   - docs/models/errors/initiateoauth2signincarrieraccountsresponsebody.md
+  - docs/models/errors/initiateoauth2signincarrieraccountsresponseresponsebody.md
   - docs/models/errors/initiateoauth2signinresponsebody.md
   - docs/models/internal/globals.md
   - docs/sdks/shippo/README.md

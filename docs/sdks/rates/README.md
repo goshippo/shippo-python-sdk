@@ -19,15 +19,15 @@ Returns an existing rate using a rate object ID.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.rates.get(rate_id='<value>')
+res = s.rates.get(rate_id="<value>")
 
 if res is not None:
     # handle response
@@ -58,15 +58,15 @@ Returns a paginated list of rates associated with a shipment
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.rates.list_shipment_rates(shipment_id='<value>', page=1, results=25)
+res = s.rates.list_shipment_rates(shipment_id="<value>", page=1, results=25)
 
 if res is not None:
     # handle response
@@ -105,19 +105,18 @@ Note: re-requesting the rates with a different currency code will re-queue the s
 ### Example Usage
 
 ```python
-import shippo
-from shippo.models import operations
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.rates.list_shipment_rates_by_currency_code(request=operations.ListShipmentRatesByCurrencyCodeRequest(
-    shipment_id='<value>',
-    currency_code='USD',
-))
+res = s.rates.list_shipment_rates_by_currency_code(request={
+    "shipment_id": "<value>",
+    "currency_code": "USD",
+})
 
 if res is not None:
     # handle response

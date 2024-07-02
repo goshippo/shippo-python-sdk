@@ -19,19 +19,19 @@ Returns a list of all transaction objects.
 ### Example Usage
 
 ```python
-import shippo
-from shippo.models import components, operations
+from shippo import Shippo
+from shippo.models import components
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.transactions.list(request=operations.ListTransactionsRequest(
-    object_status=components.TransactionStatusEnum.SUCCESS,
-    tracking_status=components.TrackingStatusEnum.DELIVERED,
-))
+res = s.transactions.list(request={
+    "object_status": components.TransactionStatusEnum.SUCCESS,
+    "tracking_status": components.TrackingStatusEnum.DELIVERED,
+})
 
 if res is not None:
     # handle response
@@ -62,21 +62,21 @@ Creates a new transaction object and purchases the shipping label using a rate o
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 from shippo.models import components
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.transactions.create(request=components.TransactionCreateRequest(
-    rate='ec9f0d3adc9441449c85d315f0997fd5',
-    async_=False,
-    label_file_type=components.LabelFileTypeEnum.PDF_4X6,
-    metadata='Order ID #12345',
-))
+res = s.transactions.create(request={
+    "rate": "ec9f0d3adc9441449c85d315f0997fd5",
+    "async_": False,
+    "label_file_type": components.LabelFileTypeEnum.PDF_4X6,
+    "metadata": "Order ID #12345",
+})
 
 if res is not None:
     # handle response
@@ -88,7 +88,7 @@ if res is not None:
 
 | Parameter                                                                                          | Type                                                                                               | Required                                                                                           | Description                                                                                        |
 | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| `request`                                                                                          | [operations.CreateTransactionRequestBody](../../models/operations/createtransactionrequestbody.md) | :heavy_check_mark:                                                                                 | The request object to use for the request.                                                         |
+| `request`                                                                                          | [operations.CreateTransactionRequestBody](../../models/operations/createtransactionrequestbody.md) | :heavy_check_mark:                                                                                 | Examples.                                                                                          |
 
 
 ### Response
@@ -107,15 +107,15 @@ Returns an existing transaction using an object ID.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.transactions.get(transaction_id='<value>')
+res = s.transactions.get(transaction_id="<value>")
 
 if res is not None:
     # handle response

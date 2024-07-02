@@ -19,15 +19,18 @@ Creates a new refund object.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.refunds.create(transaction='915d94940ea54c3a80cbfa328722f5a1', async_=False)
+res = s.refunds.create(request={
+    "transaction": "915d94940ea54c3a80cbfa328722f5a1",
+    "async_": False,
+})
 
 if res is not None:
     # handle response
@@ -37,10 +40,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                        | Type                             | Required                         | Description                      | Example                          |
-| -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- |
-| `transaction`                    | *str*                            | :heavy_check_mark:               | N/A                              | 915d94940ea54c3a80cbfa328722f5a1 |
-| `async_`                         | *Optional[bool]*                 | :heavy_minus_sign:               | N/A                              | false                            |
+| Parameter                                                                    | Type                                                                         | Required                                                                     | Description                                                                  |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `request`                                                                    | [components.RefundRequestBody](../../models/components/refundrequestbody.md) | :heavy_check_mark:                                                           | Refund details                                                               |
 
 
 ### Response
@@ -59,11 +61,11 @@ Returns a list all refund objects.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
@@ -92,15 +94,15 @@ Returns an existing rate using a rate object ID.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.refunds.get(refund_id='<value>')
+res = s.refunds.get(refund_id="<value>")
 
 if res is not None:
     # handle response

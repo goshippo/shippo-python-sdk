@@ -10,25 +10,28 @@ class ServiceLevelSwyftEnum(str, Enum):
     |:---|:---|
     | same_day | Next Day|
     | next_day | Next Day|
+
     """
-    SAME_DAY = 'same_day'
-    NEXT_DAY = 'next_day'
+    SAME_DAY = "same_day"
+    NEXT_DAY = "next_day"
 
 
 class ServiceLevelVehoEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
     | veho_next_day | Veho Next Day |
+
     """
-    VEHO_NEXT_DAY = 'veho_next_day'
+    VEHO_NEXT_DAY = "veho_next_day"
 
 
 class ServiceLevelUDSEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
     | uds_next_day | Next Day|
+
     """
-    UDS_NEXT_DAY = 'uds_next_day'
+    UDS_NEXT_DAY = "uds_next_day"
 
 
 class ServiceLevelEvriUKEnum(str, Enum):
@@ -39,20 +42,22 @@ class ServiceLevelEvriUKEnum(str, Enum):
     | hermes_uk_parcelshop_dropoff_nextday | ParcelShop Drop-Off Next Day|
     | hermes_uk_postable | Postable|
     | hermes_uk_postable_nextday | Postable Next Day|
+
     """
-    HERMES_UK_COURIER_SERVICE = 'hermes_uk_courier_service'
-    HERMES_UK_PARCELSHOP_DROPOFF = 'hermes_uk_parcelshop_dropoff'
-    HERMES_UK_PARCELSHOP_DROPOFF_NEXTDAY = 'hermes_uk_parcelshop_dropoff_nextday'
-    HERMES_UK_POSTABLE = 'hermes_uk_postable'
-    HERMES_UK_POSTABLE_NEXTDAY = 'hermes_uk_postable_nextday'
+    HERMES_UK_COURIER_SERVICE = "hermes_uk_courier_service"
+    HERMES_UK_PARCELSHOP_DROPOFF = "hermes_uk_parcelshop_dropoff"
+    HERMES_UK_PARCELSHOP_DROPOFF_NEXTDAY = "hermes_uk_parcelshop_dropoff_nextday"
+    HERMES_UK_POSTABLE = "hermes_uk_postable"
+    HERMES_UK_POSTABLE_NEXTDAY = "hermes_uk_postable_nextday"
 
 
 class ServiceLevelLasershipEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
     | lasership_routed_delivery | Routed Delivery|
+
     """
-    LASERSHIP_ROUTED_DELIVERY = 'lasership_routed_delivery'
+    LASERSHIP_ROUTED_DELIVERY = "lasership_routed_delivery"
 
 
 class ServiceLevelJitsuEnum(str, Enum):
@@ -60,9 +65,10 @@ class ServiceLevelJitsuEnum(str, Enum):
     |:---|:---|
     | axlehire_same_day | Same Day|
     | axlehire_next_day | Next Day|
+
     """
-    AXLEHIRE_SAME_DAY = 'axlehire_same_day'
-    AXLEHIRE_NEXT_DAY = 'axlehire_next_day'
+    AXLEHIRE_SAME_DAY = "axlehire_same_day"
+    AXLEHIRE_NEXT_DAY = "axlehire_next_day"
 
 
 class ServiceLevelOnTracEnum(str, Enum):
@@ -71,10 +77,11 @@ class ServiceLevelOnTracEnum(str, Enum):
     | ontrac_ground | Ground|
     | ontrac_sunrise_gold | Sunrise Gold|
     | ontrac_sunrise | Sunrise|
+
     """
-    ONTRAC_GROUND = 'ontrac_ground'
-    ONTRAC_SUNRISE_GOLD = 'ontrac_sunrise_gold'
-    ONTRAC_SUNRISE = 'ontrac_sunrise'
+    ONTRAC_GROUND = "ontrac_ground"
+    ONTRAC_SUNRISE_GOLD = "ontrac_sunrise_gold"
+    ONTRAC_SUNRISE = "ontrac_sunrise"
 
 
 class ServiceLevelSendleEnum(str, Enum):
@@ -82,9 +89,10 @@ class ServiceLevelSendleEnum(str, Enum):
     |:---|:---|
     | sendle_parcel | Sendle Parcel|
     | sendle_standard_dropoff | Sendle Standard Dropoff|
+
     """
-    SENDLE_PARCEL = 'sendle_parcel'
-    SENDLE_STANDARD_DROPOFF = 'sendle_standard_dropoff'
+    SENDLE_PARCEL = "sendle_parcel"
+    SENDLE_STANDARD_DROPOFF = "sendle_standard_dropoff"
 
 
 class ServiceLevelRoyalMailEnum(str, Enum):
@@ -110,27 +118,28 @@ class ServiceLevelRoyalMailEnum(str, Enum):
     | royal_mail_intl_bus_parcels_tracked_signed_zone_srt | International Business Parcels & Signed Zone Sort
     | royal_mail_24_flat_rate | Royal Mail 24 Parcel Flat Rate
     | royal_mail_48_flat_rate | Royal Mail 48 Parcel Flat Rate
+
     """
-    ROYAL_MAIL_TRACKED_LETTER_BOXABLE_24_NO_SIGNATURE = 'royal_mail_tracked_letter_boxable_24_no_signature'
-    ROYAL_MAIL_TRACKED_LETTER_BOXABLE_48_NO_SIGNATURE = 'royal_mail_tracked_letter_boxable_48_no_signature'
-    ROYAL_MAIL_TRACKED_24_RETURNS = 'royal_mail_tracked_24_returns'
-    ROYAL_MAIL_TRACKED_48_RETURNS = 'royal_mail_tracked_48_returns'
-    ROYAL_MAIL_SPECIAL_DELIVERY_GUARANTEED_1PM = 'royal_mail_special_delivery_guaranteed_1pm'
-    ROYAL_MAIL_SPECIAL_DELIVERY_GUARANTEED_9AM = 'royal_mail_special_delivery_guaranteed_9am'
-    ROYAL_MAIL_24 = 'royal_mail_24'
-    ROYAL_MAIL_48 = 'royal_mail_48'
-    ROYAL_MAIL_SIGNED_FOR_FIRST_CLASS = 'royal_mail_signed_for_first_class'
-    ROYAL_MAIL_SIGNED_FOR_SECOND_CLASS = 'royal_mail_signed_for_second_class'
-    ROYAL_MAIL_STANDARD_FIRST_CLASS = 'royal_mail_standard_first_class'
-    ROYAL_MAIL_STANDARD_SECOND_CLASS = 'royal_mail_standard_second_class'
-    ROYAL_MAIL_TRACKED_24_NO_SIGNATURE = 'royal_mail_tracked_24_no_signature'
-    ROYAL_MAIL_TRACKED_48_NO_SIGNATURE = 'royal_mail_tracked_48_no_signature'
-    ROYAL_MAIL_INTL_BUS_MAIL_LRG_LTR_ZONE_SORT_PRI = 'royal_mail_intl_bus_mail_lrg_ltr_zone_sort_pri'
-    ROYAL_MAIL_INTL_BUS_PARCELS_TRACKED_ZONE_SORT = 'royal_mail_intl_bus_parcels_tracked_zone_sort'
-    ROYAL_MAIL_INTL_BUS_PARCELS_TRACKED_COUNTRY_PRICED = 'royal_mail_intl_bus_parcels_tracked_country_priced'
-    ROYAL_MAIL_INTL_BUS_PARCELS_TRACKED_SIGNED_ZONE_SRT = 'royal_mail_intl_bus_parcels_tracked_signed_zone_srt'
-    ROYAL_MAIL_24_FLAT_RATE = 'royal_mail_24_flat_rate'
-    ROYAL_MAIL_48_FLAT_RATE = 'royal_mail_48_flat_rate'
+    ROYAL_MAIL_TRACKED_LETTER_BOXABLE_24_NO_SIGNATURE = "royal_mail_tracked_letter_boxable_24_no_signature"
+    ROYAL_MAIL_TRACKED_LETTER_BOXABLE_48_NO_SIGNATURE = "royal_mail_tracked_letter_boxable_48_no_signature"
+    ROYAL_MAIL_TRACKED_24_RETURNS = "royal_mail_tracked_24_returns"
+    ROYAL_MAIL_TRACKED_48_RETURNS = "royal_mail_tracked_48_returns"
+    ROYAL_MAIL_SPECIAL_DELIVERY_GUARANTEED_1PM = "royal_mail_special_delivery_guaranteed_1pm"
+    ROYAL_MAIL_SPECIAL_DELIVERY_GUARANTEED_9AM = "royal_mail_special_delivery_guaranteed_9am"
+    ROYAL_MAIL_24 = "royal_mail_24"
+    ROYAL_MAIL_48 = "royal_mail_48"
+    ROYAL_MAIL_SIGNED_FOR_FIRST_CLASS = "royal_mail_signed_for_first_class"
+    ROYAL_MAIL_SIGNED_FOR_SECOND_CLASS = "royal_mail_signed_for_second_class"
+    ROYAL_MAIL_STANDARD_FIRST_CLASS = "royal_mail_standard_first_class"
+    ROYAL_MAIL_STANDARD_SECOND_CLASS = "royal_mail_standard_second_class"
+    ROYAL_MAIL_TRACKED_24_NO_SIGNATURE = "royal_mail_tracked_24_no_signature"
+    ROYAL_MAIL_TRACKED_48_NO_SIGNATURE = "royal_mail_tracked_48_no_signature"
+    ROYAL_MAIL_INTL_BUS_MAIL_LRG_LTR_ZONE_SORT_PRI = "royal_mail_intl_bus_mail_lrg_ltr_zone_sort_pri"
+    ROYAL_MAIL_INTL_BUS_PARCELS_TRACKED_ZONE_SORT = "royal_mail_intl_bus_parcels_tracked_zone_sort"
+    ROYAL_MAIL_INTL_BUS_PARCELS_TRACKED_COUNTRY_PRICED = "royal_mail_intl_bus_parcels_tracked_country_priced"
+    ROYAL_MAIL_INTL_BUS_PARCELS_TRACKED_SIGNED_ZONE_SRT = "royal_mail_intl_bus_parcels_tracked_signed_zone_srt"
+    ROYAL_MAIL_24_FLAT_RATE = "royal_mail_24_flat_rate"
+    ROYAL_MAIL_48_FLAT_RATE = "royal_mail_48_flat_rate"
 
 
 class ServiceLevelePostGlobalEnum(str, Enum):
@@ -149,28 +158,30 @@ class ServiceLevelePostGlobalEnum(str, Enum):
     | rr_donnelley_epacket | e-Packet|
     | rr_donnelley_pmi | Priority Mail International|
     | rr_donnelley_emi | Express Mail International|
+
     """
-    RR_DONNELLEY_DOMESTIC_ECONOMY_PARCEL = 'rr_donnelley_domestic_economy_parcel'
-    RR_DONNELLEY_DOMESTIC_PRIORITY_PARCEL = 'rr_donnelley_domestic_priority_parcel'
-    RR_DONNELLEY_DOMESTIC_PARCEL_BPM = 'rr_donnelley_domestic_parcel_bpm'
-    RR_DONNELLEY_PRIORITY_DOMESTIC_PRIORITY_PARCEL_BPM = 'rr_donnelley_priority_domestic_priority_parcel_bpm'
-    RR_DONNELLEY_PRIORITY_PARCEL_DELCON = 'rr_donnelley_priority_parcel_delcon'
-    RR_DONNELLEY_PRIORITY_PARCEL_NONDELCON = 'rr_donnelley_priority_parcel_nondelcon'
-    RR_DONNELLEY_ECONOMY_PARCEL = 'rr_donnelley_economy_parcel'
-    RR_DONNELLEY_IPA = 'rr_donnelley_ipa'
-    RR_DONNELLEY_COURIER = 'rr_donnelley_courier'
-    RR_DONNELLEY_ISAL = 'rr_donnelley_isal'
-    RR_DONNELLEY_EPACKET = 'rr_donnelley_epacket'
-    RR_DONNELLEY_PMI = 'rr_donnelley_pmi'
-    RR_DONNELLEY_EMI = 'rr_donnelley_emi'
+    RR_DONNELLEY_DOMESTIC_ECONOMY_PARCEL = "rr_donnelley_domestic_economy_parcel"
+    RR_DONNELLEY_DOMESTIC_PRIORITY_PARCEL = "rr_donnelley_domestic_priority_parcel"
+    RR_DONNELLEY_DOMESTIC_PARCEL_BPM = "rr_donnelley_domestic_parcel_bpm"
+    RR_DONNELLEY_PRIORITY_DOMESTIC_PRIORITY_PARCEL_BPM = "rr_donnelley_priority_domestic_priority_parcel_bpm"
+    RR_DONNELLEY_PRIORITY_PARCEL_DELCON = "rr_donnelley_priority_parcel_delcon"
+    RR_DONNELLEY_PRIORITY_PARCEL_NONDELCON = "rr_donnelley_priority_parcel_nondelcon"
+    RR_DONNELLEY_ECONOMY_PARCEL = "rr_donnelley_economy_parcel"
+    RR_DONNELLEY_IPA = "rr_donnelley_ipa"
+    RR_DONNELLEY_COURIER = "rr_donnelley_courier"
+    RR_DONNELLEY_ISAL = "rr_donnelley_isal"
+    RR_DONNELLEY_EPACKET = "rr_donnelley_epacket"
+    RR_DONNELLEY_PMI = "rr_donnelley_pmi"
+    RR_DONNELLEY_EMI = "rr_donnelley_emi"
 
 
 class ServiceLevelPostItalianeEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
     | poste_italiane_delivery_business_express | Poste Delivery Business Express|
+
     """
-    POSTE_ITALIANE_DELIVERY_BUSINESS_EXPRESS = 'poste_italiane_delivery_business_express'
+    POSTE_ITALIANE_DELIVERY_BUSINESS_EXPRESS = "poste_italiane_delivery_business_express"
 
 
 class ServiceLevelParcelforceEnum(str, Enum):
@@ -179,26 +190,29 @@ class ServiceLevelParcelforceEnum(str, Enum):
     | parcelforce_express48 | Express 48|
     | parcelforce_express24 | Express 24|
     | parcelforce_expressam | Express AM|
+
     """
-    PARCELFORCE_EXPRESS48 = 'parcelforce_express48'
-    PARCELFORCE_EXPRESS24 = 'parcelforce_express24'
-    PARCELFORCE_EXPRESSAM = 'parcelforce_expressam'
+    PARCELFORCE_EXPRESS48 = "parcelforce_express48"
+    PARCELFORCE_EXPRESS24 = "parcelforce_express24"
+    PARCELFORCE_EXPRESSAM = "parcelforce_expressam"
 
 
 class ServiceLevelMaergoEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
     | x_delivery_expedited | Expedited|
+
     """
-    X_DELIVERY_EXPEDITED = 'x_delivery_expedited'
+    X_DELIVERY_EXPEDITED = "x_delivery_expedited"
 
 
 class ServiceLevelMondialRelayEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
     | mondial_relay_pointrelais | Point Relais|
+
     """
-    MONDIAL_RELAY_POINTRELAIS = 'mondial_relay_pointrelais'
+    MONDIAL_RELAY_POINTRELAIS = "mondial_relay_pointrelais"
 
 
 class ServiceLevelLSOEnum(str, Enum):
@@ -210,13 +224,14 @@ class ServiceLevelLSOEnum(str, Enum):
     | lso_2nd_day | 2nd Day|
     | lso_priority_next_day | Priority Next Day|
     | lso_early_overnight | Early Overnight|
+
     """
-    LSO_GROUND = 'lso_ground'
-    LSO_ECONOMY_NEXT_DAY = 'lso_economy_next_day'
-    LSO_SATURDAY_DELIVERY = 'lso_saturday_delivery'
-    LSO_2ND_DAY = 'lso_2nd_day'
-    LSO_PRIORITY_NEXT_DAY = 'lso_priority_next_day'
-    LSO_EARLY_OVERNIGHT = 'lso_early_overnight'
+    LSO_GROUND = "lso_ground"
+    LSO_ECONOMY_NEXT_DAY = "lso_economy_next_day"
+    LSO_SATURDAY_DELIVERY = "lso_saturday_delivery"
+    LSO_2ND_DAY = "lso_2nd_day"
+    LSO_PRIORITY_NEXT_DAY = "lso_priority_next_day"
+    LSO_EARLY_OVERNIGHT = "lso_early_overnight"
 
 
 class ServiceLevelGLSUSEnum(str, Enum):
@@ -228,13 +243,14 @@ class ServiceLevelGLSUSEnum(str, Enum):
     | gls_us_nps | Noon Priority Overnight|
     | gls_us_pds | Priority Overnight|
     | gls_us_sds | Saturday Delivery|
+
     """
-    GLS_US_CPS = 'gls_us_cps'
-    GLS_US_EPS = 'gls_us_eps'
-    GLS_US_ESS = 'gls_us_ess'
-    GLS_US_NPS = 'gls_us_nps'
-    GLS_US_PDS = 'gls_us_pds'
-    GLS_US_SDS = 'gls_us_sds'
+    GLS_US_CPS = "gls_us_cps"
+    GLS_US_EPS = "gls_us_eps"
+    GLS_US_ESS = "gls_us_ess"
+    GLS_US_NPS = "gls_us_nps"
+    GLS_US_PDS = "gls_us_pds"
+    GLS_US_SDS = "gls_us_sds"
 
 
 class ServiceLevelGlobegisticsEnum(str, Enum):
@@ -252,19 +268,20 @@ class ServiceLevelGlobegisticsEnum(str, Enum):
     | globegistics_ecom_extra | Globegistics eCom Extra|
     | globegistics_ecom_international_priority_airmail | Globegistics eCom International Priority Airmail|
     | globegistics_ecom_international_surface_airlift | Globegistics eCom International Surface Air Lift|
+
     """
-    GLOBEGISTICS_PRIORITY_MAIL_EXPRESS_INTERNATIONAL = 'globegistics_priority_mail_express_international'
-    GLOBEGISTICS_PRIORITY_MAIL_INTERNATIONAL = 'globegistics_priority_mail_international'
-    GLOBEGISTICS_PRIORITY_MAIL_EXPRESS_INTERNATIONAL_PDS = 'globegistics_priority_mail_express_international_pds'
-    GLOBEGISTICS_PRIORITY_MAIL_INTERNATIONAL_PDS = 'globegistics_priority_mail_international_pds'
-    GLOBEGISTICS_EPACKET = 'globegistics_epacket'
-    GLOBEGISTICS_ECOM_TRACKED_DDP = 'globegistics_ecom_tracked_ddp'
-    GLOBEGISTICS_ECOM_PACKET_DDP = 'globegistics_ecom_packet_ddp'
-    GLOBEGISTICS_ECOM_PRIORITY_MAIL_INTERNATIONAL_DDP = 'globegistics_ecom_priority_mail_international_ddp'
-    GLOBEGISTICS_ECOM_PRIORITY_MAIL_EXPRESS_INTERNATIONAL_DDP = 'globegistics_ecom_priority_mail_express_international_ddp'
-    GLOBEGISTICS_ECOM_EXTRA = 'globegistics_ecom_extra'
-    GLOBEGISTICS_ECOM_INTERNATIONAL_PRIORITY_AIRMAIL = 'globegistics_ecom_international_priority_airmail'
-    GLOBEGISTICS_ECOM_INTERNATIONAL_SURFACE_AIRLIFT = 'globegistics_ecom_international_surface_airlift'
+    GLOBEGISTICS_PRIORITY_MAIL_EXPRESS_INTERNATIONAL = "globegistics_priority_mail_express_international"
+    GLOBEGISTICS_PRIORITY_MAIL_INTERNATIONAL = "globegistics_priority_mail_international"
+    GLOBEGISTICS_PRIORITY_MAIL_EXPRESS_INTERNATIONAL_PDS = "globegistics_priority_mail_express_international_pds"
+    GLOBEGISTICS_PRIORITY_MAIL_INTERNATIONAL_PDS = "globegistics_priority_mail_international_pds"
+    GLOBEGISTICS_EPACKET = "globegistics_epacket"
+    GLOBEGISTICS_ECOM_TRACKED_DDP = "globegistics_ecom_tracked_ddp"
+    GLOBEGISTICS_ECOM_PACKET_DDP = "globegistics_ecom_packet_ddp"
+    GLOBEGISTICS_ECOM_PRIORITY_MAIL_INTERNATIONAL_DDP = "globegistics_ecom_priority_mail_international_ddp"
+    GLOBEGISTICS_ECOM_PRIORITY_MAIL_EXPRESS_INTERNATIONAL_DDP = "globegistics_ecom_priority_mail_express_international_ddp"
+    GLOBEGISTICS_ECOM_EXTRA = "globegistics_ecom_extra"
+    GLOBEGISTICS_ECOM_INTERNATIONAL_PRIORITY_AIRMAIL = "globegistics_ecom_international_priority_airmail"
+    GLOBEGISTICS_ECOM_INTERNATIONAL_SURFACE_AIRLIFT = "globegistics_ecom_international_surface_airlift"
 
 
 class ServiceLevelAramexAustraliaEnum(str, Enum):
@@ -275,12 +292,13 @@ class ServiceLevelAramexAustraliaEnum(str, Enum):
     | fastway_australia_box_small | Box Small|
     | fastway_australia_box_medium | Box Medium|
     | fastway_australia_box_large | Box Large|
+
     """
-    FASTWAY_AUSTRALIA_PARCEL = 'fastway_australia_parcel'
-    FASTWAY_AUSTRALIA_SATCHEL = 'fastway_australia_satchel'
-    FASTWAY_AUSTRALIA_BOX_SMALL = 'fastway_australia_box_small'
-    FASTWAY_AUSTRALIA_BOX_MEDIUM = 'fastway_australia_box_medium'
-    FASTWAY_AUSTRALIA_BOX_LARGE = 'fastway_australia_box_large'
+    FASTWAY_AUSTRALIA_PARCEL = "fastway_australia_parcel"
+    FASTWAY_AUSTRALIA_SATCHEL = "fastway_australia_satchel"
+    FASTWAY_AUSTRALIA_BOX_SMALL = "fastway_australia_box_small"
+    FASTWAY_AUSTRALIA_BOX_MEDIUM = "fastway_australia_box_medium"
+    FASTWAY_AUSTRALIA_BOX_LARGE = "fastway_australia_box_large"
 
 
 class ServiceLevelDeutschePostEnum(str, Enum):
@@ -296,17 +314,18 @@ class ServiceLevelDeutschePostEnum(str, Enum):
     | deutsche_post_warenpost_international_s | Warenpost International S|
     | deutsche_post_warenpost_international_m | Warenpost International M|
     | deutsche_post_warenpost_international_l | Warenpost International L|
+
     """
-    DEUTSCHE_POST_POSTKARTE = 'deutsche_post_postkarte'
-    DEUTSCHE_POST_STANDARDBRIEF = 'deutsche_post_standardbrief'
-    DEUTSCHE_POST_KOMPAKTBRIEF = 'deutsche_post_kompaktbrief'
-    DEUTSCHE_POST_GROSSBRIEF = 'deutsche_post_grossbrief'
-    DEUTSCHE_POST_MAXIBRIEF = 'deutsche_post_maxibrief'
-    DEUTSCHE_POST_MAXIBRIEF_PLUS = 'deutsche_post_maxibrief_plus'
-    DEUTSCHE_POST_WARENPOST_INTERNATIONAL_XS = 'deutsche_post_warenpost_international_xs'
-    DEUTSCHE_POST_WARENPOST_INTERNATIONAL_S = 'deutsche_post_warenpost_international_s'
-    DEUTSCHE_POST_WARENPOST_INTERNATIONAL_M = 'deutsche_post_warenpost_international_m'
-    DEUTSCHE_POST_WARENPOST_INTERNATIONAL_L = 'deutsche_post_warenpost_international_l'
+    DEUTSCHE_POST_POSTKARTE = "deutsche_post_postkarte"
+    DEUTSCHE_POST_STANDARDBRIEF = "deutsche_post_standardbrief"
+    DEUTSCHE_POST_KOMPAKTBRIEF = "deutsche_post_kompaktbrief"
+    DEUTSCHE_POST_GROSSBRIEF = "deutsche_post_grossbrief"
+    DEUTSCHE_POST_MAXIBRIEF = "deutsche_post_maxibrief"
+    DEUTSCHE_POST_MAXIBRIEF_PLUS = "deutsche_post_maxibrief_plus"
+    DEUTSCHE_POST_WARENPOST_INTERNATIONAL_XS = "deutsche_post_warenpost_international_xs"
+    DEUTSCHE_POST_WARENPOST_INTERNATIONAL_S = "deutsche_post_warenpost_international_s"
+    DEUTSCHE_POST_WARENPOST_INTERNATIONAL_M = "deutsche_post_warenpost_international_m"
+    DEUTSCHE_POST_WARENPOST_INTERNATIONAL_L = "deutsche_post_warenpost_international_l"
 
 
 class ServiceLevelDPDUKEnum(str, Enum):
@@ -329,32 +348,34 @@ class ServiceLevelDPDUKEnum(str, Enum):
     | dpd_uk_direct | DPD Direct|
     | dpd_uk_direct_tracked_mail| DPD Tracked Mail|
     | dpd_uk_pickup_returns | Pickup Returns|
+
     """
-    DPD_UK_SHIP_TO_SHOP = 'dpd_uk_ship_to_shop'
-    DPD_UK_1030 = 'dpd_uk_1030'
-    DPD_UK_1200 = 'dpd_uk_1200'
-    DPD_UK_SATURDAY = 'dpd_uk_saturday'
-    DPD_UK_SATURDAY_1030 = 'dpd_uk_saturday_1030'
-    DPD_UK_SATURDAY_1200 = 'dpd_uk_saturday_1200'
-    DPD_UK_SUNDAY = 'dpd_uk_sunday'
-    DPD_UK_SUNDAY_1030 = 'dpd_uk_sunday_1030'
-    DPD_UK_SUNDAY_1200 = 'dpd_uk_sunday_1200'
-    DPD_UK_NEXT_DAY = 'dpd_uk_next_day'
-    DPD_UK_TWO_DAY = 'dpd_uk_two_day'
-    DPD_UK_CLASSIC = 'dpd_uk_classic'
-    DPD_UK_AIR_CLASSIC = 'dpd_uk_air_classic'
-    DPD_UK_AIR_EXPRESS = 'dpd_uk_air_express'
-    DPD_UK_DIRECT = 'dpd_uk_direct'
-    DPD_UK_DIRECT_TRACKED_MAIL = 'dpd_uk_direct_tracked_mail'
-    DPD_UK_PICKUP_RETURNS = 'dpd_uk_pickup_returns'
+    DPD_UK_SHIP_TO_SHOP = "dpd_uk_ship_to_shop"
+    DPD_UK_1030 = "dpd_uk_1030"
+    DPD_UK_1200 = "dpd_uk_1200"
+    DPD_UK_SATURDAY = "dpd_uk_saturday"
+    DPD_UK_SATURDAY_1030 = "dpd_uk_saturday_1030"
+    DPD_UK_SATURDAY_1200 = "dpd_uk_saturday_1200"
+    DPD_UK_SUNDAY = "dpd_uk_sunday"
+    DPD_UK_SUNDAY_1030 = "dpd_uk_sunday_1030"
+    DPD_UK_SUNDAY_1200 = "dpd_uk_sunday_1200"
+    DPD_UK_NEXT_DAY = "dpd_uk_next_day"
+    DPD_UK_TWO_DAY = "dpd_uk_two_day"
+    DPD_UK_CLASSIC = "dpd_uk_classic"
+    DPD_UK_AIR_CLASSIC = "dpd_uk_air_classic"
+    DPD_UK_AIR_EXPRESS = "dpd_uk_air_express"
+    DPD_UK_DIRECT = "dpd_uk_direct"
+    DPD_UK_DIRECT_TRACKED_MAIL = "dpd_uk_direct_tracked_mail"
+    DPD_UK_PICKUP_RETURNS = "dpd_uk_pickup_returns"
 
 
 class ServiceLevelDPDDEEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
     | dpd_de_classic | DPD Classic|
+
     """
-    DPD_DE_CLASSIC = 'dpd_de_classic'
+    DPD_DE_CLASSIC = "dpd_de_classic"
 
 
 class ServiceLevelDHLGermanyEnum(str, Enum):
@@ -366,13 +387,14 @@ class ServiceLevelDHLGermanyEnum(str, Enum):
     | dhl_germany_paket_international | DHL Germany Paket International|
     | dhl_germany_paket_priority | DHL Germany Paket Priority|
     | dhl_germany_paket_sameday | DHL Germany Paket Sameday|
+
     """
-    DHL_GERMANY_EUROPAKET = 'dhl_germany_europaket'
-    DHL_GERMANY_PAKET = 'dhl_germany_paket'
-    DHL_GERMANY_PAKET_CONNECT = 'dhl_germany_paket_connect'
-    DHL_GERMANY_PAKET_INTERNATIONAL = 'dhl_germany_paket_international'
-    DHL_GERMANY_PAKET_PRIORITY = 'dhl_germany_paket_priority'
-    DHL_GERMANY_PAKET_SAMEDAY = 'dhl_germany_paket_sameday'
+    DHL_GERMANY_EUROPAKET = "dhl_germany_europaket"
+    DHL_GERMANY_PAKET = "dhl_germany_paket"
+    DHL_GERMANY_PAKET_CONNECT = "dhl_germany_paket_connect"
+    DHL_GERMANY_PAKET_INTERNATIONAL = "dhl_germany_paket_international"
+    DHL_GERMANY_PAKET_PRIORITY = "dhl_germany_paket_priority"
+    DHL_GERMANY_PAKET_SAMEDAY = "dhl_germany_paket_sameday"
 
 
 class ServiceLevelDHLeCommerceEnum(str, Enum):
@@ -406,35 +428,36 @@ class ServiceLevelDHLeCommerceEnum(str, Enum):
     | dhl_ecommerce_globalmail_business_standard | GlobalMail Packet Standard|
     | dhl_ecommerce_ground | Ground|
     | dhl_ecommerce_globalmail_packet_standard | GlobalMail Business Standard|
+
     """
-    DHL_ECOMMERCE_MARKETING_PARCEL_EXPEDITED = 'dhl_ecommerce_marketing_parcel_expedited'
-    DHL_ECOMMERCE_GLOBALMAIL_BUSINESS_IPA = 'dhl_ecommerce_globalmail_business_ipa'
-    DHL_ECOMMERCE_PARCEL_INTERNATIONAL_DIRECT = 'dhl_ecommerce_parcel_international_direct'
-    DHL_ECOMMERCE_PARCELS_EXPEDITED_MAX = 'dhl_ecommerce_parcels_expedited_max'
-    DHL_ECOMMERCE_BPM_GROUND = 'dhl_ecommerce_bpm_ground'
-    DHL_ECOMMERCE_PRIORITY_EXPEDITED = 'dhl_ecommerce_priority_expedited'
-    DHL_ECOMMERCE_GLOBALMAIL_PACKET_IPA = 'dhl_ecommerce_globalmail_packet_ipa'
-    DHL_ECOMMERCE_GLOBALMAIL_PACKET_ISAL = 'dhl_ecommerce_globalmail_packet_isal'
-    DHL_ECOMMERCE_EASY_RETURN_PLUS = 'dhl_ecommerce_easy_return_plus'
-    DHL_ECOMMERCE_MARKETING_PARCEL_GROUND = 'dhl_ecommerce_marketing_parcel_ground'
-    DHL_ECOMMERCE_FIRST_CLASS_PARCEL_EXPEDITED = 'dhl_ecommerce_first_class_parcel_expedited'
-    DHL_ECOMMERCE_GLOBALMAIL_BUSINESS_PRIORITY = 'dhl_ecommerce_globalmail_business_priority'
-    DHL_ECOMMERCE_PARCELS_EXPEDITED = 'dhl_ecommerce_parcels_expedited'
-    DHL_ECOMMERCE_GLOBALMAIL_BUSINESS_ISAL = 'dhl_ecommerce_globalmail_business_isal'
-    DHL_ECOMMERCE_PARCEL_PLUS_EXPEDITED_MAX = 'dhl_ecommerce_parcel_plus_expedited_max'
-    DHL_ECOMMERCE_GLOBALMAIL_PACKET_PLUS = 'dhl_ecommerce_globalmail_packet_plus'
-    DHL_ECOMMERCE_PARCELS_GROUND = 'dhl_ecommerce_parcels_ground'
-    DHL_ECOMMERCE_EXPEDITED = 'dhl_ecommerce_expedited'
-    DHL_ECOMMERCE_PARCEL_PLUS_GROUND = 'dhl_ecommerce_parcel_plus_ground'
-    DHL_ECOMMERCE_PARCEL_INTERNATIONAL_STANDARD = 'dhl_ecommerce_parcel_international_standard'
-    DHL_ECOMMERCE_BPM_EXPEDITED = 'dhl_ecommerce_bpm_expedited'
-    DHL_ECOMMERCE_PARCEL_INTERNATIONAL_EXPEDITED = 'dhl_ecommerce_parcel_international_expedited'
-    DHL_ECOMMERCE_GLOBALMAIL_PACKET_PRIORITY = 'dhl_ecommerce_globalmail_packet_priority'
-    DHL_ECOMMERCE_EASY_RETURN_LIGHT = 'dhl_ecommerce_easy_return_light'
-    DHL_ECOMMERCE_PARCEL_PLUS_EXPEDITED = 'dhl_ecommerce_parcel_plus_expedited'
-    DHL_ECOMMERCE_GLOBALMAIL_BUSINESS_STANDARD = 'dhl_ecommerce_globalmail_business_standard'
-    DHL_ECOMMERCE_GROUND = 'dhl_ecommerce_ground'
-    DHL_ECOMMERCE_GLOBALMAIL_PACKET_STANDARD = 'dhl_ecommerce_globalmail_packet_standard'
+    DHL_ECOMMERCE_MARKETING_PARCEL_EXPEDITED = "dhl_ecommerce_marketing_parcel_expedited"
+    DHL_ECOMMERCE_GLOBALMAIL_BUSINESS_IPA = "dhl_ecommerce_globalmail_business_ipa"
+    DHL_ECOMMERCE_PARCEL_INTERNATIONAL_DIRECT = "dhl_ecommerce_parcel_international_direct"
+    DHL_ECOMMERCE_PARCELS_EXPEDITED_MAX = "dhl_ecommerce_parcels_expedited_max"
+    DHL_ECOMMERCE_BPM_GROUND = "dhl_ecommerce_bpm_ground"
+    DHL_ECOMMERCE_PRIORITY_EXPEDITED = "dhl_ecommerce_priority_expedited"
+    DHL_ECOMMERCE_GLOBALMAIL_PACKET_IPA = "dhl_ecommerce_globalmail_packet_ipa"
+    DHL_ECOMMERCE_GLOBALMAIL_PACKET_ISAL = "dhl_ecommerce_globalmail_packet_isal"
+    DHL_ECOMMERCE_EASY_RETURN_PLUS = "dhl_ecommerce_easy_return_plus"
+    DHL_ECOMMERCE_MARKETING_PARCEL_GROUND = "dhl_ecommerce_marketing_parcel_ground"
+    DHL_ECOMMERCE_FIRST_CLASS_PARCEL_EXPEDITED = "dhl_ecommerce_first_class_parcel_expedited"
+    DHL_ECOMMERCE_GLOBALMAIL_BUSINESS_PRIORITY = "dhl_ecommerce_globalmail_business_priority"
+    DHL_ECOMMERCE_PARCELS_EXPEDITED = "dhl_ecommerce_parcels_expedited"
+    DHL_ECOMMERCE_GLOBALMAIL_BUSINESS_ISAL = "dhl_ecommerce_globalmail_business_isal"
+    DHL_ECOMMERCE_PARCEL_PLUS_EXPEDITED_MAX = "dhl_ecommerce_parcel_plus_expedited_max"
+    DHL_ECOMMERCE_GLOBALMAIL_PACKET_PLUS = "dhl_ecommerce_globalmail_packet_plus"
+    DHL_ECOMMERCE_PARCELS_GROUND = "dhl_ecommerce_parcels_ground"
+    DHL_ECOMMERCE_EXPEDITED = "dhl_ecommerce_expedited"
+    DHL_ECOMMERCE_PARCEL_PLUS_GROUND = "dhl_ecommerce_parcel_plus_ground"
+    DHL_ECOMMERCE_PARCEL_INTERNATIONAL_STANDARD = "dhl_ecommerce_parcel_international_standard"
+    DHL_ECOMMERCE_BPM_EXPEDITED = "dhl_ecommerce_bpm_expedited"
+    DHL_ECOMMERCE_PARCEL_INTERNATIONAL_EXPEDITED = "dhl_ecommerce_parcel_international_expedited"
+    DHL_ECOMMERCE_GLOBALMAIL_PACKET_PRIORITY = "dhl_ecommerce_globalmail_packet_priority"
+    DHL_ECOMMERCE_EASY_RETURN_LIGHT = "dhl_ecommerce_easy_return_light"
+    DHL_ECOMMERCE_PARCEL_PLUS_EXPEDITED = "dhl_ecommerce_parcel_plus_expedited"
+    DHL_ECOMMERCE_GLOBALMAIL_BUSINESS_STANDARD = "dhl_ecommerce_globalmail_business_standard"
+    DHL_ECOMMERCE_GROUND = "dhl_ecommerce_ground"
+    DHL_ECOMMERCE_GLOBALMAIL_PACKET_STANDARD = "dhl_ecommerce_globalmail_packet_standard"
 
 
 class ServiceLevelDHLExpressEnum(str, Enum):
@@ -462,29 +485,30 @@ class ServiceLevelDHLExpressEnum(str, Enum):
     | dhl_express_worldwide_b2c_nondoc | Express Worldwide (B2C) NonDoc|
     | dhl_express_medical_express | Medical Express|
     | dhl_express_express_easy_nondoc | Express Easy NonDoc|
+
     """
-    DHL_EXPRESS_DOMESTIC_EXPRESS_DOC = 'dhl_express_domestic_express_doc'
-    DHL_EXPRESS_ECONOMY_SELECT_DOC = 'dhl_express_economy_select_doc'
-    DHL_EXPRESS_WORLDWIDE_NONDOC = 'dhl_express_worldwide_nondoc'
-    DHL_EXPRESS_WORLDWIDE_DOC = 'dhl_express_worldwide_doc'
-    DHL_EXPRESS_WORLDWIDE = 'dhl_express_worldwide'
-    DHL_EXPRESS_WORLDWIDE_EU_DOC = 'dhl_express_worldwide_eu_doc'
-    DHL_EXPRESS_BREAK_BULK_EXPRESS_DOC = 'dhl_express_break_bulk_express_doc'
-    DHL_EXPRESS_EXPRESS_9_00_NONDOC = 'dhl_express_express_9_00_nondoc'
-    DHL_EXPRESS_ECONOMY_SELECT_NONDOC = 'dhl_express_economy_select_nondoc'
-    DHL_EXPRESS_BREAK_BULK_ECONOMY_DOC = 'dhl_express_break_bulk_economy_doc'
-    DHL_EXPRESS_EXPRESS_9_00_DOC = 'dhl_express_express_9_00_doc'
-    DHL_EXPRESS_EXPRESS_10_30_DOC = 'dhl_express_express_10_30_doc'
-    DHL_EXPRESS_EXPRESS_10_30_NONDOC = 'dhl_express_express_10_30_nondoc'
-    DHL_EXPRESS_EXPRESS_12_00_DOC = 'dhl_express_express_12_00_doc'
-    DHL_EXPRESS_EUROPACK_NONDOC = 'dhl_express_europack_nondoc'
-    DHL_EXPRESS_EXPRESS_ENVELOPE_DOC = 'dhl_express_express_envelope_doc'
-    DHL_EXPRESS_EXPRESS_12_00_NONDOC = 'dhl_express_express_12_00_nondoc'
-    DHL_EXPRESS_EXPRESS_12_DOC = 'dhl_express_express_12_doc'
-    DHL_EXPRESS_WORLDWIDE_B2C_DOC = 'dhl_express_worldwide_b2c_doc'
-    DHL_EXPRESS_WORLDWIDE_B2C_NONDOC = 'dhl_express_worldwide_b2c_nondoc'
-    DHL_EXPRESS_MEDICAL_EXPRESS = 'dhl_express_medical_express'
-    DHL_EXPRESS_EXPRESS_EASY_NONDOC = 'dhl_express_express_easy_nondoc'
+    DHL_EXPRESS_DOMESTIC_EXPRESS_DOC = "dhl_express_domestic_express_doc"
+    DHL_EXPRESS_ECONOMY_SELECT_DOC = "dhl_express_economy_select_doc"
+    DHL_EXPRESS_WORLDWIDE_NONDOC = "dhl_express_worldwide_nondoc"
+    DHL_EXPRESS_WORLDWIDE_DOC = "dhl_express_worldwide_doc"
+    DHL_EXPRESS_WORLDWIDE = "dhl_express_worldwide"
+    DHL_EXPRESS_WORLDWIDE_EU_DOC = "dhl_express_worldwide_eu_doc"
+    DHL_EXPRESS_BREAK_BULK_EXPRESS_DOC = "dhl_express_break_bulk_express_doc"
+    DHL_EXPRESS_EXPRESS_9_00_NONDOC = "dhl_express_express_9_00_nondoc"
+    DHL_EXPRESS_ECONOMY_SELECT_NONDOC = "dhl_express_economy_select_nondoc"
+    DHL_EXPRESS_BREAK_BULK_ECONOMY_DOC = "dhl_express_break_bulk_economy_doc"
+    DHL_EXPRESS_EXPRESS_9_00_DOC = "dhl_express_express_9_00_doc"
+    DHL_EXPRESS_EXPRESS_10_30_DOC = "dhl_express_express_10_30_doc"
+    DHL_EXPRESS_EXPRESS_10_30_NONDOC = "dhl_express_express_10_30_nondoc"
+    DHL_EXPRESS_EXPRESS_12_00_DOC = "dhl_express_express_12_00_doc"
+    DHL_EXPRESS_EUROPACK_NONDOC = "dhl_express_europack_nondoc"
+    DHL_EXPRESS_EXPRESS_ENVELOPE_DOC = "dhl_express_express_envelope_doc"
+    DHL_EXPRESS_EXPRESS_12_00_NONDOC = "dhl_express_express_12_00_nondoc"
+    DHL_EXPRESS_EXPRESS_12_DOC = "dhl_express_express_12_doc"
+    DHL_EXPRESS_WORLDWIDE_B2C_DOC = "dhl_express_worldwide_b2c_doc"
+    DHL_EXPRESS_WORLDWIDE_B2C_NONDOC = "dhl_express_worldwide_b2c_nondoc"
+    DHL_EXPRESS_MEDICAL_EXPRESS = "dhl_express_medical_express"
+    DHL_EXPRESS_EXPRESS_EASY_NONDOC = "dhl_express_express_easy_nondoc"
 
 
 class ServiceLevelPurolatorEnum(str, Enum):
@@ -508,25 +532,26 @@ class ServiceLevelPurolatorEnum(str, Enum):
     | purolator_express_international9_am | Express International 9am|
     | purolator_express_international1030_am | Express International 10:30am|
     | purolator_express_international1200 | Express International 12pm|
+
     """
-    PUROLATOR_GROUND = 'purolator_ground'
-    PUROLATOR_GROUND9_AM = 'purolator_ground9_am'
-    PUROLATOR_GROUND1030_AM = 'purolator_ground1030_am'
-    PUROLATOR_GROUND_DISTRIBUTION = 'purolator_ground_distribution'
-    PUROLATOR_GROUND_EVENING = 'purolator_ground_evening'
-    PUROLATOR_GROUND_US = 'purolator_ground_us'
-    PUROLATOR_EXPRESS = 'purolator_express'
-    PUROLATOR_EXPRESS9_AM = 'purolator_express9_am'
-    PUROLATOR_EXPRESS1030_AM = 'purolator_express1030_am'
-    PUROLATOR_EXPRESS_EVENING = 'purolator_express_evening'
-    PUROLATOR_EXPRESS_US = 'purolator_express_us'
-    PUROLATOR_EXPRESS_US9_AM = 'purolator_express_us9_am'
-    PUROLATOR_EXPRESS_US1030_AM = 'purolator_express_us1030_am'
-    PUROLATOR_EXPRESS_US1200 = 'purolator_express_us1200'
-    PUROLATOR_EXPRESS_INTERNATIONAL = 'purolator_express_international'
-    PUROLATOR_EXPRESS_INTERNATIONAL9_AM = 'purolator_express_international9_am'
-    PUROLATOR_EXPRESS_INTERNATIONAL1030_AM = 'purolator_express_international1030_am'
-    PUROLATOR_EXPRESS_INTERNATIONAL1200 = 'purolator_express_international1200'
+    PUROLATOR_GROUND = "purolator_ground"
+    PUROLATOR_GROUND9_AM = "purolator_ground9_am"
+    PUROLATOR_GROUND1030_AM = "purolator_ground1030_am"
+    PUROLATOR_GROUND_DISTRIBUTION = "purolator_ground_distribution"
+    PUROLATOR_GROUND_EVENING = "purolator_ground_evening"
+    PUROLATOR_GROUND_US = "purolator_ground_us"
+    PUROLATOR_EXPRESS = "purolator_express"
+    PUROLATOR_EXPRESS9_AM = "purolator_express9_am"
+    PUROLATOR_EXPRESS1030_AM = "purolator_express1030_am"
+    PUROLATOR_EXPRESS_EVENING = "purolator_express_evening"
+    PUROLATOR_EXPRESS_US = "purolator_express_us"
+    PUROLATOR_EXPRESS_US9_AM = "purolator_express_us9_am"
+    PUROLATOR_EXPRESS_US1030_AM = "purolator_express_us1030_am"
+    PUROLATOR_EXPRESS_US1200 = "purolator_express_us1200"
+    PUROLATOR_EXPRESS_INTERNATIONAL = "purolator_express_international"
+    PUROLATOR_EXPRESS_INTERNATIONAL9_AM = "purolator_express_international9_am"
+    PUROLATOR_EXPRESS_INTERNATIONAL1030_AM = "purolator_express_international1030_am"
+    PUROLATOR_EXPRESS_INTERNATIONAL1200 = "purolator_express_international1200"
 
 
 class ServiceLevelColissimoEnum(str, Enum):
@@ -535,10 +560,11 @@ class ServiceLevelColissimoEnum(str, Enum):
     | colissimo_home | Domicile|
     | colissimo_pick_up_point | Point Retrait|
     | colissimo_return_mainland_france | Retour France|
+
     """
-    COLISSIMO_HOME = 'colissimo_home'
-    COLISSIMO_PICK_UP_POINT = 'colissimo_pick_up_point'
-    COLISSIMO_RETURN_MAINLAND_FRANCE = 'colissimo_return_mainland_france'
+    COLISSIMO_HOME = "colissimo_home"
+    COLISSIMO_PICK_UP_POINT = "colissimo_pick_up_point"
+    COLISSIMO_RETURN_MAINLAND_FRANCE = "colissimo_return_mainland_france"
 
 
 class ServiceLevelCorreosEspanaEnum(str, Enum):
@@ -546,9 +572,10 @@ class ServiceLevelCorreosEspanaEnum(str, Enum):
     |:---|:---|
     | correos_standard_home| Paquete Estándar|
     | correos_premium_home | Paquete Premium|
+
     """
-    CORREOS_STANDARD_HOME = 'correos_standard_home'
-    CORREOS_PREMIUM_HOME = 'correos_premium_home'
+    CORREOS_STANDARD_HOME = "correos_standard_home"
+    CORREOS_PREMIUM_HOME = "correos_premium_home"
 
 
 class ServiceLevelCouriersPleaseEnum(str, Enum):
@@ -565,18 +592,19 @@ class ServiceLevelCouriersPleaseEnum(str, Enum):
     | couriersplease_road_express | Road Express|
     | couriersplease_satchel_auth_to_leave | Satchel - Authority To Leave|
     | couriersplease_satchel_sign_required | Satchel - Signature Required|
+
     """
-    COURIERSPLEASE_DOMESTIC_PRIORITY_AUTH_TO_LEAVE = 'couriersplease_domestic_priority_auth_to_leave'
-    COURIERSPLEASE_DOMESTIC_PRIORITY_SIGN_REQUIRED = 'couriersplease_domestic_priority_sign_required'
-    COURIERSPLEASE_GOLD_DOMESTIC_AUTH_TO_LEAVE = 'couriersplease_gold_domestic_auth_to_leave'
-    COURIERSPLEASE_GOLD_DOMESTIC_SIGN_REQUIRED = 'couriersplease_gold_domestic_sign_required'
-    COURIERSPLEASE_OFF_PEAK_AUTH_TO_LEAVE = 'couriersplease_off_peak_auth_to_leave'
-    COURIERSPLEASE_OFF_PEAK_SIGN_REQUIRED = 'couriersplease_off_peak_sign_required'
-    COURIERSPLEASE_PARCEL_AUTH_TO_LEAVE = 'couriersplease_parcel_auth_to_leave'
-    COURIERSPLEASE_PARCEL_SIGN_REQUIRED = 'couriersplease_parcel_sign_required'
-    COURIERSPLEASE_ROAD_EXPRESS = 'couriersplease_road_express'
-    COURIERSPLEASE_SATCHEL_AUTH_TO_LEAVE = 'couriersplease_satchel_auth_to_leave'
-    COURIERSPLEASE_SATCHEL_SIGN_REQUIRED = 'couriersplease_satchel_sign_required'
+    COURIERSPLEASE_DOMESTIC_PRIORITY_AUTH_TO_LEAVE = "couriersplease_domestic_priority_auth_to_leave"
+    COURIERSPLEASE_DOMESTIC_PRIORITY_SIGN_REQUIRED = "couriersplease_domestic_priority_sign_required"
+    COURIERSPLEASE_GOLD_DOMESTIC_AUTH_TO_LEAVE = "couriersplease_gold_domestic_auth_to_leave"
+    COURIERSPLEASE_GOLD_DOMESTIC_SIGN_REQUIRED = "couriersplease_gold_domestic_sign_required"
+    COURIERSPLEASE_OFF_PEAK_AUTH_TO_LEAVE = "couriersplease_off_peak_auth_to_leave"
+    COURIERSPLEASE_OFF_PEAK_SIGN_REQUIRED = "couriersplease_off_peak_sign_required"
+    COURIERSPLEASE_PARCEL_AUTH_TO_LEAVE = "couriersplease_parcel_auth_to_leave"
+    COURIERSPLEASE_PARCEL_SIGN_REQUIRED = "couriersplease_parcel_sign_required"
+    COURIERSPLEASE_ROAD_EXPRESS = "couriersplease_road_express"
+    COURIERSPLEASE_SATCHEL_AUTH_TO_LEAVE = "couriersplease_satchel_auth_to_leave"
+    COURIERSPLEASE_SATCHEL_SIGN_REQUIRED = "couriersplease_satchel_sign_required"
 
 
 class ServiceLevelChronopostEnum(str, Enum):
@@ -588,21 +616,23 @@ class ServiceLevelChronopostEnum(str, Enum):
     | chronopost_relais_fr | Chrono Point Relais|
     | chronopost_classic | Chrono Classic International|
     | chronopost_express | Chrono Express International|
+
     """
-    CHRONOPOST_13 = 'chronopost_13'
-    CHRONOPOST_10 = 'chronopost_10'
-    CHRONOPOST_18 = 'chronopost_18'
-    CHRONOPOST_RELAIS_FR = 'chronopost_relais_fr'
-    CHRONOPOST_CLASSIC = 'chronopost_classic'
-    CHRONOPOST_EXPRESS = 'chronopost_express'
+    CHRONOPOST_13 = "chronopost_13"
+    CHRONOPOST_10 = "chronopost_10"
+    CHRONOPOST_18 = "chronopost_18"
+    CHRONOPOST_RELAIS_FR = "chronopost_relais_fr"
+    CHRONOPOST_CLASSIC = "chronopost_classic"
+    CHRONOPOST_EXPRESS = "chronopost_express"
 
 
 class ServiceLevelCDLEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
     | cdl_next_day | Next Day|
+
     """
-    CDL_NEXT_DAY = 'cdl_next_day'
+    CDL_NEXT_DAY = "cdl_next_day"
 
 
 class ServiceLevelCanadaPostEnum(str, Enum):
@@ -619,18 +649,19 @@ class ServiceLevelCanadaPostEnum(str, Enum):
     | canada_post_small_packet_usa_air | Small Packet USA Air|
     | canada_post_tracked_packet_international | Tracked Packet International|
     | canada_post_small_packet_international_air | Small Package International Air|
+
     """
-    CANADA_POST_REGULAR_PARCEL = 'canada_post_regular_parcel'
-    CANADA_POST_EXPEDITED_PARCEL = 'canada_post_expedited_parcel'
-    CANADA_POST_PRIORITY = 'canada_post_priority'
-    CANADA_POST_XPRESSPOST = 'canada_post_xpresspost'
-    CANADA_POST_XPRESSPOST_INTERNATIONAL = 'canada_post_xpresspost_international'
-    CANADA_POST_XPRESSPOST_USA = 'canada_post_xpresspost_usa'
-    CANADA_POST_EXPEDITED_PARCEL_USA = 'canada_post_expedited_parcel_usa'
-    CANADA_POST_TRACKED_PACKET_USA = 'canada_post_tracked_packet_usa'
-    CANADA_POST_SMALL_PACKET_USA_AIR = 'canada_post_small_packet_usa_air'
-    CANADA_POST_TRACKED_PACKET_INTERNATIONAL = 'canada_post_tracked_packet_international'
-    CANADA_POST_SMALL_PACKET_INTERNATIONAL_AIR = 'canada_post_small_packet_international_air'
+    CANADA_POST_REGULAR_PARCEL = "canada_post_regular_parcel"
+    CANADA_POST_EXPEDITED_PARCEL = "canada_post_expedited_parcel"
+    CANADA_POST_PRIORITY = "canada_post_priority"
+    CANADA_POST_XPRESSPOST = "canada_post_xpresspost"
+    CANADA_POST_XPRESSPOST_INTERNATIONAL = "canada_post_xpresspost_international"
+    CANADA_POST_XPRESSPOST_USA = "canada_post_xpresspost_usa"
+    CANADA_POST_EXPEDITED_PARCEL_USA = "canada_post_expedited_parcel_usa"
+    CANADA_POST_TRACKED_PACKET_USA = "canada_post_tracked_packet_usa"
+    CANADA_POST_SMALL_PACKET_USA_AIR = "canada_post_small_packet_usa_air"
+    CANADA_POST_TRACKED_PACKET_INTERNATIONAL = "canada_post_tracked_packet_international"
+    CANADA_POST_SMALL_PACKET_INTERNATIONAL_AIR = "canada_post_small_packet_international_air"
 
 
 class ServiceLevelBetterTrucksEnum(str, Enum):
@@ -638,9 +669,10 @@ class ServiceLevelBetterTrucksEnum(str, Enum):
     |:---|:---|
     | better_trucks_same_day | Same Day|
     | better_trucks_next_day | Next Day|
+
     """
-    BETTER_TRUCKS_SAME_DAY = 'better_trucks_same_day'
-    BETTER_TRUCKS_NEXT_DAY = 'better_trucks_next_day'
+    BETTER_TRUCKS_SAME_DAY = "better_trucks_same_day"
+    BETTER_TRUCKS_NEXT_DAY = "better_trucks_next_day"
 
 
 class ServiceLevelAPGEnum(str, Enum):
@@ -650,11 +682,12 @@ class ServiceLevelAPGEnum(str, Enum):
     | epacket_plus | ePacket Plus|
     | eparcel_premium | eParcel premium|
     | apg_eparcel_expedited | eParcel Expedited|
+
     """
-    EPACKET = 'epacket'
-    EPACKET_PLUS = 'epacket_plus'
-    EPARCEL_PREMIUM = 'eparcel_premium'
-    APG_EPARCEL_EXPEDITED = 'apg_eparcel_expedited'
+    EPACKET = "epacket"
+    EPACKET_PLUS = "epacket_plus"
+    EPARCEL_PREMIUM = "eparcel_premium"
+    APG_EPARCEL_EXPEDITED = "apg_eparcel_expedited"
 
 
 class ServiceLevelAustraliaPostEnum(str, Enum):
@@ -670,17 +703,18 @@ class ServiceLevelAustraliaPostEnum(str, Enum):
     | australia_post_international_standard | International Standard|
     | australia_post_international_economy | International Economy|
     | australia_post_parcel_post_return | Parcel Post Return|
+
     """
-    AUSTRALIA_POST_EXPRESS_POST = 'australia_post_express_post'
-    AUSTRALIA_POST_PARCEL_POST = 'australia_post_parcel_post'
-    AUSTRALIA_POST_PACK_AND_TRACK_INTERNATIONAL = 'australia_post_pack_and_track_international'
-    AUSTRALIA_POST_INTERNATIONAL_AIRMAIL = 'australia_post_international_airmail'
-    AUSTRALIA_POST_EXPRESS_POST_INTERNATIONAL = 'australia_post_express_post_international'
-    AUSTRALIA_POST_EXPRESS_COURIER_INTERNATIONAL = 'australia_post_express_courier_international'
-    AUSTRALIA_POST_INTERNATIONAL_EXPRESS = 'australia_post_international_express'
-    AUSTRALIA_POST_INTERNATIONAL_STANDARD = 'australia_post_international_standard'
-    AUSTRALIA_POST_INTERNATIONAL_ECONOMY = 'australia_post_international_economy'
-    AUSTRALIA_POST_PARCEL_POST_RETURN = 'australia_post_parcel_post_return'
+    AUSTRALIA_POST_EXPRESS_POST = "australia_post_express_post"
+    AUSTRALIA_POST_PARCEL_POST = "australia_post_parcel_post"
+    AUSTRALIA_POST_PACK_AND_TRACK_INTERNATIONAL = "australia_post_pack_and_track_international"
+    AUSTRALIA_POST_INTERNATIONAL_AIRMAIL = "australia_post_international_airmail"
+    AUSTRALIA_POST_EXPRESS_POST_INTERNATIONAL = "australia_post_express_post_international"
+    AUSTRALIA_POST_EXPRESS_COURIER_INTERNATIONAL = "australia_post_express_courier_international"
+    AUSTRALIA_POST_INTERNATIONAL_EXPRESS = "australia_post_international_express"
+    AUSTRALIA_POST_INTERNATIONAL_STANDARD = "australia_post_international_standard"
+    AUSTRALIA_POST_INTERNATIONAL_ECONOMY = "australia_post_international_economy"
+    AUSTRALIA_POST_PARCEL_POST_RETURN = "australia_post_parcel_post_return"
 
 
 class ServiceLevelAsendiaEnum(str, Enum):
@@ -694,15 +728,16 @@ class ServiceLevelAsendiaEnum(str, Enum):
     | asendia_us_priority_mail_express_international | Asendia USA Priority Mail Express International|
     | asendia_us_epacket | Asendia USA International ePacket|
     | asendia_us_other | Asendia USA Other Services (custom)|
+
     """
-    ASENDIA_US_PRIORITY_TRACKED = 'asendia_us_priority_tracked'
-    ASENDIA_US_INTERNATIONAL_EXPRESS = 'asendia_us_international_express'
-    ASENDIA_US_INTERNATIONAL_PRIORITY_AIRMAIL = 'asendia_us_international_priority_airmail'
-    ASENDIA_US_INTERNATIONAL_SURFACE_AIRLIFT = 'asendia_us_international_surface_airlift'
-    ASENDIA_US_PRIORITY_MAIL_INTERNATIONAL = 'asendia_us_priority_mail_international'
-    ASENDIA_US_PRIORITY_MAIL_EXPRESS_INTERNATIONAL = 'asendia_us_priority_mail_express_international'
-    ASENDIA_US_EPACKET = 'asendia_us_epacket'
-    ASENDIA_US_OTHER = 'asendia_us_other'
+    ASENDIA_US_PRIORITY_TRACKED = "asendia_us_priority_tracked"
+    ASENDIA_US_INTERNATIONAL_EXPRESS = "asendia_us_international_express"
+    ASENDIA_US_INTERNATIONAL_PRIORITY_AIRMAIL = "asendia_us_international_priority_airmail"
+    ASENDIA_US_INTERNATIONAL_SURFACE_AIRLIFT = "asendia_us_international_surface_airlift"
+    ASENDIA_US_PRIORITY_MAIL_INTERNATIONAL = "asendia_us_priority_mail_international"
+    ASENDIA_US_PRIORITY_MAIL_EXPRESS_INTERNATIONAL = "asendia_us_priority_mail_express_international"
+    ASENDIA_US_EPACKET = "asendia_us_epacket"
+    ASENDIA_US_OTHER = "asendia_us_other"
 
 
 class ServiceLevelAPCPostalEnum(str, Enum):
@@ -717,16 +752,17 @@ class ServiceLevelAPCPostalEnum(str, Enum):
     | apc_postal_parcelconnect_epmi | parcelConnect ePMI|
     | apc_postal_parcelconnect_epacket | parcelConnect ePacket|
     | apc_postal_parcelconnect_epmei | parcelConnect ePMEI|
+
     """
-    APC_POSTAL_PARCELCONNECT_EXPEDITED = 'apc_postal_parcelconnect_expedited'
-    APC_POSTAL_PARCELCONNECT_PRIORITY = 'apc_postal_parcelconnect_priority'
-    APC_POSTAL_PARCELCONNECT_PRIORITY_DELCON = 'apc_postal_parcelconnect_priority_delcon'
-    APC_POSTAL_PARCELCONNECT_PRIORITY_PQW = 'apc_postal_parcelconnect_priority_pqw'
-    APC_POSTAL_PARCELCONNECT_BOOK_SERVICE = 'apc_postal_parcelconnect_book_service'
-    APC_POSTAL_PARCELCONNECT_STANDARD = 'apc_postal_parcelconnect_standard'
-    APC_POSTAL_PARCELCONNECT_EPMI = 'apc_postal_parcelconnect_epmi'
-    APC_POSTAL_PARCELCONNECT_EPACKET = 'apc_postal_parcelconnect_epacket'
-    APC_POSTAL_PARCELCONNECT_EPMEI = 'apc_postal_parcelconnect_epmei'
+    APC_POSTAL_PARCELCONNECT_EXPEDITED = "apc_postal_parcelconnect_expedited"
+    APC_POSTAL_PARCELCONNECT_PRIORITY = "apc_postal_parcelconnect_priority"
+    APC_POSTAL_PARCELCONNECT_PRIORITY_DELCON = "apc_postal_parcelconnect_priority_delcon"
+    APC_POSTAL_PARCELCONNECT_PRIORITY_PQW = "apc_postal_parcelconnect_priority_pqw"
+    APC_POSTAL_PARCELCONNECT_BOOK_SERVICE = "apc_postal_parcelconnect_book_service"
+    APC_POSTAL_PARCELCONNECT_STANDARD = "apc_postal_parcelconnect_standard"
+    APC_POSTAL_PARCELCONNECT_EPMI = "apc_postal_parcelconnect_epmi"
+    APC_POSTAL_PARCELCONNECT_EPACKET = "apc_postal_parcelconnect_epacket"
+    APC_POSTAL_PARCELCONNECT_EPMEI = "apc_postal_parcelconnect_epmei"
 
 
 class ServiceLevelAirterraEnum(str, Enum):
@@ -734,9 +770,10 @@ class ServiceLevelAirterraEnum(str, Enum):
     |:---|:---|
     | airterra_ground | GroundXC|
     | airterra_postal | FastPost|
+
     """
-    AIRTERRA_GROUND = 'airterra_ground'
-    AIRTERRA_POSTAL = 'airterra_postal'
+    AIRTERRA_GROUND = "airterra_ground"
+    AIRTERRA_POSTAL = "airterra_postal"
 
 
 class ServiceLevelUPSEnum(str, Enum):
@@ -767,32 +804,33 @@ class ServiceLevelUPSEnum(str, Enum):
     | ups_expedited | Expedited®|
     | ups_express_early | Express® Early|
     | ups_access_point_economy | Access Point™ Economy|
+
     """
-    UPS_STANDARD = 'ups_standard'
-    UPS_GROUND = 'ups_ground'
-    UPS_SAVER = 'ups_saver'
-    UPS_3_DAY_SELECT = 'ups_3_day_select'
-    UPS_SECOND_DAY_AIR = 'ups_second_day_air'
-    UPS_SECOND_DAY_AIR_AM = 'ups_second_day_air_am'
-    UPS_NEXT_DAY_AIR = 'ups_next_day_air'
-    UPS_NEXT_DAY_AIR_SAVER = 'ups_next_day_air_saver'
-    UPS_NEXT_DAY_AIR_EARLY_AM = 'ups_next_day_air_early_am'
-    UPS_MAIL_INNOVATIONS_BPM_FLAT = 'ups_mail_innovations_bpm_flat'
-    UPS_MAIL_INNOVATIONS_BPM_PARCEL = 'ups_mail_innovations_bpm_parcel'
-    UPS_MAIL_INNOVATIONS_IRREGULAR = 'ups_mail_innovations_irregular'
-    UPS_MAIL_INNOVATIONS_MEDIA_MAIL = 'ups_mail_innovations_media_mail'
-    UPS_MAIL_INNOVATIONS_PARCEL = 'ups_mail_innovations_parcel'
-    UPS_MAIL_INNOVATIONS_STANDARD_FLAT = 'ups_mail_innovations_standard_flat'
-    UPS_SUREPOST = 'ups_surepost'
-    UPS_SUREPOST_BOUND_PRINTED_MATTER = 'ups_surepost_bound_printed_matter'
-    UPS_SUREPOST_LIGHTWEIGHT = 'ups_surepost_lightweight'
-    UPS_SUREPOST_MEDIA = 'ups_surepost_media'
-    UPS_EXPRESS = 'ups_express'
-    UPS_EXPRESS_1200 = 'ups_express_1200'
-    UPS_EXPRESS_PLUS = 'ups_express_plus'
-    UPS_EXPEDITED = 'ups_expedited'
-    UPS_EXPRESS_EARLY = 'ups_express_early'
-    UPS_ACCESS_POINT_ECONOMY = 'ups_access_point_economy'
+    UPS_STANDARD = "ups_standard"
+    UPS_GROUND = "ups_ground"
+    UPS_SAVER = "ups_saver"
+    UPS_3_DAY_SELECT = "ups_3_day_select"
+    UPS_SECOND_DAY_AIR = "ups_second_day_air"
+    UPS_SECOND_DAY_AIR_AM = "ups_second_day_air_am"
+    UPS_NEXT_DAY_AIR = "ups_next_day_air"
+    UPS_NEXT_DAY_AIR_SAVER = "ups_next_day_air_saver"
+    UPS_NEXT_DAY_AIR_EARLY_AM = "ups_next_day_air_early_am"
+    UPS_MAIL_INNOVATIONS_BPM_FLAT = "ups_mail_innovations_bpm_flat"
+    UPS_MAIL_INNOVATIONS_BPM_PARCEL = "ups_mail_innovations_bpm_parcel"
+    UPS_MAIL_INNOVATIONS_IRREGULAR = "ups_mail_innovations_irregular"
+    UPS_MAIL_INNOVATIONS_MEDIA_MAIL = "ups_mail_innovations_media_mail"
+    UPS_MAIL_INNOVATIONS_PARCEL = "ups_mail_innovations_parcel"
+    UPS_MAIL_INNOVATIONS_STANDARD_FLAT = "ups_mail_innovations_standard_flat"
+    UPS_SUREPOST = "ups_surepost"
+    UPS_SUREPOST_BOUND_PRINTED_MATTER = "ups_surepost_bound_printed_matter"
+    UPS_SUREPOST_LIGHTWEIGHT = "ups_surepost_lightweight"
+    UPS_SUREPOST_MEDIA = "ups_surepost_media"
+    UPS_EXPRESS = "ups_express"
+    UPS_EXPRESS_1200 = "ups_express_1200"
+    UPS_EXPRESS_PLUS = "ups_express_plus"
+    UPS_EXPEDITED = "ups_expedited"
+    UPS_EXPRESS_EARLY = "ups_express_early"
+    UPS_ACCESS_POINT_ECONOMY = "ups_access_point_economy"
 
 
 class ServiceLevelFedExEnum(str, Enum):
@@ -822,32 +860,33 @@ class ServiceLevelFedExEnum(str, Enum):
     | fedex_next_day_mid_morning | Next Day Mid Morning |
     | fedex_priority_overnight_extra_hours | Priority Overnight® EH |
     | fedex_standard_overnight_extra_hours | Standard Overnight® EH |
+
     """
-    FEDEX_GROUND = 'fedex_ground'
-    FEDEX_HOME_DELIVERY = 'fedex_home_delivery'
-    FEDEX_SMART_POST = 'fedex_smart_post'
-    FEDEX_GROUND_ECONOMY = 'fedex_ground_economy'
-    FEDEX_2_DAY = 'fedex_2_day'
-    FEDEX_2_DAY_AM = 'fedex_2_day_am'
-    FEDEX_EXPRESS_SAVER = 'fedex_express_saver'
-    FEDEX_STANDARD_OVERNIGHT = 'fedex_standard_overnight'
-    FEDEX_PRIORITY_OVERNIGHT = 'fedex_priority_overnight'
-    FEDEX_FIRST_OVERNIGHT = 'fedex_first_overnight'
-    FEDEX_INTERNATIONAL_ECONOMY = 'fedex_international_economy'
-    FEDEX_INTERNATIONAL_PRIORITY = 'fedex_international_priority'
-    FEDEX_INTERNATIONAL_FIRST = 'fedex_international_first'
-    FEDEX_EUROPE_FIRST_INTERNATIONAL_PRIORITY = 'fedex_europe_first_international_priority'
-    FEDEX_INTERNATIONAL_CONNECT_PLUS = 'fedex_international_connect_plus'
-    FEDEX_FIRST = 'fedex_first'
-    FEDEX_PRIORITY = 'fedex_priority'
-    FEDEX_PRIORITY_EXPRESS = 'fedex_priority_express'
-    FEDEX_ECONOMY_SELECT = 'fedex_economy_select'
-    FEDEX_REGIONAL_ECONOMY = 'fedex_regional_economy'
-    FEDEX_FIRST_OVERNIGHT_EXTRA_HOURS = 'fedex_first_overnight_extra_hours'
-    FEDEX_INTERNATIONAL_PRIORITY_EXPRESS = 'fedex_international_priority_express'
-    FEDEX_NEXT_DAY_MID_MORNING = 'fedex_next_day_mid_morning'
-    FEDEX_PRIORITY_OVERNIGHT_EXTRA_HOURS = 'fedex_priority_overnight_extra_hours'
-    FEDEX_STANDARD_OVERNIGHT_EXTRA_HOURS = 'fedex_standard_overnight_extra_hours'
+    FEDEX_GROUND = "fedex_ground"
+    FEDEX_HOME_DELIVERY = "fedex_home_delivery"
+    FEDEX_SMART_POST = "fedex_smart_post"
+    FEDEX_GROUND_ECONOMY = "fedex_ground_economy"
+    FEDEX_2_DAY = "fedex_2_day"
+    FEDEX_2_DAY_AM = "fedex_2_day_am"
+    FEDEX_EXPRESS_SAVER = "fedex_express_saver"
+    FEDEX_STANDARD_OVERNIGHT = "fedex_standard_overnight"
+    FEDEX_PRIORITY_OVERNIGHT = "fedex_priority_overnight"
+    FEDEX_FIRST_OVERNIGHT = "fedex_first_overnight"
+    FEDEX_INTERNATIONAL_ECONOMY = "fedex_international_economy"
+    FEDEX_INTERNATIONAL_PRIORITY = "fedex_international_priority"
+    FEDEX_INTERNATIONAL_FIRST = "fedex_international_first"
+    FEDEX_EUROPE_FIRST_INTERNATIONAL_PRIORITY = "fedex_europe_first_international_priority"
+    FEDEX_INTERNATIONAL_CONNECT_PLUS = "fedex_international_connect_plus"
+    FEDEX_FIRST = "fedex_first"
+    FEDEX_PRIORITY = "fedex_priority"
+    FEDEX_PRIORITY_EXPRESS = "fedex_priority_express"
+    FEDEX_ECONOMY_SELECT = "fedex_economy_select"
+    FEDEX_REGIONAL_ECONOMY = "fedex_regional_economy"
+    FEDEX_FIRST_OVERNIGHT_EXTRA_HOURS = "fedex_first_overnight_extra_hours"
+    FEDEX_INTERNATIONAL_PRIORITY_EXPRESS = "fedex_international_priority_express"
+    FEDEX_NEXT_DAY_MID_MORNING = "fedex_next_day_mid_morning"
+    FEDEX_PRIORITY_OVERNIGHT_EXTRA_HOURS = "fedex_priority_overnight_extra_hours"
+    FEDEX_STANDARD_OVERNIGHT_EXTRA_HOURS = "fedex_standard_overnight_extra_hours"
 
 
 class ServiceLevelUSPSEnum(str, Enum):
@@ -860,13 +899,19 @@ class ServiceLevelUSPSEnum(str, Enum):
     | usps_priority_mail_express_international | Priority Mail Express International|
     | usps_first_class_package_international_service | First Class Package International|
     | usps_ground_advantage | Ground Advantage |
+
     """
-    USPS_PRIORITY = 'usps_priority'
-    USPS_PRIORITY_EXPRESS = 'usps_priority_express'
-    USPS_MEDIA_MAIL = 'usps_media_mail'
-    USPS_PRIORITY_MAIL_INTERNATIONAL = 'usps_priority_mail_international'
-    USPS_PRIORITY_MAIL_EXPRESS_INTERNATIONAL = 'usps_priority_mail_express_international'
-    USPS_FIRST_CLASS_PACKAGE_INTERNATIONAL_SERVICE = 'usps_first_class_package_international_service'
-    USPS_GROUND_ADVANTAGE = 'usps_ground_advantage'
+    USPS_PRIORITY = "usps_priority"
+    USPS_PRIORITY_EXPRESS = "usps_priority_express"
+    USPS_MEDIA_MAIL = "usps_media_mail"
+    USPS_PRIORITY_MAIL_INTERNATIONAL = "usps_priority_mail_international"
+    USPS_PRIORITY_MAIL_EXPRESS_INTERNATIONAL = "usps_priority_mail_express_international"
+    USPS_FIRST_CLASS_PACKAGE_INTERNATIONAL_SERVICE = "usps_first_class_package_international_service"
+    USPS_GROUND_ADVANTAGE = "usps_ground_advantage"
+
+
+ServiceLevelEnumSetTypedDict = Union[ServiceLevelUSPSEnum, ServiceLevelFedExEnum, ServiceLevelUPSEnum, ServiceLevelAirterraEnum, ServiceLevelAPCPostalEnum, ServiceLevelAsendiaEnum, ServiceLevelAustraliaPostEnum, ServiceLevelAPGEnum, ServiceLevelBetterTrucksEnum, ServiceLevelCanadaPostEnum, ServiceLevelCDLEnum, ServiceLevelChronopostEnum, ServiceLevelCouriersPleaseEnum, ServiceLevelCorreosEspanaEnum, ServiceLevelColissimoEnum, ServiceLevelPurolatorEnum, ServiceLevelDHLExpressEnum, ServiceLevelDHLeCommerceEnum, ServiceLevelDHLGermanyEnum, ServiceLevelDPDDEEnum, ServiceLevelDPDUKEnum, ServiceLevelDeutschePostEnum, ServiceLevelAramexAustraliaEnum, ServiceLevelGlobegisticsEnum, ServiceLevelGLSUSEnum, ServiceLevelLSOEnum, ServiceLevelMondialRelayEnum, ServiceLevelMaergoEnum, ServiceLevelParcelforceEnum, ServiceLevelPostItalianeEnum, ServiceLevelePostGlobalEnum, ServiceLevelRoyalMailEnum, ServiceLevelSendleEnum, ServiceLevelOnTracEnum, ServiceLevelJitsuEnum, ServiceLevelLasershipEnum, ServiceLevelEvriUKEnum, ServiceLevelUDSEnum, ServiceLevelVehoEnum, ServiceLevelSwyftEnum]
+
 
 ServiceLevelEnumSet = Union[ServiceLevelUSPSEnum, ServiceLevelFedExEnum, ServiceLevelUPSEnum, ServiceLevelAirterraEnum, ServiceLevelAPCPostalEnum, ServiceLevelAsendiaEnum, ServiceLevelAustraliaPostEnum, ServiceLevelAPGEnum, ServiceLevelBetterTrucksEnum, ServiceLevelCanadaPostEnum, ServiceLevelCDLEnum, ServiceLevelChronopostEnum, ServiceLevelCouriersPleaseEnum, ServiceLevelCorreosEspanaEnum, ServiceLevelColissimoEnum, ServiceLevelPurolatorEnum, ServiceLevelDHLExpressEnum, ServiceLevelDHLeCommerceEnum, ServiceLevelDHLGermanyEnum, ServiceLevelDPDDEEnum, ServiceLevelDPDUKEnum, ServiceLevelDeutschePostEnum, ServiceLevelAramexAustraliaEnum, ServiceLevelGlobegisticsEnum, ServiceLevelGLSUSEnum, ServiceLevelLSOEnum, ServiceLevelMondialRelayEnum, ServiceLevelMaergoEnum, ServiceLevelParcelforceEnum, ServiceLevelPostItalianeEnum, ServiceLevelePostGlobalEnum, ServiceLevelRoyalMailEnum, ServiceLevelSendleEnum, ServiceLevelOnTracEnum, ServiceLevelJitsuEnum, ServiceLevelLasershipEnum, ServiceLevelEvriUKEnum, ServiceLevelUDSEnum, ServiceLevelVehoEnum, ServiceLevelSwyftEnum]
+

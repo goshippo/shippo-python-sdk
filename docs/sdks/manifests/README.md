@@ -25,11 +25,11 @@ Returns a list of all manifest objects.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
@@ -65,38 +65,37 @@ Creates a new manifest object.
 ### Example Usage
 
 ```python
-import shippo
-from shippo.models import components
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.manifests.create(request=components.ManifestCreateRequest(
-    carrier_account='adcfdddf8ec64b84ad22772bce3ea37a',
-    shipment_date='2014-05-16T23:59:59Z',
-    address_from=components.AddressCreateRequest(
-        country='US',
-        name='Shwan Ippotle',
-        company='Shippo',
-        street1='215 Clayton St.',
-        street3='',
-        street_no='',
-        city='San Francisco',
-        state='CA',
-        zip='94117',
-        phone='+1 555 341 9393',
-        email='shippotle@shippo.com',
-        is_residential=True,
-        metadata='Customer ID 123456',
-        validate=True,
-    ),
-    transactions=[
-        'adcfdddf8ec64b84ad22772bce3ea37a',
+res = s.manifests.create(request={
+    "carrier_account": "adcfdddf8ec64b84ad22772bce3ea37a",
+    "shipment_date": "2014-05-16T23:59:59Z",
+    "address_from": {
+        "country": "US",
+        "name": "Shwan Ippotle",
+        "company": "Shippo",
+        "street1": "215 Clayton St.",
+        "street3": "",
+        "street_no": "",
+        "city": "San Francisco",
+        "state": "CA",
+        "zip": "94117",
+        "phone": "+1 555 341 9393",
+        "email": "shippotle@shippo.com",
+        "is_residential": True,
+        "metadata": "Customer ID 123456",
+        "validate": True,
+    },
+    "transactions": [
+        "adcfdddf8ec64b84ad22772bce3ea37a",
     ],
-))
+})
 
 if res is not None:
     # handle response
@@ -108,7 +107,7 @@ if res is not None:
 
 | Parameter                                                                            | Type                                                                                 | Required                                                                             | Description                                                                          |
 | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
-| `request`                                                                            | [components.ManifestCreateRequest](../../models/components/manifestcreaterequest.md) | :heavy_check_mark:                                                                   | The request object to use for the request.                                           |
+| `request`                                                                            | [components.ManifestCreateRequest](../../models/components/manifestcreaterequest.md) | :heavy_check_mark:                                                                   | Manifest details and contact info.                                                   |
 
 
 ### Response
@@ -127,15 +126,15 @@ Returns an existing manifest using an object ID.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 
-s = shippo.Shippo(
+s = Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version='2018-02-08',
+    shippo_api_version="2018-02-08",
 )
 
 
-res = s.manifests.get(manifest_id='<value>')
+res = s.manifests.get(manifest_id="<value>")
 
 if res is not None:
     # handle response
