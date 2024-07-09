@@ -64,6 +64,8 @@ class Transaction:
     r"""Indicates the validity of the enclosing object"""
     object_updated: Optional[datetime] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_updated'), 'encoder': utils.datetimeisoformat(True), 'decoder': dateutil.parser.isoparse, 'exclude': lambda f: f is None }})
     r"""Date and time of last Transaction update."""
+    parcel: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parcel'), 'exclude': lambda f: f is None }})
+    r"""Object ID of the Parcel object that is being shipped."""
     qr_code_url: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('qr_code_url'), 'exclude': lambda f: f is None }})
     r"""A URL pointing directly to the QR code in PNG format.
     A value will only be returned if requested using qr_code_requested flag and the carrier provides such an option.

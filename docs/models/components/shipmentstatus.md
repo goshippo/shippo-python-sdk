@@ -13,4 +13,4 @@
 | `ERROR`   | ERROR     |
 | `QUEUED`  | QUEUED    |
 | `SUCCESS` | SUCCESS   |
-| `STATUS`  | STATUS    |
+| `WAITING` | WAITING   |

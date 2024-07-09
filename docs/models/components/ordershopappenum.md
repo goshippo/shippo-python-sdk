@@ -1,4 +1,4 @@
-# ShopApp
+# OrderShopAppEnum
 
 Platform the order was created on and, if applicable, imported from. 
 Orders created via the Shippo API or dashboard will have the value "Shippo".
@@ -20,5 +20,6 @@ Orders created via the Shippo API or dashboard will have the value "Shippo".
 | `SHOPIFY`       | Shopify         |
 | `SPREECOMMERCE` | Spreecommerce   |
 | `STRIPE_RELAY`  | StripeRelay     |
+| `WALMART`       | Walmart         |
 | `WEEBLY`        | Weebly          |
 | `WOO_COMMERCE`  | WooCommerce     |

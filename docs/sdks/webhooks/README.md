@@ -36,7 +36,9 @@ s = shippo.Shippo(
 
 res = s.webhooks.create_webhook(request=components.WebhookUpdateRequest(
     event=components.WebhookEventTypeEnum.BATCH_CREATED,
-    url='https://wobbly-marmalade.org',
+    url='https://example.com/shippo-webhook',
+    active=True,
+    is_test=False,
 ))
 
 if res is not None:
@@ -151,7 +153,9 @@ s = shippo.Shippo(
 
 res = s.webhooks.update_webhook(webhook_id='<value>', webhook_update_request=components.WebhookUpdateRequest(
     event=components.WebhookEventTypeEnum.BATCH_CREATED,
-    url='http://crooked-acknowledgment.biz',
+    url='https://example.com/shippo-webhook',
+    active=True,
+    is_test=False,
 ))
 
 if res is not None:

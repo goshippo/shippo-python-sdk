@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 import dataclasses
-from typing import Optional
+from ...models.components import ordershopappenum as components_ordershopappenum
+from ...models.components import orderstatusenum as components_orderstatusenum
+from typing import List, Optional
 
 
 @dataclasses.dataclass
@@ -19,5 +21,17 @@ class ListOrdersRequest:
     r"""The page number you want to select"""
     results: Optional[int] = dataclasses.field(default=25, metadata={'query_param': { 'field_name': 'results', 'style': 'form', 'explode': True }})
     r"""The number of results to return per page (max 100)"""
+    order_status: Optional[List[components_orderstatusenum.OrderStatusEnum]] = dataclasses.field(default=None, metadata={'query_param': { 'field_name': 'order_status[]', 'style': 'form', 'explode': True }})
+    r"""Filter orders by order status"""
+    shop_app: Optional[components_ordershopappenum.OrderShopAppEnum] = dataclasses.field(default=None, metadata={'query_param': { 'field_name': 'shop_app', 'style': 'form', 'explode': True }})
+    r"""Filter orders by shop app"""
+    start_date: Optional[str] = dataclasses.field(default=None, metadata={'query_param': { 'field_name': 'start_date', 'style': 'form', 'explode': True }})
+    r"""Filter orders created after the input date and time (ISO 8601 UTC format).  This is based on the
+    `placed_at` field, meaning when the order has been placed, not when the order object was created.
+    """
+    end_date: Optional[str] = dataclasses.field(default=None, metadata={'query_param': { 'field_name': 'end_date', 'style': 'form', 'explode': True }})
+    r"""Filter orders created before the input date and time (ISO 8601 UTC format).  This is based on the
+    `placed_at` field, meaning when the order has been placed, not when the order object was created.
+    """
     
 
