@@ -4,32 +4,12 @@ from __future__ import annotations
 import dataclasses
 from .address import Address
 from .lineitem import LineItem
+from .ordershopappenum import OrderShopAppEnum
 from .orderstatusenum import OrderStatusEnum
 from .weightunitenum import WeightUnitEnum
 from dataclasses_json import Undefined, dataclass_json
-from enum import Enum
 from shippo import utils
 from typing import List, Optional
-
-
-class ShopApp(str, Enum):
-    r"""Platform the order was created on and, if applicable, imported from.
-    Orders created via the Shippo API or dashboard will have the value \"Shippo\".
-    """
-    AMAZON = 'Amazon'
-    BIGCOMMERCE = 'Bigcommerce'
-    CSV_IMPORT = 'CSV_Import'
-    E_BAY = 'eBay'
-    E_PAGES = 'ePages'
-    ETSY = 'Etsy'
-    GODADDY = 'Godaddy'
-    MAGENTO = 'Magento'
-    SHIPPO = 'Shippo'
-    SHOPIFY = 'Shopify'
-    SPREECOMMERCE = 'Spreecommerce'
-    STRIPE_RELAY = 'StripeRelay'
-    WEEBLY = 'Weebly'
-    WOO_COMMERCE = 'WooCommerce'
 
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
@@ -80,7 +60,7 @@ class Order:
     r"""Unique identifier of the order object."""
     object_owner: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('object_owner'), 'exclude': lambda f: f is None }})
     r"""Username of the user who created the object."""
-    shop_app: Optional[ShopApp] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('shop_app'), 'exclude': lambda f: f is None }})
+    shop_app: Optional[OrderShopAppEnum] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('shop_app'), 'exclude': lambda f: f is None }})
     r"""Platform the order was created on and, if applicable, imported from.
     Orders created via the Shippo API or dashboard will have the value \"Shippo\".
     """

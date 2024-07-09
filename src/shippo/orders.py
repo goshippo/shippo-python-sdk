@@ -29,16 +29,11 @@ class Orders:
         
     
     
-    def list(self, page: Optional[int] = None, results: Optional[int] = None) -> components.OrderPaginatedList:
+    def list(self, request: operations.ListOrdersRequest) -> components.OrderPaginatedList:
         r"""List all orders
         Returns a list of all order objects.
         """
         hook_ctx = HookContext(operation_id='ListOrders', oauth2_scopes=[], security_source=self.sdk_configuration.security)
-        request = operations.ListOrdersRequest(
-            page=page,
-            results=results,
-        )
-        
         _globals = operations.ListOrdersGlobals(
             shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
         )

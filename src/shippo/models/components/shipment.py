@@ -25,7 +25,7 @@ class ShipmentStatus(str, Enum):
     ERROR = 'ERROR'
     QUEUED = 'QUEUED'
     SUCCESS = 'SUCCESS'
-    STATUS = 'STATUS'
+    WAITING = 'WAITING'
 
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
