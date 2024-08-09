@@ -359,3 +359,13 @@ Based on:
 - [python v3.7.0] .
 ### Releases
 - [PyPI v3.7.0] https://pypi.org/project/shippo/3.7.0 - .
+
+## 2024-08-09 00:04:32
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.358.0 (2.390.6) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v3.7.1] .
+### Releases
+- [PyPI v3.7.1] https://pypi.org/project/shippo/3.7.1 - .

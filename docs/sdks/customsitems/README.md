@@ -27,7 +27,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_items.list(page=1, results=25)
+res = s.customs_items.list()
 
 if res is not None:
     # handle response
@@ -68,7 +68,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_items.create(request=components.CustomsItemCreateRequest(
+res = s.customs_items.create(request=components.CustomsItemBase(
     description='T-Shirt',
     mass_unit=components.WeightUnitEnum.LB,
     net_weight='5',
@@ -89,9 +89,9 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                  | Type                                                                                       | Required                                                                                   | Description                                                                                |
-| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
-| `request`                                                                                  | [components.CustomsItemCreateRequest](../../models/components/customsitemcreaterequest.md) | :heavy_check_mark:                                                                         | The request object to use for the request.                                                 |
+| Parameter                                                                | Type                                                                     | Required                                                                 | Description                                                              |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
+| `request`                                                                | [components.CustomsItemBase](../../models/components/customsitembase.md) | :heavy_check_mark:                                                       | The request object to use for the request.                               |
 
 
 ### Response
@@ -118,7 +118,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_items.get(customs_item_id='<value>', page=1)
+res = s.customs_items.get(customs_item_id='<value>')
 
 if res is not None:
     # handle response

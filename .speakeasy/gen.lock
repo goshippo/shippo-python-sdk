@@ -1,22 +1,22 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: 7a0e076d22d5d3bda37e85081e99e829
+  docChecksum: 918122d9eae3aebedbff4f23cd4af0b8
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.330.0
-  generationVersion: 2.361.10
-  releaseVersion: 3.7.0
-  configChecksum: 84b6d5bffbb9badd6bf583776f05dda6
+  speakeasyVersion: 1.358.0
+  generationVersion: 2.390.6
+  releaseVersion: 3.7.1
+  configChecksum: 749a4f6a4afb8aae74a7ccadfe5aabb1
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
 features:
   python:
     additionalDependencies: 0.1.0
-    constsAndDefaults: 0.1.3
-    core: 4.8.0
+    constsAndDefaults: 0.1.4
+    core: 4.8.4
     flattening: 2.81.1
-    globalSecurity: 2.83.5
+    globalSecurity: 2.83.7
     globalSecurityCallbacks: 0.1.0
     globalSecurityFlattening: 0.1.0
     globalServerURLs: 2.82.2
@@ -81,9 +81,16 @@ generatedFiles:
   - src/shippo/models/components/cod.py
   - src/shippo/models/components/parcelcreatefromtemplaterequest.py
   - src/shippo/models/components/parceltemplateenumset.py
+  - src/shippo/models/components/parceltemplatefedexenum.py
+  - src/shippo/models/components/parceltemplateupsenum.py
+  - src/shippo/models/components/parceltemplateuspsenum.py
+  - src/shippo/models/components/parceltemplatedhlecommerceenum.py
+  - src/shippo/models/components/parceltemplatedpdukenum.py
+  - src/shippo/models/components/parceltemplatecourierspleaseenum.py
+  - src/shippo/models/components/parceltemplatearamexaustraliaenum.py
   - src/shippo/models/components/customsdeclarationcreaterequest.py
   - src/shippo/models/components/customsdeclarationnondeliveryoptionenum.py
-  - src/shippo/models/components/customsitemcreaterequest.py
+  - src/shippo/models/components/customsitembase.py
   - src/shippo/models/components/customsdeclarationincotermenum.py
   - src/shippo/models/components/customsdeclarationeelpfcenum.py
   - src/shippo/models/components/customsdeclarationcontentstypeenum.py
@@ -167,6 +174,7 @@ generatedFiles:
   - src/shippo/models/components/pickupbase.py
   - src/shippo/models/components/rate.py
   - src/shippo/models/components/servicelevelwithparent.py
+  - src/shippo/models/components/servicelevel.py
   - src/shippo/models/components/responsemessage.py
   - src/shippo/models/components/ratepaginatedlist.py
   - src/shippo/models/components/refund.py
@@ -209,9 +217,47 @@ generatedFiles:
   - src/shippo/models/components/webhookpayloadtransaction.py
   - src/shippo/models/components/addressvalidationresultsmessagecodeenum.py
   - src/shippo/models/components/addressvalidationresultsmessagesourceenum.py
-  - src/shippo/models/components/servicelevel.py
   - src/shippo/models/components/webhookpayload.py
   - src/shippo/models/components/servicelevelenumset.py
+  - src/shippo/models/components/serviceleveluspsenum.py
+  - src/shippo/models/components/servicelevelfedexenum.py
+  - src/shippo/models/components/servicelevelupsenum.py
+  - src/shippo/models/components/servicelevelairterraenum.py
+  - src/shippo/models/components/servicelevelapcpostalenum.py
+  - src/shippo/models/components/servicelevelasendiaenum.py
+  - src/shippo/models/components/servicelevelaustraliapostenum.py
+  - src/shippo/models/components/servicelevelapgenum.py
+  - src/shippo/models/components/servicelevelbettertrucksenum.py
+  - src/shippo/models/components/servicelevelcanadapostenum.py
+  - src/shippo/models/components/servicelevelcdlenum.py
+  - src/shippo/models/components/servicelevelchronopostenum.py
+  - src/shippo/models/components/servicelevelcourierspleaseenum.py
+  - src/shippo/models/components/servicelevelcorreosespanaenum.py
+  - src/shippo/models/components/servicelevelcolissimoenum.py
+  - src/shippo/models/components/servicelevelpurolatorenum.py
+  - src/shippo/models/components/serviceleveldhlexpressenum.py
+  - src/shippo/models/components/serviceleveldhlecommerceenum.py
+  - src/shippo/models/components/serviceleveldhlgermanyenum.py
+  - src/shippo/models/components/serviceleveldpddeenum.py
+  - src/shippo/models/components/serviceleveldpdukenum.py
+  - src/shippo/models/components/serviceleveldeutschepostenum.py
+  - src/shippo/models/components/servicelevelaramexaustraliaenum.py
+  - src/shippo/models/components/servicelevelglobegisticsenum.py
+  - src/shippo/models/components/servicelevelglsusenum.py
+  - src/shippo/models/components/servicelevellsoenum.py
+  - src/shippo/models/components/servicelevelmondialrelayenum.py
+  - src/shippo/models/components/servicelevelparcelforceenum.py
+  - src/shippo/models/components/servicelevelpostitalianeenum.py
+  - src/shippo/models/components/servicelevelepostglobalenum.py
+  - src/shippo/models/components/servicelevelroyalmailenum.py
+  - src/shippo/models/components/servicelevelsendleenum.py
+  - src/shippo/models/components/servicelevelontracenum.py
+  - src/shippo/models/components/serviceleveljitsuenum.py
+  - src/shippo/models/components/servicelevellasershipenum.py
+  - src/shippo/models/components/servicelevelevriukenum.py
+  - src/shippo/models/components/serviceleveludsenum.py
+  - src/shippo/models/components/servicelevelvehoenum.py
+  - src/shippo/models/components/servicelevelswyftenum.py
   - src/shippo/models/operations/listaddresses.py
   - src/shippo/models/operations/getaddress.py
   - src/shippo/models/operations/validateaddress.py
@@ -318,17 +364,17 @@ generatedFiles:
   - docs/models/components/paymentmethod.md
   - docs/models/components/cod.md
   - docs/models/components/parcelcreatefromtemplaterequest.md
-  - docs/models/components/aramexaustraliaparceltemplate.md
-  - docs/models/components/courierspleaseparceltemplate.md
-  - docs/models/components/dpdukparceltemplate.md
-  - docs/models/components/dhlecommerceparceltemplate.md
-  - docs/models/components/uspsparceltemplate.md
-  - docs/models/components/upsparceltemplate.md
-  - docs/models/components/fedexparceltemplate.md
   - docs/models/components/parceltemplateenumset.md
+  - docs/models/components/parceltemplatefedexenum.md
+  - docs/models/components/parceltemplateupsenum.md
+  - docs/models/components/parceltemplateuspsenum.md
+  - docs/models/components/parceltemplatedhlecommerceenum.md
+  - docs/models/components/parceltemplatedpdukenum.md
+  - docs/models/components/parceltemplatecourierspleaseenum.md
+  - docs/models/components/parceltemplatearamexaustraliaenum.md
   - docs/models/components/customsdeclarationcreaterequest.md
   - docs/models/components/customsdeclarationnondeliveryoptionenum.md
-  - docs/models/components/customsitemcreaterequest.md
+  - docs/models/components/customsitembase.md
   - docs/models/components/customsdeclarationincotermenum.md
   - docs/models/components/customsdeclarationeelpfcenum.md
   - docs/models/components/customsdeclarationcontentstypeenum.md
@@ -449,8 +495,8 @@ generatedFiles:
   - docs/models/components/pickupbase.md
   - docs/models/components/attributes.md
   - docs/models/components/rate.md
-  - docs/models/components/parentservicelevel.md
   - docs/models/components/servicelevelwithparent.md
+  - docs/models/components/servicelevel.md
   - docs/models/components/responsemessage.md
   - docs/models/components/ratepaginatedlist.md
   - docs/models/components/refundstatus.md
@@ -498,52 +544,47 @@ generatedFiles:
   - docs/models/components/webhookpayloadtransaction.md
   - docs/models/components/addressvalidationresultsmessagecodeenum.md
   - docs/models/components/addressvalidationresultsmessagesourceenum.md
-  - docs/models/components/servicelevel.md
-  - docs/models/components/webhookpayloadwebhookpayloadtransaction.md
-  - docs/models/components/webhookpayloadwebhookpayloadbatch.md
-  - docs/models/components/webhookpayloadwebhookpayloadtrack.md
   - docs/models/components/webhookpayload.md
-  - docs/models/components/servicelevelswyftenum.md
-  - docs/models/components/servicelevelvehoenum.md
-  - docs/models/components/serviceleveludsenum.md
-  - docs/models/components/servicelevelevriukenum.md
-  - docs/models/components/servicelevellasershipenum.md
-  - docs/models/components/serviceleveljitsuenum.md
-  - docs/models/components/servicelevelontracenum.md
-  - docs/models/components/servicelevelsendleenum.md
-  - docs/models/components/servicelevelroyalmailenum.md
-  - docs/models/components/servicelevelepostglobalenum.md
-  - docs/models/components/servicelevelpostitalianeenum.md
-  - docs/models/components/servicelevelparcelforceenum.md
-  - docs/models/components/servicelevelmaergoenum.md
-  - docs/models/components/servicelevelmondialrelayenum.md
-  - docs/models/components/servicelevellsoenum.md
-  - docs/models/components/servicelevelglsusenum.md
-  - docs/models/components/servicelevelglobegisticsenum.md
-  - docs/models/components/servicelevelaramexaustraliaenum.md
-  - docs/models/components/serviceleveldeutschepostenum.md
-  - docs/models/components/serviceleveldpdukenum.md
-  - docs/models/components/serviceleveldpddeenum.md
-  - docs/models/components/serviceleveldhlgermanyenum.md
-  - docs/models/components/serviceleveldhlecommerceenum.md
-  - docs/models/components/serviceleveldhlexpressenum.md
-  - docs/models/components/servicelevelpurolatorenum.md
-  - docs/models/components/servicelevelcolissimoenum.md
-  - docs/models/components/servicelevelcorreosespanaenum.md
-  - docs/models/components/servicelevelcourierspleaseenum.md
-  - docs/models/components/servicelevelchronopostenum.md
-  - docs/models/components/servicelevelcdlenum.md
-  - docs/models/components/servicelevelcanadapostenum.md
-  - docs/models/components/servicelevelbettertrucksenum.md
-  - docs/models/components/servicelevelapgenum.md
-  - docs/models/components/servicelevelaustraliapostenum.md
-  - docs/models/components/servicelevelasendiaenum.md
-  - docs/models/components/servicelevelapcpostalenum.md
-  - docs/models/components/servicelevelairterraenum.md
-  - docs/models/components/servicelevelupsenum.md
-  - docs/models/components/servicelevelfedexenum.md
-  - docs/models/components/serviceleveluspsenum.md
   - docs/models/components/servicelevelenumset.md
+  - docs/models/components/serviceleveluspsenum.md
+  - docs/models/components/servicelevelfedexenum.md
+  - docs/models/components/servicelevelupsenum.md
+  - docs/models/components/servicelevelairterraenum.md
+  - docs/models/components/servicelevelapcpostalenum.md
+  - docs/models/components/servicelevelasendiaenum.md
+  - docs/models/components/servicelevelaustraliapostenum.md
+  - docs/models/components/servicelevelapgenum.md
+  - docs/models/components/servicelevelbettertrucksenum.md
+  - docs/models/components/servicelevelcanadapostenum.md
+  - docs/models/components/servicelevelcdlenum.md
+  - docs/models/components/servicelevelchronopostenum.md
+  - docs/models/components/servicelevelcourierspleaseenum.md
+  - docs/models/components/servicelevelcorreosespanaenum.md
+  - docs/models/components/servicelevelcolissimoenum.md
+  - docs/models/components/servicelevelpurolatorenum.md
+  - docs/models/components/serviceleveldhlexpressenum.md
+  - docs/models/components/serviceleveldhlecommerceenum.md
+  - docs/models/components/serviceleveldhlgermanyenum.md
+  - docs/models/components/serviceleveldpddeenum.md
+  - docs/models/components/serviceleveldpdukenum.md
+  - docs/models/components/serviceleveldeutschepostenum.md
+  - docs/models/components/servicelevelaramexaustraliaenum.md
+  - docs/models/components/servicelevelglobegisticsenum.md
+  - docs/models/components/servicelevelglsusenum.md
+  - docs/models/components/servicelevellsoenum.md
+  - docs/models/components/servicelevelmondialrelayenum.md
+  - docs/models/components/servicelevelparcelforceenum.md
+  - docs/models/components/servicelevelpostitalianeenum.md
+  - docs/models/components/servicelevelepostglobalenum.md
+  - docs/models/components/servicelevelroyalmailenum.md
+  - docs/models/components/servicelevelsendleenum.md
+  - docs/models/components/servicelevelontracenum.md
+  - docs/models/components/serviceleveljitsuenum.md
+  - docs/models/components/servicelevellasershipenum.md
+  - docs/models/components/servicelevelevriukenum.md
+  - docs/models/components/serviceleveludsenum.md
+  - docs/models/components/servicelevelvehoenum.md
+  - docs/models/components/servicelevelswyftenum.md
   - docs/models/operations/listaddressesglobals.md
   - docs/models/operations/listaddressesrequest.md
   - docs/models/operations/getaddressglobals.md
@@ -693,3 +734,4 @@ generatedFiles:
   - src/shippo/_hooks/sdkhooks.py
   - src/shippo/_hooks/types.py
   - src/shippo/_hooks/__init__.py
+  - CONTRIBUTING.md

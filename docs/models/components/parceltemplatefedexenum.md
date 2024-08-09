@@ -1,4 +1,4 @@
-# FedExParcelTemplate
+# ParcelTemplateFedExEnum
 
 |Token | Name | Dimensions|
 |:---|:---|:---|

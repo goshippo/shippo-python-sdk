@@ -33,7 +33,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.manifests.list(page=1, results=5)
+res = s.manifests.list()
 
 if res is not None:
     # handle response

@@ -30,7 +30,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.shippo_accounts.list(page=1, results=25)
+res = s.shippo_accounts.list()
 
 if res is not None:
     # handle response

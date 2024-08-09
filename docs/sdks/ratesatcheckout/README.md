@@ -125,6 +125,7 @@ Update the currently configured default parcel template for live rates. The obje
 
 ```python
 import shippo
+from shippo.models import components
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
@@ -132,7 +133,9 @@ s = shippo.Shippo(
 )
 
 
-res = s.rates_at_checkout.update_default_parcel_template(object_id='b958d3690bb04bb8b2986724872750f5')
+res = s.rates_at_checkout.update_default_parcel_template(request=components.DefaultParcelTemplateUpdateRequest(
+    object_id='b958d3690bb04bb8b2986724872750f5',
+))
 
 if res is not None:
     # handle response
