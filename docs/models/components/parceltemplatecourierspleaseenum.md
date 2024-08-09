@@ -1,4 +1,4 @@
-# CouriersPleaseParcelTemplate
+# ParcelTemplateCouriersPleaseEnum
 
 |Token | Name | Dimensions|
 |:---|:---|:---|

@@ -29,7 +29,6 @@ By default, if the query parameter is omitted, the `service_levels` property wil
 
 ```python
 import shippo
-from shippo.models import operations
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
@@ -37,7 +36,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.carrier_accounts.list(request=operations.ListCarrierAccountsRequest())
+res = s.carrier_accounts.list()
 
 if res is not None:
     # handle response
@@ -238,7 +237,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.carrier_accounts.initiate_oauth2_signin(carrier_account_object_id='<value>', redirect_uri='http://fine-cummerbund.biz', state='<value>')
+res = s.carrier_accounts.initiate_oauth2_signin(carrier_account_object_id='<value>', redirect_uri='http://fine-cummerbund.biz')
 
 if res is not None:
     # handle response

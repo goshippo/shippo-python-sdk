@@ -41,7 +41,6 @@ Optional path parameters:<br>
 
 ```python
 import shippo
-from shippo.models import operations
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
@@ -49,7 +48,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.shipments.list(request=operations.ListShipmentsRequest())
+res = s.shipments.list()
 
 if res is not None:
     # handle response
@@ -123,25 +122,7 @@ res = s.shipments.create(request=components.ShipmentCreateRequest(
         validate=True,
     ),
     parcels=[
-        components.ParcelCreateFromTemplateRequest(
-            mass_unit=components.WeightUnitEnum.LB,
-            weight='1',
-            template=components.AramexAustraliaParcelTemplate.FASTWAY_AUSTRALIA_SATCHEL_A3,
-            extra=components.ParcelExtra(
-                cod=components.Cod(
-                    amount='5.5',
-                    currency='USD',
-                    payment_method=components.PaymentMethod.CASH,
-                ),
-                insurance=components.ParcelInsurance(
-                    amount='5.5',
-                    content='Laptop',
-                    currency='USD',
-                    provider=components.ParcelInsuranceProvider.UPS,
-                ),
-            ),
-            metadata='Customer ID 123456',
-        ),
+
     ],
     extra=components.ShipmentExtra(
         accounts_receivable_customer_account=components.UPSReferenceFields(
@@ -246,70 +227,8 @@ res = s.shipments.create(request=components.ShipmentCreateRequest(
     ),
     metadata='Customer ID 123456',
     shipment_date='2021-03-22T12:00:00Z',
-    address_return=components.AddressCreateRequest(
-        country='US',
-        name='Shwan Ippotle',
-        company='Shippo',
-        street1='215 Clayton St.',
-        street3='',
-        street_no='',
-        city='San Francisco',
-        state='CA',
-        zip='94117',
-        phone='+1 555 341 9393',
-        email='shippotle@shippo.com',
-        is_residential=True,
-        metadata='Customer ID 123456',
-        validate=True,
-    ),
-    customs_declaration=components.CustomsDeclarationCreateRequest(
-        certify=True,
-        certify_signer='Shawn Ippotle',
-        contents_type=components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,
-        items=[
-            components.CustomsItemCreateRequest(
-                description='T-Shirt',
-                mass_unit=components.WeightUnitEnum.LB,
-                net_weight='5',
-                origin_country='<value>',
-                quantity=20,
-                value_amount='200',
-                value_currency='USD',
-                metadata='Order ID "123454"',
-                sku_code='HM-123',
-                hs_code='0901.21',
-            ),
-        ],
-        non_delivery_option=components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
-        b13a_filing_option=components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,
-        contents_explanation='T-Shirt purchase',
-        exporter_identification=components.CustomsExporterIdentification(
-            eori_number='PL123456790ABCDE',
-            tax_id=components.CustomsTaxIdentification(
-                number='123456789',
-                type=components.CustomsTaxIdentificationType.EIN,
-            ),
-        ),
-        invoice='#123123',
-        metadata='Order ID #123123',
-        address_importer=components.AddressImporter(
-            name='Shwan Ippotle',
-            company='Shippo',
-            street1='Blumenstraße',
-            street3='',
-            street_no='22',
-            city='München',
-            state='CA',
-            zip='80331',
-            country='DE',
-            phone='80331',
-            email='shippotle@shippo.com',
-            is_residential=True,
-        ),
-        eel_pfc=components.CustomsDeclarationEelPfcEnum.NOEEI_30_37_A,
-        incoterm=components.CustomsDeclarationIncotermEnum.DDP,
-        test=True,
-    ),
+    address_return='d799c2679e644279b59fe661ac8fa488',
+    customs_declaration='adcfdddf8ec64b84ad22772bce3ea37a',
     carrier_accounts=[
         '065a4a8c10d24a34ab932163a1b87f52',
         '73f706f4bdb94b54a337563840ce52b0',

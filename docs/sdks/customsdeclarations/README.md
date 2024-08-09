@@ -28,7 +28,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_declarations.list(page=1, results=5)
+res = s.customs_declarations.list()
 
 if res is not None:
     # handle response
@@ -74,7 +74,7 @@ res = s.customs_declarations.create(request=components.CustomsDeclarationCreateR
     certify_signer='Shawn Ippotle',
     contents_type=components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,
     items=[
-        components.CustomsItemCreateRequest(
+        components.CustomsItemBase(
             description='T-Shirt',
             mass_unit=components.WeightUnitEnum.LB,
             net_weight='5',
@@ -155,7 +155,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_declarations.get(customs_declaration_id='<value>', page=1)
+res = s.customs_declarations.get(customs_declaration_id='<value>')
 
 if res is not None:
     # handle response

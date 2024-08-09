@@ -20,6 +20,7 @@ Creates a new refund object.
 
 ```python
 import shippo
+from shippo.models import components
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
@@ -27,7 +28,10 @@ s = shippo.Shippo(
 )
 
 
-res = s.refunds.create(transaction='915d94940ea54c3a80cbfa328722f5a1', async_=False)
+res = s.refunds.create(request=components.RefundRequestBody(
+    transaction='915d94940ea54c3a80cbfa328722f5a1',
+    async_=False,
+))
 
 if res is not None:
     # handle response

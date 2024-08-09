@@ -66,7 +66,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.rates.list_shipment_rates(shipment_id='<value>', page=1, results=25)
+res = s.rates.list_shipment_rates(shipment_id='<value>')
 
 if res is not None:
     # handle response

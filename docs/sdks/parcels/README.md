@@ -31,7 +31,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.parcels.list(page=1, results=25)
+res = s.parcels.list()
 
 if res is not None:
     # handle response
