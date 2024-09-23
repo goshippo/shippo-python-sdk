@@ -53,15 +53,16 @@ if res is not None:
 | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
 | `request`                                                                          | [components.WebhookUpdateRequest](../../models/components/webhookupdaterequest.md) | :heavy_check_mark:                                                                 | The request object to use for the request.                                         |
 
-
 ### Response
 
 **[components.Webhook](../../models/components/webhook.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## list_webhooks
 
@@ -86,15 +87,16 @@ if res is not None:
 
 ```
 
-
 ### Response
 
 **[components.WebhookPaginatedList](../../models/components/webhookpaginatedlist.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## get_webhook
 
@@ -125,15 +127,16 @@ if res is not None:
 | ------------------------------------ | ------------------------------------ | ------------------------------------ | ------------------------------------ |
 | `webhook_id`                         | *str*                                | :heavy_check_mark:                   | Object ID of the webhook to retrieve |
 
-
 ### Response
 
 **[components.Webhook](../../models/components/webhook.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## update_webhook
 
@@ -171,15 +174,16 @@ if res is not None:
 | `webhook_id`                                                                       | *str*                                                                              | :heavy_check_mark:                                                                 | Object ID of the webhook to retrieve                                               |
 | `webhook_update_request`                                                           | [components.WebhookUpdateRequest](../../models/components/webhookupdaterequest.md) | :heavy_check_mark:                                                                 | N/A                                                                                |
 
-
 ### Response
 
 **[components.Webhook](../../models/components/webhook.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## delete_webhook
 

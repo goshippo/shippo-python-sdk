@@ -41,15 +41,16 @@ if res is not None:
 | --------------------- | --------------------- | --------------------- | --------------------- |
 | `rate_id`             | *str*                 | :heavy_check_mark:    | Object ID of the rate |
 
-
 ### Response
 
 **[components.Rate](../../models/components/rate.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## list_shipment_rates
 
@@ -66,7 +67,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.rates.list_shipment_rates(shipment_id='<value>', page=1, results=25)
+res = s.rates.list_shipment_rates(shipment_id='<value>')
 
 if res is not None:
     # handle response
@@ -82,15 +83,16 @@ if res is not None:
 | `page`                                             | *Optional[int]*                                    | :heavy_minus_sign:                                 | The page number you want to select                 |
 | `results`                                          | *Optional[int]*                                    | :heavy_minus_sign:                                 | The number of results to return per page (max 100) |
 
-
 ### Response
 
 **[components.RatePaginatedList](../../models/components/ratepaginatedlist.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## list_shipment_rates_by_currency_code
 
@@ -131,10 +133,10 @@ if res is not None:
 | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | `request`                                                                                                              | [operations.ListShipmentRatesByCurrencyCodeRequest](../../models/operations/listshipmentratesbycurrencycoderequest.md) | :heavy_check_mark:                                                                                                     | The request object to use for the request.                                                                             |
 
-
 ### Response
 
 **[components.RatePaginatedList](../../models/components/ratepaginatedlist.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

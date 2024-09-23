@@ -37,15 +37,16 @@ if res is not None:
 
 ```
 
-
 ### Response
 
 **[List[components.ServiceGroup]](../../models/.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## create
 
@@ -92,15 +93,16 @@ if res is not None:
 | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | `request`                                                                                    | [components.ServiceGroupCreateRequest](../../models/components/servicegroupcreaterequest.md) | :heavy_check_mark:                                                                           | The request object to use for the request.                                                   |
 
-
 ### Response
 
 **[components.ServiceGroup](../../models/components/servicegroup.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## update
 
@@ -129,6 +131,14 @@ res = s.service_groups.update(request=components.ServiceGroupUpdateRequest(
             account_object_id='80feb1633d4a43c898f0058506cfd82d',
             service_level_token='ups_next_day_air_saver',
         ),
+        components.ServiceGroupAccountAndServiceLevel(
+            account_object_id='80feb1633d4a43c898f0058506cfd82d',
+            service_level_token='ups_next_day_air_saver',
+        ),
+        components.ServiceGroupAccountAndServiceLevel(
+            account_object_id='80feb1633d4a43c898f0058506cfd82d',
+            service_level_token='ups_next_day_air_saver',
+        ),
     ],
     flat_rate='5',
     flat_rate_currency='USD',
@@ -149,15 +159,16 @@ if res is not None:
 | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | `request`                                                                                    | [components.ServiceGroupUpdateRequest](../../models/components/servicegroupupdaterequest.md) | :heavy_check_mark:                                                                           | The request object to use for the request.                                                   |
 
-
 ### Response
 
 **[components.ServiceGroup](../../models/components/servicegroup.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## delete
 

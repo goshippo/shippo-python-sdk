@@ -28,7 +28,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_declarations.list(page=1, results=5)
+res = s.customs_declarations.list()
 
 if res is not None:
     # handle response
@@ -43,15 +43,16 @@ if res is not None:
 | `page`                                                        | *Optional[int]*                                               | :heavy_minus_sign:                                            | The page number you want to select                            |
 | `results`                                                     | *Optional[int]*                                               | :heavy_minus_sign:                                            | The number of results to return per page (max 100, default 5) |
 
-
 ### Response
 
 **[components.CustomsDeclarationPaginatedList](../../models/components/customsdeclarationpaginatedlist.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## create
 
@@ -90,6 +91,15 @@ res = s.customs_declarations.create(request=components.CustomsDeclarationCreateR
     non_delivery_option=components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
     b13a_filing_option=components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,
     contents_explanation='T-Shirt purchase',
+    duties_payor=components.DutiesPayor(
+        account='2323434543',
+        type=components.CustomsDeclarationCreateRequestType.THIRD_PARTY,
+        address=components.CustomsDeclarationCreateRequestAddress(
+            name='Patrick Kavanagh',
+            zip='80331',
+            country='DE',
+        ),
+    ),
     exporter_identification=components.CustomsExporterIdentification(
         eori_number='PL123456790ABCDE',
         tax_id=components.CustomsTaxIdentification(
@@ -130,15 +140,16 @@ if res is not None:
 | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
 | `request`                                                                                                | [components.CustomsDeclarationCreateRequest](../../models/components/customsdeclarationcreaterequest.md) | :heavy_check_mark:                                                                                       | The request object to use for the request.                                                               |
 
-
 ### Response
 
 **[components.CustomsDeclaration](../../models/components/customsdeclaration.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## get
 
@@ -155,7 +166,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_declarations.get(customs_declaration_id='<value>', page=1)
+res = s.customs_declarations.get(customs_declaration_id='<value>')
 
 if res is not None:
     # handle response
@@ -170,10 +181,10 @@ if res is not None:
 | `customs_declaration_id`             | *str*                                | :heavy_check_mark:                   | Object ID of the customs declaration |
 | `page`                               | *Optional[int]*                      | :heavy_minus_sign:                   | The page number you want to select   |
 
-
 ### Response
 
 **[components.CustomsDeclaration](../../models/components/customsdeclaration.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

@@ -27,7 +27,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_items.list(page=1, results=25)
+res = s.customs_items.list()
 
 if res is not None:
     # handle response
@@ -42,15 +42,16 @@ if res is not None:
 | `page`                                             | *Optional[int]*                                    | :heavy_minus_sign:                                 | The page number you want to select                 |
 | `results`                                          | *Optional[int]*                                    | :heavy_minus_sign:                                 | The number of results to return per page (max 100) |
 
-
 ### Response
 
 **[components.CustomsItemPaginatedList](../../models/components/customsitempaginatedlist.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## create
 
@@ -93,15 +94,16 @@ if res is not None:
 | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
 | `request`                                                                                  | [components.CustomsItemCreateRequest](../../models/components/customsitemcreaterequest.md) | :heavy_check_mark:                                                                         | The request object to use for the request.                                                 |
 
-
 ### Response
 
 **[components.CustomsItem](../../models/components/customsitem.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## get
 
@@ -118,7 +120,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_items.get(customs_item_id='<value>', page=1)
+res = s.customs_items.get(customs_item_id='<value>')
 
 if res is not None:
     # handle response
@@ -133,10 +135,10 @@ if res is not None:
 | `customs_item_id`                  | *str*                              | :heavy_check_mark:                 | Object ID of the customs item      |
 | `page`                             | *Optional[int]*                    | :heavy_minus_sign:                 | The page number you want to select |
 
-
 ### Response
 
 **[components.CustomsItem](../../models/components/customsitem.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

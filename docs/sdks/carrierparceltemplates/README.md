@@ -26,7 +26,6 @@ List all carrier parcel template objects. <br> Use the following query string pa
 
 ```python
 import shippo
-from shippo.models import operations
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
@@ -34,7 +33,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.carrier_parcel_templates.list(include=operations.Include.ENABLED, carrier='fedex')
+res = s.carrier_parcel_templates.list(carrier='fedex')
 
 if res is not None:
     # handle response
@@ -49,15 +48,16 @@ if res is not None:
 | `include`                                                          | [Optional[operations.Include]](../../models/operations/include.md) | :heavy_minus_sign:                                                 | filter by user or enabled                                          |                                                                    |
 | `carrier`                                                          | *Optional[str]*                                                    | :heavy_minus_sign:                                                 | filter by specific carrier                                         | fedex                                                              |
 
-
 ### Response
 
 **[components.CarrierParcelTemplateList](../../models/components/carrierparceltemplatelist.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## get
 
@@ -88,10 +88,10 @@ if res is not None:
 | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
 | `carrier_parcel_template_token`                                 | *str*                                                           | :heavy_check_mark:                                              | The unique string representation of the carrier parcel template |
 
-
 ### Response
 
 **[components.CarrierParcelTemplate](../../models/components/carrierparceltemplate.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

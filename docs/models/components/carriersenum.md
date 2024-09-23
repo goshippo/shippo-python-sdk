@@ -47,7 +47,6 @@
 | ontrac | OnTrac|
 | orangeds | OrangeDS|
 | parcelforce | Parcelforce|
-| parcel | Parcel|
 | passport | Passport|
 | pcf | PCF|
 | poste_italiane | Poste Italiane |
@@ -64,8 +63,6 @@
 | ups | UPS|
 | usps | USPS|
 | veho | Veho |
-| x_delivery | X Delivery (now Maergo)|
-| yodel | Yodel|
 
 
 
@@ -118,7 +115,6 @@
 | `ONTRAC`             | ontrac               |
 | `ORANGEDS`           | orangeds             |
 | `PARCELFORCE`        | parcelforce          |
-| `PARCEL`             | parcel               |
 | `PASSPORT`           | passport             |
 | `PCF`                | pcf                  |
 | `POSTE_ITALIANE`     | poste_italiane       |
@@ -135,5 +131,3 @@
 | `UPS`                | ups                  |
 | `USPS`               | usps                 |
 | `VEHO`               | veho                 |
-| `X_DELIVERY`         | x_delivery           |
-| `YODEL`              | yodel                |

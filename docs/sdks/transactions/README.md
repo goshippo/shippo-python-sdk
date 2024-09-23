@@ -45,15 +45,16 @@ if res is not None:
 | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | `request`                                                                                | [operations.ListTransactionsRequest](../../models/operations/listtransactionsrequest.md) | :heavy_check_mark:                                                                       | The request object to use for the request.                                               |
 
-
 ### Response
 
 **[components.TransactionPaginatedList](../../models/components/transactionpaginatedlist.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## create
 
@@ -90,15 +91,16 @@ if res is not None:
 | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | `request`                                                                                          | [operations.CreateTransactionRequestBody](../../models/operations/createtransactionrequestbody.md) | :heavy_check_mark:                                                                                 | The request object to use for the request.                                                         |
 
-
 ### Response
 
 **[components.Transaction](../../models/components/transaction.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## get
 
@@ -129,10 +131,10 @@ if res is not None:
 | -------------------------------------- | -------------------------------------- | -------------------------------------- | -------------------------------------- |
 | `transaction_id`                       | *str*                                  | :heavy_check_mark:                     | Object ID of the transaction to update |
 
-
 ### Response
 
 **[components.Transaction](../../models/components/transaction.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

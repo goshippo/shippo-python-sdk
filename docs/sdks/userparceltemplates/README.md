@@ -42,15 +42,16 @@ if res is not None:
 
 ```
 
-
 ### Response
 
 **[components.UserParcelTemplateList](../../models/components/userparceltemplatelist.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## create
 
@@ -91,15 +92,16 @@ if res is not None:
 | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
 | `request`                                                                                                | [components.UserParcelTemplateCreateRequest](../../models/components/userparceltemplatecreaterequest.md) | :heavy_check_mark:                                                                                       | The request object to use for the request.                                                               |
 
-
 ### Response
 
 **[components.UserParcelTemplate](../../models/components/userparceltemplate.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## delete
 
@@ -134,6 +136,7 @@ s.user_parcel_templates.delete(user_parcel_template_object_id='<value>')
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
 
+
 ## get
 
 Returns the parcel template information for a specific user parcel
@@ -164,15 +167,16 @@ if res is not None:
 | ------------------------------------- | ------------------------------------- | ------------------------------------- | ------------------------------------- |
 | `user_parcel_template_object_id`      | *str*                                 | :heavy_check_mark:                    | Object ID of the user parcel template |
 
-
 ### Response
 
 **[components.UserParcelTemplate](../../models/components/userparceltemplate.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## update
 
@@ -213,10 +217,10 @@ if res is not None:
 | `user_parcel_template_object_id`                                                                                   | *str*                                                                                                              | :heavy_check_mark:                                                                                                 | Object ID of the user parcel template                                                                              |
 | `user_parcel_template_update_request`                                                                              | [Optional[components.UserParcelTemplateUpdateRequest]](../../models/components/userparceltemplateupdaterequest.md) | :heavy_minus_sign:                                                                                                 | N/A                                                                                                                |
 
-
 ### Response
 
 **[components.UserParcelTemplate](../../models/components/userparceltemplate.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

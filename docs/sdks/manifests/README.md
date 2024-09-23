@@ -33,7 +33,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.manifests.list(page=1, results=5)
+res = s.manifests.list()
 
 if res is not None:
     # handle response
@@ -48,15 +48,16 @@ if res is not None:
 | `page`                                                        | *Optional[int]*                                               | :heavy_minus_sign:                                            | The page number you want to select                            |
 | `results`                                                     | *Optional[int]*                                               | :heavy_minus_sign:                                            | The number of results to return per page (max 100, default 5) |
 
-
 ### Response
 
 **[components.ManifestPaginatedList](../../models/components/manifestpaginatedlist.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## create
 
@@ -110,15 +111,16 @@ if res is not None:
 | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
 | `request`                                                                            | [components.ManifestCreateRequest](../../models/components/manifestcreaterequest.md) | :heavy_check_mark:                                                                   | The request object to use for the request.                                           |
 
-
 ### Response
 
 **[components.Manifest](../../models/components/manifest.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## get
 
@@ -149,10 +151,10 @@ if res is not None:
 | ----------------------------------- | ----------------------------------- | ----------------------------------- | ----------------------------------- |
 | `manifest_id`                       | *str*                               | :heavy_check_mark:                  | Object ID of the manifest to update |
 
-
 ### Response
 
 **[components.Manifest](../../models/components/manifest.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

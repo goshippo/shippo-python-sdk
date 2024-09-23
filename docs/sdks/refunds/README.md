@@ -20,6 +20,7 @@ Creates a new refund object.
 
 ```python
 import shippo
+from shippo.models import components
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
@@ -27,7 +28,10 @@ s = shippo.Shippo(
 )
 
 
-res = s.refunds.create(transaction='915d94940ea54c3a80cbfa328722f5a1', async_=False)
+res = s.refunds.create(request=components.RefundRequestBody(
+    transaction='915d94940ea54c3a80cbfa328722f5a1',
+    async_=False,
+))
 
 if res is not None:
     # handle response
@@ -42,15 +46,16 @@ if res is not None:
 | `transaction`                    | *str*                            | :heavy_check_mark:               | N/A                              | 915d94940ea54c3a80cbfa328722f5a1 |
 | `async_`                         | *Optional[bool]*                 | :heavy_minus_sign:               | N/A                              | false                            |
 
-
 ### Response
 
 **[components.Refund](../../models/components/refund.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## list
 
@@ -75,15 +80,16 @@ if res is not None:
 
 ```
 
-
 ### Response
 
 **[components.RefundPaginatedList](../../models/components/refundpaginatedlist.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## get
 
@@ -114,10 +120,10 @@ if res is not None:
 | --------------------------------- | --------------------------------- | --------------------------------- | --------------------------------- |
 | `refund_id`                       | *str*                             | :heavy_check_mark:                | Object ID of the refund to update |
 
-
 ### Response
 
 **[components.Refund](../../models/components/refund.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
