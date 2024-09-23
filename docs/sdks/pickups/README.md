@@ -51,8 +51,8 @@ res = s.pickups.create(request=components.PickupBase(
         building_type=components.BuildingType.APARTMENT,
         instructions='Behind screen door',
     ),
-    requested_end_time=dateutil.parser.isoparse('2023-06-18T07:14:55.676Z'),
-    requested_start_time=dateutil.parser.isoparse('2023-06-21T08:42:38.998Z'),
+    requested_end_time=dateutil.parser.isoparse('2023-06-18T07:14:55.338Z'),
+    requested_start_time=dateutil.parser.isoparse('2023-12-01T17:06:07.804Z'),
     transactions=[
         'adcfdddf8ec64b84ad22772bce3ea37a',
     ],
@@ -70,10 +70,10 @@ if res is not None:
 | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- |
 | `request`                                                      | [components.PickupBase](../../models/components/pickupbase.md) | :heavy_check_mark:                                             | The request object to use for the request.                     |
 
-
 ### Response
 
 **[components.Pickup](../../models/components/pickup.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

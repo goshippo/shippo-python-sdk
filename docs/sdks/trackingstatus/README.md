@@ -28,6 +28,7 @@ Registers a webhook that will send HTTP notifications to you when the status of 
 
 ```python
 import shippo
+from shippo.models import components
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
@@ -35,7 +36,11 @@ s = shippo.Shippo(
 )
 
 
-res = s.tracking_status.create(carrier='usps', tracking_number='9205590164917312751089', metadata='Order 000123')
+res = s.tracking_status.create(request=components.TracksRequest(
+    carrier='usps',
+    tracking_number='9205590164917312751089',
+    metadata='Order 000123',
+))
 
 if res is not None:
     # handle response
@@ -51,15 +56,16 @@ if res is not None:
 | `tracking_number`                                                                                                     | *str*                                                                                                                 | :heavy_check_mark:                                                                                                    | Tracking number to track.                                                                                             | 9205590164917312751089                                                                                                |
 | `metadata`                                                                                                            | *Optional[str]*                                                                                                       | :heavy_minus_sign:                                                                                                    | A string of up to 100 characters that can be filled with any additional information you want to attach to the object. | Order 000123                                                                                                          |
 
-
 ### Response
 
 **[components.Track](../../models/components/track.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## get
 
@@ -91,10 +97,10 @@ if res is not None:
 | `tracking_number`   | *str*               | :heavy_check_mark:  | Tracking number     |
 | `carrier`           | *str*               | :heavy_check_mark:  | Name of the carrier |
 
-
 ### Response
 
 **[components.Track](../../models/components/track.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

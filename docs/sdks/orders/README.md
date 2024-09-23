@@ -58,15 +58,16 @@ if res is not None:
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | `request`                                                                    | [operations.ListOrdersRequest](../../models/operations/listordersrequest.md) | :heavy_check_mark:                                                           | The request object to use for the request.                                   |
 
-
 ### Response
 
 **[components.OrderPaginatedList](../../models/components/orderpaginatedlist.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## create
 
@@ -160,15 +161,16 @@ if res is not None:
 | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
 | `request`                                                                      | [components.OrderCreateRequest](../../models/components/ordercreaterequest.md) | :heavy_check_mark:                                                             | The request object to use for the request.                                     |
 
-
 ### Response
 
 **[components.Order](../../models/components/order.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## get
 
@@ -199,10 +201,10 @@ if res is not None:
 | ---------------------- | ---------------------- | ---------------------- | ---------------------- |
 | `order_id`             | *str*                  | :heavy_check_mark:     | Object ID of the order |
 
-
 ### Response
 
 **[components.Order](../../models/components/order.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

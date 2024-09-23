@@ -3,33 +3,33 @@
 
 ## Supported Types
 
-### `components.WebhookPayloadWebhookPayloadTrack`
+### `components.WebhookPayloadTrack`
 
 ```python
-value: components.WebhookPayloadWebhookPayloadTrack = /* values here */
+value: components.WebhookPayloadTrack = /* values here */
 ```
 
-### `components.WebhookPayloadWebhookPayloadBatch`
+### `components.WebhookPayloadBatch`
 
 ```python
-value: components.WebhookPayloadWebhookPayloadBatch = /* values here */
+value: components.WebhookPayloadBatch = /* values here */
 ```
 
-### `components.WebhookPayloadWebhookPayloadBatch`
+### `components.WebhookPayloadBatch`
 
 ```python
-value: components.WebhookPayloadWebhookPayloadBatch = /* values here */
+value: components.WebhookPayloadBatch = /* values here */
 ```
 
-### `components.WebhookPayloadWebhookPayloadTransaction`
+### `components.WebhookPayloadTransaction`
 
 ```python
-value: components.WebhookPayloadWebhookPayloadTransaction = /* values here */
+value: components.WebhookPayloadTransaction = /* values here */
 ```
 
-### `components.WebhookPayloadWebhookPayloadTransaction`
+### `components.WebhookPayloadTransaction`
 
 ```python
-value: components.WebhookPayloadWebhookPayloadTransaction = /* values here */
+value: components.WebhookPayloadTransaction = /* values here */
 ```
 

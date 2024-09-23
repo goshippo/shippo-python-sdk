@@ -63,15 +63,16 @@ if res is not None:
 | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
 | `request`                                                                          | [operations.ListShipmentsRequest](../../models/operations/listshipmentsrequest.md) | :heavy_check_mark:                                                                 | The request object to use for the request.                                         |
 
-
 ### Response
 
 **[components.ShipmentPaginatedList](../../models/components/shipmentpaginatedlist.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## create
 
@@ -123,10 +124,36 @@ res = s.shipments.create(request=components.ShipmentCreateRequest(
         validate=True,
     ),
     parcels=[
-        components.ParcelCreateFromTemplateRequest(
+        '<value>',
+        components.ParcelCreateRequest(
             mass_unit=components.WeightUnitEnum.LB,
             weight='1',
-            template=components.AramexAustraliaParcelTemplate.FASTWAY_AUSTRALIA_SATCHEL_A3,
+            distance_unit=components.DistanceUnitEnum.IN,
+            height='1',
+            length='1',
+            width='1',
+            extra=components.ParcelExtra(
+                cod=components.Cod(
+                    amount='5.5',
+                    currency='USD',
+                    payment_method=components.PaymentMethod.CASH,
+                ),
+                insurance=components.ParcelInsurance(
+                    amount='5.5',
+                    content='Laptop',
+                    currency='USD',
+                    provider=components.ParcelInsuranceProvider.UPS,
+                ),
+            ),
+            metadata='Customer ID 123456',
+        ),
+        components.ParcelCreateRequest(
+            mass_unit=components.WeightUnitEnum.LB,
+            weight='1',
+            distance_unit=components.DistanceUnitEnum.IN,
+            height='1',
+            length='1',
+            width='1',
             extra=components.ParcelExtra(
                 cod=components.Cod(
                     amount='5.5',
@@ -246,22 +273,7 @@ res = s.shipments.create(request=components.ShipmentCreateRequest(
     ),
     metadata='Customer ID 123456',
     shipment_date='2021-03-22T12:00:00Z',
-    address_return=components.AddressCreateRequest(
-        country='US',
-        name='Shwan Ippotle',
-        company='Shippo',
-        street1='215 Clayton St.',
-        street3='',
-        street_no='',
-        city='San Francisco',
-        state='CA',
-        zip='94117',
-        phone='+1 555 341 9393',
-        email='shippotle@shippo.com',
-        is_residential=True,
-        metadata='Customer ID 123456',
-        validate=True,
-    ),
+    address_return='d799c2679e644279b59fe661ac8fa488',
     customs_declaration=components.CustomsDeclarationCreateRequest(
         certify=True,
         certify_signer='Shawn Ippotle',
@@ -283,6 +295,15 @@ res = s.shipments.create(request=components.ShipmentCreateRequest(
         non_delivery_option=components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
         b13a_filing_option=components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,
         contents_explanation='T-Shirt purchase',
+        duties_payor=components.DutiesPayor(
+            account='2323434543',
+            type=components.CustomsDeclarationCreateRequestType.THIRD_PARTY,
+            address=components.CustomsDeclarationCreateRequestAddress(
+                name='Patrick Kavanagh',
+                zip='80331',
+                country='DE',
+            ),
+        ),
         exporter_identification=components.CustomsExporterIdentification(
             eori_number='PL123456790ABCDE',
             tax_id=components.CustomsTaxIdentification(
@@ -328,15 +349,16 @@ if res is not None:
 | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
 | `request`                                                                            | [components.ShipmentCreateRequest](../../models/components/shipmentcreaterequest.md) | :heavy_check_mark:                                                                   | The request object to use for the request.                                           |
 
-
 ### Response
 
 **[components.Shipment](../../models/components/shipment.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## get
 
@@ -367,10 +389,10 @@ if res is not None:
 | ----------------------------------- | ----------------------------------- | ----------------------------------- | ----------------------------------- |
 | `shipment_id`                       | *str*                               | :heavy_check_mark:                  | Object ID of the shipment to update |
 
-
 ### Response
 
 **[components.Shipment](../../models/components/shipment.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

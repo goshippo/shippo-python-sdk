@@ -1,4 +1,4 @@
-# DHLECommerceParcelTemplate
+# ParcelTemplateDHLeCommerceEnum
 
 |Token | Name | Dimensions|
 |:---|:---|:---|

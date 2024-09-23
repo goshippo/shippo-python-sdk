@@ -44,22 +44,7 @@ res = s.batches.create(request=components.BatchCreateRequest(
     batch_shipments=[
         components.BatchShipmentCreateRequest(
             shipment=components.ShipmentCreateRequest(
-                address_from=components.AddressCreateRequest(
-                    country='US',
-                    name='Shwan Ippotle',
-                    company='Shippo',
-                    street1='215 Clayton St.',
-                    street3='',
-                    street_no='',
-                    city='San Francisco',
-                    state='CA',
-                    zip='94117',
-                    phone='+1 555 341 9393',
-                    email='shippotle@shippo.com',
-                    is_residential=True,
-                    metadata='Customer ID 123456',
-                    validate=True,
-                ),
+                address_from='d799c2679e644279b59fe661ac8fa488',
                 address_to=components.AddressCreateRequest(
                     country='US',
                     name='Shwan Ippotle',
@@ -77,10 +62,57 @@ res = s.batches.create(request=components.BatchCreateRequest(
                     validate=True,
                 ),
                 parcels=[
-                    components.ParcelCreateFromTemplateRequest(
+                    components.ParcelCreateRequest(
                         mass_unit=components.WeightUnitEnum.LB,
                         weight='1',
-                        template=components.AramexAustraliaParcelTemplate.FASTWAY_AUSTRALIA_SATCHEL_A3,
+                        distance_unit=components.DistanceUnitEnum.IN,
+                        height='1',
+                        length='1',
+                        width='1',
+                        extra=components.ParcelExtra(
+                            cod=components.Cod(
+                                amount='5.5',
+                                currency='USD',
+                                payment_method=components.PaymentMethod.CASH,
+                            ),
+                            insurance=components.ParcelInsurance(
+                                amount='5.5',
+                                content='Laptop',
+                                currency='USD',
+                                provider=components.ParcelInsuranceProvider.UPS,
+                            ),
+                        ),
+                        metadata='Customer ID 123456',
+                    ),
+                    components.ParcelCreateRequest(
+                        mass_unit=components.WeightUnitEnum.LB,
+                        weight='1',
+                        distance_unit=components.DistanceUnitEnum.IN,
+                        height='1',
+                        length='1',
+                        width='1',
+                        extra=components.ParcelExtra(
+                            cod=components.Cod(
+                                amount='5.5',
+                                currency='USD',
+                                payment_method=components.PaymentMethod.CASH,
+                            ),
+                            insurance=components.ParcelInsurance(
+                                amount='5.5',
+                                content='Laptop',
+                                currency='USD',
+                                provider=components.ParcelInsuranceProvider.UPS,
+                            ),
+                        ),
+                        metadata='Customer ID 123456',
+                    ),
+                    components.ParcelCreateRequest(
+                        mass_unit=components.WeightUnitEnum.LB,
+                        weight='1',
+                        distance_unit=components.DistanceUnitEnum.IN,
+                        height='1',
+                        length='1',
+                        width='1',
                         extra=components.ParcelExtra(
                             cod=components.Cod(
                                 amount='5.5',
@@ -233,10 +265,43 @@ res = s.batches.create(request=components.BatchCreateRequest(
                             sku_code='HM-123',
                             hs_code='0901.21',
                         ),
+                        components.CustomsItemCreateRequest(
+                            description='T-Shirt',
+                            mass_unit=components.WeightUnitEnum.LB,
+                            net_weight='5',
+                            origin_country='<value>',
+                            quantity=20,
+                            value_amount='200',
+                            value_currency='USD',
+                            metadata='Order ID "123454"',
+                            sku_code='HM-123',
+                            hs_code='0901.21',
+                        ),
+                        components.CustomsItemCreateRequest(
+                            description='T-Shirt',
+                            mass_unit=components.WeightUnitEnum.LB,
+                            net_weight='5',
+                            origin_country='<value>',
+                            quantity=20,
+                            value_amount='200',
+                            value_currency='USD',
+                            metadata='Order ID "123454"',
+                            sku_code='HM-123',
+                            hs_code='0901.21',
+                        ),
                     ],
                     non_delivery_option=components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
                     b13a_filing_option=components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,
                     contents_explanation='T-Shirt purchase',
+                    duties_payor=components.DutiesPayor(
+                        account='2323434543',
+                        type=components.CustomsDeclarationCreateRequestType.THIRD_PARTY,
+                        address=components.CustomsDeclarationCreateRequestAddress(
+                            name='Patrick Kavanagh',
+                            zip='80331',
+                            country='DE',
+                        ),
+                    ),
                     exporter_identification=components.CustomsExporterIdentification(
                         eori_number='PL123456790ABCDE',
                         tax_id=components.CustomsTaxIdentification(
@@ -290,15 +355,16 @@ if res is not None:
 | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
 | `request`                                                                      | [components.BatchCreateRequest](../../models/components/batchcreaterequest.md) | :heavy_check_mark:                                                             | The request object to use for the request.                                     |
 
-
 ### Response
 
 **[components.Batch](../../models/components/batch.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## get
 
@@ -332,15 +398,16 @@ if res is not None:
 | ---------------------- | ---------------------- | ---------------------- | ---------------------- |
 | `batch_id`             | *str*                  | :heavy_check_mark:     | Object ID of the batch |
 
-
 ### Response
 
 **[components.Batch](../../models/components/batch.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## add_shipments
 
@@ -361,16 +428,30 @@ s = shippo.Shippo(
 res = s.batches.add_shipments(batch_id='<value>', request_body=[
     components.BatchShipmentCreateRequest(
         shipment=components.ShipmentCreateRequest(
-            address_from='d799c2679e644279b59fe661ac8fa488',
+            address_from=components.AddressCreateRequest(
+                country='US',
+                name='Shwan Ippotle',
+                company='Shippo',
+                street1='215 Clayton St.',
+                street3='',
+                street_no='',
+                city='San Francisco',
+                state='CA',
+                zip='94117',
+                phone='+1 555 341 9393',
+                email='shippotle@shippo.com',
+                is_residential=True,
+                metadata='Customer ID 123456',
+                validate=True,
+            ),
             address_to='d799c2679e644279b59fe661ac8fa489',
             parcels=[
-                components.ParcelCreateRequest(
+                '<value>',
+                '<value>',
+                components.ParcelCreateFromTemplateRequest(
                     mass_unit=components.WeightUnitEnum.LB,
                     weight='1',
-                    distance_unit=components.DistanceUnitEnum.IN,
-                    height='1',
-                    length='1',
-                    width='1',
+                    template=components.ParcelTemplateUSPSEnum.USPS_SMALL_FLAT_RATE_ENVELOPE,
                     extra=components.ParcelExtra(
                         cod=components.Cod(
                             amount='5.5',
@@ -490,7 +571,225 @@ res = s.batches.add_shipments(batch_id='<value>', request_body=[
             ),
             metadata='Customer ID 123456',
             shipment_date='2021-03-22T12:00:00Z',
-            address_return='d799c2679e644279b59fe661ac8fa488',
+            address_return=components.AddressCreateRequest(
+                country='US',
+                name='Shwan Ippotle',
+                company='Shippo',
+                street1='215 Clayton St.',
+                street3='',
+                street_no='',
+                city='San Francisco',
+                state='CA',
+                zip='94117',
+                phone='+1 555 341 9393',
+                email='shippotle@shippo.com',
+                is_residential=True,
+                metadata='Customer ID 123456',
+                validate=True,
+            ),
+            customs_declaration='adcfdddf8ec64b84ad22772bce3ea37a',
+            carrier_accounts=[
+                '065a4a8c10d24a34ab932163a1b87f52',
+                '73f706f4bdb94b54a337563840ce52b0',
+            ],
+        ),
+        carrier_account='a4391cd4ab974f478f55dc08b5c8e3b3',
+        metadata='SHIPMENT #1',
+        servicelevel_token='fedex_ground',
+    ),
+    components.BatchShipmentCreateRequest(
+        shipment=components.ShipmentCreateRequest(
+            address_from=components.AddressCreateRequest(
+                country='US',
+                name='Shwan Ippotle',
+                company='Shippo',
+                street1='215 Clayton St.',
+                street3='',
+                street_no='',
+                city='San Francisco',
+                state='CA',
+                zip='94117',
+                phone='+1 555 341 9393',
+                email='shippotle@shippo.com',
+                is_residential=True,
+                metadata='Customer ID 123456',
+                validate=True,
+            ),
+            address_to=components.AddressCreateRequest(
+                country='US',
+                name='Shwan Ippotle',
+                company='Shippo',
+                street1='215 Clayton St.',
+                street3='',
+                street_no='',
+                city='San Francisco',
+                state='CA',
+                zip='94117',
+                phone='+1 555 341 9393',
+                email='shippotle@shippo.com',
+                is_residential=True,
+                metadata='Customer ID 123456',
+                validate=True,
+            ),
+            parcels=[
+                components.ParcelCreateFromTemplateRequest(
+                    mass_unit=components.WeightUnitEnum.LB,
+                    weight='1',
+                    template=components.ParcelTemplateCouriersPleaseEnum.COURIERSPLEASE_1KG_SATCHEL,
+                    extra=components.ParcelExtra(
+                        cod=components.Cod(
+                            amount='5.5',
+                            currency='USD',
+                            payment_method=components.PaymentMethod.CASH,
+                        ),
+                        insurance=components.ParcelInsurance(
+                            amount='5.5',
+                            content='Laptop',
+                            currency='USD',
+                            provider=components.ParcelInsuranceProvider.UPS,
+                        ),
+                    ),
+                    metadata='Customer ID 123456',
+                ),
+                components.ParcelCreateFromTemplateRequest(
+                    mass_unit=components.WeightUnitEnum.LB,
+                    weight='1',
+                    template=components.ParcelTemplateDHLeCommerceEnum.DH_LE_C_SM_FLATS,
+                    extra=components.ParcelExtra(
+                        cod=components.Cod(
+                            amount='5.5',
+                            currency='USD',
+                            payment_method=components.PaymentMethod.CASH,
+                        ),
+                        insurance=components.ParcelInsurance(
+                            amount='5.5',
+                            content='Laptop',
+                            currency='USD',
+                            provider=components.ParcelInsuranceProvider.UPS,
+                        ),
+                    ),
+                    metadata='Customer ID 123456',
+                ),
+            ],
+            extra=components.ShipmentExtra(
+                accounts_receivable_customer_account=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                appropriation_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                bill_of_lading_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                cod=components.Cod(
+                    amount='5.5',
+                    currency='USD',
+                    payment_method=components.PaymentMethod.CASH,
+                ),
+                cod_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                customer_reference=components.CustomerReference(
+                    ref_sort=1,
+                ),
+                dealer_order_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                dept_number=components.DepartmentNumber(
+                    ref_sort=3,
+                ),
+                fda_product_code=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                insurance=components.Insurance(
+                    amount='5.5',
+                    currency='USD',
+                ),
+                invoice_number=components.InvoiceNumber(
+                    ref_sort=2,
+                ),
+                manifest_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                model_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                part_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                po_number=components.PoNumber(
+                    ref_sort=2,
+                ),
+                production_code=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                purchase_request_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                rma_number=components.RmaNumber(
+                    ref_sort=1,
+                ),
+                salesperson_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                serial_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                store_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                transaction_reference_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+            ),
+            metadata='Customer ID 123456',
+            shipment_date='2021-03-22T12:00:00Z',
+            address_return=components.AddressCreateRequest(
+                country='US',
+                name='Shwan Ippotle',
+                company='Shippo',
+                street1='215 Clayton St.',
+                street3='',
+                street_no='',
+                city='San Francisco',
+                state='CA',
+                zip='94117',
+                phone='+1 555 341 9393',
+                email='shippotle@shippo.com',
+                is_residential=True,
+                metadata='Customer ID 123456',
+                validate=True,
+            ),
             customs_declaration=components.CustomsDeclarationCreateRequest(
                 certify=True,
                 certify_signer='Shawn Ippotle',
@@ -512,6 +811,233 @@ res = s.batches.add_shipments(batch_id='<value>', request_body=[
                 non_delivery_option=components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
                 b13a_filing_option=components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,
                 contents_explanation='T-Shirt purchase',
+                duties_payor=components.DutiesPayor(
+                    account='2323434543',
+                    type=components.CustomsDeclarationCreateRequestType.THIRD_PARTY,
+                    address=components.CustomsDeclarationCreateRequestAddress(
+                        name='Patrick Kavanagh',
+                        zip='80331',
+                        country='DE',
+                    ),
+                ),
+                exporter_identification=components.CustomsExporterIdentification(
+                    eori_number='PL123456790ABCDE',
+                    tax_id=components.CustomsTaxIdentification(
+                        number='123456789',
+                        type=components.CustomsTaxIdentificationType.EIN,
+                    ),
+                ),
+                invoice='#123123',
+                metadata='Order ID #123123',
+                address_importer=components.AddressImporter(
+                    name='Shwan Ippotle',
+                    company='Shippo',
+                    street1='Blumenstraße',
+                    street3='',
+                    street_no='22',
+                    city='München',
+                    state='CA',
+                    zip='80331',
+                    country='DE',
+                    phone='80331',
+                    email='shippotle@shippo.com',
+                    is_residential=True,
+                ),
+                eel_pfc=components.CustomsDeclarationEelPfcEnum.NOEEI_30_37_A,
+                incoterm=components.CustomsDeclarationIncotermEnum.DDP,
+                test=True,
+            ),
+            carrier_accounts=[
+                '065a4a8c10d24a34ab932163a1b87f52',
+                '73f706f4bdb94b54a337563840ce52b0',
+            ],
+        ),
+        carrier_account='a4391cd4ab974f478f55dc08b5c8e3b3',
+        metadata='SHIPMENT #1',
+        servicelevel_token='fedex_ground',
+    ),
+    components.BatchShipmentCreateRequest(
+        shipment=components.ShipmentCreateRequest(
+            address_from='d799c2679e644279b59fe661ac8fa488',
+            address_to='d799c2679e644279b59fe661ac8fa489',
+            parcels=[
+                '<value>',
+                '<value>',
+                '<value>',
+            ],
+            extra=components.ShipmentExtra(
+                accounts_receivable_customer_account=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                appropriation_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                bill_of_lading_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                cod=components.Cod(
+                    amount='5.5',
+                    currency='USD',
+                    payment_method=components.PaymentMethod.CASH,
+                ),
+                cod_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                customer_reference=components.CustomerReference(
+                    ref_sort=1,
+                ),
+                dealer_order_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                dept_number=components.DepartmentNumber(
+                    ref_sort=3,
+                ),
+                fda_product_code=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                insurance=components.Insurance(
+                    amount='5.5',
+                    currency='USD',
+                ),
+                invoice_number=components.InvoiceNumber(
+                    ref_sort=2,
+                ),
+                manifest_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                model_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                part_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                po_number=components.PoNumber(
+                    ref_sort=2,
+                ),
+                production_code=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                purchase_request_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                rma_number=components.RmaNumber(
+                    ref_sort=1,
+                ),
+                salesperson_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                serial_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                store_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+                transaction_reference_number=components.UPSReferenceFields(
+                    prefix='ABC',
+                    value='value',
+                    ref_sort=1,
+                ),
+            ),
+            metadata='Customer ID 123456',
+            shipment_date='2021-03-22T12:00:00Z',
+            address_return=components.AddressCreateRequest(
+                country='US',
+                name='Shwan Ippotle',
+                company='Shippo',
+                street1='215 Clayton St.',
+                street3='',
+                street_no='',
+                city='San Francisco',
+                state='CA',
+                zip='94117',
+                phone='+1 555 341 9393',
+                email='shippotle@shippo.com',
+                is_residential=True,
+                metadata='Customer ID 123456',
+                validate=True,
+            ),
+            customs_declaration=components.CustomsDeclarationCreateRequest(
+                certify=True,
+                certify_signer='Shawn Ippotle',
+                contents_type=components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,
+                items=[
+                    components.CustomsItemCreateRequest(
+                        description='T-Shirt',
+                        mass_unit=components.WeightUnitEnum.LB,
+                        net_weight='5',
+                        origin_country='<value>',
+                        quantity=20,
+                        value_amount='200',
+                        value_currency='USD',
+                        metadata='Order ID "123454"',
+                        sku_code='HM-123',
+                        hs_code='0901.21',
+                    ),
+                    components.CustomsItemCreateRequest(
+                        description='T-Shirt',
+                        mass_unit=components.WeightUnitEnum.LB,
+                        net_weight='5',
+                        origin_country='<value>',
+                        quantity=20,
+                        value_amount='200',
+                        value_currency='USD',
+                        metadata='Order ID "123454"',
+                        sku_code='HM-123',
+                        hs_code='0901.21',
+                    ),
+                    components.CustomsItemCreateRequest(
+                        description='T-Shirt',
+                        mass_unit=components.WeightUnitEnum.LB,
+                        net_weight='5',
+                        origin_country='<value>',
+                        quantity=20,
+                        value_amount='200',
+                        value_currency='USD',
+                        metadata='Order ID "123454"',
+                        sku_code='HM-123',
+                        hs_code='0901.21',
+                    ),
+                ],
+                non_delivery_option=components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
+                b13a_filing_option=components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,
+                contents_explanation='T-Shirt purchase',
+                duties_payor=components.DutiesPayor(
+                    account='2323434543',
+                    type=components.CustomsDeclarationCreateRequestType.THIRD_PARTY,
+                    address=components.CustomsDeclarationCreateRequestAddress(
+                        name='Patrick Kavanagh',
+                        zip='80331',
+                        country='DE',
+                    ),
+                ),
                 exporter_identification=components.CustomsExporterIdentification(
                     eori_number='PL123456790ABCDE',
                     tax_id=components.CustomsTaxIdentification(
@@ -563,15 +1089,16 @@ if res is not None:
 | `batch_id`                                                                                           | *str*                                                                                                | :heavy_check_mark:                                                                                   | Object ID of the batch                                                                               |
 | `request_body`                                                                                       | List[[components.BatchShipmentCreateRequest](../../models/components/batchshipmentcreaterequest.md)] | :heavy_check_mark:                                                                                   | Array of shipments to add to the batch                                                               |
 
-
 ### Response
 
 **[components.Batch](../../models/components/batch.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## purchase
 
@@ -605,15 +1132,16 @@ if res is not None:
 | ---------------------- | ---------------------- | ---------------------- | ---------------------- |
 | `batch_id`             | *str*                  | :heavy_check_mark:     | Object ID of the batch |
 
-
 ### Response
 
 **[components.Batch](../../models/components/batch.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## remove_shipments
 
@@ -632,6 +1160,8 @@ s = shippo.Shippo(
 
 res = s.batches.remove_shipments(batch_id='<value>', request_body=[
     '<value>',
+    '<value>',
+    '<value>',
 ])
 
 if res is not None:
@@ -647,10 +1177,10 @@ if res is not None:
 | `batch_id`                                             | *str*                                                  | :heavy_check_mark:                                     | Object ID of the batch                                 |
 | `request_body`                                         | List[*str*]                                            | :heavy_check_mark:                                     | Array of shipments object ids to remove from the batch |
 
-
 ### Response
 
 **[components.Batch](../../models/components/batch.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

@@ -41,7 +41,22 @@ s = shippo.Shippo(
 
 
 res = s.rates_at_checkout.create(request=components.LiveRateCreateRequest(
-    address_to='<value>',
+    address_to=components.AddressCompleteCreateRequest(
+        name='Shwan Ippotle',
+        street1='215 Clayton St.',
+        city='San Francisco',
+        state='CA',
+        zip='94117',
+        country='US',
+        company='Shippo',
+        street3='',
+        street_no='',
+        phone='+1 555 341 9393',
+        email='shippotle@shippo.com',
+        is_residential=True,
+        metadata='Customer ID 123456',
+        validate=True,
+    ),
     line_items=[
         components.LineItem(
             currency='USD',
@@ -74,15 +89,16 @@ if res is not None:
 | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
 | `request`                                                                            | [components.LiveRateCreateRequest](../../models/components/liveratecreaterequest.md) | :heavy_check_mark:                                                                   | The request object to use for the request.                                           |
 
-
 ### Response
 
 **[components.LiveRatePaginatedList](../../models/components/liveratepaginatedlist.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## get_default_parcel_template
 
@@ -107,15 +123,16 @@ if res is not None:
 
 ```
 
-
 ### Response
 
 **[components.DefaultParcelTemplate](../../models/components/defaultparceltemplate.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## update_default_parcel_template
 
@@ -125,6 +142,7 @@ Update the currently configured default parcel template for live rates. The obje
 
 ```python
 import shippo
+from shippo.models import components
 
 s = shippo.Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
@@ -132,7 +150,9 @@ s = shippo.Shippo(
 )
 
 
-res = s.rates_at_checkout.update_default_parcel_template(object_id='b958d3690bb04bb8b2986724872750f5')
+res = s.rates_at_checkout.update_default_parcel_template(request=components.DefaultParcelTemplateUpdateRequest(
+    object_id='b958d3690bb04bb8b2986724872750f5',
+))
 
 if res is not None:
     # handle response
@@ -146,15 +166,16 @@ if res is not None:
 | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- |
 | `object_id`                      | *Optional[str]*                  | :heavy_minus_sign:               | N/A                              | b958d3690bb04bb8b2986724872750f5 |
 
-
 ### Response
 
 **[components.DefaultParcelTemplate](../../models/components/defaultparceltemplate.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## delete_default_parcel_template
 

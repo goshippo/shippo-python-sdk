@@ -165,12 +165,6 @@ value: components.ServiceLevelLSOEnum = /* values here */
 value: components.ServiceLevelMondialRelayEnum = /* values here */
 ```
 
-### `components.ServiceLevelMaergoEnum`
-
-```python
-value: components.ServiceLevelMaergoEnum = /* values here */
-```
-
 ### `components.ServiceLevelParcelforceEnum`
 
 ```python

@@ -31,7 +31,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.parcels.list(page=1, results=25)
+res = s.parcels.list()
 
 if res is not None:
     # handle response
@@ -46,15 +46,16 @@ if res is not None:
 | `page`                                             | *Optional[int]*                                    | :heavy_minus_sign:                                 | The page number you want to select                 |
 | `results`                                          | *Optional[int]*                                    | :heavy_minus_sign:                                 | The number of results to return per page (max 100) |
 
-
 ### Response
 
 **[components.ParcelPaginatedList](../../models/components/parcelpaginatedlist.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## create
 
@@ -107,15 +108,16 @@ if res is not None:
 | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | `request`                                                                                | [operations.CreateParcelRequestBody](../../models/operations/createparcelrequestbody.md) | :heavy_check_mark:                                                                       | The request object to use for the request.                                               |
 
-
 ### Response
 
 **[components.Parcel](../../models/components/parcel.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | errors.SDKError | 4xx-5xx         | */*             |
+
 
 ## get
 
@@ -146,10 +148,10 @@ if res is not None:
 | ----------------------- | ----------------------- | ----------------------- | ----------------------- |
 | `parcel_id`             | *str*                   | :heavy_check_mark:      | Object ID of the parcel |
 
-
 ### Response
 
 **[components.Parcel](../../models/components/parcel.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |

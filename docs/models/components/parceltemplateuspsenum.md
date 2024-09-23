@@ -1,4 +1,4 @@
-# USPSParcelTemplate
+# ParcelTemplateUSPSEnum
 
 |Token | Name | Dimensions|
 |:---|:---|:---|

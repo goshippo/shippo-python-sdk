@@ -89,3 +89,9 @@ value: components.CarrierAccountUPSCreateRequest = /* values here */
 value: components.CarrierAccountUSPSCreateRequest = /* values here */
 ```
 
+### `components.CarrierAccountSendleCreateRequest`
+
+```python
+value: components.CarrierAccountSendleCreateRequest = /* values here */
+```
+
