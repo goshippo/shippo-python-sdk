@@ -1,4 +1,5 @@
-LOCAL_SPEC_FILE=./build/public-api.yaml
+BUILD_DIR=./build/
+LOCAL_SPEC_FILE=${BUILD_DIR}public-api.yaml
 
 init-venv:
 	if [ ! -d ".venv" ]; then python3 -m venv .venv; fi
@@ -16,6 +17,7 @@ speakeasy-install: # dev task, locally install the speakeasy CLI
 	speakeasy auth login
 
 download-public-spec: # dev task, download the current public spec, in preparation for modifying and running speakeasy-generate
+	mkdir -p ${BUILD_DIR}
 	curl https://docs.goshippo.com/spec/shippoapi/public-api.yaml > $(LOCAL_SPEC_FILE)
 
 speakeasy-generate: # dev task, run the generator on a local spec.  useful for testing out changes to the spec or gen.yaml - but DO NOT commit the results of manual generation
