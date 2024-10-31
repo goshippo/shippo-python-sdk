@@ -1,9 +1,13 @@
 name: Validate
 
 on:
-  workflow_call:
   pull_request:
-    types: [ opened, reopened, synchronize ]
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
 
 jobs:
   check:
