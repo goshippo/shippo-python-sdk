@@ -47,7 +47,7 @@ class TestInstalabel:
                         )
                     ]
                 ),
-            order=get_order_object_id(api)),
+                order=get_order_object_id(api)),
         )
         assert transaction is not None
         assert isinstance(transaction, Transaction)
