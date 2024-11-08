@@ -1,3 +1,4 @@
+import pytest
 from dateutil.parser import isoparse
 
 import shippo
@@ -7,6 +8,7 @@ from shippo.models.components import OrderCreateRequest, LineItemBase, WeightUni
 
 class TestCreateOrder:
 
+    @pytest.mark.run(order=1)
     def test_create_order(self, api: shippo.Shippo):
         order = api.orders.create(request=OrderCreateRequest(
             placed_at='2016-09-23T01:28:12Z',
