@@ -1,7 +1,7 @@
 import shippo
 from shippo.models.components import CarriersEnum, DistanceUnitEnum, WeightUnitEnum, \
     AddressCreateRequest, ShipmentCreateRequest, TransactionCreateRequest, ParcelCreateRequest, Transaction
-from tests.helpers_custom import get_carrier_accounts
+from tests.helpers_custom import get_carrier_accounts, get_order_object_id
 
 
 # https://docs.goshippo.com/docs/stories/single_rating_guide/
@@ -48,7 +48,7 @@ class TestPurchaseLabel:
         assert shipment is not None
 
         transaction = api.transactions.create(
-            TransactionCreateRequest(rate=shipment.rates[0].object_id)
+            TransactionCreateRequest(rate=shipment.rates[0].object_id, order=get_order_object_id(api))
         )
         assert transaction is not None
 
@@ -101,7 +101,7 @@ class TestPurchaseLabel:
         assert shipment.address_return.object_id == address_from.object_id
 
         transaction = api.transactions.create(
-            TransactionCreateRequest(rate=shipment.rates[0].object_id)
+            TransactionCreateRequest(rate=shipment.rates[0].object_id, order=get_order_object_id(api))
         )
         assert transaction is not None
         assert isinstance(transaction, Transaction)

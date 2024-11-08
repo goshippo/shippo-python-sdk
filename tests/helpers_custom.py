@@ -1,7 +1,8 @@
+import string
 from typing import List
 
-from shippo.models.components import CarriersEnum, CarrierAccount
-from shippo.models.operations import ListCarrierAccountsRequest
+from shippo.models.components import CarriersEnum, CarrierAccount, Order
+from shippo.models.operations import ListCarrierAccountsRequest, ListOrdersRequest
 
 import shippo
 
@@ -15,3 +16,8 @@ def get_carrier_accounts(api: shippo.Shippo, carrier: CarriersEnum) -> List[Carr
         carrier=carrier
     ))
     return carrier_accounts.results
+
+
+def get_order_object_id(api: shippo.Shippo) -> string:
+    orders = api.orders.list(request=ListOrdersRequest())
+    return orders.results[0].object_id
