@@ -10,7 +10,7 @@ from typing import Optional
 class ShippoAccounts:
     r"""Shippo Accounts are used by Shippo Platform Accounts to create and manage Managed Shippo Accounts.
     Managed Shippo Accounts are headless accounts that represent your customers. They are opaque to your end customers, meaning customers do not need to create their own Shippo login or have a billing relationship with Shippo. 
-    They can be used by marketplaces, e-commerce platforms, and third-party logistics providers who want to offer, seamless, built-in shipping functionality to their customers. 
+    They can be used by marketplaces, e-commerce platforms, and third-party logistics providers who want to offer, seamless, built-in shipping functionality to their customers. See our <a href=\"https://docs.goshippo.com/docs/platformaccounts/platform_accounts/\">guide</a> for more details.
     <SchemaDefinition schemaRef=\"#/components/schemas/ShippoAccount\"/>
     """
     sdk_configuration: SDKConfiguration
@@ -22,7 +22,7 @@ class ShippoAccounts:
     
     def list(self, page: Optional[int] = None, results: Optional[int] = None) -> components.ShippoAccountPaginatedList:
         r"""List all Shippo Accounts
-        Returns a list of Shippo Accounts objects
+        Returns a list of Shippo Managed Accounts objects.
         """
         hook_ctx = HookContext(operation_id='ListShippoAccounts', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.ListShippoAccountsRequest(
@@ -87,7 +87,7 @@ class ShippoAccounts:
     
     def create(self, request: components.ShippoAccountUpdateRequest) -> components.ShippoAccount:
         r"""Create a Shippo Account
-        Creates a Shippo Account object
+        Creates a new <a href=\"https://docs.goshippo.com/docs/platformaccounts/platform_using_accounts/\">Shippo Managed Account</a>.
         """
         hook_ctx = HookContext(operation_id='CreateShippoAccount', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         _globals = operations.CreateShippoAccountGlobals(
@@ -151,7 +151,7 @@ class ShippoAccounts:
     
     def get(self, shippo_account_id: str) -> components.ShippoAccount:
         r"""Retrieve a Shippo Account
-        Returns a Shippo Account using an object ID
+        Returns a Shippo Managed Account using an object ID.
         """
         hook_ctx = HookContext(operation_id='GetShippoAccount', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.GetShippoAccountRequest(
@@ -214,7 +214,7 @@ class ShippoAccounts:
     
     def update(self, shippo_account_id: str, shippo_account_update_request: Optional[components.ShippoAccountUpdateRequest] = None) -> components.ShippoAccount:
         r"""Update a Shippo Account
-        Updates a Shippo Account object
+        Updates a Shippo Managed Account using an object ID.
         """
         hook_ctx = HookContext(operation_id='UpdateShippoAccount', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.UpdateShippoAccountRequest(

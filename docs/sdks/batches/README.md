@@ -361,10 +361,9 @@ if res is not None:
 
 ### Errors
 
-| Error Object    | Status Code     | Content Type    |
+| Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4xx-5xx         | */*             |
-
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
 
 ## get
 
@@ -404,10 +403,9 @@ if res is not None:
 
 ### Errors
 
-| Error Object    | Status Code     | Content Type    |
+| Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4xx-5xx         | */*             |
-
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
 
 ## add_shipments
 
@@ -425,7 +423,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.batches.add_shipments(batch_id='<value>', request_body=[
+res = s.batches.add_shipments(request_body=[
     components.BatchShipmentCreateRequest(
         shipment=components.ShipmentCreateRequest(
             address_from=components.AddressCreateRequest(
@@ -1074,7 +1072,7 @@ res = s.batches.add_shipments(batch_id='<value>', request_body=[
         metadata='SHIPMENT #1',
         servicelevel_token='fedex_ground',
     ),
-])
+], batch_id='<value>')
 
 if res is not None:
     # handle response
@@ -1095,10 +1093,9 @@ if res is not None:
 
 ### Errors
 
-| Error Object    | Status Code     | Content Type    |
+| Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4xx-5xx         | */*             |
-
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
 
 ## purchase
 
@@ -1138,10 +1135,9 @@ if res is not None:
 
 ### Errors
 
-| Error Object    | Status Code     | Content Type    |
+| Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4xx-5xx         | */*             |
-
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
 
 ## remove_shipments
 
@@ -1158,11 +1154,11 @@ s = shippo.Shippo(
 )
 
 
-res = s.batches.remove_shipments(batch_id='<value>', request_body=[
+res = s.batches.remove_shipments(request_body=[
     '<value>',
     '<value>',
     '<value>',
-])
+], batch_id='<value>')
 
 if res is not None:
     # handle response
@@ -1183,6 +1179,6 @@ if res is not None:
 
 ### Errors
 
-| Error Object    | Status Code     | Content Type    |
+| Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4xx-5xx         | */*             |
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
