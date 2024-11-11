@@ -2,7 +2,7 @@ import shippo
 from shippo.models.components import CarriersEnum, DistanceUnitEnum, WeightUnitEnum, \
     AddressCreateRequest, ParcelCreateRequest, ShipmentCreateRequest, \
     InstantTransactionCreateRequest, Transaction
-from tests.helpers_custom import get_carrier_account, get_order_object_id
+from tests.helpers_custom import get_carrier_account, get_first_order_object_id
 
 
 # https://docs.goshippo.com/docs/guides_general/single_call/
@@ -47,7 +47,7 @@ class TestInstalabel:
                         )
                     ]
                 ),
-                order=get_order_object_id(api)),
+                order=get_first_order_object_id(api)),
         )
         assert transaction is not None
         assert isinstance(transaction, Transaction)

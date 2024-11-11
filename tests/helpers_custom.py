@@ -18,6 +18,10 @@ def get_carrier_accounts(api: shippo.Shippo, carrier: CarriersEnum) -> List[Carr
     return carrier_accounts.results
 
 
-def get_order_object_id(api: shippo.Shippo) -> string:
+def get_first_order_object_id(api: shippo.Shippo) -> string:
+    return get_orders(api)[0].object_id
+
+
+def get_orders(api: shippo.Shippo) -> List[Order]:
     orders = api.orders.list(request=ListOrdersRequest())
-    return orders.results[0].object_id
+    return orders.results

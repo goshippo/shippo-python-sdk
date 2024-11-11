@@ -3,14 +3,14 @@ from dateutil.parser import isoparse
 
 import shippo
 from shippo.models.components import OrderCreateRequest, LineItemBase, WeightUnitEnum, AddressCreateRequest, \
-    OrderStatusEnum
+    OrderStatusEnum, Order
 
 
 class TestCreateOrder:
 
-    @pytest.mark.run(order=1)
-    def test_create_order(self, api: shippo.Shippo):
-        order = api.orders.create(request=OrderCreateRequest(
+    @pytest.fixture
+    def create_order(self, api: shippo.Shippo):
+        return api.orders.create(request=OrderCreateRequest(
             placed_at='2016-09-23T01:28:12Z',
             to_address=AddressCreateRequest(
                 country='US',
@@ -73,4 +73,10 @@ class TestCreateOrder:
             ],
         ))
 
+    @pytest.mark.order(1)
+    def test_create_order(self, create_order):
+        order = create_order
+
         assert order is not None
+        assert isinstance(order, Order)
+        assert order.object_id is not None
