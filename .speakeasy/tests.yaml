@@ -1,0 +1,43 @@
+testsVersion: 0.0.1
+tests:
+  CreateOrder:
+    - name: Successfully create order
+      parameters:
+        header:
+          application/json:
+            - $ref: '#/.public-api/components/parameters/ShippoApiVersionHeader'
+      requestBody:
+        application/json:
+          - $ref: '#/.public-api/components/schemas/OrderCreateRequest'
+      responses:
+        '201':
+          application/json:
+            - $ref: '#/.public-api/components/responses/orderResponse'
+
+  ListOrders:
+    - name: Successfully get all orders
+      parameters:
+        query:
+          application/json:
+            - $ref: '#/.public-api/components/parameters/PageNumberQueryParam'
+            - $ref: '#/.public-api/components/parameters/ResultsPerPageQueryParam'
+        header:
+          application/json:
+            - $ref: '#/.public-api/components/parameters/ShippoApiVersionHeader'
+      responses:
+        '200':
+          application/json:
+            - $ref: '#/.public-api/components/responses/orderPaginatedResponse'
+
+  GetOrder:
+    - name: Successfully get an order
+      parameters:
+        header:
+          application/json:
+            - $ref: '#/.public-api/components/parameters/ShippoApiVersionHeader'
+        path:
+          OrderId: '1267ab11165b44ff993634b28e5d9ce5'
+      responses:
+        '200':
+          application/json:
+            - $ref: '#/.public-api/components/responses/orderResponse'
