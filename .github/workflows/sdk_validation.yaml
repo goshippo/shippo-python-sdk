@@ -16,7 +16,6 @@ jobs:
       matrix:
         python-version: [ '3.8', '3.11' ]
     name: Python ${{ matrix.python-version }}
-    timeout-minutes: 10
     env:
       SHIPPO_TOKEN: ${{ secrets.SHIPPO_TOKEN }}
     concurrency:
