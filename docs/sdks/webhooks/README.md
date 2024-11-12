@@ -59,10 +59,9 @@ if res is not None:
 
 ### Errors
 
-| Error Object    | Status Code     | Content Type    |
+| Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4xx-5xx         | */*             |
-
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
 
 ## list_webhooks
 
@@ -93,10 +92,9 @@ if res is not None:
 
 ### Errors
 
-| Error Object    | Status Code     | Content Type    |
+| Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4xx-5xx         | */*             |
-
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
 
 ## get_webhook
 
@@ -133,10 +131,9 @@ if res is not None:
 
 ### Errors
 
-| Error Object    | Status Code     | Content Type    |
+| Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4xx-5xx         | */*             |
-
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
 
 ## update_webhook
 
@@ -154,12 +151,12 @@ s = shippo.Shippo(
 )
 
 
-res = s.webhooks.update_webhook(webhook_id='<value>', webhook_update_request=components.WebhookUpdateRequest(
+res = s.webhooks.update_webhook(webhook_update_request=components.WebhookUpdateRequest(
     event=components.WebhookEventTypeEnum.BATCH_CREATED,
     url='https://example.com/shippo-webhook',
     active=True,
     is_test=False,
-))
+), webhook_id='<value>')
 
 if res is not None:
     # handle response
@@ -180,10 +177,9 @@ if res is not None:
 
 ### Errors
 
-| Error Object    | Status Code     | Content Type    |
+| Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4xx-5xx         | */*             |
-
+| errors.SDKError | 4XX, 5XX        | \*/\*           |
 
 ## delete_webhook
 
@@ -214,6 +210,6 @@ s.webhooks.delete_webhook(webhook_id='<value>')
 
 ### Errors
 
-| Error Object    | Status Code     | Content Type    |
+| Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| errors.SDKError | 4xx-5xx         | */*             |
+| errors.SDKError | 4XX, 5XX        | \*/\*           |

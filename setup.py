@@ -19,7 +19,7 @@ except FileNotFoundError:
 
 setuptools.setup(
     name='shippo',
-    version='3.7.1',
+    version='3.8.0',
     author='Shippo',
     description='Shipping API Python library (USPS, FedEx, UPS and more)',
     license = 'MIT License',
