@@ -11,8 +11,9 @@ generation:
     requestResponseComponentNamesFeb2024: true
   auth:
     oAuth2ClientCredentialsEnabled: true
+    oAuth2PasswordEnabled: false
 python:
-  version: 3.7.1
+  version: 3.8.0
   additionalDependencies:
     dependencies: {}
     extraDependencies:
@@ -21,6 +22,7 @@ python:
         pytest: ==8.1.1
   author: Shippo
   clientServerStatusCodesAsErrors: true
+  defaultErrorName: SDKError
   description: Shipping API Python library (USPS, FedEx, UPS and more)
   flattenGlobalSecurity: true
   imports:
