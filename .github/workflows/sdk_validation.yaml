@@ -20,7 +20,7 @@ jobs:
     env:
       SHIPPO_TOKEN: ${{ secrets.SHIPPO_TOKEN }}
     concurrency:
-      group: python-sdk-check
+      group: python-sdk-check-${{ github.event.pull_request.number }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
