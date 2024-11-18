@@ -21,7 +21,6 @@ jobs:
       SHIPPO_TOKEN: ${{ secrets.SHIPPO_TOKEN }}
     concurrency:
       group: python-sdk-check-${{ github.event.pull_request.number }}
-      cancel-in-progress: true
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
