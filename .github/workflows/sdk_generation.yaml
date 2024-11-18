@@ -12,7 +12,7 @@ permissions:
         type: boolean
         default: false
   schedule:
-    - cron: 0 0 * * *
+    - cron: "0 0 * * 1" # Mondays at 00:00 UTC
 jobs:
   generate:
     uses: speakeasy-api/sdk-generation-action/.github/workflows/workflow-executor.yaml@v15
