@@ -1,0 +1,16 @@
+certifi==2024.8.30
+charset-normalizer==3.4.0
+dataclasses-json==0.6.7
+idna==3.10
+iniconfig==2.0.0
+marshmallow==3.23.1
+mypy-extensions==1.0.0
+packaging==24.2
+pluggy==1.5.0
+pytest==8.3.3
+python-dateutil==2.9.0.post0
+requests==2.32.3
+six==1.16.0
+typing-inspect==0.9.0
+typing_extensions==4.12.2
+urllib3==2.2.3
