@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: e82796aa3c96b5a7135e06b06d1414b1
+  docChecksum: d17362762d19f1f23211a71e568bf249
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.438.1
-  generationVersion: 2.457.2
-  releaseVersion: 3.8.0
-  configChecksum: 0fa4b8a354eb33058718b45cd5d73e32
+  speakeasyVersion: 1.441.0
+  generationVersion: 2.460.1
+  releaseVersion: 3.8.1
+  configChecksum: 7caf9a9e8acdea022dbcac299a6b3ab2
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
@@ -14,7 +14,7 @@ features:
   python:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.4
-    core: 4.8.15
+    core: 4.8.16
     flattening: 2.81.1
     globalSecurity: 2.83.7
     globalSecurityCallbacks: 0.1.0
@@ -1196,7 +1196,7 @@ examples:
           SHIPPO-API-VERSION: "2018-02-08"
       responses:
         "200":
-          application/json: [{"description": "USPS shipping options", "flat_rate": "5", "flat_rate_currency": "USD", "free_shipping_threshold_currency": "USD", "free_shipping_threshold_min": "5", "name": "USPS Shipping", "rate_adjustment": 15, "type": "FLAT_RATE", "object_id": "80feb1633d4a43c898f005850", "is_active": true, "service_levels": [{"name": "Priority Mail Express", "token": "usps_priority_express", "parent_servicelevel": {"name": "Priority Mail Express", "token": "usps_priority_express"}}, {"name": "Priority Mail Express", "token": "usps_priority_express", "parent_servicelevel": {"name": "Priority Mail Express", "token": "usps_priority_express"}}]}, {"description": "USPS shipping options", "flat_rate": "5", "flat_rate_currency": "USD", "free_shipping_threshold_currency": "USD", "free_shipping_threshold_min": "5", "name": "USPS Shipping", "rate_adjustment": 15, "type": "FLAT_RATE", "object_id": "80feb1633d4a43c898f005850", "is_active": true, "service_levels": [{"name": "Priority Mail Express", "token": "usps_priority_express", "parent_servicelevel": {"name": "Priority Mail Express", "token": "usps_priority_express"}}, {"name": "Priority Mail Express", "token": "usps_priority_express", "parent_servicelevel": {"name": "Priority Mail Express", "token": "usps_priority_express"}}]}, {"description": "USPS shipping options", "flat_rate": "5", "flat_rate_currency": "USD", "free_shipping_threshold_currency": "USD", "free_shipping_threshold_min": "5", "name": "USPS Shipping", "rate_adjustment": 15, "type": "FLAT_RATE", "object_id": "80feb1633d4a43c898f005850", "is_active": true, "service_levels": []}]
+          application/json: [{"description": "USPS shipping options", "flat_rate": "5", "flat_rate_currency": "USD", "free_shipping_threshold_currency": "USD", "free_shipping_threshold_min": "5", "name": "USPS Shipping", "rate_adjustment": 15, "type": "FLAT_RATE", "object_id": "80feb1633d4a43c898f005850", "is_active": true, "service_levels": [{"account_object_id": "80feb1633d4a43c898f0058506cfd82d", "service_level_token": "ups_next_day_air_saver"}, {"account_object_id": "80feb1633d4a43c898f0058506cfd82d", "service_level_token": "ups_next_day_air_saver"}]}, {"description": "USPS shipping options", "flat_rate": "5", "flat_rate_currency": "USD", "free_shipping_threshold_currency": "USD", "free_shipping_threshold_min": "5", "name": "USPS Shipping", "rate_adjustment": 15, "type": "FLAT_RATE", "object_id": "80feb1633d4a43c898f005850", "is_active": true, "service_levels": [{"account_object_id": "80feb1633d4a43c898f0058506cfd82d", "service_level_token": "ups_next_day_air_saver"}, {"account_object_id": "80feb1633d4a43c898f0058506cfd82d", "service_level_token": "ups_next_day_air_saver"}]}, {"description": "USPS shipping options", "flat_rate": "5", "flat_rate_currency": "USD", "free_shipping_threshold_currency": "USD", "free_shipping_threshold_min": "5", "name": "USPS Shipping", "rate_adjustment": 15, "type": "FLAT_RATE", "object_id": "80feb1633d4a43c898f005850", "is_active": true, "service_levels": []}]
   CreateServiceGroup:
     speakeasy-default-create-service-group:
       parameters:
@@ -1206,7 +1206,7 @@ examples:
         application/json: {"description": "USPS shipping options", "flat_rate": "5", "flat_rate_currency": "USD", "free_shipping_threshold_currency": "USD", "free_shipping_threshold_min": "5", "name": "USPS Shipping", "rate_adjustment": 15, "type": "FLAT_RATE", "service_levels": [{"account_object_id": "80feb1633d4a43c898f0058506cfd82d", "service_level_token": "ups_next_day_air_saver"}]}
       responses:
         "201":
-          application/json: {"description": "USPS shipping options", "flat_rate": "5", "flat_rate_currency": "USD", "free_shipping_threshold_currency": "USD", "free_shipping_threshold_min": "5", "name": "USPS Shipping", "rate_adjustment": 15, "type": "FLAT_RATE", "object_id": "80feb1633d4a43c898f005850", "is_active": true, "service_levels": [{"name": "Priority Mail Express", "token": "usps_priority_express", "parent_servicelevel": {"name": "Priority Mail Express", "token": "usps_priority_express"}}, {"name": "Priority Mail Express", "token": "usps_priority_express", "parent_servicelevel": {"name": "Priority Mail Express", "token": "usps_priority_express"}}]}
+          application/json: {"description": "USPS shipping options", "flat_rate": "5", "flat_rate_currency": "USD", "free_shipping_threshold_currency": "USD", "free_shipping_threshold_min": "5", "name": "USPS Shipping", "rate_adjustment": 15, "type": "FLAT_RATE", "object_id": "80feb1633d4a43c898f005850", "is_active": true, "service_levels": [{"account_object_id": "80feb1633d4a43c898f0058506cfd82d", "service_level_token": "ups_next_day_air_saver"}, {"account_object_id": "80feb1633d4a43c898f0058506cfd82d", "service_level_token": "ups_next_day_air_saver"}]}
   UpdateServiceGroup:
     speakeasy-default-update-service-group:
       parameters:
@@ -1216,7 +1216,7 @@ examples:
         application/json: {"description": "USPS shipping options", "flat_rate": "5", "flat_rate_currency": "USD", "free_shipping_threshold_currency": "USD", "free_shipping_threshold_min": "5", "name": "USPS Shipping", "rate_adjustment": 15, "type": "FLAT_RATE", "object_id": "80feb1633d4a43c898f005850", "is_active": true, "service_levels": [{"account_object_id": "80feb1633d4a43c898f0058506cfd82d", "service_level_token": "ups_next_day_air_saver"}, {"account_object_id": "80feb1633d4a43c898f0058506cfd82d", "service_level_token": "ups_next_day_air_saver"}, {"account_object_id": "80feb1633d4a43c898f0058506cfd82d", "service_level_token": "ups_next_day_air_saver"}]}
       responses:
         "200":
-          application/json: {"description": "USPS shipping options", "flat_rate": "5", "flat_rate_currency": "USD", "free_shipping_threshold_currency": "USD", "free_shipping_threshold_min": "5", "name": "USPS Shipping", "rate_adjustment": 15, "type": "FLAT_RATE", "object_id": "80feb1633d4a43c898f005850", "is_active": true, "service_levels": [{"name": "Priority Mail Express", "token": "usps_priority_express", "parent_servicelevel": {"name": "Priority Mail Express", "token": "usps_priority_express"}}, {"name": "Priority Mail Express", "token": "usps_priority_express", "parent_servicelevel": {"name": "Priority Mail Express", "token": "usps_priority_express"}}]}
+          application/json: {"description": "USPS shipping options", "flat_rate": "5", "flat_rate_currency": "USD", "free_shipping_threshold_currency": "USD", "free_shipping_threshold_min": "5", "name": "USPS Shipping", "rate_adjustment": 15, "type": "FLAT_RATE", "object_id": "80feb1633d4a43c898f005850", "is_active": true, "service_levels": [{"account_object_id": "80feb1633d4a43c898f0058506cfd82d", "service_level_token": "ups_next_day_air_saver"}, {"account_object_id": "80feb1633d4a43c898f0058506cfd82d", "service_level_token": "ups_next_day_air_saver"}]}
   DeleteServiceGroup:
     speakeasy-default-delete-service-group:
       parameters:
