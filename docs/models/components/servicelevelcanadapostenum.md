@@ -13,21 +13,27 @@
 | canada_post_small_packet_usa_air | Small Packet USA Air|
 | canada_post_tracked_packet_international | Tracked Packet International|
 | canada_post_small_packet_international_air | Small Package International Air|
+| canada_post_small_packet_international_surface  | Small Packet International Surface
+| canada_post_international_parcel_surface  | International Parcel Surface
+| canada_post_international_parcel_air  | International Parcel Air
 
 
 
 ## Values
 
-| Name                                         | Value                                        |
-| -------------------------------------------- | -------------------------------------------- |
-| `CANADA_POST_REGULAR_PARCEL`                 | canada_post_regular_parcel                   |
-| `CANADA_POST_EXPEDITED_PARCEL`               | canada_post_expedited_parcel                 |
-| `CANADA_POST_PRIORITY`                       | canada_post_priority                         |
-| `CANADA_POST_XPRESSPOST`                     | canada_post_xpresspost                       |
-| `CANADA_POST_XPRESSPOST_INTERNATIONAL`       | canada_post_xpresspost_international         |
-| `CANADA_POST_XPRESSPOST_USA`                 | canada_post_xpresspost_usa                   |
-| `CANADA_POST_EXPEDITED_PARCEL_USA`           | canada_post_expedited_parcel_usa             |
-| `CANADA_POST_TRACKED_PACKET_USA`             | canada_post_tracked_packet_usa               |
-| `CANADA_POST_SMALL_PACKET_USA_AIR`           | canada_post_small_packet_usa_air             |
-| `CANADA_POST_TRACKED_PACKET_INTERNATIONAL`   | canada_post_tracked_packet_international     |
-| `CANADA_POST_SMALL_PACKET_INTERNATIONAL_AIR` | canada_post_small_packet_international_air   |
+| Name                                             | Value                                            |
+| ------------------------------------------------ | ------------------------------------------------ |
+| `CANADA_POST_REGULAR_PARCEL`                     | canada_post_regular_parcel                       |
+| `CANADA_POST_EXPEDITED_PARCEL`                   | canada_post_expedited_parcel                     |
+| `CANADA_POST_PRIORITY`                           | canada_post_priority                             |
+| `CANADA_POST_XPRESSPOST`                         | canada_post_xpresspost                           |
+| `CANADA_POST_XPRESSPOST_INTERNATIONAL`           | canada_post_xpresspost_international             |
+| `CANADA_POST_XPRESSPOST_USA`                     | canada_post_xpresspost_usa                       |
+| `CANADA_POST_EXPEDITED_PARCEL_USA`               | canada_post_expedited_parcel_usa                 |
+| `CANADA_POST_TRACKED_PACKET_USA`                 | canada_post_tracked_packet_usa                   |
+| `CANADA_POST_SMALL_PACKET_USA_AIR`               | canada_post_small_packet_usa_air                 |
+| `CANADA_POST_TRACKED_PACKET_INTERNATIONAL`       | canada_post_tracked_packet_international         |
+| `CANADA_POST_SMALL_PACKET_INTERNATIONAL_AIR`     | canada_post_small_packet_international_air       |
+| `CANADA_POST_SMALL_PACKET_INTERNATIONAL_SURFACE` | canada_post_small_packet_international_surface   |
+| `CANADA_POST_INTERNATIONAL_PARCEL_SURFACE`       | canada_post_international_parcel_surface         |
+| `CANADA_POST_INTERNATIONAL_PARCEL_AIR`           | canada_post_international_parcel_air             |
