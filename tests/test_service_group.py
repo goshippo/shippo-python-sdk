@@ -1,4 +1,4 @@
-from shippo.models.components import ServiceGroup, ServiceLevel
+from shippo.models.components import ServiceGroup, ServiceGroupAccountAndServiceLevel
 
 import shippo
 
@@ -22,6 +22,6 @@ class TestServiceGroups:
 
         first_service_level = first_service_group.service_levels[0]
         assert first_service_level is not None
-        assert isinstance(first_service_level, ServiceLevel)
+        assert isinstance(first_service_level, ServiceGroupAccountAndServiceLevel)
         assert first_service_level.account_object_id is not None
         assert first_service_level.service_level_token is not None
