@@ -17,5 +17,9 @@ class GetBatchGlobals:
 class GetBatchRequest:
     batch_id: str = dataclasses.field(metadata={'path_param': { 'field_name': 'BatchId', 'style': 'simple', 'explode': False }})
     r"""Object ID of the batch"""
+    page: Optional[int] = dataclasses.field(default=1, metadata={'query_param': { 'field_name': 'page', 'style': 'form', 'explode': True }})
+    r"""The page number you want to select"""
+    results: Optional[int] = dataclasses.field(default=5, metadata={'query_param': { 'field_name': 'results', 'style': 'form', 'explode': True }})
+    r"""The number of results to return per page (max 100, default 5)"""
     
 
