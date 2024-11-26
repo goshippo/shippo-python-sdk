@@ -1,4 +1,5 @@
 import re
+from typing import List
 
 import shippo
 from shippo.models.components import ShipmentPaginatedList, Shipment
@@ -32,7 +33,7 @@ class TestShipments:
             assert_shipment_results(secondResponse.results)
 
 
-def assert_shipment_results(results: list[Shipment]):
+def assert_shipment_results(results: List[Shipment]):
     assert isinstance(results, list)
     if len(results) > 0:
         for result in results:
