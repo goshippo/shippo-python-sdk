@@ -33,7 +33,7 @@ import shippo
 from shippo.models import components
 
 s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
+    api_key_header='<YOUR_API_KEY_HERE>',
     shippo_api_version='2018-02-08',
 )
 
@@ -378,7 +378,7 @@ For more details on filtering results, see our guide on <a href="https://docs.go
 import shippo
 
 s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
+    api_key_header='<YOUR_API_KEY_HERE>',
     shippo_api_version='2018-02-08',
 )
 
@@ -393,9 +393,11 @@ if res is not None:
 
 ### Parameters
 
-| Parameter              | Type                   | Required               | Description            |
-| ---------------------- | ---------------------- | ---------------------- | ---------------------- |
-| `batch_id`             | *str*                  | :heavy_check_mark:     | Object ID of the batch |
+| Parameter                                                     | Type                                                          | Required                                                      | Description                                                   |
+| ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- |
+| `batch_id`                                                    | *str*                                                         | :heavy_check_mark:                                            | Object ID of the batch                                        |
+| `page`                                                        | *Optional[int]*                                               | :heavy_minus_sign:                                            | The page number you want to select                            |
+| `results`                                                     | *Optional[int]*                                               | :heavy_minus_sign:                                            | The number of results to return per page (max 100, default 5) |
 
 ### Response
 
@@ -418,7 +420,7 @@ import shippo
 from shippo.models import components
 
 s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
+    api_key_header='<YOUR_API_KEY_HERE>',
     shippo_api_version='2018-02-08',
 )
 
@@ -1110,7 +1112,7 @@ When all the shipments are purchased, the status will change to `PURCHASED` and 
 import shippo
 
 s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
+    api_key_header='<YOUR_API_KEY_HERE>',
     shippo_api_version='2018-02-08',
 )
 
@@ -1149,7 +1151,7 @@ Removes shipments from an existing batch shipment.
 import shippo
 
 s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
+    api_key_header='<YOUR_API_KEY_HERE>',
     shippo_api_version='2018-02-08',
 )
 

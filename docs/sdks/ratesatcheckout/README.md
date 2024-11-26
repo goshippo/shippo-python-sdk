@@ -35,7 +35,7 @@ import shippo
 from shippo.models import components
 
 s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
+    api_key_header='<YOUR_API_KEY_HERE>',
     shippo_api_version='2018-02-08',
 )
 
@@ -109,7 +109,7 @@ Retrieve and display the currently configured default parcel template for live r
 import shippo
 
 s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
+    api_key_header='<YOUR_API_KEY_HERE>',
     shippo_api_version='2018-02-08',
 )
 
@@ -143,7 +143,7 @@ import shippo
 from shippo.models import components
 
 s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
+    api_key_header='<YOUR_API_KEY_HERE>',
     shippo_api_version='2018-02-08',
 )
 
@@ -184,7 +184,7 @@ Clears the currently configured default parcel template for live rates.
 import shippo
 
 s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
+    api_key_header='<YOUR_API_KEY_HERE>',
     shippo_api_version='2018-02-08',
 )
 

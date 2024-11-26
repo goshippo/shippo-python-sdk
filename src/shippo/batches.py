@@ -90,7 +90,7 @@ class Batches:
 
     
     
-    def get(self, batch_id: str) -> components.Batch:
+    def get(self, batch_id: str, page: Optional[int] = None, results: Optional[int] = None) -> components.Batch:
         r"""Retrieve a batch
         Returns a batch using an object ID. <br> Batch shipments are displayed 100 at a time.  You can iterate 
         through each `page` using the `?page= query` parameter.  You can also filter based on batch shipment 
@@ -100,6 +100,8 @@ class Batches:
         hook_ctx = HookContext(operation_id='GetBatch', oauth2_scopes=[], security_source=self.sdk_configuration.security)
         request = operations.GetBatchRequest(
             batch_id=batch_id,
+            page=page,
+            results=results,
         )
         
         _globals = operations.GetBatchGlobals(
@@ -116,6 +118,7 @@ class Batches:
             headers, query_params = utils.get_security(self.sdk_configuration.security)
         
         headers = { **utils.get_headers(request, _globals), **headers }
+        query_params = { **utils.get_query_params(request, _globals), **query_params }
         headers['Accept'] = 'application/json'
         headers['user-agent'] = self.sdk_configuration.user_agent
         client = self.sdk_configuration.client

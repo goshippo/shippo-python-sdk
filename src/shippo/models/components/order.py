@@ -12,6 +12,11 @@ from shippo import utils
 from typing import List, Optional
 
 
+@dataclasses.dataclass
+class Transactions:
+    pass
+
+
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class Order:
@@ -64,7 +69,7 @@ class Order:
     r"""Platform the order was created on and, if applicable, imported from.
     Orders created via the Shippo API or dashboard will have the value \"Shippo\".
     """
-    transactions: Optional[List[str]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('transactions'), 'exclude': lambda f: f is None }})
+    transactions: Optional[List[Transactions]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('transactions'), 'exclude': lambda f: f is None }})
     r"""Array of <a href=\\"#tag/Transactions\\">transaction</a> objects representing all shipping labels purchased for this order.
     All objects are returned expanded with a limited number of fields by default.
     """

@@ -28,7 +28,7 @@ List all carrier parcel template objects. <br> Use the following query string pa
 import shippo
 
 s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
+    api_key_header='<YOUR_API_KEY_HERE>',
     shippo_api_version='2018-02-08',
 )
 
@@ -68,7 +68,7 @@ Fetches the parcel template information for a specific carrier parcel template, 
 import shippo
 
 s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
+    api_key_header='<YOUR_API_KEY_HERE>',
     shippo_api_version='2018-02-08',
 )
 

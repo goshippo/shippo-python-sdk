@@ -24,7 +24,7 @@ Returns a list of service group objects.
 import shippo
 
 s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
+    api_key_header='<YOUR_API_KEY_HERE>',
     shippo_api_version='2018-02-08',
 )
 
@@ -58,7 +58,7 @@ import shippo
 from shippo.models import components
 
 s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
+    api_key_header='<YOUR_API_KEY_HERE>',
     shippo_api_version='2018-02-08',
 )
 
@@ -113,7 +113,7 @@ import shippo
 from shippo.models import components
 
 s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
+    api_key_header='<YOUR_API_KEY_HERE>',
     shippo_api_version='2018-02-08',
 )
 
@@ -177,7 +177,7 @@ Deletes an existing service group using an object ID.
 import shippo
 
 s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
+    api_key_header='<YOUR_API_KEY_HERE>',
     shippo_api_version='2018-02-08',
 )
 

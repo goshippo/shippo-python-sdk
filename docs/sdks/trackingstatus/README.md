@@ -31,7 +31,7 @@ import shippo
 from shippo.models import components
 
 s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
+    api_key_header='<YOUR_API_KEY_HERE>',
     shippo_api_version='2018-02-08',
 )
 
@@ -76,7 +76,7 @@ Returns the tracking status of a shipment using a carrier name and a tracking nu
 import shippo
 
 s = shippo.Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
+    api_key_header='<YOUR_API_KEY_HERE>',
     shippo_api_version='2018-02-08',
 )
 
