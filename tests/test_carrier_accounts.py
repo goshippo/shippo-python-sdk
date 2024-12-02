@@ -1,3 +1,6 @@
+import pytest
+from marshmallow import ValidationError
+
 import shippo
 from shippo.models.components import CarriersEnum, ConnectExistingOwnAccountRequest
 from shippo.models.operations import ListCarrierAccountsRequest
@@ -18,3 +21,34 @@ class TestCarrierAccounts:
                     assert carrier_account.object_id is not None
                     assert carrier_account.object_owner is not None
                     assert carrier_account.test is not None
+
+    def test_parameters_deserialize_to_dict(self, api: shippo.Shippo):
+        parameters = {
+            'api_version': 4,
+            'username': '12345',
+            'password': 'password',
+            'pickup_no': '12345',
+            'facility_code': '1234'
+        }
+
+        request_data = {
+            'account_id': '123456789',
+            'carrier': 'dhl_ecommerce',
+            'parameters': parameters,
+            'metadata': 'DHLEcomTestAccount',
+            'active': False,
+            'test': False
+        }
+
+        try:
+            request = ConnectExistingOwnAccountRequest.from_dict(request_data)
+            assert isinstance(request.parameters, dict)
+            for key, value in request.parameters.items():
+                assert key in parameters
+                assert value is not None
+
+        except ValidationError as e:
+            pytest.fail(f'Deserialization failed with ValidationError: {e}')
+        except Exception as e:
+            pytest.fail(f'Unexpected error occurred: {e}')
+
