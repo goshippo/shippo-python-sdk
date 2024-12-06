@@ -50,7 +50,6 @@ class CarriersEnum(str, Enum):
     | new_zealand_post | New Zealand Post (also used for Pace and CourierPost)|
     | nippon_express | Nippon Express|
     | ontrac | OnTrac|
-    | orangeds | OrangeDS|
     | parcelforce | Parcelforce|
     | passport | Passport|
     | pcf | PCF|
@@ -112,7 +111,6 @@ class CarriersEnum(str, Enum):
     NEW_ZEALAND_POST = 'new_zealand_post'
     NIPPON_EXPRESS = 'nippon_express'
     ONTRAC = 'ontrac'
-    ORANGEDS = 'orangeds'
     PARCELFORCE = 'parcelforce'
     PASSPORT = 'passport'
     PCF = 'pcf'
