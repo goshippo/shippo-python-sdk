@@ -20,14 +20,19 @@ Shippo external API.: Use this API to integrate with the Shippo service
 
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
+<!-- $toc-max-depth=2 -->
+* [<img src="https://docs.goshippo.com/images/Logo.png" width="30" alt="Shippo logo"> Shippo Python SDK](#img-srchttpsdocsgoshippocomimageslogopng-width30-altshippo-logo-shippo-python-sdk)
+  * [SDK Installation](#sdk-installation)
+  * [SDK Reinstallation to a specific version](#sdk-reinstallation-to-a-specific-version)
+  * [SDK Example Usage](#sdk-example-usage)
+  * [Custom HTTP Client](#custom-http-client)
+  * [Debug HTTP Client](#debug-http-client)
+  * [Documentation](#documentation)
+  * [Available Resources and Operations](#available-resources-and-operations)
+  * [Maturity](#maturity)
+  * [Contributions](#contributions)
+  * [About Shippo](#about-shippo)
 
-* [SDK Installation](#sdk-installation)
-* [SDK Example Usage](#sdk-example-usage)
-* [Available Resources and Operations](#available-resources-and-operations)
-* [Error Handling](#error-handling)
-* [Server Selection](#server-selection)
-* [Custom HTTP Client](#custom-http-client)
-* [Authentication](#authentication)
 <!-- End Table of Contents [toc] -->
 
 <!-- Start SDK Installation [installation] -->

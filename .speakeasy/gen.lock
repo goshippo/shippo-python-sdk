@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: 256e7d68eaf807fc9ef86f8311e8a13f
+  docChecksum: f5fb49c650f0b24e378f83b41c734d6d
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.447.0
-  generationVersion: 2.463.0
-  releaseVersion: 3.9.0
-  configChecksum: d5580dbd92c617bc4ccb971b84ab7996
+  speakeasyVersion: 1.455.3
+  generationVersion: 2.479.3
+  releaseVersion: 3.9.1
+  configChecksum: c2084958ec0a2e63f6f6bb2892d4aaa2
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
@@ -14,7 +14,7 @@ features:
   python:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.4
-    core: 4.8.17
+    core: 4.8.18
     flattening: 2.81.1
     globalSecurity: 2.83.7
     globalSecurityCallbacks: 0.1.0
@@ -1429,4 +1429,13 @@ examples:
       parameters:
         path:
           webhookId: "<value>"
+  batch: {}
+  track:
+    speakeasy-default-track:
+      requestBody:
+        application/json: {"data": {"address_from": {"city": "Las Vegas", "country": "US", "state": "NV", "zip": "89101"}, "address_to": {"city": "Las Vegas", "country": "US", "state": "NV", "zip": "89101"}, "carrier": "usps", "messages": ["<value>"], "metadata": "Order 000123", "original_eta": "2021-07-23T00:00:00Z", "servicelevel": {"name": "Priority Mail Express", "token": "usps_priority_express", "parent_servicelevel": {"name": "Priority Mail Express", "token": "usps_priority_express"}}, "tracking_history": [{"location": {"city": "Las Vegas", "country": "US", "state": "NV", "zip": "89101"}, "object_created": "2023-07-25T17:47:12.180Z", "object_id": "<id>", "object_updated": "2023-02-21T22:35:19.645Z", "status": "DELIVERED", "substatus": {"code": "information_received", "text": "Information about the package received.", "action_required": true}, "status_date": "2016-07-23T00:00:00Z", "status_details": "Your shipment has been delivered at the destination mailbox."}], "tracking_number": "9205590164917312751089", "tracking_status": {"location": {"city": "Las Vegas", "country": "US", "state": "NV", "zip": "89101"}, "object_created": "2024-05-20T11:37:56.914Z", "object_id": "<id>", "object_updated": "2023-06-07T16:48:30.895Z", "status": "DELIVERED", "substatus": {"code": "information_received", "text": "Information about the package received.", "action_required": true}, "status_date": "2016-07-23T00:00:00Z", "status_details": "Your shipment has been delivered at the destination mailbox."}}}
+  transaction:
+    speakeasy-default-transaction:
+      requestBody:
+        application/json: {"data": {"created_by": {"first_name": "Shwan", "last_name": "Ippotle", "username": "shippotle@shippo.com"}, "label_file_type": "PDF_4x6", "label_url": "https://shippo-delivery.s3.amazonaws.com/70ae8117ee1749e393f249d5b77c45e0.pdf?Signature=vDw1ltcyGveVR1OQoUDdzC43BY8%3D&Expires=1437093830&AWSAccessKeyId=AKIAJTHP3LLFMYAWALIA", "messages": [], "object_id": "915d94940ea54c3a80cbfa328722f5a1", "object_owner": "shippotle@shippo.com", "parcel": "e94c7fdfdc7b495dbb390a28d929d90a", "qr_code_url": "https://shippo-delivery.s3.amazonaws.com/96_qr_code.pdf?Signature=PEdWrp0mFWAGwJp7FW3b%2FeA2eyY%3D&Expires=1385930652&AWSAccessKeyId=AKIAJTHP3LLFMYAWALIA", "rate": {"amount": "5.5", "amount_local": "5.5", "currency": "USD", "currency_local": "USD", "object_id": "adcfdddf8ec64b84ad22772bce3ea37a", "provider": "USPS", "carrier_account": "078870331023437cb917f5187429b093", "servicelevel_name": "Priority Mail", "servicelevel_token": "fedex_ground"}, "status": "SUCCESS", "tracking_number": "9499907123456123456781", "tracking_status": "DELIVERED", "tracking_url_provider": "https://tools.usps.com/go/TrackConfirmAction_input?origTrackNum=9499907123456123456781"}}
 generatedTests: {}
