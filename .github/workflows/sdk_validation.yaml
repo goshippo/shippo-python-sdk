@@ -18,6 +18,7 @@ jobs:
     name: Python ${{ matrix.python-version }}
     timeout-minutes: 10
     env:
+      IMAGE_VERSION: "20241215.1.0"
       SHIPPO_TOKEN: ${{ secrets.SHIPPO_TOKEN }}
     concurrency:
       group: python-sdk-check
