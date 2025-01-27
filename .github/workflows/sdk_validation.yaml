@@ -11,7 +11,7 @@ on:
 
 jobs:
   check:
-    runs-on: ubuntu-22.03
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: [ '3.8', '3.11' ]
