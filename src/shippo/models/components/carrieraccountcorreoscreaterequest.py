@@ -4,6 +4,7 @@ from __future__ import annotations
 import dataclasses
 from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
+from typing import Final
 
 
 @dataclasses.dataclass
@@ -14,7 +15,7 @@ class CarrierAccountCorreosCreateRequestParameters:
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class CarrierAccountCorreosCreateRequest:
-    carrier: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('carrier') }})
     parameters: CarrierAccountCorreosCreateRequestParameters = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parameters') }})
+    CARRIER: Final[str] = dataclasses.field(default='correos', metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('carrier') }})
     
 

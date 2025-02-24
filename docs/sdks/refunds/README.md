@@ -64,6 +64,7 @@ Returns a list all refund objects.
 
 ```python
 import shippo
+from shippo.models import operations
 
 s = shippo.Shippo(
     api_key_header='<YOUR_API_KEY_HERE>',
@@ -71,7 +72,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.refunds.list()
+res = s.refunds.list(request=operations.ListRefundsRequest())
 
 if res is not None:
     # handle response
@@ -104,7 +105,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.refunds.get(refund_id='<value>')
+res = s.refunds.get(refund_id='<id>')
 
 if res is not None:
     # handle response

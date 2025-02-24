@@ -5,13 +5,13 @@ import dataclasses
 from .carrieraccountupscreaterequestparameters import CarrierAccountUPSCreateRequestParameters
 from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
-from typing import Optional
+from typing import Final, Optional
 
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class CarrierAccountUPSCreateRequest:
-    carrier: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('carrier') }})
+    CARRIER: Final[str] = dataclasses.field(default='ups', metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('carrier') }})
     parameters: Optional[CarrierAccountUPSCreateRequestParameters] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parameters'), 'exclude': lambda f: f is None }})
     
 

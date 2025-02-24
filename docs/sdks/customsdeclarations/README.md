@@ -164,7 +164,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_declarations.get(customs_declaration_id='<value>')
+res = s.customs_declarations.get(customs_declaration_id='<id>')
 
 if res is not None:
     # handle response

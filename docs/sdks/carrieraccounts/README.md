@@ -80,16 +80,16 @@ s = shippo.Shippo(
 res = s.carrier_accounts.create(request=components.ConnectExistingOwnAccountRequest(
     account_id='321123',
     carrier='fedex',
-    parameters=components.FedExConnectExistingOwnAccountParameters(
-        first_name='Loyal',
-        last_name='Collier',
-        phone_number='(890) 307-8579',
-        from_address_st='<value>',
-        from_address_city='<value>',
-        from_address_state='<value>',
-        from_address_zip='<value>',
-        from_address_country_iso2='<value>',
-    ),
+    parameters={
+        'first_name': 'Loyal',
+        'last_name': 'Collier',
+        'phone_number': '(890) 307-8579',
+        'from_address_st': '<value>',
+        'from_address_city': '<value>',
+        'from_address_state': '<value>',
+        'from_address_zip': '<value>',
+        'from_address_country_iso2': '<value>',
+    },
     metadata='FEDEX Account',
     test=False,
 ))
@@ -131,7 +131,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.carrier_accounts.get(carrier_account_id='<value>')
+res = s.carrier_accounts.get(carrier_account_id='<id>')
 
 if res is not None:
     # handle response
@@ -171,33 +171,33 @@ s = shippo.Shippo(
 )
 
 
-res = s.carrier_accounts.update(carrier_account_id='<value>', carrier_account_base=components.CarrierAccountBase(
+res = s.carrier_accounts.update(carrier_account_id='<id>', carrier_account_base=components.CarrierAccountBase(
     account_id='****',
     carrier='usps',
-    parameters=components.UPSConnectExistingOwnAccountParameters(
-        account_number='94567e',
-        billing_address_city='San Francisco',
-        billing_address_country_iso2='US',
-        billing_address_state='CA',
-        billing_address_street1='731 Market St',
-        billing_address_zip='94103',
-        collec_country_iso2='US',
-        collec_zip='94103',
-        company='Shippo',
-        email='hippo@shippo.com',
-        full_name='Shippo Meister',
-        has_invoice=False,
-        phone='1112223333',
-        title='Manager',
-        ups_agreements=True,
-        aia_country_iso2='US',
-        billing_address_street2='STE 200',
-        currency_code='USD',
-        invoice_controlid='1234',
-        invoice_date='20210529',
-        invoice_number='1112234',
-        invoice_value='11.23',
-    ),
+    parameters={
+        'account_number': '94567e',
+        'aia_country_iso2': 'US',
+        'billing_address_city': 'San Francisco',
+        'billing_address_country_iso2': 'US',
+        'billing_address_state': 'CA',
+        'billing_address_street1': '731 Market St',
+        'billing_address_street2': 'STE 200',
+        'billing_address_zip': '94103',
+        'collec_country_iso2': 'US',
+        'collec_zip': '94103',
+        'company': 'Shippo',
+        'currency_code': 'USD',
+        'email': 'hippo@shippo.com',
+        'full_name': 'Shippo Meister',
+        'has_invoice': False,
+        'invoice_controlid': '1234',
+        'invoice_date': '20210529',
+        'invoice_number': '1112234',
+        'invoice_value': '11.23',
+        'phone': '1112223333',
+        'title': 'Manager',
+        'ups_agreements': True,
+    },
 ))
 
 if res is not None:
@@ -238,7 +238,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.carrier_accounts.initiate_oauth2_signin(carrier_account_object_id='<value>', redirect_uri='https://enlightened-mortise.com/')
+res = s.carrier_accounts.initiate_oauth2_signin(carrier_account_object_id='<id>', redirect_uri='https://enlightened-mortise.com/')
 
 if res is not None:
     # handle response
@@ -283,28 +283,8 @@ s = shippo.Shippo(
 )
 
 
-res = s.carrier_accounts.register(request=components.CarrierAccountUPSCreateRequest(
-    carrier='ups',
-    parameters=components.CarrierAccountUPSCreateRequestParameters(
-        billing_address_city='San Francisco',
-        billing_address_country_iso2='US',
-        billing_address_state='CA',
-        billing_address_street1='731 Market St',
-        billing_address_zip='94103',
-        pickup_address_city='San Francisco',
-        pickup_address_country_iso2='US',
-        pickup_address_state='CA',
-        pickup_address_street1='731 Market St',
-        pickup_address_zip='94103',
-        ups_agreements=True,
-        billing_address_street2='STE 200',
-        company='Shippo',
-        email='hippo@shippo.com',
-        full_name='Shippo Meister',
-        phone='1112223333',
-        pickup_address_same_as_billing_address=False,
-        pickup_address_street2='STE 200',
-    ),
+res = s.carrier_accounts.register(request=components.CarrierAccountCorreosCreateRequest(
+    parameters=components.CarrierAccountCorreosCreateRequestParameters(),
 ))
 
 if res is not None:

@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 from .parceltemplatearamexaustraliaenum import ParcelTemplateAramexAustraliaEnum
-from .parceltemplatecourierspleaseenum import ParcelTemplateCouriersPleaseEnum
 from .parceltemplatedhlecommerceenum import ParcelTemplateDHLeCommerceEnum
 from .parceltemplatedpdukenum import ParcelTemplateDPDUKEnum
 from .parceltemplatefedexenum import ParcelTemplateFedExEnum
@@ -10,4 +9,4 @@ from .parceltemplateupsenum import ParcelTemplateUPSEnum
 from .parceltemplateuspsenum import ParcelTemplateUSPSEnum
 from typing import Union
 
-ParcelTemplateEnumSet = Union[ParcelTemplateFedExEnum, ParcelTemplateUPSEnum, ParcelTemplateUSPSEnum, ParcelTemplateDHLeCommerceEnum, ParcelTemplateDPDUKEnum, ParcelTemplateCouriersPleaseEnum, ParcelTemplateAramexAustraliaEnum]
+ParcelTemplateEnumSet = Union[ParcelTemplateFedExEnum, ParcelTemplateUPSEnum, ParcelTemplateUSPSEnum, ParcelTemplateDHLeCommerceEnum, ParcelTemplateDPDUKEnum, ParcelTemplateAramexAustraliaEnum]

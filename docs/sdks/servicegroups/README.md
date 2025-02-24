@@ -22,6 +22,7 @@ Returns a list of service group objects.
 
 ```python
 import shippo
+from shippo.models import operations
 
 s = shippo.Shippo(
     api_key_header='<YOUR_API_KEY_HERE>',
@@ -29,7 +30,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.service_groups.list()
+res = s.service_groups.list(request=operations.ListServiceGroupsRequest())
 
 if res is not None:
     # handle response
@@ -182,7 +183,7 @@ s = shippo.Shippo(
 )
 
 
-s.service_groups.delete(service_group_id='<value>')
+s.service_groups.delete(service_group_id='<id>')
 
 # Use the SDK ...
 

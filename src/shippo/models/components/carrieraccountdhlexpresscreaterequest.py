@@ -5,12 +5,13 @@ import dataclasses
 from .carrieraccountdhlexpresscreaterequestparameters import CarrierAccountDHLExpressCreateRequestParameters
 from dataclasses_json import Undefined, dataclass_json
 from shippo import utils
+from typing import Final
 
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class CarrierAccountDHLExpressCreateRequest:
-    carrier: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('carrier') }})
     parameters: CarrierAccountDHLExpressCreateRequestParameters = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parameters') }})
+    CARRIER: Final[str] = dataclasses.field(default='dhl_express', metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('carrier') }})
     
 
