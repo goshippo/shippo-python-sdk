@@ -19,7 +19,6 @@
 | collect_plus | CollectPlus|
 | correios_br | CorreiosBR|
 | correos_espana | Correos España |
-| couriersplease | Couriers Please|
 | colissimo | Colissimo|
 | deutsche_post | Deutsche Post|
 | dhl_benelux | DHL Benelux|
@@ -45,7 +44,6 @@
 | new_zealand_post | New Zealand Post (also used for Pace and CourierPost)|
 | nippon_express | Nippon Express|
 | ontrac | OnTrac|
-| orangeds | OrangeDS|
 | parcelforce | Parcelforce|
 | passport | Passport|
 | pcf | PCF|
@@ -87,7 +85,6 @@
 | `COLLECT_PLUS`       | collect_plus         |
 | `CORREIOS_BR`        | correios_br          |
 | `CORREOS_ESPANA`     | correos_espana       |
-| `COURIERSPLEASE`     | couriersplease       |
 | `COLISSIMO`          | colissimo            |
 | `DEUTSCHE_POST`      | deutsche_post        |
 | `DHL_BENELUX`        | dhl_benelux          |
@@ -113,7 +110,6 @@
 | `NEW_ZEALAND_POST`   | new_zealand_post     |
 | `NIPPON_EXPRESS`     | nippon_express       |
 | `ONTRAC`             | ontrac               |
-| `ORANGEDS`           | orangeds             |
 | `PARCELFORCE`        | parcelforce          |
 | `PASSPORT`           | passport             |
 | `PCF`                | pcf                  |

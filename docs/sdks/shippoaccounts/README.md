@@ -115,7 +115,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.shippo_accounts.get(shippo_account_id='<value>')
+res = s.shippo_accounts.get(shippo_account_id='<id>')
 
 if res is not None:
     # handle response
@@ -155,7 +155,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.shippo_accounts.update(shippo_account_id='<value>', shippo_account_update_request=components.ShippoAccountUpdateRequest(
+res = s.shippo_accounts.update(shippo_account_id='<id>', shippo_account_update_request=components.ShippoAccountUpdateRequest(
     email='hippo@shippo.com',
     first_name='Shippo',
     last_name='Meister',

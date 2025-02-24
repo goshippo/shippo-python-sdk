@@ -1,6 +1,6 @@
 # RegisterCarrierAccountRequestBody
 
-Examples.
+The body of the request.
 
 
 ## Supported Types

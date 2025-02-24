@@ -75,12 +75,6 @@ value: components.ServiceLevelCDLEnum = /* values here */
 value: components.ServiceLevelChronopostEnum = /* values here */
 ```
 
-### `components.ServiceLevelCouriersPleaseEnum`
-
-```python
-value: components.ServiceLevelCouriersPleaseEnum = /* values here */
-```
-
 ### `components.ServiceLevelCorreosEspanaEnum`
 
 ```python

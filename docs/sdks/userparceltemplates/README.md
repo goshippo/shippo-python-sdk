@@ -27,6 +27,7 @@ Returns a list all of all user parcel template objects.
 
 ```python
 import shippo
+from shippo.models import operations
 
 s = shippo.Shippo(
     api_key_header='<YOUR_API_KEY_HERE>',
@@ -34,7 +35,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.user_parcel_templates.list()
+res = s.user_parcel_templates.list(request=operations.ListUserParcelTemplatesRequest())
 
 if res is not None:
     # handle response
@@ -116,7 +117,7 @@ s = shippo.Shippo(
 )
 
 
-s.user_parcel_templates.delete(user_parcel_template_object_id='<value>')
+s.user_parcel_templates.delete(user_parcel_template_object_id='<id>')
 
 # Use the SDK ...
 
@@ -150,7 +151,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.user_parcel_templates.get(user_parcel_template_object_id='<value>')
+res = s.user_parcel_templates.get(user_parcel_template_object_id='<id>')
 
 if res is not None:
     # handle response
@@ -190,7 +191,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.user_parcel_templates.update(user_parcel_template_object_id='<value>', user_parcel_template_update_request=components.UserParcelTemplateUpdateRequest(
+res = s.user_parcel_templates.update(user_parcel_template_object_id='<id>', user_parcel_template_update_request=components.UserParcelTemplateUpdateRequest(
     distance_unit=components.DistanceUnitEnum.IN,
     height='6',
     length='10',
