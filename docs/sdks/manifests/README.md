@@ -135,7 +135,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.manifests.get(manifest_id='<value>')
+res = s.manifests.get(manifest_id='<id>')
 
 if res is not None:
     # handle response

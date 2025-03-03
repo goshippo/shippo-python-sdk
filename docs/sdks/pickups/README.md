@@ -51,8 +51,8 @@ res = s.pickups.create(request=components.PickupBase(
         building_type=components.BuildingType.APARTMENT,
         instructions='Behind screen door',
     ),
-    requested_end_time=dateutil.parser.isoparse('2023-06-18T07:14:55.338Z'),
-    requested_start_time=dateutil.parser.isoparse('2023-12-01T17:06:07.804Z'),
+    requested_end_time=dateutil.parser.isoparse('2024-06-17T07:14:55.338Z'),
+    requested_start_time=dateutil.parser.isoparse('2024-11-30T17:06:07.804Z'),
     transactions=[
         'adcfdddf8ec64b84ad22772bce3ea37a',
     ],

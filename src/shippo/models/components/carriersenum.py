@@ -24,7 +24,6 @@ class CarriersEnum(str, Enum):
     | collect_plus | CollectPlus|
     | correios_br | CorreiosBR|
     | correos_espana | Correos España |
-    | couriersplease | Couriers Please|
     | colissimo | Colissimo|
     | deutsche_post | Deutsche Post|
     | dhl_benelux | DHL Benelux|
@@ -50,7 +49,6 @@ class CarriersEnum(str, Enum):
     | new_zealand_post | New Zealand Post (also used for Pace and CourierPost)|
     | nippon_express | Nippon Express|
     | ontrac | OnTrac|
-    | orangeds | OrangeDS|
     | parcelforce | Parcelforce|
     | passport | Passport|
     | pcf | PCF|
@@ -86,7 +84,6 @@ class CarriersEnum(str, Enum):
     COLLECT_PLUS = 'collect_plus'
     CORREIOS_BR = 'correios_br'
     CORREOS_ESPANA = 'correos_espana'
-    COURIERSPLEASE = 'couriersplease'
     COLISSIMO = 'colissimo'
     DEUTSCHE_POST = 'deutsche_post'
     DHL_BENELUX = 'dhl_benelux'
@@ -112,7 +109,6 @@ class CarriersEnum(str, Enum):
     NEW_ZEALAND_POST = 'new_zealand_post'
     NIPPON_EXPRESS = 'nippon_express'
     ONTRAC = 'ontrac'
-    ORANGEDS = 'orangeds'
     PARCELFORCE = 'parcelforce'
     PASSPORT = 'passport'
     PCF = 'pcf'

@@ -118,7 +118,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_items.get(customs_item_id='<value>')
+res = s.customs_items.get(customs_item_id='<id>')
 
 if res is not None:
     # handle response

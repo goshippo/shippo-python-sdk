@@ -123,7 +123,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.addresses.get(address_id='<value>')
+res = s.addresses.get(address_id='<id>')
 
 if res is not None:
     # handle response
@@ -162,7 +162,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.addresses.validate(address_id='<value>')
+res = s.addresses.validate(address_id='<id>')
 
 if res is not None:
     # handle response

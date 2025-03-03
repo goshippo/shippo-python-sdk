@@ -13,14 +13,14 @@ from typing import List, Optional, Union
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class LiveRateCreateRequest:
-    address_to: LiveRateCreateRequestAddressTo = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_to') }})
+    address_to: AddressTo = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_to') }})
     r"""The recipient address, which includes the recipient's name, company name, street address, city, state, zip code,
     country, phone number, and email address (strings). Special characters should not be included in 
     any address element, especially name, company, and email.
     """
     line_items: List[LineItem] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('line_items') }})
     r"""Array of Line Item objects"""
-    address_from: Optional[LiveRateCreateRequestAddressFrom] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_from'), 'exclude': lambda f: f is None }})
+    address_from: Optional[AddressFrom] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_from'), 'exclude': lambda f: f is None }})
     r"""The sender address, which includes your name, company name, street address, city, state, zip code,
     country, phone number, and email address (strings). Special characters should not be included in 
     any address element, especially name, company, and email.
@@ -30,8 +30,8 @@ class LiveRateCreateRequest:
     
 
 
-LiveRateCreateRequestAddressFrom = Union[str, AddressCompleteCreateRequest]
+AddressFrom = Union[str, AddressCompleteCreateRequest]
 
-LiveRateCreateRequestAddressTo = Union[str, AddressCompleteCreateRequest]
+AddressTo = Union[str, AddressCompleteCreateRequest]
 
 LiveRateCreateRequestParcel = Union[str, Parcel]

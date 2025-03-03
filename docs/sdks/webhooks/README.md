@@ -111,7 +111,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.webhooks.get_webhook(webhook_id='<value>')
+res = s.webhooks.get_webhook(webhook_id='<id>')
 
 if res is not None:
     # handle response
@@ -156,7 +156,7 @@ res = s.webhooks.update_webhook(webhook_update_request=components.WebhookUpdateR
     url='https://example.com/shippo-webhook',
     active=True,
     is_test=False,
-), webhook_id='<value>')
+), webhook_id='<id>')
 
 if res is not None:
     # handle response
@@ -196,7 +196,7 @@ s = shippo.Shippo(
 )
 
 
-s.webhooks.delete_webhook(webhook_id='<value>')
+s.webhooks.delete_webhook(webhook_id='<id>')
 
 # Use the SDK ...
 

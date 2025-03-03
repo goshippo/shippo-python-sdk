@@ -132,7 +132,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.parcels.get(parcel_id='<value>')
+res = s.parcels.get(parcel_id='<id>')
 
 if res is not None:
     # handle response

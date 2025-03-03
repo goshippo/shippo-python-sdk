@@ -90,7 +90,7 @@ res = s.customs_declarations.create(request=components.CustomsDeclarationCreateR
     non_delivery_option=components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
     b13a_filing_option=components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,
     contents_explanation='T-Shirt purchase',
-    duties_payor=components.DutiesPayor(
+    duties_payor=components.CustomsDeclarationCreateRequestDutiesPayor(
         account='2323434543',
         type=components.CustomsDeclarationCreateRequestType.THIRD_PARTY,
         address=components.CustomsDeclarationCreateRequestAddress(
@@ -164,7 +164,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.customs_declarations.get(customs_declaration_id='<value>')
+res = s.customs_declarations.get(customs_declaration_id='<id>')
 
 if res is not None:
     # handle response

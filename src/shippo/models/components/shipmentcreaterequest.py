@@ -15,8 +15,8 @@ from typing import List, Optional, Union
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class ShipmentCreateRequest:
-    address_from: AddressFrom = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_from') }})
-    address_to: AddressTo = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_to') }})
+    address_from: ShipmentCreateRequestAddressFrom = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_from') }})
+    address_to: ShipmentCreateRequestAddressTo = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('address_to') }})
     parcels: List[Parcels] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('parcels') }})
     extra: Optional[ShipmentExtra] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('extra'), 'exclude': lambda f: f is None }})
     r"""An object holding optional extra services to be requested."""
@@ -37,11 +37,11 @@ class ShipmentCreateRequest:
     
 
 
-AddressFrom = Union[AddressCreateRequest, str]
+ShipmentCreateRequestAddressFrom = Union[AddressCreateRequest, str]
 
 AddressReturn = Union[AddressCreateRequest, str]
 
-AddressTo = Union[AddressCreateRequest, str]
+ShipmentCreateRequestAddressTo = Union[AddressCreateRequest, str]
 
 ShipmentCreateRequestCustomsDeclaration = Union[CustomsDeclarationCreateRequest, str]
 

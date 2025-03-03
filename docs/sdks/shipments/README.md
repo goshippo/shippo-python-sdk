@@ -278,23 +278,12 @@ res = s.shipments.create(request=components.ShipmentCreateRequest(
         certify_signer='Shawn Ippotle',
         contents_type=components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,
         items=[
-            components.CustomsItemCreateRequest(
-                description='T-Shirt',
-                mass_unit=components.WeightUnitEnum.LB,
-                net_weight='5',
-                origin_country='<value>',
-                quantity=20,
-                value_amount='200',
-                value_currency='USD',
-                metadata='Order ID "123454"',
-                sku_code='HM-123',
-                hs_code='0901.21',
-            ),
+
         ],
         non_delivery_option=components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
         b13a_filing_option=components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,
         contents_explanation='T-Shirt purchase',
-        duties_payor=components.DutiesPayor(
+        duties_payor=components.CustomsDeclarationCreateRequestDutiesPayor(
             account='2323434543',
             type=components.CustomsDeclarationCreateRequestType.THIRD_PARTY,
             address=components.CustomsDeclarationCreateRequestAddress(
@@ -373,7 +362,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.shipments.get(shipment_id='<value>')
+res = s.shipments.get(shipment_id='<id>')
 
 if res is not None:
     # handle response

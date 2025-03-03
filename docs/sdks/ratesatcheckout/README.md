@@ -107,6 +107,7 @@ Retrieve and display the currently configured default parcel template for live r
 
 ```python
 import shippo
+from shippo.models import operations
 
 s = shippo.Shippo(
     api_key_header='<YOUR_API_KEY_HERE>',
@@ -114,7 +115,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.rates_at_checkout.get_default_parcel_template()
+res = s.rates_at_checkout.get_default_parcel_template(request=operations.GetDefaultParcelTemplateRequest())
 
 if res is not None:
     # handle response
@@ -182,6 +183,7 @@ Clears the currently configured default parcel template for live rates.
 
 ```python
 import shippo
+from shippo.models import operations
 
 s = shippo.Shippo(
     api_key_header='<YOUR_API_KEY_HERE>',
@@ -189,7 +191,7 @@ s = shippo.Shippo(
 )
 
 
-s.rates_at_checkout.delete_default_parcel_template()
+s.rates_at_checkout.delete_default_parcel_template(request=operations.DeleteDefaultParcelTemplateRequest())
 
 # Use the SDK ...
 

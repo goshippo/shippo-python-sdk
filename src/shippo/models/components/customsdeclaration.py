@@ -35,7 +35,7 @@ class CustomsDeclarationAddress:
 
 @dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
-class CustomsDeclarationDutiesPayor:
+class DutiesPayor:
     r"""Specifies who will pay the duties for the shipment. Only accepted for FedEx shipments."""
     account: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('account'), 'exclude': lambda f: f is None }})
     r"""Account number to be billed for duties."""
@@ -89,7 +89,7 @@ class CustomsDeclaration:
     """
     disclaimer: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('disclaimer'), 'exclude': lambda f: f is None }})
     r"""Disclaimer for the shipment and customs information that have been provided."""
-    duties_payor: Optional[CustomsDeclarationDutiesPayor] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('duties_payor'), 'exclude': lambda f: f is None }})
+    duties_payor: Optional[DutiesPayor] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('duties_payor'), 'exclude': lambda f: f is None }})
     r"""Specifies who will pay the duties for the shipment. Only accepted for FedEx shipments."""
     exporter_identification: Optional[CustomsExporterIdentification] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.get_field_name('exporter_identification'), 'exclude': lambda f: f is None }})
     r"""Additional exporter identification that may be required to ship in certain countries"""

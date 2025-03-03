@@ -145,6 +145,19 @@ res = s.orders.create(request=components.OrderCreateRequest(
             weight='0.4',
             weight_unit=components.WeightUnitEnum.LB,
         ),
+        components.LineItemBase(
+            currency='USD',
+            manufacture_country='US',
+            max_delivery_time=dateutil.parser.isoparse('2016-07-23T00:00:00Z'),
+            max_ship_time=dateutil.parser.isoparse('2016-07-23T00:00:00Z'),
+            quantity=20,
+            sku='HM-123',
+            title='Hippo Magazines',
+            total_price='12.1',
+            variant_title='June Edition',
+            weight='0.4',
+            weight_unit=components.WeightUnitEnum.LB,
+        ),
     ],
 ))
 
@@ -185,7 +198,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.orders.get(order_id='<value>')
+res = s.orders.get(order_id='<id>')
 
 if res is not None:
     # handle response

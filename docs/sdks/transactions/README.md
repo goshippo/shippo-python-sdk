@@ -116,7 +116,7 @@ s = shippo.Shippo(
 )
 
 
-res = s.transactions.get(transaction_id='<value>')
+res = s.transactions.get(transaction_id='<id>')
 
 if res is not None:
     # handle response
