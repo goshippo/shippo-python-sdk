@@ -10,8 +10,9 @@ class CustomsDeclarationIncotermEnum(str, Enum):
     If expecting DAP for other carriers, please use DDU.
     Allowed values available <a href=\"#tag/Customs-Declaration-Incoterm\">here</a>
     """
-    DDP = 'DDP'
-    DDU = 'DDU'
-    FCA = 'FCA'
-    DAP = 'DAP'
-    E_DAP = 'eDAP'
+
+    DDP = "DDP"
+    DDU = "DDU"
+    FCA = "FCA"
+    DAP = "DAP"
+    E_DAP = "eDAP"

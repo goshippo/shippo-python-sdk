@@ -6,5 +6,6 @@ from enum import Enum
 
 class ObjectStateEnum(str, Enum):
     r"""Indicates the validity of the enclosing object"""
-    VALID = 'VALID'
-    INVALID = 'INVALID'
+
+    VALID = "VALID"
+    INVALID = "INVALID"

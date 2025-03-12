@@ -19,27 +19,29 @@ Returns an existing rate using a rate object ID.
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.rates.get(rate_id='<value>')
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.rates.get(rate_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 ### Parameters
 
-| Parameter             | Type                  | Required              | Description           |
-| --------------------- | --------------------- | --------------------- | --------------------- |
-| `rate_id`             | *str*                 | :heavy_check_mark:    | Object ID of the rate |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `rate_id`                                                           | *str*                                                               | :heavy_check_mark:                                                  | Object ID of the rate                                               |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
@@ -58,29 +60,31 @@ Returns a paginated list of rates associated with a shipment
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.rates.list_shipment_rates(shipment_id='<value>')
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.rates.list_shipment_rates(shipment_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 ### Parameters
 
-| Parameter                                          | Type                                               | Required                                           | Description                                        |
-| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |
-| `shipment_id`                                      | *str*                                              | :heavy_check_mark:                                 | Object ID of the shipment to update                |
-| `page`                                             | *Optional[int]*                                    | :heavy_minus_sign:                                 | The page number you want to select                 |
-| `results`                                          | *Optional[int]*                                    | :heavy_minus_sign:                                 | The number of results to return per page (max 100) |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `shipment_id`                                                       | *str*                                                               | :heavy_check_mark:                                                  | Object ID of the shipment to update                                 |
+| `page`                                                              | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | The page number you want to select                                  |
+| `results`                                                           | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | The number of results to return per page (max 100)                  |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
@@ -105,23 +109,23 @@ Note: re-requesting the rates with a different currency code will re-queue the s
 ### Example Usage
 
 ```python
-import shippo
-from shippo.models import operations
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.rates.list_shipment_rates_by_currency_code(request=operations.ListShipmentRatesByCurrencyCodeRequest(
-    shipment_id='<value>',
-    currency_code='USD',
-))
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.rates.list_shipment_rates_by_currency_code(request={
+        "shipment_id": "<id>",
+        "currency_code": "USD",
+    })
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -130,6 +134,7 @@ if res is not None:
 | Parameter                                                                                                              | Type                                                                                                                   | Required                                                                                                               | Description                                                                                                            |
 | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | `request`                                                                                                              | [operations.ListShipmentRatesByCurrencyCodeRequest](../../models/operations/listshipmentratesbycurrencycoderequest.md) | :heavy_check_mark:                                                                                                     | The request object to use for the request.                                                                             |
+| `retries`                                                                                                              | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                       | :heavy_minus_sign:                                                                                                     | Configuration to override the default retry behavior of the client.                                                    |
 
 ### Response
 

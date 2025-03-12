@@ -25,25 +25,26 @@ Creates a new webhook to send notifications to a URL when a specific event occur
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 from shippo.models import components
 
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
 
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-res = s.webhooks.create_webhook(request=components.WebhookUpdateRequest(
-    event=components.WebhookEventTypeEnum.BATCH_CREATED,
-    url='https://example.com/shippo-webhook',
-    active=True,
-    is_test=False,
-))
+    res = s_client.webhooks.create_webhook(request={
+        "event": components.WebhookEventTypeEnum.BATCH_CREATED,
+        "url": "https://example.com/shippo-webhook",
+        "active": True,
+        "is_test": False,
+    })
 
-if res is not None:
-    # handle response
-    pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -52,6 +53,7 @@ if res is not None:
 | Parameter                                                                          | Type                                                                               | Required                                                                           | Description                                                                        |
 | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
 | `request`                                                                          | [components.WebhookUpdateRequest](../../models/components/webhookupdaterequest.md) | :heavy_check_mark:                                                                 | The request object to use for the request.                                         |
+| `retries`                                                                          | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                   | :heavy_minus_sign:                                                                 | Configuration to override the default retry behavior of the client.                |
 
 ### Response
 
@@ -70,21 +72,28 @@ Returns a list of all webhooks you have created.
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.webhooks.list_webhooks()
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.webhooks.list_webhooks()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
@@ -103,27 +112,29 @@ Returns the details of a specific webhook using the webhook object ID.
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.webhooks.get_webhook(webhook_id='<value>')
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.webhooks.get_webhook(webhook_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 ### Parameters
 
-| Parameter                            | Type                                 | Required                             | Description                          |
-| ------------------------------------ | ------------------------------------ | ------------------------------------ | ------------------------------------ |
-| `webhook_id`                         | *str*                                | :heavy_check_mark:                   | Object ID of the webhook to retrieve |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `webhook_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | Object ID of the webhook to retrieve                                |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
@@ -142,25 +153,26 @@ Updates an existing webhook using the webhook object ID.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 from shippo.models import components
 
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
 
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-res = s.webhooks.update_webhook(webhook_update_request=components.WebhookUpdateRequest(
-    event=components.WebhookEventTypeEnum.BATCH_CREATED,
-    url='https://example.com/shippo-webhook',
-    active=True,
-    is_test=False,
-), webhook_id='<value>')
+    res = s_client.webhooks.update_webhook(webhook_id="<id>", webhook_update_request={
+        "event": components.WebhookEventTypeEnum.BATCH_CREATED,
+        "url": "https://example.com/shippo-webhook",
+        "active": True,
+        "is_test": False,
+    })
 
-if res is not None:
-    # handle response
-    pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -170,6 +182,7 @@ if res is not None:
 | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
 | `webhook_id`                                                                       | *str*                                                                              | :heavy_check_mark:                                                                 | Object ID of the webhook to retrieve                                               |
 | `webhook_update_request`                                                           | [components.WebhookUpdateRequest](../../models/components/webhookupdaterequest.md) | :heavy_check_mark:                                                                 | N/A                                                                                |
+| `retries`                                                                          | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                   | :heavy_minus_sign:                                                                 | Configuration to override the default retry behavior of the client.                |
 
 ### Response
 
@@ -188,25 +201,26 @@ Deletes a specific webhook using the webhook object ID.
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-s.webhooks.delete_webhook(webhook_id='<value>')
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-# Use the SDK ...
+    s_client.webhooks.delete_webhook(webhook_id="<id>")
+
+    # Use the SDK ...
 
 ```
 
 ### Parameters
 
-| Parameter                          | Type                               | Required                           | Description                        |
-| ---------------------------------- | ---------------------------------- | ---------------------------------- | ---------------------------------- |
-| `webhook_id`                       | *str*                              | :heavy_check_mark:                 | Object ID of the webhook to delete |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `webhook_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | Object ID of the webhook to delete                                  |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Errors
 

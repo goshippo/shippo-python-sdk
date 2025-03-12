@@ -23,20 +23,22 @@ class ParcelTemplateFedExEnum(str, Enum):
     | FedEx_Pak_2 | FedEx® Small Pak | 12.75 x 10.25 x 0.80 in|
     | FedEx_Tube | FedEx® Tube | 38.00 x 6.00 x 6.00 in|
     | FedEx_XL_Pak | FedEx® Extra Large Pak | 17.50 x 20.75 x 2.00 in|
+
     """
-    FED_EX_BOX_10KG = 'FedEx_Box_10kg'
-    FED_EX_BOX_25KG = 'FedEx_Box_25kg'
-    FED_EX_BOX_EXTRA_LARGE_1 = 'FedEx_Box_Extra_Large_1'
-    FED_EX_BOX_EXTRA_LARGE_2 = 'FedEx_Box_Extra_Large_2'
-    FED_EX_BOX_LARGE_1 = 'FedEx_Box_Large_1'
-    FED_EX_BOX_LARGE_2 = 'FedEx_Box_Large_2'
-    FED_EX_BOX_MEDIUM_1 = 'FedEx_Box_Medium_1'
-    FED_EX_BOX_MEDIUM_2 = 'FedEx_Box_Medium_2'
-    FED_EX_BOX_SMALL_1 = 'FedEx_Box_Small_1'
-    FED_EX_BOX_SMALL_2 = 'FedEx_Box_Small_2'
-    FED_EX_ENVELOPE = 'FedEx_Envelope'
-    FED_EX_PADDED_PAK = 'FedEx_Padded_Pak'
-    FED_EX_PAK_1 = 'FedEx_Pak_1'
-    FED_EX_PAK_2 = 'FedEx_Pak_2'
-    FED_EX_TUBE = 'FedEx_Tube'
-    FED_EX_XL_PAK = 'FedEx_XL_Pak'
+
+    FED_EX_BOX_10KG = "FedEx_Box_10kg"
+    FED_EX_BOX_25KG = "FedEx_Box_25kg"
+    FED_EX_BOX_EXTRA_LARGE_1 = "FedEx_Box_Extra_Large_1"
+    FED_EX_BOX_EXTRA_LARGE_2 = "FedEx_Box_Extra_Large_2"
+    FED_EX_BOX_LARGE_1 = "FedEx_Box_Large_1"
+    FED_EX_BOX_LARGE_2 = "FedEx_Box_Large_2"
+    FED_EX_BOX_MEDIUM_1 = "FedEx_Box_Medium_1"
+    FED_EX_BOX_MEDIUM_2 = "FedEx_Box_Medium_2"
+    FED_EX_BOX_SMALL_1 = "FedEx_Box_Small_1"
+    FED_EX_BOX_SMALL_2 = "FedEx_Box_Small_2"
+    FED_EX_ENVELOPE = "FedEx_Envelope"
+    FED_EX_PADDED_PAK = "FedEx_Padded_Pak"
+    FED_EX_PAK_1 = "FedEx_Pak_1"
+    FED_EX_PAK_2 = "FedEx_Pak_2"
+    FED_EX_TUBE = "FedEx_Tube"
+    FED_EX_XL_PAK = "FedEx_XL_Pak"

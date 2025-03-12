@@ -17,14 +17,22 @@ class ServiceLevelAustraliaPostEnum(str, Enum):
     | australia_post_international_standard | International Standard|
     | australia_post_international_economy | International Economy|
     | australia_post_parcel_post_return | Parcel Post Return|
+
     """
-    AUSTRALIA_POST_EXPRESS_POST = 'australia_post_express_post'
-    AUSTRALIA_POST_PARCEL_POST = 'australia_post_parcel_post'
-    AUSTRALIA_POST_PACK_AND_TRACK_INTERNATIONAL = 'australia_post_pack_and_track_international'
-    AUSTRALIA_POST_INTERNATIONAL_AIRMAIL = 'australia_post_international_airmail'
-    AUSTRALIA_POST_EXPRESS_POST_INTERNATIONAL = 'australia_post_express_post_international'
-    AUSTRALIA_POST_EXPRESS_COURIER_INTERNATIONAL = 'australia_post_express_courier_international'
-    AUSTRALIA_POST_INTERNATIONAL_EXPRESS = 'australia_post_international_express'
-    AUSTRALIA_POST_INTERNATIONAL_STANDARD = 'australia_post_international_standard'
-    AUSTRALIA_POST_INTERNATIONAL_ECONOMY = 'australia_post_international_economy'
-    AUSTRALIA_POST_PARCEL_POST_RETURN = 'australia_post_parcel_post_return'
+
+    AUSTRALIA_POST_EXPRESS_POST = "australia_post_express_post"
+    AUSTRALIA_POST_PARCEL_POST = "australia_post_parcel_post"
+    AUSTRALIA_POST_PACK_AND_TRACK_INTERNATIONAL = (
+        "australia_post_pack_and_track_international"
+    )
+    AUSTRALIA_POST_INTERNATIONAL_AIRMAIL = "australia_post_international_airmail"
+    AUSTRALIA_POST_EXPRESS_POST_INTERNATIONAL = (
+        "australia_post_express_post_international"
+    )
+    AUSTRALIA_POST_EXPRESS_COURIER_INTERNATIONAL = (
+        "australia_post_express_courier_international"
+    )
+    AUSTRALIA_POST_INTERNATIONAL_EXPRESS = "australia_post_international_express"
+    AUSTRALIA_POST_INTERNATIONAL_STANDARD = "australia_post_international_standard"
+    AUSTRALIA_POST_INTERNATIONAL_ECONOMY = "australia_post_international_economy"
+    AUSTRALIA_POST_PARCEL_POST_RETURN = "australia_post_parcel_post_return"

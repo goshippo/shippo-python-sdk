@@ -20,28 +20,30 @@ Returns a list of all address objects that have been created in this account.
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.addresses.list()
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.addresses.list()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 ### Parameters
 
-| Parameter                                                     | Type                                                          | Required                                                      | Description                                                   |
-| ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- |
-| `page`                                                        | *Optional[int]*                                               | :heavy_minus_sign:                                            | The page number you want to select                            |
-| `results`                                                     | *Optional[int]*                                               | :heavy_minus_sign:                                            | The number of results to return per page (max 100, default 5) |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `page`                                                              | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | The page number you want to select                                  |
+| `results`                                                           | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | The number of results to return per page (max 100, default 5)       |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
@@ -60,35 +62,35 @@ Creates a new address object. You can use address objects to create new shipment
 ### Example Usage
 
 ```python
-import shippo
-from shippo.models import components
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.addresses.create(request=components.AddressCreateRequest(
-    country='US',
-    name='Shwan Ippotle',
-    company='Shippo',
-    street1='215 Clayton St.',
-    street3='',
-    street_no='',
-    city='San Francisco',
-    state='CA',
-    zip='94117',
-    phone='+1 555 341 9393',
-    email='shippotle@shippo.com',
-    is_residential=True,
-    metadata='Customer ID 123456',
-    validate=True,
-))
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.addresses.create(request={
+        "country": "US",
+        "name": "Shwan Ippotle",
+        "company": "Shippo",
+        "street1": "215 Clayton St.",
+        "street3": "",
+        "street_no": "",
+        "city": "San Francisco",
+        "state": "CA",
+        "zip": "94117",
+        "phone": "+1 555 341 9393",
+        "email": "shippotle@shippo.com",
+        "is_residential": True,
+        "metadata": "Customer ID 123456",
+        "validate_": True,
+    })
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -97,6 +99,7 @@ if res is not None:
 | Parameter                                                                          | Type                                                                               | Required                                                                           | Description                                                                        |
 | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
 | `request`                                                                          | [components.AddressCreateRequest](../../models/components/addresscreaterequest.md) | :heavy_check_mark:                                                                 | The request object to use for the request.                                         |
+| `retries`                                                                          | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                   | :heavy_minus_sign:                                                                 | Configuration to override the default retry behavior of the client.                |
 
 ### Response
 
@@ -115,27 +118,29 @@ Returns an existing address using an object ID.
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.addresses.get(address_id='<value>')
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.addresses.get(address_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 ### Parameters
 
-| Parameter                | Type                     | Required                 | Description              |
-| ------------------------ | ------------------------ | ------------------------ | ------------------------ |
-| `address_id`             | *str*                    | :heavy_check_mark:       | Object ID of the address |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `address_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | Object ID of the address                                            |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
@@ -154,27 +159,29 @@ Validates an existing address using an object ID
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.addresses.validate(address_id='<value>')
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.addresses.validate(address_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 ### Parameters
 
-| Parameter                | Type                     | Required                 | Description              |
-| ------------------------ | ------------------------ | ------------------------ | ------------------------ |
-| `address_id`             | *str*                    | :heavy_check_mark:       | Object ID of the address |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `address_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | Object ID of the address                                            |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 

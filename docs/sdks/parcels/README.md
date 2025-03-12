@@ -23,28 +23,30 @@ Returns a list of all parcel objects.
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.parcels.list()
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.parcels.list()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 ### Parameters
 
-| Parameter                                          | Type                                               | Required                                           | Description                                        |
-| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |
-| `page`                                             | *Optional[int]*                                    | :heavy_minus_sign:                                 | The page number you want to select                 |
-| `results`                                          | *Optional[int]*                                    | :heavy_minus_sign:                                 | The number of results to return per page (max 100) |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `page`                                                              | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | The page number you want to select                                  |
+| `results`                                                           | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | The number of results to return per page (max 100)                  |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
@@ -63,41 +65,42 @@ Creates a new parcel object.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 from shippo.models import components
 
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
 
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-res = s.parcels.create(request=components.ParcelCreateRequest(
-    mass_unit=components.WeightUnitEnum.LB,
-    weight='1',
-    distance_unit=components.DistanceUnitEnum.IN,
-    height='1',
-    length='1',
-    width='1',
-    extra=components.ParcelExtra(
-        cod=components.Cod(
-            amount='5.5',
-            currency='USD',
-            payment_method=components.PaymentMethod.CASH,
-        ),
-        insurance=components.ParcelInsurance(
-            amount='5.5',
-            content='Laptop',
-            currency='USD',
-            provider=components.ParcelInsuranceProvider.UPS,
-        ),
-    ),
-    metadata='Customer ID 123456',
-))
+    res = s_client.parcels.create(request={
+        "mass_unit": components.WeightUnitEnum.LB,
+        "weight": "1",
+        "distance_unit": components.DistanceUnitEnum.IN,
+        "height": "1",
+        "length": "1",
+        "width": "1",
+        "extra": {
+            "cod": {
+                "amount": "5.5",
+                "currency": "USD",
+                "payment_method": components.PaymentMethod.CASH,
+            },
+            "insurance": {
+                "amount": "5.5",
+                "content": "Laptop",
+                "currency": "USD",
+                "provider": components.ParcelInsuranceProvider.UPS,
+            },
+        },
+        "metadata": "Customer ID 123456",
+    })
 
-if res is not None:
-    # handle response
-    pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -106,6 +109,7 @@ if res is not None:
 | Parameter                                                                                | Type                                                                                     | Required                                                                                 | Description                                                                              |
 | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | `request`                                                                                | [operations.CreateParcelRequestBody](../../models/operations/createparcelrequestbody.md) | :heavy_check_mark:                                                                       | The request object to use for the request.                                               |
+| `retries`                                                                                | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                         | :heavy_minus_sign:                                                                       | Configuration to override the default retry behavior of the client.                      |
 
 ### Response
 
@@ -124,27 +128,29 @@ Returns parcel details using an existing parcel object ID (this will not return 
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.parcels.get(parcel_id='<value>')
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.parcels.get(parcel_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 ### Parameters
 
-| Parameter               | Type                    | Required                | Description             |
-| ----------------------- | ----------------------- | ----------------------- | ----------------------- |
-| `parcel_id`             | *str*                   | :heavy_check_mark:      | Object ID of the parcel |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `parcel_id`                                                         | *str*                                                               | :heavy_check_mark:                                                  | Object ID of the parcel                                             |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 

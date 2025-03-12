@@ -8,5 +8,7 @@ class ServiceLevelUDSEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
     | uds_next_day | Next Day|
+
     """
-    UDS_NEXT_DAY = 'uds_next_day'
+
+    UDS_NEXT_DAY = "uds_next_day"

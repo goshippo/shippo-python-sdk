@@ -8,5 +8,7 @@ class ServiceLevelVehoEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
     | veho_next_day | Veho Next Day |
+
     """
-    VEHO_NEXT_DAY = 'veho_next_day'
+
+    VEHO_NEXT_DAY = "veho_next_day"

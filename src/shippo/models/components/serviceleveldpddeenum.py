@@ -8,5 +8,7 @@ class ServiceLevelDPDDEEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
     | dpd_de_classic | DPD Classic|
+
     """
-    DPD_DE_CLASSIC = 'dpd_de_classic'
+
+    DPD_DE_CLASSIC = "dpd_de_classic"

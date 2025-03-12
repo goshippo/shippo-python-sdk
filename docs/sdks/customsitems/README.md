@@ -19,28 +19,30 @@ Returns a list all customs items objects.
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.customs_items.list()
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.customs_items.list()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 ### Parameters
 
-| Parameter                                          | Type                                               | Required                                           | Description                                        |
-| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |
-| `page`                                             | *Optional[int]*                                    | :heavy_minus_sign:                                 | The page number you want to select                 |
-| `results`                                          | *Optional[int]*                                    | :heavy_minus_sign:                                 | The number of results to return per page (max 100) |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `page`                                                              | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | The page number you want to select                                  |
+| `results`                                                           | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | The number of results to return per page (max 100)                  |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
@@ -59,31 +61,32 @@ Creates a new customs item object.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 from shippo.models import components
 
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
 
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-res = s.customs_items.create(request=components.CustomsItemCreateRequest(
-    description='T-Shirt',
-    mass_unit=components.WeightUnitEnum.LB,
-    net_weight='5',
-    origin_country='<value>',
-    quantity=20,
-    value_amount='200',
-    value_currency='USD',
-    metadata='Order ID "123454"',
-    sku_code='HM-123',
-    hs_code='0901.21',
-))
+    res = s_client.customs_items.create(request={
+        "description": "T-Shirt",
+        "mass_unit": components.WeightUnitEnum.LB,
+        "net_weight": "5",
+        "origin_country": "<value>",
+        "quantity": 20,
+        "value_amount": "200",
+        "value_currency": "USD",
+        "metadata": "Order ID \"123454\"",
+        "sku_code": "HM-123",
+        "hs_code": "0901.21",
+    })
 
-if res is not None:
-    # handle response
-    pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -92,6 +95,7 @@ if res is not None:
 | Parameter                                                                                  | Type                                                                                       | Required                                                                                   | Description                                                                                |
 | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
 | `request`                                                                                  | [components.CustomsItemCreateRequest](../../models/components/customsitemcreaterequest.md) | :heavy_check_mark:                                                                         | The request object to use for the request.                                                 |
+| `retries`                                                                                  | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                           | :heavy_minus_sign:                                                                         | Configuration to override the default retry behavior of the client.                        |
 
 ### Response
 
@@ -110,28 +114,30 @@ Returns an existing customs item using an object ID
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.customs_items.get(customs_item_id='<value>')
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.customs_items.get(customs_item_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 ### Parameters
 
-| Parameter                          | Type                               | Required                           | Description                        |
-| ---------------------------------- | ---------------------------------- | ---------------------------------- | ---------------------------------- |
-| `customs_item_id`                  | *str*                              | :heavy_check_mark:                 | Object ID of the customs item      |
-| `page`                             | *Optional[int]*                    | :heavy_minus_sign:                 | The page number you want to select |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `customs_item_id`                                                   | *str*                                                               | :heavy_check_mark:                                                  | Object ID of the customs item                                       |
+| `page`                                                              | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | The page number you want to select                                  |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 

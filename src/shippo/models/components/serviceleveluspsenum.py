@@ -14,11 +14,17 @@ class ServiceLevelUSPSEnum(str, Enum):
     | usps_priority_mail_express_international | Priority Mail Express International|
     | usps_first_class_package_international_service | First Class Package International|
     | usps_ground_advantage | Ground Advantage |
+
     """
-    USPS_PRIORITY = 'usps_priority'
-    USPS_PRIORITY_EXPRESS = 'usps_priority_express'
-    USPS_MEDIA_MAIL = 'usps_media_mail'
-    USPS_PRIORITY_MAIL_INTERNATIONAL = 'usps_priority_mail_international'
-    USPS_PRIORITY_MAIL_EXPRESS_INTERNATIONAL = 'usps_priority_mail_express_international'
-    USPS_FIRST_CLASS_PACKAGE_INTERNATIONAL_SERVICE = 'usps_first_class_package_international_service'
-    USPS_GROUND_ADVANTAGE = 'usps_ground_advantage'
+
+    USPS_PRIORITY = "usps_priority"
+    USPS_PRIORITY_EXPRESS = "usps_priority_express"
+    USPS_MEDIA_MAIL = "usps_media_mail"
+    USPS_PRIORITY_MAIL_INTERNATIONAL = "usps_priority_mail_international"
+    USPS_PRIORITY_MAIL_EXPRESS_INTERNATIONAL = (
+        "usps_priority_mail_express_international"
+    )
+    USPS_FIRST_CLASS_PACKAGE_INTERNATIONAL_SERVICE = (
+        "usps_first_class_package_international_service"
+    )
+    USPS_GROUND_ADVANTAGE = "usps_ground_advantage"

@@ -13,10 +13,12 @@ class ServiceLevelLSOEnum(str, Enum):
     | lso_2nd_day | 2nd Day|
     | lso_priority_next_day | Priority Next Day|
     | lso_early_overnight | Early Overnight|
+
     """
-    LSO_GROUND = 'lso_ground'
-    LSO_ECONOMY_NEXT_DAY = 'lso_economy_next_day'
-    LSO_SATURDAY_DELIVERY = 'lso_saturday_delivery'
-    LSO_2ND_DAY = 'lso_2nd_day'
-    LSO_PRIORITY_NEXT_DAY = 'lso_priority_next_day'
-    LSO_EARLY_OVERNIGHT = 'lso_early_overnight'
+
+    LSO_GROUND = "lso_ground"
+    LSO_ECONOMY_NEXT_DAY = "lso_economy_next_day"
+    LSO_SATURDAY_DELIVERY = "lso_saturday_delivery"
+    LSO_2ND_DAY = "lso_2nd_day"
+    LSO_PRIORITY_NEXT_DAY = "lso_priority_next_day"
+    LSO_EARLY_OVERNIGHT = "lso_early_overnight"

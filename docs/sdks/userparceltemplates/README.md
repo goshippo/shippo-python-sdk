@@ -26,21 +26,29 @@ Returns a list all of all user parcel template objects.
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.user_parcel_templates.list()
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.user_parcel_templates.list(request={})
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
+
+### Parameters
+
+| Parameter                                                                                              | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                              | [operations.ListUserParcelTemplatesRequest](../../models/operations/listuserparceltemplatesrequest.md) | :heavy_check_mark:                                                                                     | The request object to use for the request.                                                             |
+| `retries`                                                                                              | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                       | :heavy_minus_sign:                                                                                     | Configuration to override the default retry behavior of the client.                                    |
 
 ### Response
 
@@ -65,23 +73,24 @@ and depth, as well as their units."
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 from shippo.models import components
 
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
 
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-res = s.user_parcel_templates.create(request=components.UserParcelTemplateWithCarrierTemplateCreateRequest(
-    weight='12',
-    weight_unit=components.WeightUnitEnum.LB,
-))
+    res = s_client.user_parcel_templates.create(request={
+        "weight": "12",
+        "weight_unit": components.WeightUnitEnum.LB,
+    })
 
-if res is not None:
-    # handle response
-    pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -90,6 +99,7 @@ if res is not None:
 | Parameter                                                                                                | Type                                                                                                     | Required                                                                                                 | Description                                                                                              |
 | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
 | `request`                                                                                                | [components.UserParcelTemplateCreateRequest](../../models/components/userparceltemplatecreaterequest.md) | :heavy_check_mark:                                                                                       | The request object to use for the request.                                                               |
+| `retries`                                                                                                | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                         | :heavy_minus_sign:                                                                                       | Configuration to override the default retry behavior of the client.                                      |
 
 ### Response
 
@@ -108,25 +118,26 @@ Deletes a user parcel template using an object ID.
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-s.user_parcel_templates.delete(user_parcel_template_object_id='<value>')
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-# Use the SDK ...
+    s_client.user_parcel_templates.delete(user_parcel_template_object_id="<id>")
+
+    # Use the SDK ...
 
 ```
 
 ### Parameters
 
-| Parameter                             | Type                                  | Required                              | Description                           |
-| ------------------------------------- | ------------------------------------- | ------------------------------------- | ------------------------------------- |
-| `user_parcel_template_object_id`      | *str*                                 | :heavy_check_mark:                    | Object ID of the user parcel template |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `user_parcel_template_object_id`                                    | *str*                                                               | :heavy_check_mark:                                                  | Object ID of the user parcel template                               |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Errors
 
@@ -142,27 +153,29 @@ template, identified by the object ID.
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.user_parcel_templates.get(user_parcel_template_object_id='<value>')
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.user_parcel_templates.get(user_parcel_template_object_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 ### Parameters
 
-| Parameter                             | Type                                  | Required                              | Description                           |
-| ------------------------------------- | ------------------------------------- | ------------------------------------- | ------------------------------------- |
-| `user_parcel_template_object_id`      | *str*                                 | :heavy_check_mark:                    | Object ID of the user parcel template |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `user_parcel_template_object_id`                                    | *str*                                                               | :heavy_check_mark:                                                  | Object ID of the user parcel template                               |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
@@ -181,28 +194,29 @@ Updates an existing user parcel template.
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 from shippo.models import components
 
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
 
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-res = s.user_parcel_templates.update(user_parcel_template_object_id='<value>', user_parcel_template_update_request=components.UserParcelTemplateUpdateRequest(
-    distance_unit=components.DistanceUnitEnum.IN,
-    height='6',
-    length='10',
-    name='My Custom Template',
-    width='8',
-    weight='12',
-    weight_unit=components.WeightUnitEnum.LB,
-))
+    res = s_client.user_parcel_templates.update(user_parcel_template_object_id="<id>", user_parcel_template_update_request={
+        "distance_unit": components.DistanceUnitEnum.IN,
+        "height": "6",
+        "length": "10",
+        "name": "My Custom Template",
+        "width": "8",
+        "weight": "12",
+        "weight_unit": components.WeightUnitEnum.LB,
+    })
 
-if res is not None:
-    # handle response
-    pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -212,6 +226,7 @@ if res is not None:
 | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
 | `user_parcel_template_object_id`                                                                                   | *str*                                                                                                              | :heavy_check_mark:                                                                                                 | Object ID of the user parcel template                                                                              |
 | `user_parcel_template_update_request`                                                                              | [Optional[components.UserParcelTemplateUpdateRequest]](../../models/components/userparceltemplateupdaterequest.md) | :heavy_minus_sign:                                                                                                 | N/A                                                                                                                |
+| `retries`                                                                                                          | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                   | :heavy_minus_sign:                                                                                                 | Configuration to override the default retry behavior of the client.                                                |
 
 ### Response
 

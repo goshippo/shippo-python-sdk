@@ -24,7 +24,6 @@ class CarriersEnum(str, Enum):
     | collect_plus | CollectPlus|
     | correios_br | CorreiosBR|
     | correos_espana | Correos España |
-    | couriersplease | Couriers Please|
     | colissimo | Colissimo|
     | deutsche_post | Deutsche Post|
     | dhl_benelux | DHL Benelux|
@@ -50,7 +49,6 @@ class CarriersEnum(str, Enum):
     | new_zealand_post | New Zealand Post (also used for Pace and CourierPost)|
     | nippon_express | Nippon Express|
     | ontrac | OnTrac|
-    | orangeds | OrangeDS|
     | parcelforce | Parcelforce|
     | passport | Passport|
     | pcf | PCF|
@@ -68,65 +66,65 @@ class CarriersEnum(str, Enum):
     | ups | UPS|
     | usps | USPS|
     | veho | Veho |
+
     """
-    AIRTERRA = 'airterra'
-    APC_POSTAL = 'apc_postal'
-    APG = 'apg'
-    ARAMEX = 'aramex'
-    ASENDIA_US = 'asendia_us'
-    AUSTRALIA_POST = 'australia_post'
-    AXLEHIRE = 'axlehire'
-    BETTER_TRUCKS = 'better_trucks'
-    BORDERGURU = 'borderguru'
-    BOXBERRY = 'boxberry'
-    BRING = 'bring'
-    CANADA_POST = 'canada_post'
-    CDL = 'cdl'
-    CHRONOPOST = 'chronopost'
-    COLLECT_PLUS = 'collect_plus'
-    CORREIOS_BR = 'correios_br'
-    CORREOS_ESPANA = 'correos_espana'
-    COURIERSPLEASE = 'couriersplease'
-    COLISSIMO = 'colissimo'
-    DEUTSCHE_POST = 'deutsche_post'
-    DHL_BENELUX = 'dhl_benelux'
-    DHL_ECOMMERCE = 'dhl_ecommerce'
-    DHL_EXPRESS = 'dhl_express'
-    DHL_GERMANY_C2C = 'dhl_germany_c2c'
-    DHL_GERMANY = 'dhl_germany'
-    DPD_DE = 'dpd_de'
-    DPD_UK = 'dpd_uk'
-    ESTAFETA = 'estafeta'
-    FASTWAY_AUSTRALIA = 'fastway_australia'
-    FEDEX = 'fedex'
-    GLOBEGISTICS = 'globegistics'
-    GLS_US = 'gls_us'
-    GOPHR = 'gophr'
-    GSO = 'gso'
-    HERMES_GERMANY_B2C = 'hermes_germany_b2c'
-    HERMES_UK = 'hermes_uk'
-    HONGKONG_POST = 'hongkong_post'
-    LASERSHIP = 'lasership'
-    LSO = 'lso'
-    MONDIAL_RELAY = 'mondial_relay'
-    NEW_ZEALAND_POST = 'new_zealand_post'
-    NIPPON_EXPRESS = 'nippon_express'
-    ONTRAC = 'ontrac'
-    ORANGEDS = 'orangeds'
-    PARCELFORCE = 'parcelforce'
-    PASSPORT = 'passport'
-    PCF = 'pcf'
-    POSTE_ITALIANE = 'poste_italiane'
-    POSTI = 'posti'
-    PUROLATOR = 'purolator'
-    ROYAL_MAIL = 'royal_mail'
-    RR_DONNELLEY = 'rr_donnelley'
-    RUSSIAN_POST = 'russian_post'
-    SENDLE = 'sendle'
-    SKYPOSTAL = 'skypostal'
-    STUART = 'stuart'
-    SWYFT = 'swyft'
-    UDS = 'uds'
-    UPS = 'ups'
-    USPS = 'usps'
-    VEHO = 'veho'
+
+    AIRTERRA = "airterra"
+    APC_POSTAL = "apc_postal"
+    APG = "apg"
+    ARAMEX = "aramex"
+    ASENDIA_US = "asendia_us"
+    AUSTRALIA_POST = "australia_post"
+    AXLEHIRE = "axlehire"
+    BETTER_TRUCKS = "better_trucks"
+    BORDERGURU = "borderguru"
+    BOXBERRY = "boxberry"
+    BRING = "bring"
+    CANADA_POST = "canada_post"
+    CDL = "cdl"
+    CHRONOPOST = "chronopost"
+    COLLECT_PLUS = "collect_plus"
+    CORREIOS_BR = "correios_br"
+    CORREOS_ESPANA = "correos_espana"
+    COLISSIMO = "colissimo"
+    DEUTSCHE_POST = "deutsche_post"
+    DHL_BENELUX = "dhl_benelux"
+    DHL_ECOMMERCE = "dhl_ecommerce"
+    DHL_EXPRESS = "dhl_express"
+    DHL_GERMANY_C2C = "dhl_germany_c2c"
+    DHL_GERMANY = "dhl_germany"
+    DPD_DE = "dpd_de"
+    DPD_UK = "dpd_uk"
+    ESTAFETA = "estafeta"
+    FASTWAY_AUSTRALIA = "fastway_australia"
+    FEDEX = "fedex"
+    GLOBEGISTICS = "globegistics"
+    GLS_US = "gls_us"
+    GOPHR = "gophr"
+    GSO = "gso"
+    HERMES_GERMANY_B2C = "hermes_germany_b2c"
+    HERMES_UK = "hermes_uk"
+    HONGKONG_POST = "hongkong_post"
+    LASERSHIP = "lasership"
+    LSO = "lso"
+    MONDIAL_RELAY = "mondial_relay"
+    NEW_ZEALAND_POST = "new_zealand_post"
+    NIPPON_EXPRESS = "nippon_express"
+    ONTRAC = "ontrac"
+    PARCELFORCE = "parcelforce"
+    PASSPORT = "passport"
+    PCF = "pcf"
+    POSTE_ITALIANE = "poste_italiane"
+    POSTI = "posti"
+    PUROLATOR = "purolator"
+    ROYAL_MAIL = "royal_mail"
+    RR_DONNELLEY = "rr_donnelley"
+    RUSSIAN_POST = "russian_post"
+    SENDLE = "sendle"
+    SKYPOSTAL = "skypostal"
+    STUART = "stuart"
+    SWYFT = "swyft"
+    UDS = "uds"
+    UPS = "ups"
+    USPS = "usps"
+    VEHO = "veho"

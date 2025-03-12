@@ -13,6 +13,7 @@ class TestShipments:
         response = api.shipments.list(request=ListShipmentsRequest())
 
         assert response is not None
+        assert response.results is not None
         assert isinstance(response, ShipmentPaginatedList)
 
         assert_shipment_results(response.results)
@@ -21,14 +22,21 @@ class TestShipments:
         response = api.shipments.list(request=ListShipmentsRequest(page=1, results=2))
 
         assert response is not None
+        assert response.results is not None
         assert isinstance(response, ShipmentPaginatedList)
 
         assert_shipment_results(response.results)
 
-        if next is not None:
-            page_token = re.search(r'page_token=([^&]+)', response.next)
-            secondResponse = api.shipments.list(request=ListShipmentsRequest(page_token=page_token, page=2, results=2))
+        if response.next is not None:
+            page_token_match = re.search(r"page_token=([^&]+)", response.next)
+            assert page_token_match is not None
+
+            page_token = page_token_match.group(1)
+            secondResponse = api.shipments.list(
+                request=ListShipmentsRequest(page_token=page_token, page=2, results=2)
+            )
             assert secondResponse is not None
+            assert secondResponse.results is not None
             assert isinstance(response, ShipmentPaginatedList)
             assert_shipment_results(secondResponse.results)
 

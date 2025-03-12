@@ -29,26 +29,28 @@ class ServiceLevelDHLExpressEnum(str, Enum):
     | dhl_express_worldwide_b2c_nondoc | Express Worldwide (B2C) NonDoc|
     | dhl_express_medical_express | Medical Express|
     | dhl_express_express_easy_nondoc | Express Easy NonDoc|
+
     """
-    DHL_EXPRESS_DOMESTIC_EXPRESS_DOC = 'dhl_express_domestic_express_doc'
-    DHL_EXPRESS_ECONOMY_SELECT_DOC = 'dhl_express_economy_select_doc'
-    DHL_EXPRESS_WORLDWIDE_NONDOC = 'dhl_express_worldwide_nondoc'
-    DHL_EXPRESS_WORLDWIDE_DOC = 'dhl_express_worldwide_doc'
-    DHL_EXPRESS_WORLDWIDE = 'dhl_express_worldwide'
-    DHL_EXPRESS_WORLDWIDE_EU_DOC = 'dhl_express_worldwide_eu_doc'
-    DHL_EXPRESS_BREAK_BULK_EXPRESS_DOC = 'dhl_express_break_bulk_express_doc'
-    DHL_EXPRESS_EXPRESS_9_00_NONDOC = 'dhl_express_express_9_00_nondoc'
-    DHL_EXPRESS_ECONOMY_SELECT_NONDOC = 'dhl_express_economy_select_nondoc'
-    DHL_EXPRESS_BREAK_BULK_ECONOMY_DOC = 'dhl_express_break_bulk_economy_doc'
-    DHL_EXPRESS_EXPRESS_9_00_DOC = 'dhl_express_express_9_00_doc'
-    DHL_EXPRESS_EXPRESS_10_30_DOC = 'dhl_express_express_10_30_doc'
-    DHL_EXPRESS_EXPRESS_10_30_NONDOC = 'dhl_express_express_10_30_nondoc'
-    DHL_EXPRESS_EXPRESS_12_00_DOC = 'dhl_express_express_12_00_doc'
-    DHL_EXPRESS_EUROPACK_NONDOC = 'dhl_express_europack_nondoc'
-    DHL_EXPRESS_EXPRESS_ENVELOPE_DOC = 'dhl_express_express_envelope_doc'
-    DHL_EXPRESS_EXPRESS_12_00_NONDOC = 'dhl_express_express_12_00_nondoc'
-    DHL_EXPRESS_EXPRESS_12_DOC = 'dhl_express_express_12_doc'
-    DHL_EXPRESS_WORLDWIDE_B2C_DOC = 'dhl_express_worldwide_b2c_doc'
-    DHL_EXPRESS_WORLDWIDE_B2C_NONDOC = 'dhl_express_worldwide_b2c_nondoc'
-    DHL_EXPRESS_MEDICAL_EXPRESS = 'dhl_express_medical_express'
-    DHL_EXPRESS_EXPRESS_EASY_NONDOC = 'dhl_express_express_easy_nondoc'
+
+    DHL_EXPRESS_DOMESTIC_EXPRESS_DOC = "dhl_express_domestic_express_doc"
+    DHL_EXPRESS_ECONOMY_SELECT_DOC = "dhl_express_economy_select_doc"
+    DHL_EXPRESS_WORLDWIDE_NONDOC = "dhl_express_worldwide_nondoc"
+    DHL_EXPRESS_WORLDWIDE_DOC = "dhl_express_worldwide_doc"
+    DHL_EXPRESS_WORLDWIDE = "dhl_express_worldwide"
+    DHL_EXPRESS_WORLDWIDE_EU_DOC = "dhl_express_worldwide_eu_doc"
+    DHL_EXPRESS_BREAK_BULK_EXPRESS_DOC = "dhl_express_break_bulk_express_doc"
+    DHL_EXPRESS_EXPRESS_9_00_NONDOC = "dhl_express_express_9_00_nondoc"
+    DHL_EXPRESS_ECONOMY_SELECT_NONDOC = "dhl_express_economy_select_nondoc"
+    DHL_EXPRESS_BREAK_BULK_ECONOMY_DOC = "dhl_express_break_bulk_economy_doc"
+    DHL_EXPRESS_EXPRESS_9_00_DOC = "dhl_express_express_9_00_doc"
+    DHL_EXPRESS_EXPRESS_10_30_DOC = "dhl_express_express_10_30_doc"
+    DHL_EXPRESS_EXPRESS_10_30_NONDOC = "dhl_express_express_10_30_nondoc"
+    DHL_EXPRESS_EXPRESS_12_00_DOC = "dhl_express_express_12_00_doc"
+    DHL_EXPRESS_EUROPACK_NONDOC = "dhl_express_europack_nondoc"
+    DHL_EXPRESS_EXPRESS_ENVELOPE_DOC = "dhl_express_express_envelope_doc"
+    DHL_EXPRESS_EXPRESS_12_00_NONDOC = "dhl_express_express_12_00_nondoc"
+    DHL_EXPRESS_EXPRESS_12_DOC = "dhl_express_express_12_doc"
+    DHL_EXPRESS_WORLDWIDE_B2C_DOC = "dhl_express_worldwide_b2c_doc"
+    DHL_EXPRESS_WORLDWIDE_B2C_NONDOC = "dhl_express_worldwide_b2c_nondoc"
+    DHL_EXPRESS_MEDICAL_EXPRESS = "dhl_express_medical_express"
+    DHL_EXPRESS_EXPRESS_EASY_NONDOC = "dhl_express_express_easy_nondoc"

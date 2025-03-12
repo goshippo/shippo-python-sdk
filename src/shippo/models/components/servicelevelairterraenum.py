@@ -9,6 +9,8 @@ class ServiceLevelAirterraEnum(str, Enum):
     |:---|:---|
     | airterra_ground | GroundXC|
     | airterra_postal | FastPost|
+
     """
-    AIRTERRA_GROUND = 'airterra_ground'
-    AIRTERRA_POSTAL = 'airterra_postal'
+
+    AIRTERRA_GROUND = "airterra_ground"
+    AIRTERRA_POSTAL = "airterra_postal"

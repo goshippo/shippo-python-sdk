@@ -22,28 +22,30 @@ Returns a list of Shippo Managed Accounts objects.
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.shippo_accounts.list()
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.shippo_accounts.list()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 ### Parameters
 
-| Parameter                                          | Type                                               | Required                                           | Description                                        |
-| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |
-| `page`                                             | *Optional[int]*                                    | :heavy_minus_sign:                                 | The page number you want to select                 |
-| `results`                                          | *Optional[int]*                                    | :heavy_minus_sign:                                 | The number of results to return per page (max 100) |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `page`                                                              | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | The page number you want to select                                  |
+| `results`                                                           | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | The number of results to return per page (max 100)                  |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
@@ -62,25 +64,25 @@ Creates a new <a href="https://docs.goshippo.com/docs/platformaccounts/platform_
 ### Example Usage
 
 ```python
-import shippo
-from shippo.models import components
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.shippo_accounts.create(request=components.ShippoAccountUpdateRequest(
-    email='hippo@shippo.com',
-    first_name='Shippo',
-    last_name='Meister',
-    company_name='Acme',
-))
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.shippo_accounts.create(request={
+        "email": "hippo@shippo.com",
+        "first_name": "Shippo",
+        "last_name": "Meister",
+        "company_name": "Acme",
+    })
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -89,6 +91,7 @@ if res is not None:
 | Parameter                                                                                      | Type                                                                                           | Required                                                                                       | Description                                                                                    |
 | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | `request`                                                                                      | [components.ShippoAccountUpdateRequest](../../models/components/shippoaccountupdaterequest.md) | :heavy_check_mark:                                                                             | The request object to use for the request.                                                     |
+| `retries`                                                                                      | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                               | :heavy_minus_sign:                                                                             | Configuration to override the default retry behavior of the client.                            |
 
 ### Response
 
@@ -107,27 +110,29 @@ Returns a Shippo Managed Account using an object ID.
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.shippo_accounts.get(shippo_account_id='<value>')
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.shippo_accounts.get(shippo_account_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 ### Parameters
 
-| Parameter                      | Type                           | Required                       | Description                    |
-| ------------------------------ | ------------------------------ | ------------------------------ | ------------------------------ |
-| `shippo_account_id`            | *str*                          | :heavy_check_mark:             | Object ID of the ShippoAccount |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `shippo_account_id`                                                 | *str*                                                               | :heavy_check_mark:                                                  | Object ID of the ShippoAccount                                      |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
@@ -146,25 +151,25 @@ Updates a Shippo Managed Account using an object ID.
 ### Example Usage
 
 ```python
-import shippo
-from shippo.models import components
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.shippo_accounts.update(shippo_account_id='<value>', shippo_account_update_request=components.ShippoAccountUpdateRequest(
-    email='hippo@shippo.com',
-    first_name='Shippo',
-    last_name='Meister',
-    company_name='Acme',
-))
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.shippo_accounts.update(shippo_account_id="<id>", shippo_account_update_request={
+        "email": "hippo@shippo.com",
+        "first_name": "Shippo",
+        "last_name": "Meister",
+        "company_name": "Acme",
+    })
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -174,6 +179,7 @@ if res is not None:
 | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
 | `shippo_account_id`                                                                                      | *str*                                                                                                    | :heavy_check_mark:                                                                                       | Object ID of the ShippoAccount                                                                           |
 | `shippo_account_update_request`                                                                          | [Optional[components.ShippoAccountUpdateRequest]](../../models/components/shippoaccountupdaterequest.md) | :heavy_minus_sign:                                                                                       | N/A                                                                                                      |
+| `retries`                                                                                                | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                         | :heavy_minus_sign:                                                                                       | Configuration to override the default retry behavior of the client.                                      |
 
 ### Response
 

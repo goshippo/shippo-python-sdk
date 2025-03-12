@@ -10,7 +10,9 @@ class ServiceLevelParcelforceEnum(str, Enum):
     | parcelforce_express48 | Express 48|
     | parcelforce_express24 | Express 24|
     | parcelforce_expressam | Express AM|
+
     """
-    PARCELFORCE_EXPRESS48 = 'parcelforce_express48'
-    PARCELFORCE_EXPRESS24 = 'parcelforce_express24'
-    PARCELFORCE_EXPRESSAM = 'parcelforce_expressam'
+
+    PARCELFORCE_EXPRESS48 = "parcelforce_express48"
+    PARCELFORCE_EXPRESS24 = "parcelforce_express24"
+    PARCELFORCE_EXPRESSAM = "parcelforce_expressam"

@@ -10,7 +10,9 @@ class ServiceLevelOnTracEnum(str, Enum):
     | ontrac_ground | Ground|
     | ontrac_sunrise_gold | Sunrise Gold|
     | ontrac_sunrise | Sunrise|
+
     """
-    ONTRAC_GROUND = 'ontrac_ground'
-    ONTRAC_SUNRISE_GOLD = 'ontrac_sunrise_gold'
-    ONTRAC_SUNRISE = 'ontrac_sunrise'
+
+    ONTRAC_GROUND = "ontrac_ground"
+    ONTRAC_SUNRISE_GOLD = "ontrac_sunrise_gold"
+    ONTRAC_SUNRISE = "ontrac_sunrise"

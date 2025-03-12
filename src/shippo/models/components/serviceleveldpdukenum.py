@@ -24,21 +24,23 @@ class ServiceLevelDPDUKEnum(str, Enum):
     | dpd_uk_direct | DPD Direct|
     | dpd_uk_direct_tracked_mail| DPD Tracked Mail|
     | dpd_uk_pickup_returns | Pickup Returns|
+
     """
-    DPD_UK_SHIP_TO_SHOP = 'dpd_uk_ship_to_shop'
-    DPD_UK_1030 = 'dpd_uk_1030'
-    DPD_UK_1200 = 'dpd_uk_1200'
-    DPD_UK_SATURDAY = 'dpd_uk_saturday'
-    DPD_UK_SATURDAY_1030 = 'dpd_uk_saturday_1030'
-    DPD_UK_SATURDAY_1200 = 'dpd_uk_saturday_1200'
-    DPD_UK_SUNDAY = 'dpd_uk_sunday'
-    DPD_UK_SUNDAY_1030 = 'dpd_uk_sunday_1030'
-    DPD_UK_SUNDAY_1200 = 'dpd_uk_sunday_1200'
-    DPD_UK_NEXT_DAY = 'dpd_uk_next_day'
-    DPD_UK_TWO_DAY = 'dpd_uk_two_day'
-    DPD_UK_CLASSIC = 'dpd_uk_classic'
-    DPD_UK_AIR_CLASSIC = 'dpd_uk_air_classic'
-    DPD_UK_AIR_EXPRESS = 'dpd_uk_air_express'
-    DPD_UK_DIRECT = 'dpd_uk_direct'
-    DPD_UK_DIRECT_TRACKED_MAIL = 'dpd_uk_direct_tracked_mail'
-    DPD_UK_PICKUP_RETURNS = 'dpd_uk_pickup_returns'
+
+    DPD_UK_SHIP_TO_SHOP = "dpd_uk_ship_to_shop"
+    DPD_UK_1030 = "dpd_uk_1030"
+    DPD_UK_1200 = "dpd_uk_1200"
+    DPD_UK_SATURDAY = "dpd_uk_saturday"
+    DPD_UK_SATURDAY_1030 = "dpd_uk_saturday_1030"
+    DPD_UK_SATURDAY_1200 = "dpd_uk_saturday_1200"
+    DPD_UK_SUNDAY = "dpd_uk_sunday"
+    DPD_UK_SUNDAY_1030 = "dpd_uk_sunday_1030"
+    DPD_UK_SUNDAY_1200 = "dpd_uk_sunday_1200"
+    DPD_UK_NEXT_DAY = "dpd_uk_next_day"
+    DPD_UK_TWO_DAY = "dpd_uk_two_day"
+    DPD_UK_CLASSIC = "dpd_uk_classic"
+    DPD_UK_AIR_CLASSIC = "dpd_uk_air_classic"
+    DPD_UK_AIR_EXPRESS = "dpd_uk_air_express"
+    DPD_UK_DIRECT = "dpd_uk_direct"
+    DPD_UK_DIRECT_TRACKED_MAIL = "dpd_uk_direct_tracked_mail"
+    DPD_UK_PICKUP_RETURNS = "dpd_uk_pickup_returns"

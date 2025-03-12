@@ -9,6 +9,8 @@ class ServiceLevelBetterTrucksEnum(str, Enum):
     |:---|:---|
     | better_trucks_same_day | Same Day|
     | better_trucks_next_day | Next Day|
+
     """
-    BETTER_TRUCKS_SAME_DAY = 'better_trucks_same_day'
-    BETTER_TRUCKS_NEXT_DAY = 'better_trucks_next_day'
+
+    BETTER_TRUCKS_SAME_DAY = "better_trucks_same_day"
+    BETTER_TRUCKS_NEXT_DAY = "better_trucks_next_day"

@@ -8,5 +8,7 @@ class ServiceLevelCDLEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
     | cdl_next_day | Next Day|
+
     """
-    CDL_NEXT_DAY = 'cdl_next_day'
+
+    CDL_NEXT_DAY = "cdl_next_day"

@@ -13,7 +13,6 @@ from .servicelevelcdlenum import ServiceLevelCDLEnum
 from .servicelevelchronopostenum import ServiceLevelChronopostEnum
 from .servicelevelcolissimoenum import ServiceLevelColissimoEnum
 from .servicelevelcorreosespanaenum import ServiceLevelCorreosEspanaEnum
-from .servicelevelcourierspleaseenum import ServiceLevelCouriersPleaseEnum
 from .serviceleveldeutschepostenum import ServiceLevelDeutschePostEnum
 from .serviceleveldhlecommerceenum import ServiceLevelDHLeCommerceEnum
 from .serviceleveldhlexpressenum import ServiceLevelDHLExpressEnum
@@ -41,5 +40,94 @@ from .servicelevelupsenum import ServiceLevelUPSEnum
 from .serviceleveluspsenum import ServiceLevelUSPSEnum
 from .servicelevelvehoenum import ServiceLevelVehoEnum
 from typing import Union
+from typing_extensions import TypeAliasType
 
-ServiceLevelEnumSet = Union[ServiceLevelUSPSEnum, ServiceLevelFedExEnum, ServiceLevelUPSEnum, ServiceLevelAirterraEnum, ServiceLevelAPCPostalEnum, ServiceLevelAsendiaEnum, ServiceLevelAustraliaPostEnum, ServiceLevelAPGEnum, ServiceLevelBetterTrucksEnum, ServiceLevelCanadaPostEnum, ServiceLevelCDLEnum, ServiceLevelChronopostEnum, ServiceLevelCouriersPleaseEnum, ServiceLevelCorreosEspanaEnum, ServiceLevelColissimoEnum, ServiceLevelPurolatorEnum, ServiceLevelDHLExpressEnum, ServiceLevelDHLeCommerceEnum, ServiceLevelDHLGermanyEnum, ServiceLevelDPDDEEnum, ServiceLevelDPDUKEnum, ServiceLevelDeutschePostEnum, ServiceLevelAramexAustraliaEnum, ServiceLevelGlobegisticsEnum, ServiceLevelGLSUSEnum, ServiceLevelLSOEnum, ServiceLevelMondialRelayEnum, ServiceLevelParcelforceEnum, ServiceLevelPostItalianeEnum, ServiceLevelePostGlobalEnum, ServiceLevelRoyalMailEnum, ServiceLevelSendleEnum, ServiceLevelOnTracEnum, ServiceLevelJitsuEnum, ServiceLevelLasershipEnum, ServiceLevelEvriUKEnum, ServiceLevelUDSEnum, ServiceLevelVehoEnum, ServiceLevelSwyftEnum]
+
+ServiceLevelEnumSetTypedDict = TypeAliasType(
+    "ServiceLevelEnumSetTypedDict",
+    Union[
+        ServiceLevelUSPSEnum,
+        ServiceLevelFedExEnum,
+        ServiceLevelUPSEnum,
+        ServiceLevelAirterraEnum,
+        ServiceLevelAPCPostalEnum,
+        ServiceLevelAsendiaEnum,
+        ServiceLevelAustraliaPostEnum,
+        ServiceLevelAPGEnum,
+        ServiceLevelBetterTrucksEnum,
+        ServiceLevelCanadaPostEnum,
+        ServiceLevelCDLEnum,
+        ServiceLevelChronopostEnum,
+        ServiceLevelCorreosEspanaEnum,
+        ServiceLevelColissimoEnum,
+        ServiceLevelPurolatorEnum,
+        ServiceLevelDHLExpressEnum,
+        ServiceLevelDHLeCommerceEnum,
+        ServiceLevelDHLGermanyEnum,
+        ServiceLevelDPDDEEnum,
+        ServiceLevelDPDUKEnum,
+        ServiceLevelDeutschePostEnum,
+        ServiceLevelAramexAustraliaEnum,
+        ServiceLevelGlobegisticsEnum,
+        ServiceLevelGLSUSEnum,
+        ServiceLevelLSOEnum,
+        ServiceLevelMondialRelayEnum,
+        ServiceLevelParcelforceEnum,
+        ServiceLevelPostItalianeEnum,
+        ServiceLevelePostGlobalEnum,
+        ServiceLevelRoyalMailEnum,
+        ServiceLevelSendleEnum,
+        ServiceLevelOnTracEnum,
+        ServiceLevelJitsuEnum,
+        ServiceLevelLasershipEnum,
+        ServiceLevelEvriUKEnum,
+        ServiceLevelUDSEnum,
+        ServiceLevelVehoEnum,
+        ServiceLevelSwyftEnum,
+    ],
+)
+
+
+ServiceLevelEnumSet = TypeAliasType(
+    "ServiceLevelEnumSet",
+    Union[
+        ServiceLevelUSPSEnum,
+        ServiceLevelFedExEnum,
+        ServiceLevelUPSEnum,
+        ServiceLevelAirterraEnum,
+        ServiceLevelAPCPostalEnum,
+        ServiceLevelAsendiaEnum,
+        ServiceLevelAustraliaPostEnum,
+        ServiceLevelAPGEnum,
+        ServiceLevelBetterTrucksEnum,
+        ServiceLevelCanadaPostEnum,
+        ServiceLevelCDLEnum,
+        ServiceLevelChronopostEnum,
+        ServiceLevelCorreosEspanaEnum,
+        ServiceLevelColissimoEnum,
+        ServiceLevelPurolatorEnum,
+        ServiceLevelDHLExpressEnum,
+        ServiceLevelDHLeCommerceEnum,
+        ServiceLevelDHLGermanyEnum,
+        ServiceLevelDPDDEEnum,
+        ServiceLevelDPDUKEnum,
+        ServiceLevelDeutschePostEnum,
+        ServiceLevelAramexAustraliaEnum,
+        ServiceLevelGlobegisticsEnum,
+        ServiceLevelGLSUSEnum,
+        ServiceLevelLSOEnum,
+        ServiceLevelMondialRelayEnum,
+        ServiceLevelParcelforceEnum,
+        ServiceLevelPostItalianeEnum,
+        ServiceLevelePostGlobalEnum,
+        ServiceLevelRoyalMailEnum,
+        ServiceLevelSendleEnum,
+        ServiceLevelOnTracEnum,
+        ServiceLevelJitsuEnum,
+        ServiceLevelLasershipEnum,
+        ServiceLevelEvriUKEnum,
+        ServiceLevelUDSEnum,
+        ServiceLevelVehoEnum,
+        ServiceLevelSwyftEnum,
+    ],
+)

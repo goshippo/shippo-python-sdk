@@ -13,10 +13,12 @@ class ServiceLevelGLSUSEnum(str, Enum):
     | gls_us_nps | Noon Priority Overnight|
     | gls_us_pds | Priority Overnight|
     | gls_us_sds | Saturday Delivery|
+
     """
-    GLS_US_CPS = 'gls_us_cps'
-    GLS_US_EPS = 'gls_us_eps'
-    GLS_US_ESS = 'gls_us_ess'
-    GLS_US_NPS = 'gls_us_nps'
-    GLS_US_PDS = 'gls_us_pds'
-    GLS_US_SDS = 'gls_us_sds'
+
+    GLS_US_CPS = "gls_us_cps"
+    GLS_US_EPS = "gls_us_eps"
+    GLS_US_ESS = "gls_us_ess"
+    GLS_US_NPS = "gls_us_nps"
+    GLS_US_PDS = "gls_us_pds"
+    GLS_US_SDS = "gls_us_sds"

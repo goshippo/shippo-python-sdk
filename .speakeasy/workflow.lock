@@ -1,4 +1,4 @@
-speakeasyVersion: 1.447.0
+speakeasyVersion: 1.513.7
 sources:
     openapi:
         sourceNamespace: openapi
@@ -14,8 +14,6 @@ targets:
         sourceNamespace: openapi
         sourceRevisionDigest: sha256:e8ab98342833888dbc4dd20f683ee5fb7791107d8574b8dfabce743bc3675cd0
         sourceBlobDigest: sha256:8c66d55b10c00886e8fd1f2b6ea6b233bccf17f622fed046dcf302d5da3f91f5
-        codeSamplesNamespace: openapi-code-samples
-        codeSamplesRevisionDigest: sha256:4d98db29bd18b7b3669055823e761d8c64c5c63c3c282521be4a1c6f56ca69bb
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest

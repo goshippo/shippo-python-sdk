@@ -20,24 +20,81 @@ Shippo external API.: Use this API to integrate with the Shippo service
 
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
+<!-- $toc-max-depth=2 -->
+* [<img src="https://docs.goshippo.com/images/Logo.png" width="30" alt="Shippo logo"> Shippo Python SDK](#img-srchttpsdocsgoshippocomimageslogopng-width30-altshippo-logo-shippo-python-sdk)
+  * [SDK Installation](#sdk-installation)
+  * [SDK Reinstallation to a specific version](#sdk-reinstallation-to-a-specific-version)
+  * [SDK Example Usage](#sdk-example-usage)
+  * [Retries](#retries)
+  * [Custom HTTP Client](#custom-http-client)
+  * [Debug HTTP Client](#debug-http-client)
+  * [Documentation](#documentation)
+  * [Resource Management](#resource-management)
+  * [Debugging](#debugging)
+  * [IDE Support](#ide-support)
+  * [Available Resources and Operations](#available-resources-and-operations)
+  * [Maturity](#maturity)
+  * [Contributions](#contributions)
+  * [About Shippo](#about-shippo)
 
-* [SDK Installation](#sdk-installation)
-* [SDK Example Usage](#sdk-example-usage)
-* [Available Resources and Operations](#available-resources-and-operations)
-* [Error Handling](#error-handling)
-* [Server Selection](#server-selection)
-* [Custom HTTP Client](#custom-http-client)
-* [Authentication](#authentication)
 <!-- End Table of Contents [toc] -->
 
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
 
-The SDK can be installed using the *pip* package manager, with dependencies and metadata stored in the `setup.py` file.
+> [!NOTE]
+> **Python version upgrade policy**
+>
+> Once a Python version reaches its [official end of life date](https://devguide.python.org/versions/), a 3-month grace period is provided for users to upgrade. Following this grace period, the minimum python version supported in the SDK will be updated.
+
+The SDK can be installed with either *pip* or *poetry* package managers.
+
+### PIP
+
+*PIP* is the default package installer for Python, enabling easy installation and management of packages from PyPI via the command line.
 
 ```bash
 pip install shippo
 ```
+
+### Poetry
+
+*Poetry* is a modern tool that simplifies dependency management and package publishing by using a single `pyproject.toml` file to handle project metadata and dependencies.
+
+```bash
+poetry add shippo
+```
+
+### Shell and script usage with `uv`
+
+You can use this SDK in a Python shell with [uv](https://docs.astral.sh/uv/) and the `uvx` command that comes with it like so:
+
+```shell
+uvx --from shippo python
+```
+
+It's also possible to write a standalone Python script without needing to set up a whole project like so:
+
+```python
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.9"
+# dependencies = [
+#     "shippo",
+# ]
+# ///
+
+from shippo import Shippo
+
+sdk = Shippo(
+  # SDK arguments
+)
+
+# Rest of script here...
+```
+
+Once that is saved to a file, you can run it with `uv run script.py` where
+`script.py` can be replaced with the actual file name.
 <!-- End SDK Installation [installation] -->
 
 ## SDK Reinstallation to a specific version
@@ -71,19 +128,132 @@ if address_list is not None:
 <!-- No Authentication [security] -->
 <!-- No Global Parameters [global-parameters] -->
 
+<!-- Start Retries [retries] -->
+## Retries
+
+Some of the endpoints in this SDK support retries. If you use the SDK without any configuration, it will fall back to the default retry strategy provided by the API. However, the default retry strategy can be overridden on a per-operation basis, or across the entire SDK.
+
+To change the default retry strategy for a single API call, simply provide a `RetryConfig` object to the call:
+```python
+from shippo import Shippo
+from shippo.utils import BackoffStrategy, RetryConfig
+
+
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
+
+    res = s_client.addresses.list(,
+        RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
+
+    assert res is not None
+
+    # Handle response
+    print(res)
+
+```
+
+If you'd like to override the default retry strategy for all operations that support retries, you can use the `retry_config` optional parameter when initializing the SDK:
+```python
+from shippo import Shippo
+from shippo.utils import BackoffStrategy, RetryConfig
+
+
+with Shippo(
+    retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
+
+    res = s_client.addresses.list()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
+
+```
+<!-- End Retries [retries] -->
+
 <!-- Start Custom HTTP Client [http-client] -->
 ## Custom HTTP Client
 
-The Python SDK makes API calls using the [requests](https://pypi.org/project/requests/) HTTP library.  In order to provide a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration, you can initialize the SDK client with a custom `requests.Session` object.
+The Python SDK makes API calls using the [httpx](https://www.python-httpx.org/) HTTP library.  In order to provide a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration, you can initialize the SDK client with your own HTTP client instance.
+Depending on whether you are using the sync or async version of the SDK, you can pass an instance of `HttpClient` or `AsyncHttpClient` respectively, which are Protocol's ensuring that the client has the necessary methods to make API calls.
+This allows you to wrap the client with your own custom logic, such as adding custom headers, logging, or error handling, or you can just pass an instance of `httpx.Client` or `httpx.AsyncClient` directly.
 
 For example, you could specify a header for every request that this sdk makes as follows:
 ```python
-import shippo
-import requests
+from shippo import Shippo
+import httpx
 
-http_client = requests.Session()
-http_client.headers.update({'x-custom-header': 'someValue'})
-s = shippo.Shippo(client=http_client)
+http_client = httpx.Client(headers={"x-custom-header": "someValue"})
+s = Shippo(client=http_client)
+```
+
+or you could wrap the client with your own custom logic:
+```python
+from shippo import Shippo
+from shippo.httpclient import AsyncHttpClient
+import httpx
+
+class CustomClient(AsyncHttpClient):
+    client: AsyncHttpClient
+
+    def __init__(self, client: AsyncHttpClient):
+        self.client = client
+
+    async def send(
+        self,
+        request: httpx.Request,
+        *,
+        stream: bool = False,
+        auth: Union[
+            httpx._types.AuthTypes, httpx._client.UseClientDefault, None
+        ] = httpx.USE_CLIENT_DEFAULT,
+        follow_redirects: Union[
+            bool, httpx._client.UseClientDefault
+        ] = httpx.USE_CLIENT_DEFAULT,
+    ) -> httpx.Response:
+        request.headers["Client-Level-Header"] = "added by client"
+
+        return await self.client.send(
+            request, stream=stream, auth=auth, follow_redirects=follow_redirects
+        )
+
+    def build_request(
+        self,
+        method: str,
+        url: httpx._types.URLTypes,
+        *,
+        content: Optional[httpx._types.RequestContent] = None,
+        data: Optional[httpx._types.RequestData] = None,
+        files: Optional[httpx._types.RequestFiles] = None,
+        json: Optional[Any] = None,
+        params: Optional[httpx._types.QueryParamTypes] = None,
+        headers: Optional[httpx._types.HeaderTypes] = None,
+        cookies: Optional[httpx._types.CookieTypes] = None,
+        timeout: Union[
+            httpx._types.TimeoutTypes, httpx._client.UseClientDefault
+        ] = httpx.USE_CLIENT_DEFAULT,
+        extensions: Optional[httpx._types.RequestExtensions] = None,
+    ) -> httpx.Request:
+        return self.client.build_request(
+            method,
+            url,
+            content=content,
+            data=data,
+            files=files,
+            json=json,
+            params=params,
+            headers=headers,
+            cookies=cookies,
+            timeout=timeout,
+            extensions=extensions,
+        )
+
+s = Shippo(async_client=CustomClient(httpx.AsyncClient()))
 ```
 <!-- End Custom HTTP Client [http-client] -->
 
@@ -112,7 +282,61 @@ print(debug_session.last_response.status_code, debug_session.last_response.text)
 ## Documentation
 Review our full guides and references at [https://docs.goshippo.com/](https://docs.goshippo.com/).
 
+<!-- Start Resource Management [resource-management] -->
+## Resource Management
+
+The `Shippo` class implements the context manager protocol and registers a finalizer function to close the underlying sync and async HTTPX clients it uses under the hood. This will close HTTP connections, release memory and free up other resources held by the SDK. In short-lived Python programs and notebooks that make a few SDK method calls, resource management may not be a concern. However, in longer-lived programs, it is beneficial to create a single SDK instance via a [context manager][context-manager] and reuse it across the application.
+
+[context-manager]: https://docs.python.org/3/reference/datamodel.html#context-managers
+
+```python
+from shippo import Shippo
+def main():
+
+    with Shippo(
+        api_key_header="<YOUR_API_KEY_HERE>",
+        shippo_api_version="2018-02-08",
+    ) as s_client:
+        # Rest of application here...
+
+
+# Or when using async:
+async def amain():
+
+    async with Shippo(
+        api_key_header="<YOUR_API_KEY_HERE>",
+        shippo_api_version="2018-02-08",
+    ) as s_client:
+        # Rest of application here...
+```
+<!-- End Resource Management [resource-management] -->
+
+<!-- Start Debugging [debug] -->
+## Debugging
+
+You can setup your SDK to emit debug logs for SDK requests and responses.
+
+You can pass your own logger class directly into your SDK.
+```python
+from shippo import Shippo
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+s = Shippo(debug_logger=logging.getLogger("shippo"))
+```
+<!-- End Debugging [debug] -->
+
 <!-- Placeholder for Future Speakeasy SDK Sections -->
+
+<!-- Start IDE Support [idesupport] -->
+## IDE Support
+
+### PyCharm
+
+Generally, the SDK will work well with most IDEs out of the box. However, when using PyCharm, you can enjoy much better integration with Pydantic by installing an additional plugin.
+
+- [PyCharm Pydantic Plugin](https://docs.pydantic.dev/latest/integrations/pycharm/)
+<!-- End IDE Support [idesupport] -->
 
 <!-- Start Available Resources and Operations [operations] -->
 ## Available Resources and Operations

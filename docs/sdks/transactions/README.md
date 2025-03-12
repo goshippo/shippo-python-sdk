@@ -19,23 +19,24 @@ Returns a list of all transaction objects.
 ### Example Usage
 
 ```python
-import shippo
-from shippo.models import components, operations
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
+from shippo.models import components
 
 
-res = s.transactions.list(request=operations.ListTransactionsRequest(
-    object_status=components.TransactionStatusEnum.SUCCESS,
-    tracking_status=components.TrackingStatusEnum.DELIVERED,
-))
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.transactions.list(request={
+        "object_status": components.TransactionStatusEnum.SUCCESS,
+        "tracking_status": components.TrackingStatusEnum.DELIVERED,
+    })
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -44,6 +45,7 @@ if res is not None:
 | Parameter                                                                                | Type                                                                                     | Required                                                                                 | Description                                                                              |
 | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | `request`                                                                                | [operations.ListTransactionsRequest](../../models/operations/listtransactionsrequest.md) | :heavy_check_mark:                                                                       | The request object to use for the request.                                               |
+| `retries`                                                                                | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                         | :heavy_minus_sign:                                                                       | Configuration to override the default retry behavior of the client.                      |
 
 ### Response
 
@@ -62,26 +64,27 @@ Creates a new transaction object and purchases the shipping label using a rate o
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 from shippo.models import components
 
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
 
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-res = s.transactions.create(request=components.TransactionCreateRequest(
-    rate='ec9f0d3adc9441449c85d315f0997fd5',
-    async_=False,
-    label_file_type=components.LabelFileTypeEnum.PDF_4X6,
-    metadata='Order ID #12345',
-    order='adcfdddf8ec64b84ad22772bce3ea37a',
-))
+    res = s_client.transactions.create(request={
+        "rate": "ec9f0d3adc9441449c85d315f0997fd5",
+        "async_": False,
+        "label_file_type": components.LabelFileTypeEnum.PDF_4X6,
+        "metadata": "Order ID #12345",
+        "order": "adcfdddf8ec64b84ad22772bce3ea37a",
+    })
 
-if res is not None:
-    # handle response
-    pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -90,6 +93,7 @@ if res is not None:
 | Parameter                                                                                          | Type                                                                                               | Required                                                                                           | Description                                                                                        |
 | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | `request`                                                                                          | [operations.CreateTransactionRequestBody](../../models/operations/createtransactionrequestbody.md) | :heavy_check_mark:                                                                                 | The request object to use for the request.                                                         |
+| `retries`                                                                                          | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                   | :heavy_minus_sign:                                                                                 | Configuration to override the default retry behavior of the client.                                |
 
 ### Response
 
@@ -108,27 +112,29 @@ Returns an existing transaction using an object ID.
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.transactions.get(transaction_id='<value>')
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.transactions.get(transaction_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 ### Parameters
 
-| Parameter                              | Type                                   | Required                               | Description                            |
-| -------------------------------------- | -------------------------------------- | -------------------------------------- | -------------------------------------- |
-| `transaction_id`                       | *str*                                  | :heavy_check_mark:                     | Object ID of the transaction to update |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `transaction_id`                                                    | *str*                                                               | :heavy_check_mark:                                                  | Object ID of the transaction to update                              |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
