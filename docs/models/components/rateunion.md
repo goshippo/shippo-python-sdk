@@ -1,4 +1,4 @@
-# TransactionRate
+# RateUnion
 
 ID of the Rate object for which a Label has to be obtained.  
 If you purchase a label by calling the transaction endpoint without a rate (instalabel), 

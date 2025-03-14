@@ -10,9 +10,9 @@ from shippo.models.components import (
     AddressCompleteCreateRequest,
     LineItem,
     WeightUnitEnum,
-    Parcel,
     DistanceUnitEnum,
     ServiceLevelUPSEnum,
+    ParcelValid,
 )
 from tests.helpers_custom import get_carrier_account
 
@@ -90,7 +90,7 @@ class TestRatesAtCheckout:
                         sku="HM-123",
                     )
                 ],
-                parcel=Parcel(
+                parcel=ParcelValid(
                     length="10",
                     width="15",
                     height="10",

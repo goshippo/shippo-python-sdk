@@ -7,7 +7,7 @@ from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-class Provider(str, Enum):
+class InsuranceProvider(str, Enum):
     r"""To have insurance cover provided by a carrier directly instead of Shippo's provider (XCover), set `provider` to `FEDEX`, `UPS`, or `ONTRAC`."""
 
     FEDEX = "FEDEX"
@@ -30,7 +30,7 @@ class InsuranceTypedDict(TypedDict):
     r"""Currency for the amount value.
     Currently only USD is supported for FedEx and UPS.
     """
-    provider: NotRequired[Provider]
+    provider: NotRequired[InsuranceProvider]
     r"""To have insurance cover provided by a carrier directly instead of Shippo's provider (XCover), set `provider` to `FEDEX`, `UPS`, or `ONTRAC`."""
 
 
@@ -52,5 +52,5 @@ class Insurance(BaseModel):
     Currently only USD is supported for FedEx and UPS.
     """
 
-    provider: Optional[Provider] = None
+    provider: Optional[InsuranceProvider] = None
     r"""To have insurance cover provided by a carrier directly instead of Shippo's provider (XCover), set `provider` to `FEDEX`, `UPS`, or `ONTRAC`."""

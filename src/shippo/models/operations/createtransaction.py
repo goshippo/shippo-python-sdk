@@ -26,8 +26,8 @@ class CreateTransactionGlobals(BaseModel):
     r"""Optional string used to pick a non-default API version to use. See our <a href=\"https://docs.goshippo.com/docs/api_concepts/apiversioning/\">API version</a> guide."""
 
 
-CreateTransactionRequestBodyTypedDict = TypeAliasType(
-    "CreateTransactionRequestBodyTypedDict",
+CreateTransactionRequestTypedDict = TypeAliasType(
+    "CreateTransactionRequestTypedDict",
     Union[
         components_transactioncreaterequest.TransactionCreateRequestTypedDict,
         components_instanttransactioncreaterequest.InstantTransactionCreateRequestTypedDict,
@@ -36,8 +36,8 @@ CreateTransactionRequestBodyTypedDict = TypeAliasType(
 r"""Examples."""
 
 
-CreateTransactionRequestBody = TypeAliasType(
-    "CreateTransactionRequestBody",
+CreateTransactionRequest = TypeAliasType(
+    "CreateTransactionRequest",
     Union[
         components_transactioncreaterequest.TransactionCreateRequest,
         components_instanttransactioncreaterequest.InstantTransactionCreateRequest,

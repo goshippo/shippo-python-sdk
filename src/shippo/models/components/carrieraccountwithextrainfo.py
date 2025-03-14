@@ -19,8 +19,8 @@ from typing import Any, Dict, List, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-ParametersTypedDict = TypeAliasType(
-    "ParametersTypedDict",
+CarrierAccountWithExtraInfoParametersTypedDict = TypeAliasType(
+    "CarrierAccountWithExtraInfoParametersTypedDict",
     Union[
         FedExConnectExistingOwnAccountParametersTypedDict,
         UPSConnectExistingOwnAccountParametersTypedDict,
@@ -29,8 +29,8 @@ ParametersTypedDict = TypeAliasType(
 )
 
 
-Parameters = TypeAliasType(
-    "Parameters",
+CarrierAccountWithExtraInfoParameters = TypeAliasType(
+    "CarrierAccountWithExtraInfoParameters",
     Union[
         FedExConnectExistingOwnAccountParameters,
         UPSConnectExistingOwnAccountParameters,
@@ -95,7 +95,7 @@ class CarrierAccountWithExtraInfoTypedDict(TypedDict):
     r"""Determines whether the account is active. When creating a shipment, if no `carrier_accounts` are explicitly
     passed Shippo will query all carrier accounts that have this field set. By default, this is set to True.
     """
-    parameters: NotRequired[ParametersTypedDict]
+    parameters: NotRequired[CarrierAccountWithExtraInfoParametersTypedDict]
     carrier_name: NotRequired[Any]
     r"""Carrier name, see <a href=\"#tag/Carriers\">Carriers</a><br>"""
     is_shippo_account: NotRequired[bool]
@@ -128,7 +128,7 @@ class CarrierAccountWithExtraInfo(BaseModel):
     passed Shippo will query all carrier accounts that have this field set. By default, this is set to True.
     """
 
-    parameters: Optional[Parameters] = None
+    parameters: Optional[CarrierAccountWithExtraInfoParameters] = None
 
     carrier_name: Optional[Any] = None
     r"""Carrier name, see <a href=\"#tag/Carriers\">Carriers</a><br>"""

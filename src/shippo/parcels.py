@@ -219,14 +219,13 @@ class Parcels(BaseSDK):
         self,
         *,
         request: Union[
-            operations.CreateParcelRequestBody,
-            operations.CreateParcelRequestBodyTypedDict,
+            operations.CreateParcelRequest, operations.CreateParcelRequestTypedDict
         ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Parcel]:
+    ) -> Optional[components.ParcelValid]:
         r"""Create a new parcel
 
         Creates a new parcel object.
@@ -248,8 +247,8 @@ class Parcels(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(request, operations.CreateParcelRequestBody)
-        request = cast(operations.CreateParcelRequestBody, request)
+            request = utils.unmarshal(request, operations.CreateParcelRequest)
+        request = cast(operations.CreateParcelRequest, request)
 
         req = self._build_request(
             method="POST",
@@ -268,7 +267,7 @@ class Parcels(BaseSDK):
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", operations.CreateParcelRequestBody
+                request, False, False, "json", operations.CreateParcelRequest
             ),
             timeout_ms=timeout_ms,
         )
@@ -294,7 +293,7 @@ class Parcels(BaseSDK):
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Parcel])
+            return utils.unmarshal_json(http_res.text, Optional[components.ParcelValid])
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError(
@@ -319,14 +318,13 @@ class Parcels(BaseSDK):
         self,
         *,
         request: Union[
-            operations.CreateParcelRequestBody,
-            operations.CreateParcelRequestBodyTypedDict,
+            operations.CreateParcelRequest, operations.CreateParcelRequestTypedDict
         ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Parcel]:
+    ) -> Optional[components.ParcelValid]:
         r"""Create a new parcel
 
         Creates a new parcel object.
@@ -348,8 +346,8 @@ class Parcels(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(request, operations.CreateParcelRequestBody)
-        request = cast(operations.CreateParcelRequestBody, request)
+            request = utils.unmarshal(request, operations.CreateParcelRequest)
+        request = cast(operations.CreateParcelRequest, request)
 
         req = self._build_request_async(
             method="POST",
@@ -368,7 +366,7 @@ class Parcels(BaseSDK):
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", operations.CreateParcelRequestBody
+                request, False, False, "json", operations.CreateParcelRequest
             ),
             timeout_ms=timeout_ms,
         )
@@ -394,7 +392,7 @@ class Parcels(BaseSDK):
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Parcel])
+            return utils.unmarshal_json(http_res.text, Optional[components.ParcelValid])
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError(
@@ -423,7 +421,7 @@ class Parcels(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Parcel]:
+    ) -> Optional[components.ParcelValid]:
         r"""Retrieve an existing parcel
 
         Returns parcel details using an existing parcel object ID (this will not return parcel details associated with un-purchased shipment/rate parcel object IDs).
@@ -488,7 +486,7 @@ class Parcels(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Parcel])
+            return utils.unmarshal_json(http_res.text, Optional[components.ParcelValid])
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError(
@@ -517,7 +515,7 @@ class Parcels(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Parcel]:
+    ) -> Optional[components.ParcelValid]:
         r"""Retrieve an existing parcel
 
         Returns parcel details using an existing parcel object ID (this will not return parcel details associated with un-purchased shipment/rate parcel object IDs).
@@ -582,7 +580,7 @@ class Parcels(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Parcel])
+            return utils.unmarshal_json(http_res.text, Optional[components.ParcelValid])
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError(

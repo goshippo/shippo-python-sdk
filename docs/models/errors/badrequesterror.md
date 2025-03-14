@@ -1,4 +1,4 @@
-# InitiateOauth2SigninResponseBody
+# BadRequestError
 
 Invalid parameters provided by the user
 

@@ -1,4 +1,4 @@
-# CreateParcelRequestBody
+# CreateParcelRequest
 
 Parcel details.
 

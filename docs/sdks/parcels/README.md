@@ -106,14 +106,14 @@ with Shippo(
 
 ### Parameters
 
-| Parameter                                                                                | Type                                                                                     | Required                                                                                 | Description                                                                              |
-| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `request`                                                                                | [operations.CreateParcelRequestBody](../../models/operations/createparcelrequestbody.md) | :heavy_check_mark:                                                                       | The request object to use for the request.                                               |
-| `retries`                                                                                | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                         | :heavy_minus_sign:                                                                       | Configuration to override the default retry behavior of the client.                      |
+| Parameter                                                                        | Type                                                                             | Required                                                                         | Description                                                                      |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `request`                                                                        | [operations.CreateParcelRequest](../../models/operations/createparcelrequest.md) | :heavy_check_mark:                                                               | The request object to use for the request.                                       |
+| `retries`                                                                        | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                 | :heavy_minus_sign:                                                               | Configuration to override the default retry behavior of the client.              |
 
 ### Response
 
-**[components.Parcel](../../models/components/parcel.md)**
+**[components.ParcelValid](../../models/components/parcelvalid.md)**
 
 ### Errors
 
@@ -154,7 +154,7 @@ with Shippo(
 
 ### Response
 
-**[components.Parcel](../../models/components/parcel.md)**
+**[components.ParcelValid](../../models/components/parcelvalid.md)**
 
 ### Errors
 

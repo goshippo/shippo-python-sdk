@@ -26,8 +26,8 @@ class CreateParcelGlobals(BaseModel):
     r"""Optional string used to pick a non-default API version to use. See our <a href=\"https://docs.goshippo.com/docs/api_concepts/apiversioning/\">API version</a> guide."""
 
 
-CreateParcelRequestBodyTypedDict = TypeAliasType(
-    "CreateParcelRequestBodyTypedDict",
+CreateParcelRequestTypedDict = TypeAliasType(
+    "CreateParcelRequestTypedDict",
     Union[
         components_parcelcreatefromtemplaterequest.ParcelCreateFromTemplateRequestTypedDict,
         components_parcelcreaterequest.ParcelCreateRequestTypedDict,
@@ -36,8 +36,8 @@ CreateParcelRequestBodyTypedDict = TypeAliasType(
 r"""Parcel details."""
 
 
-CreateParcelRequestBody = TypeAliasType(
-    "CreateParcelRequestBody",
+CreateParcelRequest = TypeAliasType(
+    "CreateParcelRequest",
     Union[
         components_parcelcreatefromtemplaterequest.ParcelCreateFromTemplateRequest,
         components_parcelcreaterequest.ParcelCreateRequest,

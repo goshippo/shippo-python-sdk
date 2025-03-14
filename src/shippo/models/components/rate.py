@@ -13,7 +13,7 @@ from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-class Attributes(str, Enum):
+class Attribute(str, Enum):
     BESTVALUE = "BESTVALUE"
     CHEAPEST = "CHEAPEST"
     FASTEST = "FASTEST"
@@ -32,7 +32,7 @@ class RateTypedDict(TypedDict):
     r"""Currency used in the recipient's country, refers to `amount_local`.
     The <a href=\"http://www.xe.com/iso4217.php\">official ISO 4217</a> currency codes are used, e.g. `USD` or \"EUR\".
     """
-    attributes: List[Attributes]
+    attributes: List[Attribute]
     r"""An array containing specific attributes of this Rate in context of the entire shipment.
     Attributes can be assigned `CHEAPEST`, `FASTEST`, or `BESTVALUE`.
     """
@@ -96,7 +96,7 @@ class Rate(BaseModel):
     The <a href=\"http://www.xe.com/iso4217.php\">official ISO 4217</a> currency codes are used, e.g. `USD` or \"EUR\".
     """
 
-    attributes: List[Attributes]
+    attributes: List[Attribute]
     r"""An array containing specific attributes of this Rate in context of the entire shipment.
     Attributes can be assigned `CHEAPEST`, `FASTEST`, or `BESTVALUE`.
     """

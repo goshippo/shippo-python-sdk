@@ -3,7 +3,7 @@
 from __future__ import annotations
 from .address import Address, AddressTypedDict
 from .customsdeclaration import CustomsDeclaration, CustomsDeclarationTypedDict
-from .parcel import Parcel, ParcelTypedDict
+from .parcel_valid import ParcelValid, ParcelValidTypedDict
 from .rate import Rate, RateTypedDict
 from .responsemessage import ResponseMessage, ResponseMessageTypedDict
 from .shipmentextra import ShipmentExtra, ShipmentExtraTypedDict
@@ -50,7 +50,7 @@ class ShipmentTypedDict(TypedDict):
     r"""Username of the user who created the Shipment object."""
     object_updated: datetime
     r"""Date and time of last Shipment update."""
-    parcels: List[ParcelTypedDict]
+    parcels: List[ParcelValidTypedDict]
     r"""List of Parcel objects to be shipped."""
     rates: List[RateTypedDict]
     r"""An array with all available rates. If <code>async</code> has been set to <code>false</code> in the request,
@@ -112,7 +112,7 @@ class Shipment(BaseModel):
     object_updated: datetime
     r"""Date and time of last Shipment update."""
 
-    parcels: List[Parcel]
+    parcels: List[ParcelValid]
     r"""List of Parcel objects to be shipped."""
 
     rates: List[Rate]

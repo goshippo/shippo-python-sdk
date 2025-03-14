@@ -11,9 +11,9 @@ Object ID for an existing User Parcel Template OR a fully formed Parcel object.
 value: str = /* values here */
 ```
 
-### `components.Parcel`
+### `components.ParcelValid`
 
 ```python
-value: components.Parcel = /* values here */
+value: components.ParcelValid = /* values here */
 ```
 

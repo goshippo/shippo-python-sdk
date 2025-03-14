@@ -26,8 +26,8 @@ from .createorder import CreateOrderGlobals, CreateOrderGlobalsTypedDict
 from .createparcel import (
     CreateParcelGlobals,
     CreateParcelGlobalsTypedDict,
-    CreateParcelRequestBody,
-    CreateParcelRequestBodyTypedDict,
+    CreateParcelRequest,
+    CreateParcelRequestTypedDict,
 )
 from .createpickup import CreatePickupGlobals, CreatePickupGlobalsTypedDict
 from .createrefund import CreateRefundGlobals, CreateRefundGlobalsTypedDict
@@ -44,8 +44,8 @@ from .createtrack import CreateTrackGlobals, CreateTrackGlobalsTypedDict
 from .createtransaction import (
     CreateTransactionGlobals,
     CreateTransactionGlobalsTypedDict,
-    CreateTransactionRequestBody,
-    CreateTransactionRequestBodyTypedDict,
+    CreateTransactionRequest,
+    CreateTransactionRequestTypedDict,
 )
 from .createuserparceltemplate import (
     CreateUserParcelTemplateGlobals,
@@ -294,8 +294,8 @@ from .purchasebatch import (
 from .registercarrieraccount import (
     RegisterCarrierAccountGlobals,
     RegisterCarrierAccountGlobalsTypedDict,
-    RegisterCarrierAccountRequestBody,
-    RegisterCarrierAccountRequestBodyTypedDict,
+    RegisterCarrierAccountRequest,
+    RegisterCarrierAccountRequestTypedDict,
 )
 from .removeshipmentsfrombatch import (
     RemoveShipmentsFromBatchGlobals,
@@ -362,8 +362,8 @@ __all__ = [
     "CreateOrderGlobalsTypedDict",
     "CreateParcelGlobals",
     "CreateParcelGlobalsTypedDict",
-    "CreateParcelRequestBody",
-    "CreateParcelRequestBodyTypedDict",
+    "CreateParcelRequest",
+    "CreateParcelRequestTypedDict",
     "CreatePickupGlobals",
     "CreatePickupGlobalsTypedDict",
     "CreateRefundGlobals",
@@ -378,8 +378,8 @@ __all__ = [
     "CreateTrackGlobalsTypedDict",
     "CreateTransactionGlobals",
     "CreateTransactionGlobalsTypedDict",
-    "CreateTransactionRequestBody",
-    "CreateTransactionRequestBodyTypedDict",
+    "CreateTransactionRequest",
+    "CreateTransactionRequestTypedDict",
     "CreateUserParcelTemplateGlobals",
     "CreateUserParcelTemplateGlobalsTypedDict",
     "DeleteDefaultParcelTemplateGlobals",
@@ -547,8 +547,8 @@ __all__ = [
     "PurchaseBatchRequestTypedDict",
     "RegisterCarrierAccountGlobals",
     "RegisterCarrierAccountGlobalsTypedDict",
-    "RegisterCarrierAccountRequestBody",
-    "RegisterCarrierAccountRequestBodyTypedDict",
+    "RegisterCarrierAccountRequest",
+    "RegisterCarrierAccountRequestTypedDict",
     "RemoveShipmentsFromBatchGlobals",
     "RemoveShipmentsFromBatchGlobalsTypedDict",
     "RemoveShipmentsFromBatchRequest",

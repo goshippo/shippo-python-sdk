@@ -18,7 +18,7 @@ class ObjectState(str, Enum):
     VALID = "VALID"
 
 
-class ParcelTypedDict(TypedDict):
+class ParcelValidTypedDict(TypedDict):
     mass_unit: WeightUnitEnum
     r"""The unit used for weight."""
     weight: str
@@ -52,7 +52,7 @@ class ParcelTypedDict(TypedDict):
     r"""Indicates whether the object has been created in test mode."""
 
 
-class Parcel(BaseModel):
+class ParcelValid(BaseModel):
     mass_unit: WeightUnitEnum
     r"""The unit used for weight."""
 

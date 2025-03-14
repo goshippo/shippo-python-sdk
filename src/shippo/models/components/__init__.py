@@ -38,7 +38,7 @@ from .batch import (
     ObjectResultsTypedDict,
 )
 from .batchcreaterequest import BatchCreateRequest, BatchCreateRequestTypedDict
-from .batchshipment import BatchShipment, BatchShipmentTypedDict, Status
+from .batchshipment import BatchShipment, BatchShipmentStatus, BatchShipmentTypedDict
 from .batchshipmentcreaterequest import (
     BatchShipmentCreateRequest,
     BatchShipmentCreateRequestTypedDict,
@@ -47,7 +47,7 @@ from .batchshipmentpaginatedlist import (
     BatchShipmentPaginatedList,
     BatchShipmentPaginatedListTypedDict,
 )
-from .billing import Billing, BillingTypedDict, Type
+from .billing import Billing, BillingType, BillingTypedDict
 from .carrieraccount import (
     CarrierAccount,
     CarrierAccountParameters,
@@ -172,13 +172,13 @@ from .carrieraccountwithextrainfo import (
     Authentication,
     AuthenticationTypedDict,
     CarrierAccountWithExtraInfo,
+    CarrierAccountWithExtraInfoParameters,
+    CarrierAccountWithExtraInfoParametersTypedDict,
     CarrierAccountWithExtraInfoStatus,
     CarrierAccountWithExtraInfoType,
     CarrierAccountWithExtraInfoTypedDict,
     ObjectInfo,
     ObjectInfoTypedDict,
-    Parameters,
-    ParametersTypedDict,
 )
 from .carrierparceltemplate import CarrierParcelTemplate, CarrierParcelTemplateTypedDict
 from .carrierparceltemplatelist import (
@@ -199,10 +199,10 @@ from .customsdeclaration import (
     CustomsDeclaration,
     CustomsDeclarationAddress,
     CustomsDeclarationAddressTypedDict,
+    CustomsDeclarationDutiesPayor,
+    CustomsDeclarationDutiesPayorTypedDict,
     CustomsDeclarationType,
     CustomsDeclarationTypedDict,
-    DutiesPayor,
-    DutiesPayorTypedDict,
 )
 from .customsdeclarationb13afilingoptionenum import (
     CustomsDeclarationB13AFilingOptionEnum,
@@ -274,18 +274,18 @@ from .instanttransactioncreaterequest import (
     InstantTransactionCreateRequestTypedDict,
     LabelFileType,
 )
-from .insurance import Insurance, InsuranceTypedDict, Provider
+from .insurance import Insurance, InsuranceProvider, InsuranceTypedDict
 from .invoicenumber import InvoiceNumber, InvoiceNumberTypedDict
 from .labelfiletypeenum import LabelFileTypeEnum
 from .lineitem import LineItem, LineItemTypedDict
 from .lineitembase import LineItemBase, LineItemBaseTypedDict
 from .liverate import LiveRate, LiveRateTypedDict
 from .liveratecreaterequest import (
-    AddressFrom,
-    AddressFromTypedDict,
-    AddressTo,
-    AddressToTypedDict,
     LiveRateCreateRequest,
+    LiveRateCreateRequestAddressFrom,
+    LiveRateCreateRequestAddressFromTypedDict,
+    LiveRateCreateRequestAddressTo,
+    LiveRateCreateRequestAddressToTypedDict,
     LiveRateCreateRequestParcel,
     LiveRateCreateRequestParcelTypedDict,
     LiveRateCreateRequestTypedDict,
@@ -301,12 +301,12 @@ from .manifestcreaterequest import (
 )
 from .manifestpaginatedlist import ManifestPaginatedList, ManifestPaginatedListTypedDict
 from .objectstateenum import ObjectStateEnum
-from .order import Order, OrderTypedDict, Transactions, TransactionsTypedDict
+from .order import Order, OrderTransaction, OrderTransactionTypedDict, OrderTypedDict
 from .ordercreaterequest import OrderCreateRequest, OrderCreateRequestTypedDict
 from .orderpaginatedlist import OrderPaginatedList, OrderPaginatedListTypedDict
 from .ordershopappenum import OrderShopAppEnum
 from .orderstatusenum import OrderStatusEnum
-from .parcel import ObjectState, Parcel, ParcelTypedDict
+from .parcel_valid import ObjectState, ParcelValid, ParcelValidTypedDict
 from .parcelcreatefromtemplaterequest import (
     ParcelCreateFromTemplateRequest,
     ParcelCreateFromTemplateRequestTypedDict,
@@ -329,7 +329,7 @@ from .parceltemplateuspsenum import ParcelTemplateUSPSEnum
 from .pickup import Pickup, PickupStatus, PickupTypedDict
 from .pickupbase import PickupBase, PickupBaseTypedDict
 from .ponumber import PoNumber, PoNumberTypedDict
-from .rate import Attributes, Rate, RateTypedDict
+from .rate import Attribute, Rate, RateTypedDict
 from .ratepaginatedlist import RatePaginatedList, RatePaginatedListTypedDict
 from .refund import Refund, RefundStatus, RefundTypedDict
 from .refundpaginatedlist import RefundPaginatedList, RefundPaginatedListTypedDict
@@ -399,15 +399,15 @@ from .shipment import Shipment, ShipmentStatus, ShipmentTypedDict
 from .shipmentcreaterequest import (
     AddressReturn,
     AddressReturnTypedDict,
-    Parcels,
-    ParcelsTypedDict,
+    CustomsDeclarationUnion,
+    CustomsDeclarationUnionTypedDict,
     ShipmentCreateRequest,
     ShipmentCreateRequestAddressFrom,
     ShipmentCreateRequestAddressFromTypedDict,
     ShipmentCreateRequestAddressTo,
     ShipmentCreateRequestAddressToTypedDict,
-    ShipmentCreateRequestCustomsDeclaration,
-    ShipmentCreateRequestCustomsDeclarationTypedDict,
+    ShipmentCreateRequestParcel,
+    ShipmentCreateRequestParcelTypedDict,
     ShipmentCreateRequestTypedDict,
 )
 from .shipmentextra import (
@@ -450,9 +450,9 @@ from .tracksrequest import TracksRequest, TracksRequestTypedDict
 from .transaction import (
     CreatedBy,
     CreatedByTypedDict,
+    RateUnion,
+    RateUnionTypedDict,
     Transaction,
-    TransactionRate,
-    TransactionRateTypedDict,
     TransactionTypedDict,
 )
 from .transactioncreaterequest import (
@@ -510,16 +510,12 @@ __all__ = [
     "AddressCompleteCreateRequestTypedDict",
     "AddressCreateRequest",
     "AddressCreateRequestTypedDict",
-    "AddressFrom",
-    "AddressFromTypedDict",
     "AddressImporter",
     "AddressImporterTypedDict",
     "AddressPaginatedList",
     "AddressPaginatedListTypedDict",
     "AddressReturn",
     "AddressReturnTypedDict",
-    "AddressTo",
-    "AddressToTypedDict",
     "AddressTypedDict",
     "AddressValidationResults",
     "AddressValidationResultsMessage",
@@ -530,7 +526,7 @@ __all__ = [
     "Alcohol",
     "AlcoholTypedDict",
     "AncillaryEndorsement",
-    "Attributes",
+    "Attribute",
     "Authentication",
     "AuthenticationTypedDict",
     "Batch",
@@ -541,10 +537,12 @@ __all__ = [
     "BatchShipmentCreateRequestTypedDict",
     "BatchShipmentPaginatedList",
     "BatchShipmentPaginatedListTypedDict",
+    "BatchShipmentStatus",
     "BatchShipmentTypedDict",
     "BatchStatus",
     "BatchTypedDict",
     "Billing",
+    "BillingType",
     "BillingTypedDict",
     "BuildingLocationType",
     "BuildingType",
@@ -623,6 +621,8 @@ __all__ = [
     "CarrierAccountUSPSCreateRequestParametersTypedDict",
     "CarrierAccountUSPSCreateRequestTypedDict",
     "CarrierAccountWithExtraInfo",
+    "CarrierAccountWithExtraInfoParameters",
+    "CarrierAccountWithExtraInfoParametersTypedDict",
     "CarrierAccountWithExtraInfoStatus",
     "CarrierAccountWithExtraInfoType",
     "CarrierAccountWithExtraInfoTypedDict",
@@ -655,6 +655,8 @@ __all__ = [
     "CustomsDeclarationCreateRequestDutiesPayorTypedDict",
     "CustomsDeclarationCreateRequestType",
     "CustomsDeclarationCreateRequestTypedDict",
+    "CustomsDeclarationDutiesPayor",
+    "CustomsDeclarationDutiesPayorTypedDict",
     "CustomsDeclarationEelPfcEnum",
     "CustomsDeclarationIncotermEnum",
     "CustomsDeclarationNonDeliveryOptionEnum",
@@ -662,6 +664,8 @@ __all__ = [
     "CustomsDeclarationPaginatedListTypedDict",
     "CustomsDeclarationType",
     "CustomsDeclarationTypedDict",
+    "CustomsDeclarationUnion",
+    "CustomsDeclarationUnionTypedDict",
     "CustomsExporterIdentification",
     "CustomsExporterIdentificationTypedDict",
     "CustomsInvoicedCharges",
@@ -691,13 +695,12 @@ __all__ = [
     "DistanceUnitEnum",
     "DryIce",
     "DryIceTypedDict",
-    "DutiesPayor",
-    "DutiesPayorTypedDict",
     "FedExConnectExistingOwnAccountParameters",
     "FedExConnectExistingOwnAccountParametersTypedDict",
     "InstantTransactionCreateRequest",
     "InstantTransactionCreateRequestTypedDict",
     "Insurance",
+    "InsuranceProvider",
     "InsuranceTypedDict",
     "InvoiceNumber",
     "InvoiceNumberTypedDict",
@@ -711,6 +714,10 @@ __all__ = [
     "LineItemTypedDict",
     "LiveRate",
     "LiveRateCreateRequest",
+    "LiveRateCreateRequestAddressFrom",
+    "LiveRateCreateRequestAddressFromTypedDict",
+    "LiveRateCreateRequestAddressTo",
+    "LiveRateCreateRequestAddressToTypedDict",
     "LiveRateCreateRequestParcel",
     "LiveRateCreateRequestParcelTypedDict",
     "LiveRateCreateRequestTypedDict",
@@ -743,10 +750,9 @@ __all__ = [
     "OrderPaginatedListTypedDict",
     "OrderShopAppEnum",
     "OrderStatusEnum",
+    "OrderTransaction",
+    "OrderTransactionTypedDict",
     "OrderTypedDict",
-    "Parameters",
-    "ParametersTypedDict",
-    "Parcel",
     "ParcelCreateFromTemplateRequest",
     "ParcelCreateFromTemplateRequestTypedDict",
     "ParcelCreateRequest",
@@ -766,9 +772,8 @@ __all__ = [
     "ParcelTemplateFedExEnum",
     "ParcelTemplateUPSEnum",
     "ParcelTemplateUSPSEnum",
-    "ParcelTypedDict",
-    "Parcels",
-    "ParcelsTypedDict",
+    "ParcelValid",
+    "ParcelValidTypedDict",
     "PaymentMethod",
     "Pickup",
     "PickupBase",
@@ -778,11 +783,12 @@ __all__ = [
     "PoNumber",
     "PoNumberTypedDict",
     "PreferredDeliveryTimeframe",
-    "Provider",
     "Rate",
     "RatePaginatedList",
     "RatePaginatedListTypedDict",
     "RateTypedDict",
+    "RateUnion",
+    "RateUnionTypedDict",
     "RecipientType",
     "Refund",
     "RefundPaginatedList",
@@ -858,8 +864,8 @@ __all__ = [
     "ShipmentCreateRequestAddressFromTypedDict",
     "ShipmentCreateRequestAddressTo",
     "ShipmentCreateRequestAddressToTypedDict",
-    "ShipmentCreateRequestCustomsDeclaration",
-    "ShipmentCreateRequestCustomsDeclarationTypedDict",
+    "ShipmentCreateRequestParcel",
+    "ShipmentCreateRequestParcelTypedDict",
     "ShipmentCreateRequestTypedDict",
     "ShipmentExtra",
     "ShipmentExtraLasershipAttributesEnum",
@@ -877,7 +883,6 @@ __all__ = [
     "ShippoAccountUpdateRequest",
     "ShippoAccountUpdateRequestTypedDict",
     "SignatureConfirmation",
-    "Status",
     "Track",
     "TrackTypedDict",
     "TrackingStatus",
@@ -894,13 +899,8 @@ __all__ = [
     "TransactionCreateRequestTypedDict",
     "TransactionPaginatedList",
     "TransactionPaginatedListTypedDict",
-    "TransactionRate",
-    "TransactionRateTypedDict",
     "TransactionStatusEnum",
     "TransactionTypedDict",
-    "Transactions",
-    "TransactionsTypedDict",
-    "Type",
     "UPSConnectExistingOwnAccountParameters",
     "UPSConnectExistingOwnAccountParametersTypedDict",
     "UPSReferenceFields",

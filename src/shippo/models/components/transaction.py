@@ -40,9 +40,7 @@ class CreatedBy(BaseModel):
     username: Optional[str] = None
 
 
-TransactionRateTypedDict = TypeAliasType(
-    "TransactionRateTypedDict", Union[CoreRateTypedDict, str]
-)
+RateUnionTypedDict = TypeAliasType("RateUnionTypedDict", Union[CoreRateTypedDict, str])
 r"""ID of the Rate object for which a Label has to be obtained.
 If you purchase a label by calling the transaction endpoint without a rate (instalabel),
 this field will be a simplified Rate object in the Transaction model returned from the POST request.
@@ -50,7 +48,7 @@ this field will be a simplified Rate object in the Transaction model returned fr
 """
 
 
-TransactionRate = TypeAliasType("TransactionRate", Union[CoreRate, str])
+RateUnion = TypeAliasType("RateUnion", Union[CoreRate, str])
 r"""ID of the Rate object for which a Label has to be obtained.
 If you purchase a label by calling the transaction endpoint without a rate (instalabel),
 this field will be a simplified Rate object in the Transaction model returned from the POST request.
@@ -95,7 +93,7 @@ class TransactionTypedDict(TypedDict):
     r"""A URL pointing directly to the QR code in PNG format.
     A value will only be returned if requested using qr_code_requested flag and the carrier provides such an option.
     """
-    rate: NotRequired[TransactionRateTypedDict]
+    rate: NotRequired[RateUnionTypedDict]
     r"""ID of the Rate object for which a Label has to be obtained.
     If you purchase a label by calling the transaction endpoint without a rate (instalabel),
     this field will be a simplified Rate object in the Transaction model returned from the POST request.
@@ -168,7 +166,7 @@ class Transaction(BaseModel):
     A value will only be returned if requested using qr_code_requested flag and the carrier provides such an option.
     """
 
-    rate: Optional[TransactionRate] = None
+    rate: Optional[RateUnion] = None
     r"""ID of the Rate object for which a Label has to be obtained.
     If you purchase a label by calling the transaction endpoint without a rate (instalabel),
     this field will be a simplified Rate object in the Transaction model returned from the POST request.

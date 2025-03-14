@@ -11,11 +11,11 @@ from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-class TransactionsTypedDict(TypedDict):
+class OrderTransactionTypedDict(TypedDict):
     pass
 
 
-class Transactions(BaseModel):
+class OrderTransaction(BaseModel):
     pass
 
 
@@ -69,7 +69,7 @@ class OrderTypedDict(TypedDict):
     r"""Platform the order was created on and, if applicable, imported from.
     Orders created via the Shippo API or dashboard will have the value \"Shippo\".
     """
-    transactions: NotRequired[List[TransactionsTypedDict]]
+    transactions: NotRequired[List[OrderTransactionTypedDict]]
     r"""Array of <a href=\"#tag/Transactions\">transaction</a> objects representing all shipping labels purchased for this order.
     All objects are returned expanded with a limited number of fields by default.
     """
@@ -144,7 +144,7 @@ class Order(BaseModel):
     Orders created via the Shippo API or dashboard will have the value \"Shippo\".
     """
 
-    transactions: Optional[List[Transactions]] = None
+    transactions: Optional[List[OrderTransaction]] = None
     r"""Array of <a href=\"#tag/Transactions\">transaction</a> objects representing all shipping labels purchased for this order.
     All objects are returned expanded with a limited number of fields by default.
     """

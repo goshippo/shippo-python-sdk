@@ -7,7 +7,7 @@ from typing import Any, List, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-class Status(str, Enum):
+class BatchShipmentStatus(str, Enum):
     r"""`INVALID` batch shipments cannot be purchased and will have to be removed, fixed, and added to the batch again.<br>
     `VALID` batch shipments can be purchased. <br>
     Batch shipments with the status `TRANSACTION_FAILED` were not able to be purchased and the error will be displayed on the message field<br>
@@ -25,7 +25,7 @@ class BatchShipmentTypedDict(TypedDict):
     r"""Object ID of this batch shipment. Can be used in the remove_shipments endpoint."""
     shipment: str
     r"""Object ID of the shipment object created for this batch shipment."""
-    status: Status
+    status: BatchShipmentStatus
     r"""`INVALID` batch shipments cannot be purchased and will have to be removed, fixed, and added to the batch again.<br>
     `VALID` batch shipments can be purchased. <br>
     Batch shipments with the status `TRANSACTION_FAILED` were not able to be purchased and the error will be displayed on the message field<br>
@@ -55,7 +55,7 @@ class BatchShipment(BaseModel):
     shipment: str
     r"""Object ID of the shipment object created for this batch shipment."""
 
-    status: Status
+    status: BatchShipmentStatus
     r"""`INVALID` batch shipments cannot be purchased and will have to be removed, fixed, and added to the batch again.<br>
     `VALID` batch shipments can be purchased. <br>
     Batch shipments with the status `TRANSACTION_FAILED` were not able to be purchased and the error will be displayed on the message field<br>

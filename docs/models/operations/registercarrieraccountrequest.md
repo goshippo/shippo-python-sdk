@@ -1,4 +1,4 @@
-# RegisterCarrierAccountRequestBody
+# RegisterCarrierAccountRequest
 
 The body of the request.
 

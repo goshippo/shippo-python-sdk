@@ -1,4 +1,4 @@
-# InitiateOauth2SigninCarrierAccountsResponseResponseBody
+# NotFoundError
 
 Invalid carrier account provided by the user
 

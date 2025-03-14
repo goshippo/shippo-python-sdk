@@ -7,7 +7,7 @@ from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-class Type(str, Enum):
+class BillingType(str, Enum):
     r"""Party to be billed. (Leave blank for DHL Germany.)"""
 
     SENDER = "SENDER"
@@ -26,7 +26,7 @@ class BillingTypedDict(TypedDict):
     r"""Country iso2 code of account number to be billed (required for UPS third party billing only)."""
     participation_code: NotRequired[str]
     r"""2 digit code used to override your default participation code associated with your DHL Germany account."""
-    type: NotRequired[Type]
+    type: NotRequired[BillingType]
     r"""Party to be billed. (Leave blank for DHL Germany.)"""
     zip: NotRequired[str]
     r"""ZIP code of account number to be billed (required for UPS if there is a zip on the billing account)."""
@@ -44,7 +44,7 @@ class Billing(BaseModel):
     participation_code: Optional[str] = None
     r"""2 digit code used to override your default participation code associated with your DHL Germany account."""
 
-    type: Optional[Type] = None
+    type: Optional[BillingType] = None
     r"""Party to be billed. (Leave blank for DHL Germany.)"""
 
     zip: Optional[str] = None

@@ -1,4 +1,4 @@
-# CreateTransactionRequestBody
+# CreateTransactionRequest
 
 Examples.
 

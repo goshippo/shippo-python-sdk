@@ -40,8 +40,8 @@ class RegisterCarrierAccountGlobals(BaseModel):
     r"""Optional string used to pick a non-default API version to use. See our <a href=\"https://docs.goshippo.com/docs/api_concepts/apiversioning/\">API version</a> guide."""
 
 
-RegisterCarrierAccountRequestBodyTypedDict = TypeAliasType(
-    "RegisterCarrierAccountRequestBodyTypedDict",
+RegisterCarrierAccountRequestTypedDict = TypeAliasType(
+    "RegisterCarrierAccountRequestTypedDict",
     Union[
         components_carrieraccountcanadapostcreaterequest.CarrierAccountCanadaPostCreateRequestTypedDict,
         components_carrieraccountchronopostcreaterequest.CarrierAccountChronopostCreateRequestTypedDict,
@@ -63,7 +63,7 @@ RegisterCarrierAccountRequestBodyTypedDict = TypeAliasType(
 r"""The body of the request."""
 
 
-RegisterCarrierAccountRequestBody = Annotated[
+RegisterCarrierAccountRequest = Annotated[
     Union[
         Annotated[
             components_carrieraccountcanadapostcreaterequest.CarrierAccountCanadaPostCreateRequest,

@@ -6,14 +6,15 @@ from .addresscompletecreaterequest import (
     AddressCompleteCreateRequestTypedDict,
 )
 from .lineitem import LineItem, LineItemTypedDict
-from .parcel import Parcel, ParcelTypedDict
+from .parcel_valid import ParcelValid, ParcelValidTypedDict
 from shippo.types import BaseModel
 from typing import List, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
-AddressFromTypedDict = TypeAliasType(
-    "AddressFromTypedDict", Union[AddressCompleteCreateRequestTypedDict, str]
+LiveRateCreateRequestAddressFromTypedDict = TypeAliasType(
+    "LiveRateCreateRequestAddressFromTypedDict",
+    Union[AddressCompleteCreateRequestTypedDict, str],
 )
 r"""The sender address, which includes your name, company name, street address, city, state, zip code,
 country, phone number, and email address (strings). Special characters should not be included in
@@ -21,15 +22,18 @@ any address element, especially name, company, and email.
 """
 
 
-AddressFrom = TypeAliasType("AddressFrom", Union[AddressCompleteCreateRequest, str])
+LiveRateCreateRequestAddressFrom = TypeAliasType(
+    "LiveRateCreateRequestAddressFrom", Union[AddressCompleteCreateRequest, str]
+)
 r"""The sender address, which includes your name, company name, street address, city, state, zip code,
 country, phone number, and email address (strings). Special characters should not be included in
 any address element, especially name, company, and email.
 """
 
 
-AddressToTypedDict = TypeAliasType(
-    "AddressToTypedDict", Union[AddressCompleteCreateRequestTypedDict, str]
+LiveRateCreateRequestAddressToTypedDict = TypeAliasType(
+    "LiveRateCreateRequestAddressToTypedDict",
+    Union[AddressCompleteCreateRequestTypedDict, str],
 )
 r"""The recipient address, which includes the recipient's name, company name, street address, city, state, zip code,
 country, phone number, and email address (strings). Special characters should not be included in
@@ -37,7 +41,9 @@ any address element, especially name, company, and email.
 """
 
 
-AddressTo = TypeAliasType("AddressTo", Union[AddressCompleteCreateRequest, str])
+LiveRateCreateRequestAddressTo = TypeAliasType(
+    "LiveRateCreateRequestAddressTo", Union[AddressCompleteCreateRequest, str]
+)
 r"""The recipient address, which includes the recipient's name, company name, street address, city, state, zip code,
 country, phone number, and email address (strings). Special characters should not be included in
 any address element, especially name, company, and email.
@@ -45,26 +51,26 @@ any address element, especially name, company, and email.
 
 
 LiveRateCreateRequestParcelTypedDict = TypeAliasType(
-    "LiveRateCreateRequestParcelTypedDict", Union[ParcelTypedDict, str]
+    "LiveRateCreateRequestParcelTypedDict", Union[ParcelValidTypedDict, str]
 )
 r"""Object ID for an existing User Parcel Template OR a fully formed Parcel object."""
 
 
 LiveRateCreateRequestParcel = TypeAliasType(
-    "LiveRateCreateRequestParcel", Union[Parcel, str]
+    "LiveRateCreateRequestParcel", Union[ParcelValid, str]
 )
 r"""Object ID for an existing User Parcel Template OR a fully formed Parcel object."""
 
 
 class LiveRateCreateRequestTypedDict(TypedDict):
-    address_to: AddressToTypedDict
+    address_to: LiveRateCreateRequestAddressToTypedDict
     r"""The recipient address, which includes the recipient's name, company name, street address, city, state, zip code,
     country, phone number, and email address (strings). Special characters should not be included in
     any address element, especially name, company, and email.
     """
     line_items: List[LineItemTypedDict]
     r"""Array of Line Item objects"""
-    address_from: NotRequired[AddressFromTypedDict]
+    address_from: NotRequired[LiveRateCreateRequestAddressFromTypedDict]
     r"""The sender address, which includes your name, company name, street address, city, state, zip code,
     country, phone number, and email address (strings). Special characters should not be included in
     any address element, especially name, company, and email.
@@ -74,7 +80,7 @@ class LiveRateCreateRequestTypedDict(TypedDict):
 
 
 class LiveRateCreateRequest(BaseModel):
-    address_to: AddressTo
+    address_to: LiveRateCreateRequestAddressTo
     r"""The recipient address, which includes the recipient's name, company name, street address, city, state, zip code,
     country, phone number, and email address (strings). Special characters should not be included in
     any address element, especially name, company, and email.
@@ -83,7 +89,7 @@ class LiveRateCreateRequest(BaseModel):
     line_items: List[LineItem]
     r"""Array of Line Item objects"""
 
-    address_from: Optional[AddressFrom] = None
+    address_from: Optional[LiveRateCreateRequestAddressFrom] = None
     r"""The sender address, which includes your name, company name, street address, city, state, zip code,
     country, phone number, and email address (strings). Special characters should not be included in
     any address element, especially name, company, and email.

@@ -265,12 +265,12 @@ with Shippo(
 
 ### Errors
 
-| Error Type                                                     | Status Code                                                    | Content Type                                                   |
-| -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- |
-| errors.InitiateOauth2SigninResponseBody                        | 400                                                            | application/json                                               |
-| errors.InitiateOauth2SigninCarrierAccountsResponseBody         | 401                                                            | application/json                                               |
-| errors.InitiateOauth2SigninCarrierAccountsResponseResponseBody | 404                                                            | application/json                                               |
-| errors.SDKError                                                | 4XX, 5XX                                                       | \*/\*                                                          |
+| Error Type               | Status Code              | Content Type             |
+| ------------------------ | ------------------------ | ------------------------ |
+| errors.BadRequestError   | 400                      | application/json         |
+| errors.UnauthorizedError | 401                      | application/json         |
+| errors.NotFoundError     | 404                      | application/json         |
+| errors.SDKError          | 4XX, 5XX                 | \*/\*                    |
 
 ## register
 
@@ -301,10 +301,10 @@ with Shippo(
 
 ### Parameters
 
-| Parameter                                                                                                    | Type                                                                                                         | Required                                                                                                     | Description                                                                                                  |
-| ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                    | [operations.RegisterCarrierAccountRequestBody](../../models/operations/registercarrieraccountrequestbody.md) | :heavy_check_mark:                                                                                           | The request object to use for the request.                                                                   |
-| `retries`                                                                                                    | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                             | :heavy_minus_sign:                                                                                           | Configuration to override the default retry behavior of the client.                                          |
+| Parameter                                                                                            | Type                                                                                                 | Required                                                                                             | Description                                                                                          |
+| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `request`                                                                                            | [operations.RegisterCarrierAccountRequest](../../models/operations/registercarrieraccountrequest.md) | :heavy_check_mark:                                                                                   | The request object to use for the request.                                                           |
+| `retries`                                                                                            | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                     | :heavy_minus_sign:                                                                                   | Configuration to override the default retry behavior of the client.                                  |
 
 ### Response
 

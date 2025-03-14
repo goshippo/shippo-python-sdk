@@ -1,4 +1,4 @@
-# ShipmentCreateRequestCustomsDeclaration
+# CustomsDeclarationUnion
 
 
 ## Supported Types

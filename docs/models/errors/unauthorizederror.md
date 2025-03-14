@@ -1,4 +1,4 @@
-# InitiateOauth2SigninCarrierAccountsResponseBody
+# UnauthorizedError
 
 Invalid ShippoToken or unsupported carrier account provided by the user
 

@@ -215,8 +215,8 @@ class Transactions(BaseSDK):
         self,
         *,
         request: Union[
-            operations.CreateTransactionRequestBody,
-            operations.CreateTransactionRequestBodyTypedDict,
+            operations.CreateTransactionRequest,
+            operations.CreateTransactionRequestTypedDict,
         ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -244,8 +244,8 @@ class Transactions(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(request, operations.CreateTransactionRequestBody)
-        request = cast(operations.CreateTransactionRequestBody, request)
+            request = utils.unmarshal(request, operations.CreateTransactionRequest)
+        request = cast(operations.CreateTransactionRequest, request)
 
         req = self._build_request(
             method="POST",
@@ -264,7 +264,7 @@ class Transactions(BaseSDK):
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", operations.CreateTransactionRequestBody
+                request, False, False, "json", operations.CreateTransactionRequest
             ),
             timeout_ms=timeout_ms,
         )
@@ -315,8 +315,8 @@ class Transactions(BaseSDK):
         self,
         *,
         request: Union[
-            operations.CreateTransactionRequestBody,
-            operations.CreateTransactionRequestBodyTypedDict,
+            operations.CreateTransactionRequest,
+            operations.CreateTransactionRequestTypedDict,
         ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -344,8 +344,8 @@ class Transactions(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(request, operations.CreateTransactionRequestBody)
-        request = cast(operations.CreateTransactionRequestBody, request)
+            request = utils.unmarshal(request, operations.CreateTransactionRequest)
+        request = cast(operations.CreateTransactionRequest, request)
 
         req = self._build_request_async(
             method="POST",
@@ -364,7 +364,7 @@ class Transactions(BaseSDK):
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", operations.CreateTransactionRequestBody
+                request, False, False, "json", operations.CreateTransactionRequest
             ),
             timeout_ms=timeout_ms,
         )

@@ -45,7 +45,7 @@ class CustomsDeclarationAddress(BaseModel):
     r"""Country ISO code of account number to be billed."""
 
 
-class DutiesPayorTypedDict(TypedDict):
+class CustomsDeclarationDutiesPayorTypedDict(TypedDict):
     r"""Specifies who will pay the duties for the shipment. Only accepted for FedEx shipments."""
 
     account: NotRequired[str]
@@ -55,7 +55,7 @@ class DutiesPayorTypedDict(TypedDict):
     address: NotRequired[CustomsDeclarationAddressTypedDict]
 
 
-class DutiesPayor(BaseModel):
+class CustomsDeclarationDutiesPayor(BaseModel):
     r"""Specifies who will pay the duties for the shipment. Only accepted for FedEx shipments."""
 
     account: Optional[str] = None
@@ -108,7 +108,7 @@ class CustomsDeclarationTypedDict(TypedDict):
     """
     disclaimer: NotRequired[str]
     r"""Disclaimer for the shipment and customs information that have been provided."""
-    duties_payor: NotRequired[DutiesPayorTypedDict]
+    duties_payor: NotRequired[CustomsDeclarationDutiesPayorTypedDict]
     r"""Specifies who will pay the duties for the shipment. Only accepted for FedEx shipments."""
     exporter_identification: NotRequired[CustomsExporterIdentificationTypedDict]
     r"""Additional exporter identification that may be required to ship in certain countries"""
@@ -210,7 +210,7 @@ class CustomsDeclaration(BaseModel):
     disclaimer: Optional[str] = None
     r"""Disclaimer for the shipment and customs information that have been provided."""
 
-    duties_payor: Optional[DutiesPayor] = None
+    duties_payor: Optional[CustomsDeclarationDutiesPayor] = None
     r"""Specifies who will pay the duties for the shipment. Only accepted for FedEx shipments."""
 
     exporter_identification: Optional[CustomsExporterIdentification] = None

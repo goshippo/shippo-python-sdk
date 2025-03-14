@@ -1,4 +1,4 @@
-# Parcels
+# ShipmentCreateRequestParcel
 
 
 ## Supported Types

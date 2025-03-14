@@ -1,4 +1,4 @@
-# Status
+# BatchShipmentStatus
 
 `INVALID` batch shipments cannot be purchased and will have to be removed, fixed, and added to the batch again.<br>
 `VALID` batch shipments can be purchased. <br>

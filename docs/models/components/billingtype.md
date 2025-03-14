@@ -1,4 +1,4 @@
-# Type
+# BillingType
 
 Party to be billed. (Leave blank for DHL Germany.)
 

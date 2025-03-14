@@ -933,25 +933,19 @@ class CarrierAccounts(BaseSDK):
             )
         if utils.match_response(http_res, "400", "application/json"):
             response_data = utils.unmarshal_json(
-                http_res.text, errors.InitiateOauth2SigninResponseBodyData
+                http_res.text, errors.BadRequestErrorData
             )
-            raise errors.InitiateOauth2SigninResponseBody(data=response_data)
+            raise errors.BadRequestError(data=response_data)
         if utils.match_response(http_res, "401", "application/json"):
             response_data = utils.unmarshal_json(
-                http_res.text,
-                errors.InitiateOauth2SigninCarrierAccountsResponseBodyData,
+                http_res.text, errors.UnauthorizedErrorData
             )
-            raise errors.InitiateOauth2SigninCarrierAccountsResponseBody(
-                data=response_data
-            )
+            raise errors.UnauthorizedError(data=response_data)
         if utils.match_response(http_res, "404", "application/json"):
             response_data = utils.unmarshal_json(
-                http_res.text,
-                errors.InitiateOauth2SigninCarrierAccountsResponseResponseBodyData,
+                http_res.text, errors.NotFoundErrorData
             )
-            raise errors.InitiateOauth2SigninCarrierAccountsResponseResponseBody(
-                data=response_data
-            )
+            raise errors.NotFoundError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError(
@@ -1057,25 +1051,19 @@ class CarrierAccounts(BaseSDK):
             )
         if utils.match_response(http_res, "400", "application/json"):
             response_data = utils.unmarshal_json(
-                http_res.text, errors.InitiateOauth2SigninResponseBodyData
+                http_res.text, errors.BadRequestErrorData
             )
-            raise errors.InitiateOauth2SigninResponseBody(data=response_data)
+            raise errors.BadRequestError(data=response_data)
         if utils.match_response(http_res, "401", "application/json"):
             response_data = utils.unmarshal_json(
-                http_res.text,
-                errors.InitiateOauth2SigninCarrierAccountsResponseBodyData,
+                http_res.text, errors.UnauthorizedErrorData
             )
-            raise errors.InitiateOauth2SigninCarrierAccountsResponseBody(
-                data=response_data
-            )
+            raise errors.UnauthorizedError(data=response_data)
         if utils.match_response(http_res, "404", "application/json"):
             response_data = utils.unmarshal_json(
-                http_res.text,
-                errors.InitiateOauth2SigninCarrierAccountsResponseResponseBodyData,
+                http_res.text, errors.NotFoundErrorData
             )
-            raise errors.InitiateOauth2SigninCarrierAccountsResponseResponseBody(
-                data=response_data
-            )
+            raise errors.NotFoundError(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError(
@@ -1100,8 +1088,8 @@ class CarrierAccounts(BaseSDK):
         self,
         *,
         request: Union[
-            operations.RegisterCarrierAccountRequestBody,
-            operations.RegisterCarrierAccountRequestBodyTypedDict,
+            operations.RegisterCarrierAccountRequest,
+            operations.RegisterCarrierAccountRequestTypedDict,
         ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -1129,10 +1117,8 @@ class CarrierAccounts(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, operations.RegisterCarrierAccountRequestBody
-            )
-        request = cast(operations.RegisterCarrierAccountRequestBody, request)
+            request = utils.unmarshal(request, operations.RegisterCarrierAccountRequest)
+        request = cast(operations.RegisterCarrierAccountRequest, request)
 
         req = self._build_request(
             method="POST",
@@ -1151,11 +1137,7 @@ class CarrierAccounts(BaseSDK):
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request,
-                False,
-                False,
-                "json",
-                operations.RegisterCarrierAccountRequestBody,
+                request, False, False, "json", operations.RegisterCarrierAccountRequest
             ),
             timeout_ms=timeout_ms,
         )
@@ -1208,8 +1190,8 @@ class CarrierAccounts(BaseSDK):
         self,
         *,
         request: Union[
-            operations.RegisterCarrierAccountRequestBody,
-            operations.RegisterCarrierAccountRequestBodyTypedDict,
+            operations.RegisterCarrierAccountRequest,
+            operations.RegisterCarrierAccountRequestTypedDict,
         ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -1237,10 +1219,8 @@ class CarrierAccounts(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, operations.RegisterCarrierAccountRequestBody
-            )
-        request = cast(operations.RegisterCarrierAccountRequestBody, request)
+            request = utils.unmarshal(request, operations.RegisterCarrierAccountRequest)
+        request = cast(operations.RegisterCarrierAccountRequest, request)
 
         req = self._build_request_async(
             method="POST",
@@ -1259,11 +1239,7 @@ class CarrierAccounts(BaseSDK):
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request,
-                False,
-                False,
-                "json",
-                operations.RegisterCarrierAccountRequestBody,
+                request, False, False, "json", operations.RegisterCarrierAccountRequest
             ),
             timeout_ms=timeout_ms,
         )

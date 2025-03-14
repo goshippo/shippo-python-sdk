@@ -1,4 +1,4 @@
-# DutiesPayor
+# CustomsDeclarationDutiesPayor
 
 Specifies who will pay the duties for the shipment. Only accepted for FedEx shipments.
 

@@ -47,33 +47,33 @@ ShipmentCreateRequestAddressTo = TypeAliasType(
 )
 
 
-ShipmentCreateRequestCustomsDeclarationTypedDict = TypeAliasType(
-    "ShipmentCreateRequestCustomsDeclarationTypedDict",
+CustomsDeclarationUnionTypedDict = TypeAliasType(
+    "CustomsDeclarationUnionTypedDict",
     Union[CustomsDeclarationCreateRequestTypedDict, str],
 )
 
 
-ShipmentCreateRequestCustomsDeclaration = TypeAliasType(
-    "ShipmentCreateRequestCustomsDeclaration",
-    Union[CustomsDeclarationCreateRequest, str],
+CustomsDeclarationUnion = TypeAliasType(
+    "CustomsDeclarationUnion", Union[CustomsDeclarationCreateRequest, str]
 )
 
 
-ParcelsTypedDict = TypeAliasType(
-    "ParcelsTypedDict",
+ShipmentCreateRequestParcelTypedDict = TypeAliasType(
+    "ShipmentCreateRequestParcelTypedDict",
     Union[ParcelCreateFromTemplateRequestTypedDict, ParcelCreateRequestTypedDict, str],
 )
 
 
-Parcels = TypeAliasType(
-    "Parcels", Union[ParcelCreateFromTemplateRequest, ParcelCreateRequest, str]
+ShipmentCreateRequestParcel = TypeAliasType(
+    "ShipmentCreateRequestParcel",
+    Union[ParcelCreateFromTemplateRequest, ParcelCreateRequest, str],
 )
 
 
 class ShipmentCreateRequestTypedDict(TypedDict):
     address_from: ShipmentCreateRequestAddressFromTypedDict
     address_to: ShipmentCreateRequestAddressToTypedDict
-    parcels: List[ParcelsTypedDict]
+    parcels: List[ShipmentCreateRequestParcelTypedDict]
     extra: NotRequired[ShipmentExtraTypedDict]
     r"""An object holding optional extra services to be requested."""
     metadata: NotRequired[str]
@@ -84,7 +84,7 @@ class ShipmentCreateRequestTypedDict(TypedDict):
     be in the future, on a working day, or similar.
     """
     address_return: NotRequired[AddressReturnTypedDict]
-    customs_declaration: NotRequired[ShipmentCreateRequestCustomsDeclarationTypedDict]
+    customs_declaration: NotRequired[CustomsDeclarationUnionTypedDict]
     async_: NotRequired[bool]
     carrier_accounts: NotRequired[List[str]]
     r"""List of <a href=\"#tag/Carrier-Accounts/\">Carrier Accounts</a> `object_id`s used to filter
@@ -97,7 +97,7 @@ class ShipmentCreateRequest(BaseModel):
 
     address_to: ShipmentCreateRequestAddressTo
 
-    parcels: List[Parcels]
+    parcels: List[ShipmentCreateRequestParcel]
 
     extra: Optional[ShipmentExtra] = None
     r"""An object holding optional extra services to be requested."""
@@ -113,7 +113,7 @@ class ShipmentCreateRequest(BaseModel):
 
     address_return: Optional[AddressReturn] = None
 
-    customs_declaration: Optional[ShipmentCreateRequestCustomsDeclaration] = None
+    customs_declaration: Optional[CustomsDeclarationUnion] = None
 
     async_: Annotated[Optional[bool], pydantic.Field(alias="async")] = None
 

@@ -6,61 +6,55 @@ from shippo.types import BaseModel
 from typing import Optional
 
 
-class InitiateOauth2SigninCarrierAccountsResponseResponseBodyData(BaseModel):
+class NotFoundErrorData(BaseModel):
     title: Optional[str] = None
 
     detail: Optional[str] = None
 
 
-class InitiateOauth2SigninCarrierAccountsResponseResponseBody(Exception):
+class NotFoundError(Exception):
     r"""Invalid carrier account provided by the user"""
 
-    data: InitiateOauth2SigninCarrierAccountsResponseResponseBodyData
+    data: NotFoundErrorData
 
-    def __init__(
-        self, data: InitiateOauth2SigninCarrierAccountsResponseResponseBodyData
-    ):
+    def __init__(self, data: NotFoundErrorData):
         self.data = data
 
     def __str__(self) -> str:
-        return utils.marshal_json(
-            self.data, InitiateOauth2SigninCarrierAccountsResponseResponseBodyData
-        )
+        return utils.marshal_json(self.data, NotFoundErrorData)
 
 
-class InitiateOauth2SigninCarrierAccountsResponseBodyData(BaseModel):
+class UnauthorizedErrorData(BaseModel):
     title: Optional[str] = None
 
     detail: Optional[str] = None
 
 
-class InitiateOauth2SigninCarrierAccountsResponseBody(Exception):
+class UnauthorizedError(Exception):
     r"""Invalid ShippoToken or unsupported carrier account provided by the user"""
 
-    data: InitiateOauth2SigninCarrierAccountsResponseBodyData
+    data: UnauthorizedErrorData
 
-    def __init__(self, data: InitiateOauth2SigninCarrierAccountsResponseBodyData):
+    def __init__(self, data: UnauthorizedErrorData):
         self.data = data
 
     def __str__(self) -> str:
-        return utils.marshal_json(
-            self.data, InitiateOauth2SigninCarrierAccountsResponseBodyData
-        )
+        return utils.marshal_json(self.data, UnauthorizedErrorData)
 
 
-class InitiateOauth2SigninResponseBodyData(BaseModel):
+class BadRequestErrorData(BaseModel):
     title: Optional[str] = None
 
     detail: Optional[str] = None
 
 
-class InitiateOauth2SigninResponseBody(Exception):
+class BadRequestError(Exception):
     r"""Invalid parameters provided by the user"""
 
-    data: InitiateOauth2SigninResponseBodyData
+    data: BadRequestErrorData
 
-    def __init__(self, data: InitiateOauth2SigninResponseBodyData):
+    def __init__(self, data: BadRequestErrorData):
         self.data = data
 
     def __str__(self) -> str:
-        return utils.marshal_json(self.data, InitiateOauth2SigninResponseBodyData)
+        return utils.marshal_json(self.data, BadRequestErrorData)
