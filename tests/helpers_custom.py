@@ -1,4 +1,5 @@
-from typing import Any, List, TypeGuard
+from typing import Any, List
+from typing_extensions import TypeGuard
 
 import shippo
 from shippo.models.components import CarriersEnum
