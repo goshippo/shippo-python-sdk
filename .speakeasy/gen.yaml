@@ -15,7 +15,7 @@ generation:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: false
 python:
-  version: 5.0.0
+  version: 4.0.0
   additionalDependencies:
     dev:
       httpretty: ==1.1.4

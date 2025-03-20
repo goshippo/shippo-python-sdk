@@ -1,6 +1,6 @@
 [project]
 name = "shippo"
-version = "5.0.0"
+version = "4.0.0"
 description = "Shipping API Python library (USPS, FedEx, UPS and more)"
 authors = [{ name = "Shippo" },]
 readme = "README-PYPI.md"
