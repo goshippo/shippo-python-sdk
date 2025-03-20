@@ -306,7 +306,7 @@ from .ordercreaterequest import OrderCreateRequest, OrderCreateRequestTypedDict
 from .orderpaginatedlist import OrderPaginatedList, OrderPaginatedListTypedDict
 from .ordershopappenum import OrderShopAppEnum
 from .orderstatusenum import OrderStatusEnum
-from .parcel_valid import ObjectState, ParcelValid, ParcelValidTypedDict
+from .parcel import ObjectState, Parcel, ParcelTypedDict
 from .parcelcreatefromtemplaterequest import (
     ParcelCreateFromTemplateRequest,
     ParcelCreateFromTemplateRequestTypedDict,
@@ -753,6 +753,7 @@ __all__ = [
     "OrderTransaction",
     "OrderTransactionTypedDict",
     "OrderTypedDict",
+    "Parcel",
     "ParcelCreateFromTemplateRequest",
     "ParcelCreateFromTemplateRequestTypedDict",
     "ParcelCreateRequest",
@@ -772,8 +773,7 @@ __all__ = [
     "ParcelTemplateFedExEnum",
     "ParcelTemplateUPSEnum",
     "ParcelTemplateUSPSEnum",
-    "ParcelValid",
-    "ParcelValidTypedDict",
+    "ParcelTypedDict",
     "PaymentMethod",
     "Pickup",
     "PickupBase",

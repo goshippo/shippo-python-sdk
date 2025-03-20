@@ -6,7 +6,7 @@ from .addresscompletecreaterequest import (
     AddressCompleteCreateRequestTypedDict,
 )
 from .lineitem import LineItem, LineItemTypedDict
-from .parcel_valid import ParcelValid, ParcelValidTypedDict
+from .parcel import Parcel, ParcelTypedDict
 from shippo.types import BaseModel
 from typing import List, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
@@ -51,13 +51,13 @@ any address element, especially name, company, and email.
 
 
 LiveRateCreateRequestParcelTypedDict = TypeAliasType(
-    "LiveRateCreateRequestParcelTypedDict", Union[ParcelValidTypedDict, str]
+    "LiveRateCreateRequestParcelTypedDict", Union[ParcelTypedDict, str]
 )
 r"""Object ID for an existing User Parcel Template OR a fully formed Parcel object."""
 
 
 LiveRateCreateRequestParcel = TypeAliasType(
-    "LiveRateCreateRequestParcel", Union[ParcelValid, str]
+    "LiveRateCreateRequestParcel", Union[Parcel, str]
 )
 r"""Object ID for an existing User Parcel Template OR a fully formed Parcel object."""
 

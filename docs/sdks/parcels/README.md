@@ -113,7 +113,7 @@ with Shippo(
 
 ### Response
 
-**[components.ParcelValid](../../models/components/parcelvalid.md)**
+**[components.Parcel](../../models/components/parcel.md)**
 
 ### Errors
 
@@ -154,7 +154,7 @@ with Shippo(
 
 ### Response
 
-**[components.ParcelValid](../../models/components/parcelvalid.md)**
+**[components.Parcel](../../models/components/parcel.md)**
 
 ### Errors
 

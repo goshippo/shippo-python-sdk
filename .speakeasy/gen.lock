@@ -1,10 +1,10 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: 79a38fe084c30b7c60d476f55da0fda1
+  docChecksum: ace15c0d1b81b595278d710d80bb795b
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.517.3
-  generationVersion: 2.548.6
+  speakeasyVersion: 1.521.1
+  generationVersion: 2.558.5
   releaseVersion: 5.0.0
   configChecksum: 860626f5ba2c2416a166e87a3312d046
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
@@ -14,7 +14,7 @@ features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.5
-    core: 5.12.3
+    core: 5.12.4
     defaultEnabledRetries: 0.2.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.3.2
@@ -177,6 +177,7 @@ generatedFiles:
   - docs/models/components/ordershopappenum.md
   - docs/models/components/orderstatusenum.md
   - docs/models/components/ordertransaction.md
+  - docs/models/components/parcel.md
   - docs/models/components/parcelcreatefromtemplaterequest.md
   - docs/models/components/parcelcreaterequest.md
   - docs/models/components/parcelextra.md
@@ -190,7 +191,6 @@ generatedFiles:
   - docs/models/components/parceltemplatefedexenum.md
   - docs/models/components/parceltemplateupsenum.md
   - docs/models/components/parceltemplateuspsenum.md
-  - docs/models/components/parcelvalid.md
   - docs/models/components/paymentmethod.md
   - docs/models/components/pickup.md
   - docs/models/components/pickupbase.md
@@ -553,7 +553,7 @@ generatedFiles:
   - src/shippo/models/components/orderpaginatedlist.py
   - src/shippo/models/components/ordershopappenum.py
   - src/shippo/models/components/orderstatusenum.py
-  - src/shippo/models/components/parcel_valid.py
+  - src/shippo/models/components/parcel.py
   - src/shippo/models/components/parcelcreatefromtemplaterequest.py
   - src/shippo/models/components/parcelcreaterequest.py
   - src/shippo/models/components/parcelextra.py
