@@ -3,14 +3,11 @@ SHELL := /bin/bash
 BUILD_DIR=./build/
 LOCAL_SPEC_FILE=${BUILD_DIR}public-api.yaml
 
-init-venv:
-	if [ ! -d ".venv" ]; then python3 -m venv .venv; fi
-
-install: init-venv
-	source .venv/bin/activate; python3 -m pip install .[dev]
+install: 
+	poetry install
 
 test:
-	source .venv/bin/activate; python3 -m pytest --junitxml=build/test_results/report.xml
+	poetry run pytest --junitxml=build/test_results/report.xml
 
 check: test
 
