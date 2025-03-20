@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+
 BUILD_DIR=./build/
 LOCAL_SPEC_FILE=${BUILD_DIR}public-api.yaml
 
