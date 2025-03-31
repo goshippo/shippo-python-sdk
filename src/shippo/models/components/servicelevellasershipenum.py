@@ -8,5 +8,7 @@ class ServiceLevelLasershipEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
     | lasership_routed_delivery | Routed Delivery|
+
     """
-    LASERSHIP_ROUTED_DELIVERY = 'lasership_routed_delivery'
+
+    LASERSHIP_ROUTED_DELIVERY = "lasership_routed_delivery"

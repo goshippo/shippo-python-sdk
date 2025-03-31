@@ -27,24 +27,26 @@ class ParcelTemplateUSPSEnum(str, Enum):
     | USPS_SmallFlatRateBox | Small Flat Rate Box |  8.69 x 5.44 x 1.75 in |
     | USPS_SmallFlatRateEnvelope | Small Flat Rate Envelope |  10.00 x 6.00 x 4.00 in |
     | USPS_SoftPack | Soft Pack Padded Envelope |  Length and width defined in the Parcel|
+
     """
-    USPS_FLAT_RATE_CARDBOARD_ENVELOPE = 'USPS_FlatRateCardboardEnvelope'
-    USPS_FLAT_RATE_ENVELOPE = 'USPS_FlatRateEnvelope'
-    USPS_FLAT_RATE_GIFT_CARD_ENVELOPE = 'USPS_FlatRateGiftCardEnvelope'
-    USPS_FLAT_RATE_LEGAL_ENVELOPE = 'USPS_FlatRateLegalEnvelope'
-    USPS_FLAT_RATE_PADDED_ENVELOPE = 'USPS_FlatRatePaddedEnvelope'
-    USPS_FLAT_RATE_WINDOW_ENVELOPE = 'USPS_FlatRateWindowEnvelope'
-    USPS_IRREGULAR_PARCEL = 'USPS_IrregularParcel'
-    USPS_LARGE_FLAT_RATE_BOARD_GAME_BOX = 'USPS_LargeFlatRateBoardGameBox'
-    USPS_LARGE_FLAT_RATE_BOX = 'USPS_LargeFlatRateBox'
-    USPS_APO_FLAT_RATE_BOX = 'USPS_APOFlatRateBox'
-    USPS_LARGE_VIDEO_FLAT_RATE_BOX = 'USPS_LargeVideoFlatRateBox'
-    USPS_MEDIUM_FLAT_RATE_BOX1 = 'USPS_MediumFlatRateBox1'
-    USPS_MEDIUM_FLAT_RATE_BOX2 = 'USPS_MediumFlatRateBox2'
-    USPS_REGIONAL_RATE_BOX_A1 = 'USPS_RegionalRateBoxA1'
-    USPS_REGIONAL_RATE_BOX_A2 = 'USPS_RegionalRateBoxA2'
-    USPS_REGIONAL_RATE_BOX_B1 = 'USPS_RegionalRateBoxB1'
-    USPS_REGIONAL_RATE_BOX_B2 = 'USPS_RegionalRateBoxB2'
-    USPS_SMALL_FLAT_RATE_BOX = 'USPS_SmallFlatRateBox'
-    USPS_SMALL_FLAT_RATE_ENVELOPE = 'USPS_SmallFlatRateEnvelope'
-    USPS_SOFT_PACK = 'USPS_SoftPack'
+
+    USPS_FLAT_RATE_CARDBOARD_ENVELOPE = "USPS_FlatRateCardboardEnvelope"
+    USPS_FLAT_RATE_ENVELOPE = "USPS_FlatRateEnvelope"
+    USPS_FLAT_RATE_GIFT_CARD_ENVELOPE = "USPS_FlatRateGiftCardEnvelope"
+    USPS_FLAT_RATE_LEGAL_ENVELOPE = "USPS_FlatRateLegalEnvelope"
+    USPS_FLAT_RATE_PADDED_ENVELOPE = "USPS_FlatRatePaddedEnvelope"
+    USPS_FLAT_RATE_WINDOW_ENVELOPE = "USPS_FlatRateWindowEnvelope"
+    USPS_IRREGULAR_PARCEL = "USPS_IrregularParcel"
+    USPS_LARGE_FLAT_RATE_BOARD_GAME_BOX = "USPS_LargeFlatRateBoardGameBox"
+    USPS_LARGE_FLAT_RATE_BOX = "USPS_LargeFlatRateBox"
+    USPS_APO_FLAT_RATE_BOX = "USPS_APOFlatRateBox"
+    USPS_LARGE_VIDEO_FLAT_RATE_BOX = "USPS_LargeVideoFlatRateBox"
+    USPS_MEDIUM_FLAT_RATE_BOX1 = "USPS_MediumFlatRateBox1"
+    USPS_MEDIUM_FLAT_RATE_BOX2 = "USPS_MediumFlatRateBox2"
+    USPS_REGIONAL_RATE_BOX_A1 = "USPS_RegionalRateBoxA1"
+    USPS_REGIONAL_RATE_BOX_A2 = "USPS_RegionalRateBoxA2"
+    USPS_REGIONAL_RATE_BOX_B1 = "USPS_RegionalRateBoxB1"
+    USPS_REGIONAL_RATE_BOX_B2 = "USPS_RegionalRateBoxB2"
+    USPS_SMALL_FLAT_RATE_BOX = "USPS_SmallFlatRateBox"
+    USPS_SMALL_FLAT_RATE_ENVELOPE = "USPS_SmallFlatRateEnvelope"
+    USPS_SOFT_PACK = "USPS_SoftPack"

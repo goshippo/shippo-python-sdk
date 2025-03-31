@@ -5,4 +5,4 @@ from enum import Enum
 
 
 class ShipmentExtraReturnServiceTypeLasershipEnum(str, Enum):
-    NO_RETURN = 'NO_RETURN'
+    NO_RETURN = "NO_RETURN"

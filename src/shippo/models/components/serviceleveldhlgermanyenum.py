@@ -13,10 +13,12 @@ class ServiceLevelDHLGermanyEnum(str, Enum):
     | dhl_germany_paket_international | DHL Germany Paket International|
     | dhl_germany_paket_priority | DHL Germany Paket Priority|
     | dhl_germany_paket_sameday | DHL Germany Paket Sameday|
+
     """
-    DHL_GERMANY_EUROPAKET = 'dhl_germany_europaket'
-    DHL_GERMANY_PAKET = 'dhl_germany_paket'
-    DHL_GERMANY_PAKET_CONNECT = 'dhl_germany_paket_connect'
-    DHL_GERMANY_PAKET_INTERNATIONAL = 'dhl_germany_paket_international'
-    DHL_GERMANY_PAKET_PRIORITY = 'dhl_germany_paket_priority'
-    DHL_GERMANY_PAKET_SAMEDAY = 'dhl_germany_paket_sameday'
+
+    DHL_GERMANY_EUROPAKET = "dhl_germany_europaket"
+    DHL_GERMANY_PAKET = "dhl_germany_paket"
+    DHL_GERMANY_PAKET_CONNECT = "dhl_germany_paket_connect"
+    DHL_GERMANY_PAKET_INTERNATIONAL = "dhl_germany_paket_international"
+    DHL_GERMANY_PAKET_PRIORITY = "dhl_germany_paket_priority"
+    DHL_GERMANY_PAKET_SAMEDAY = "dhl_germany_paket_sameday"

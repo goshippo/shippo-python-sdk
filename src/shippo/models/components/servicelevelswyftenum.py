@@ -9,6 +9,8 @@ class ServiceLevelSwyftEnum(str, Enum):
     |:---|:---|
     | same_day | Next Day|
     | next_day | Next Day|
+
     """
-    SAME_DAY = 'same_day'
-    NEXT_DAY = 'next_day'
+
+    SAME_DAY = "same_day"
+    NEXT_DAY = "next_day"

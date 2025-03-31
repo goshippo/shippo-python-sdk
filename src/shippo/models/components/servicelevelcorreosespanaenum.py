@@ -9,6 +9,8 @@ class ServiceLevelCorreosEspanaEnum(str, Enum):
     |:---|:---|
     | correos_standard_home| Paquete Estándar|
     | correos_premium_home | Paquete Premium|
+
     """
-    CORREOS_STANDARD_HOME = 'correos_standard_home'
-    CORREOS_PREMIUM_HOME = 'correos_premium_home'
+
+    CORREOS_STANDARD_HOME = "correos_standard_home"
+    CORREOS_PREMIUM_HOME = "correos_premium_home"

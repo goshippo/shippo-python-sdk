@@ -35,12 +35,6 @@ value: components.ParcelTemplateDHLeCommerceEnum = /* values here */
 value: components.ParcelTemplateDPDUKEnum = /* values here */
 ```
 
-### `components.ParcelTemplateCouriersPleaseEnum`
-
-```python
-value: components.ParcelTemplateCouriersPleaseEnum = /* values here */
-```
-
 ### `components.ParcelTemplateAramexAustraliaEnum`
 
 ```python

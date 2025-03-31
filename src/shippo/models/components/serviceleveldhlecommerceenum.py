@@ -35,32 +35,52 @@ class ServiceLevelDHLeCommerceEnum(str, Enum):
     | dhl_ecommerce_globalmail_business_standard | GlobalMail Packet Standard|
     | dhl_ecommerce_ground | Ground|
     | dhl_ecommerce_globalmail_packet_standard | GlobalMail Business Standard|
+
     """
-    DHL_ECOMMERCE_MARKETING_PARCEL_EXPEDITED = 'dhl_ecommerce_marketing_parcel_expedited'
-    DHL_ECOMMERCE_GLOBALMAIL_BUSINESS_IPA = 'dhl_ecommerce_globalmail_business_ipa'
-    DHL_ECOMMERCE_PARCEL_INTERNATIONAL_DIRECT = 'dhl_ecommerce_parcel_international_direct'
-    DHL_ECOMMERCE_PARCELS_EXPEDITED_MAX = 'dhl_ecommerce_parcels_expedited_max'
-    DHL_ECOMMERCE_BPM_GROUND = 'dhl_ecommerce_bpm_ground'
-    DHL_ECOMMERCE_PRIORITY_EXPEDITED = 'dhl_ecommerce_priority_expedited'
-    DHL_ECOMMERCE_GLOBALMAIL_PACKET_IPA = 'dhl_ecommerce_globalmail_packet_ipa'
-    DHL_ECOMMERCE_GLOBALMAIL_PACKET_ISAL = 'dhl_ecommerce_globalmail_packet_isal'
-    DHL_ECOMMERCE_EASY_RETURN_PLUS = 'dhl_ecommerce_easy_return_plus'
-    DHL_ECOMMERCE_MARKETING_PARCEL_GROUND = 'dhl_ecommerce_marketing_parcel_ground'
-    DHL_ECOMMERCE_FIRST_CLASS_PARCEL_EXPEDITED = 'dhl_ecommerce_first_class_parcel_expedited'
-    DHL_ECOMMERCE_GLOBALMAIL_BUSINESS_PRIORITY = 'dhl_ecommerce_globalmail_business_priority'
-    DHL_ECOMMERCE_PARCELS_EXPEDITED = 'dhl_ecommerce_parcels_expedited'
-    DHL_ECOMMERCE_GLOBALMAIL_BUSINESS_ISAL = 'dhl_ecommerce_globalmail_business_isal'
-    DHL_ECOMMERCE_PARCEL_PLUS_EXPEDITED_MAX = 'dhl_ecommerce_parcel_plus_expedited_max'
-    DHL_ECOMMERCE_GLOBALMAIL_PACKET_PLUS = 'dhl_ecommerce_globalmail_packet_plus'
-    DHL_ECOMMERCE_PARCELS_GROUND = 'dhl_ecommerce_parcels_ground'
-    DHL_ECOMMERCE_EXPEDITED = 'dhl_ecommerce_expedited'
-    DHL_ECOMMERCE_PARCEL_PLUS_GROUND = 'dhl_ecommerce_parcel_plus_ground'
-    DHL_ECOMMERCE_PARCEL_INTERNATIONAL_STANDARD = 'dhl_ecommerce_parcel_international_standard'
-    DHL_ECOMMERCE_BPM_EXPEDITED = 'dhl_ecommerce_bpm_expedited'
-    DHL_ECOMMERCE_PARCEL_INTERNATIONAL_EXPEDITED = 'dhl_ecommerce_parcel_international_expedited'
-    DHL_ECOMMERCE_GLOBALMAIL_PACKET_PRIORITY = 'dhl_ecommerce_globalmail_packet_priority'
-    DHL_ECOMMERCE_EASY_RETURN_LIGHT = 'dhl_ecommerce_easy_return_light'
-    DHL_ECOMMERCE_PARCEL_PLUS_EXPEDITED = 'dhl_ecommerce_parcel_plus_expedited'
-    DHL_ECOMMERCE_GLOBALMAIL_BUSINESS_STANDARD = 'dhl_ecommerce_globalmail_business_standard'
-    DHL_ECOMMERCE_GROUND = 'dhl_ecommerce_ground'
-    DHL_ECOMMERCE_GLOBALMAIL_PACKET_STANDARD = 'dhl_ecommerce_globalmail_packet_standard'
+
+    DHL_ECOMMERCE_MARKETING_PARCEL_EXPEDITED = (
+        "dhl_ecommerce_marketing_parcel_expedited"
+    )
+    DHL_ECOMMERCE_GLOBALMAIL_BUSINESS_IPA = "dhl_ecommerce_globalmail_business_ipa"
+    DHL_ECOMMERCE_PARCEL_INTERNATIONAL_DIRECT = (
+        "dhl_ecommerce_parcel_international_direct"
+    )
+    DHL_ECOMMERCE_PARCELS_EXPEDITED_MAX = "dhl_ecommerce_parcels_expedited_max"
+    DHL_ECOMMERCE_BPM_GROUND = "dhl_ecommerce_bpm_ground"
+    DHL_ECOMMERCE_PRIORITY_EXPEDITED = "dhl_ecommerce_priority_expedited"
+    DHL_ECOMMERCE_GLOBALMAIL_PACKET_IPA = "dhl_ecommerce_globalmail_packet_ipa"
+    DHL_ECOMMERCE_GLOBALMAIL_PACKET_ISAL = "dhl_ecommerce_globalmail_packet_isal"
+    DHL_ECOMMERCE_EASY_RETURN_PLUS = "dhl_ecommerce_easy_return_plus"
+    DHL_ECOMMERCE_MARKETING_PARCEL_GROUND = "dhl_ecommerce_marketing_parcel_ground"
+    DHL_ECOMMERCE_FIRST_CLASS_PARCEL_EXPEDITED = (
+        "dhl_ecommerce_first_class_parcel_expedited"
+    )
+    DHL_ECOMMERCE_GLOBALMAIL_BUSINESS_PRIORITY = (
+        "dhl_ecommerce_globalmail_business_priority"
+    )
+    DHL_ECOMMERCE_PARCELS_EXPEDITED = "dhl_ecommerce_parcels_expedited"
+    DHL_ECOMMERCE_GLOBALMAIL_BUSINESS_ISAL = "dhl_ecommerce_globalmail_business_isal"
+    DHL_ECOMMERCE_PARCEL_PLUS_EXPEDITED_MAX = "dhl_ecommerce_parcel_plus_expedited_max"
+    DHL_ECOMMERCE_GLOBALMAIL_PACKET_PLUS = "dhl_ecommerce_globalmail_packet_plus"
+    DHL_ECOMMERCE_PARCELS_GROUND = "dhl_ecommerce_parcels_ground"
+    DHL_ECOMMERCE_EXPEDITED = "dhl_ecommerce_expedited"
+    DHL_ECOMMERCE_PARCEL_PLUS_GROUND = "dhl_ecommerce_parcel_plus_ground"
+    DHL_ECOMMERCE_PARCEL_INTERNATIONAL_STANDARD = (
+        "dhl_ecommerce_parcel_international_standard"
+    )
+    DHL_ECOMMERCE_BPM_EXPEDITED = "dhl_ecommerce_bpm_expedited"
+    DHL_ECOMMERCE_PARCEL_INTERNATIONAL_EXPEDITED = (
+        "dhl_ecommerce_parcel_international_expedited"
+    )
+    DHL_ECOMMERCE_GLOBALMAIL_PACKET_PRIORITY = (
+        "dhl_ecommerce_globalmail_packet_priority"
+    )
+    DHL_ECOMMERCE_EASY_RETURN_LIGHT = "dhl_ecommerce_easy_return_light"
+    DHL_ECOMMERCE_PARCEL_PLUS_EXPEDITED = "dhl_ecommerce_parcel_plus_expedited"
+    DHL_ECOMMERCE_GLOBALMAIL_BUSINESS_STANDARD = (
+        "dhl_ecommerce_globalmail_business_standard"
+    )
+    DHL_ECOMMERCE_GROUND = "dhl_ecommerce_ground"
+    DHL_ECOMMERCE_GLOBALMAIL_PACKET_STANDARD = (
+        "dhl_ecommerce_globalmail_packet_standard"
+    )

@@ -25,28 +25,30 @@ Returns a list of all manifest objects.
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.manifests.list()
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.manifests.list()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 ### Parameters
 
-| Parameter                                                     | Type                                                          | Required                                                      | Description                                                   |
-| ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- |
-| `page`                                                        | *Optional[int]*                                               | :heavy_minus_sign:                                            | The page number you want to select                            |
-| `results`                                                     | *Optional[int]*                                               | :heavy_minus_sign:                                            | The number of results to return per page (max 100, default 5) |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `page`                                                              | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | The page number you want to select                                  |
+| `results`                                                           | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | The number of results to return per page (max 100, default 5)       |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
@@ -65,42 +67,42 @@ Creates a new manifest object.
 ### Example Usage
 
 ```python
-import shippo
-from shippo.models import components
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.manifests.create(request=components.ManifestCreateRequest(
-    carrier_account='adcfdddf8ec64b84ad22772bce3ea37a',
-    shipment_date='2014-05-16T23:59:59Z',
-    address_from=components.AddressCreateRequest(
-        country='US',
-        name='Shwan Ippotle',
-        company='Shippo',
-        street1='215 Clayton St.',
-        street3='',
-        street_no='',
-        city='San Francisco',
-        state='CA',
-        zip='94117',
-        phone='+1 555 341 9393',
-        email='shippotle@shippo.com',
-        is_residential=True,
-        metadata='Customer ID 123456',
-        validate=True,
-    ),
-    transactions=[
-        'adcfdddf8ec64b84ad22772bce3ea37a',
-    ],
-))
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.manifests.create(request={
+        "carrier_account": "adcfdddf8ec64b84ad22772bce3ea37a",
+        "shipment_date": "2014-05-16T23:59:59Z",
+        "address_from": {
+            "country": "US",
+            "name": "Shwan Ippotle",
+            "company": "Shippo",
+            "street1": "215 Clayton St.",
+            "street3": "",
+            "street_no": "",
+            "city": "San Francisco",
+            "state": "CA",
+            "zip": "94117",
+            "phone": "+1 555 341 9393",
+            "email": "shippotle@shippo.com",
+            "is_residential": True,
+            "metadata": "Customer ID 123456",
+            "validate_": True,
+        },
+        "transactions": [
+            "adcfdddf8ec64b84ad22772bce3ea37a",
+        ],
+    })
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -109,6 +111,7 @@ if res is not None:
 | Parameter                                                                            | Type                                                                                 | Required                                                                             | Description                                                                          |
 | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
 | `request`                                                                            | [components.ManifestCreateRequest](../../models/components/manifestcreaterequest.md) | :heavy_check_mark:                                                                   | The request object to use for the request.                                           |
+| `retries`                                                                            | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                     | :heavy_minus_sign:                                                                   | Configuration to override the default retry behavior of the client.                  |
 
 ### Response
 
@@ -127,27 +130,29 @@ Returns an existing manifest using an object ID.
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.manifests.get(manifest_id='<value>')
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.manifests.get(manifest_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 ### Parameters
 
-| Parameter                           | Type                                | Required                            | Description                         |
-| ----------------------------------- | ----------------------------------- | ----------------------------------- | ----------------------------------- |
-| `manifest_id`                       | *str*                               | :heavy_check_mark:                  | Object ID of the manifest to update |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `manifest_id`                                                       | *str*                                                               | :heavy_check_mark:                                                  | Object ID of the manifest to update                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 

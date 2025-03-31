@@ -20,28 +20,30 @@ Returns a a list of all customs declaration objects
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.customs_declarations.list()
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.customs_declarations.list()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 ### Parameters
 
-| Parameter                                                     | Type                                                          | Required                                                      | Description                                                   |
-| ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- |
-| `page`                                                        | *Optional[int]*                                               | :heavy_minus_sign:                                            | The page number you want to select                            |
-| `results`                                                     | *Optional[int]*                                               | :heavy_minus_sign:                                            | The number of results to return per page (max 100, default 5) |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `page`                                                              | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | The page number you want to select                                  |
+| `results`                                                           | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | The number of results to return per page (max 100, default 5)       |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
@@ -60,76 +62,77 @@ Creates a new customs declaration object
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 from shippo.models import components
 
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
 
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-res = s.customs_declarations.create(request=components.CustomsDeclarationCreateRequest(
-    certify=True,
-    certify_signer='Shawn Ippotle',
-    contents_type=components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,
-    items=[
-        components.CustomsItemCreateRequest(
-            description='T-Shirt',
-            mass_unit=components.WeightUnitEnum.LB,
-            net_weight='5',
-            origin_country='<value>',
-            quantity=20,
-            value_amount='200',
-            value_currency='USD',
-            metadata='Order ID "123454"',
-            sku_code='HM-123',
-            hs_code='0901.21',
-        ),
-    ],
-    non_delivery_option=components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
-    b13a_filing_option=components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,
-    contents_explanation='T-Shirt purchase',
-    duties_payor=components.DutiesPayor(
-        account='2323434543',
-        type=components.CustomsDeclarationCreateRequestType.THIRD_PARTY,
-        address=components.CustomsDeclarationCreateRequestAddress(
-            name='Patrick Kavanagh',
-            zip='80331',
-            country='DE',
-        ),
-    ),
-    exporter_identification=components.CustomsExporterIdentification(
-        eori_number='PL123456790ABCDE',
-        tax_id=components.CustomsTaxIdentification(
-            number='123456789',
-            type=components.CustomsTaxIdentificationType.EIN,
-        ),
-    ),
-    invoice='#123123',
-    metadata='Order ID #123123',
-    address_importer=components.AddressImporter(
-        name='Shwan Ippotle',
-        company='Shippo',
-        street1='Blumenstraße',
-        street3='',
-        street_no='22',
-        city='München',
-        state='CA',
-        zip='80331',
-        country='DE',
-        phone='80331',
-        email='shippotle@shippo.com',
-        is_residential=True,
-    ),
-    eel_pfc=components.CustomsDeclarationEelPfcEnum.NOEEI_30_37_A,
-    incoterm=components.CustomsDeclarationIncotermEnum.DDP,
-    test=True,
-))
+    res = s_client.customs_declarations.create(request={
+        "certify": True,
+        "certify_signer": "Shawn Ippotle",
+        "contents_type": components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,
+        "items": [
+            {
+                "description": "T-Shirt",
+                "mass_unit": components.WeightUnitEnum.LB,
+                "net_weight": "5",
+                "origin_country": "<value>",
+                "quantity": 20,
+                "value_amount": "200",
+                "value_currency": "USD",
+                "metadata": "Order ID \"123454\"",
+                "sku_code": "HM-123",
+                "hs_code": "0901.21",
+            },
+        ],
+        "non_delivery_option": components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
+        "b13a_filing_option": components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,
+        "contents_explanation": "T-Shirt purchase",
+        "duties_payor": {
+            "account": "2323434543",
+            "type": components.CustomsDeclarationCreateRequestType.THIRD_PARTY,
+            "address": {
+                "name": "Patrick Kavanagh",
+                "zip": "80331",
+                "country": "DE",
+            },
+        },
+        "exporter_identification": {
+            "eori_number": "PL123456790ABCDE",
+            "tax_id": {
+                "number": "123456789",
+                "type": components.CustomsTaxIdentificationType.EIN,
+            },
+        },
+        "invoice": "#123123",
+        "metadata": "Order ID #123123",
+        "address_importer": {
+            "name": "Shwan Ippotle",
+            "company": "Shippo",
+            "street1": "Blumenstraße",
+            "street3": "",
+            "street_no": "22",
+            "city": "München",
+            "state": "CA",
+            "zip": "80331",
+            "country": "DE",
+            "phone": "80331",
+            "email": "shippotle@shippo.com",
+            "is_residential": True,
+        },
+        "eel_pfc": components.CustomsDeclarationEelPfcEnum.NOEEI_30_37_A,
+        "incoterm": components.CustomsDeclarationIncotermEnum.DDP,
+        "test": True,
+    })
 
-if res is not None:
-    # handle response
-    pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -138,6 +141,7 @@ if res is not None:
 | Parameter                                                                                                | Type                                                                                                     | Required                                                                                                 | Description                                                                                              |
 | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
 | `request`                                                                                                | [components.CustomsDeclarationCreateRequest](../../models/components/customsdeclarationcreaterequest.md) | :heavy_check_mark:                                                                                       | The request object to use for the request.                                                               |
+| `retries`                                                                                                | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                         | :heavy_minus_sign:                                                                                       | Configuration to override the default retry behavior of the client.                                      |
 
 ### Response
 
@@ -156,28 +160,30 @@ Returns an existing customs declaration using an object ID
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.customs_declarations.get(customs_declaration_id='<value>')
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.customs_declarations.get(customs_declaration_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 ### Parameters
 
-| Parameter                            | Type                                 | Required                             | Description                          |
-| ------------------------------------ | ------------------------------------ | ------------------------------------ | ------------------------------------ |
-| `customs_declaration_id`             | *str*                                | :heavy_check_mark:                   | Object ID of the customs declaration |
-| `page`                               | *Optional[int]*                      | :heavy_minus_sign:                   | The page number you want to select   |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `customs_declaration_id`                                            | *str*                                                               | :heavy_check_mark:                                                  | Object ID of the customs declaration                                |
+| `page`                                                              | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | The page number you want to select                                  |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 

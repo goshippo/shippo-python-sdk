@@ -2,12 +2,38 @@
 
 from __future__ import annotations
 from .parceltemplatearamexaustraliaenum import ParcelTemplateAramexAustraliaEnum
-from .parceltemplatecourierspleaseenum import ParcelTemplateCouriersPleaseEnum
 from .parceltemplatedhlecommerceenum import ParcelTemplateDHLeCommerceEnum
 from .parceltemplatedpdukenum import ParcelTemplateDPDUKEnum
 from .parceltemplatefedexenum import ParcelTemplateFedExEnum
 from .parceltemplateupsenum import ParcelTemplateUPSEnum
 from .parceltemplateuspsenum import ParcelTemplateUSPSEnum
 from typing import Union
+from typing_extensions import TypeAliasType
 
-ParcelTemplateEnumSet = Union[ParcelTemplateFedExEnum, ParcelTemplateUPSEnum, ParcelTemplateUSPSEnum, ParcelTemplateDHLeCommerceEnum, ParcelTemplateDPDUKEnum, ParcelTemplateCouriersPleaseEnum, ParcelTemplateAramexAustraliaEnum]
+
+ParcelTemplateEnumSetTypedDict = TypeAliasType(
+    "ParcelTemplateEnumSetTypedDict",
+    Union[
+        ParcelTemplateFedExEnum,
+        ParcelTemplateUPSEnum,
+        ParcelTemplateUSPSEnum,
+        ParcelTemplateDHLeCommerceEnum,
+        ParcelTemplateDPDUKEnum,
+        ParcelTemplateAramexAustraliaEnum,
+    ],
+)
+r"""If template is passed, `length`, `width`, `height`, and `distance_unit` are not required"""
+
+
+ParcelTemplateEnumSet = TypeAliasType(
+    "ParcelTemplateEnumSet",
+    Union[
+        ParcelTemplateFedExEnum,
+        ParcelTemplateUPSEnum,
+        ParcelTemplateUSPSEnum,
+        ParcelTemplateDHLeCommerceEnum,
+        ParcelTemplateDPDUKEnum,
+        ParcelTemplateAramexAustraliaEnum,
+    ],
+)
+r"""If template is passed, `length`, `width`, `height`, and `distance_unit` are not required"""

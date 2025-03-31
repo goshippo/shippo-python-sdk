@@ -1,12 +1,13 @@
 from shippo.models.components import ServiceGroup, ServiceGroupAccountAndServiceLevel
 
 import shippo
+from shippo.models.operations.listservicegroups import ListServiceGroupsRequest
 
 
 class TestServiceGroups:
 
     def test_service_groups(self, api: shippo.Shippo):
-        service_groups = api.service_groups.list()
+        service_groups = api.service_groups.list(request=ListServiceGroupsRequest())
 
         assert service_groups is not None
         assert isinstance(service_groups, list)
@@ -18,7 +19,7 @@ class TestServiceGroups:
         assert first_service_group.object_id is not None
         assert first_service_group.name is not None
         assert first_service_group.description is not None
-        assert first_service_group.flat_rate_currency == 'USD'
+        assert first_service_group.flat_rate_currency == "USD"
 
         first_service_level = first_service_group.service_levels[0]
         assert first_service_level is not None

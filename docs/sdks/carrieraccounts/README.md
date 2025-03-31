@@ -28,20 +28,20 @@ By default, if the query parameter is omitted, the `service_levels` property wil
 ### Example Usage
 
 ```python
-import shippo
-from shippo.models import operations
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.carrier_accounts.list(request=operations.ListCarrierAccountsRequest())
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.carrier_accounts.list(request={})
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -50,6 +50,7 @@ if res is not None:
 | Parameter                                                                                      | Type                                                                                           | Required                                                                                       | Description                                                                                    |
 | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | `request`                                                                                      | [operations.ListCarrierAccountsRequest](../../models/operations/listcarrieraccountsrequest.md) | :heavy_check_mark:                                                                             | The request object to use for the request.                                                     |
+| `retries`                                                                                      | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                               | :heavy_minus_sign:                                                                             | Configuration to override the default retry behavior of the client.                            |
 
 ### Response
 
@@ -68,35 +69,35 @@ Creates a new carrier account or connects an existing carrier account to the Shi
 ### Example Usage
 
 ```python
-import shippo
-from shippo.models import components
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.carrier_accounts.create(request=components.ConnectExistingOwnAccountRequest(
-    account_id='321123',
-    carrier='fedex',
-    parameters=components.FedExConnectExistingOwnAccountParameters(
-        first_name='Loyal',
-        last_name='Collier',
-        phone_number='(890) 307-8579',
-        from_address_st='<value>',
-        from_address_city='<value>',
-        from_address_state='<value>',
-        from_address_zip='<value>',
-        from_address_country_iso2='<value>',
-    ),
-    metadata='FEDEX Account',
-    test=False,
-))
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.carrier_accounts.create(request={
+        "account_id": "321123",
+        "carrier": "fedex",
+        "parameters": {
+            "first_name": "Loyal",
+            "last_name": "Collier",
+            "phone_number": "(890) 307-8579",
+            "from_address_st": "<value>",
+            "from_address_city": "<value>",
+            "from_address_state": "<value>",
+            "from_address_zip": "<value>",
+            "from_address_country_iso2": "<value>",
+        },
+        "metadata": "FEDEX Account",
+        "test": False,
+    })
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -105,6 +106,7 @@ if res is not None:
 | Parameter                                                                                                  | Type                                                                                                       | Required                                                                                                   | Description                                                                                                |
 | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | `request`                                                                                                  | [components.ConnectExistingOwnAccountRequest](../../models/components/connectexistingownaccountrequest.md) | :heavy_check_mark:                                                                                         | The request object to use for the request.                                                                 |
+| `retries`                                                                                                  | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                           | :heavy_minus_sign:                                                                                         | Configuration to override the default retry behavior of the client.                                        |
 
 ### Response
 
@@ -123,27 +125,29 @@ Returns an existing carrier account using an object ID.
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.carrier_accounts.get(carrier_account_id='<value>')
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.carrier_accounts.get(carrier_account_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 ### Parameters
 
-| Parameter                        | Type                             | Required                         | Description                      |
-| -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- |
-| `carrier_account_id`             | *str*                            | :heavy_check_mark:               | Object ID of the carrier account |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `carrier_account_id`                                                | *str*                                                               | :heavy_check_mark:                                                  | Object ID of the carrier account                                    |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 
@@ -162,47 +166,47 @@ Updates an existing carrier account object. The account_id and carrier can't be 
 ### Example Usage
 
 ```python
-import shippo
-from shippo.models import components
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.carrier_accounts.update(carrier_account_id='<value>', carrier_account_base=components.CarrierAccountBase(
-    account_id='****',
-    carrier='usps',
-    parameters=components.UPSConnectExistingOwnAccountParameters(
-        account_number='94567e',
-        billing_address_city='San Francisco',
-        billing_address_country_iso2='US',
-        billing_address_state='CA',
-        billing_address_street1='731 Market St',
-        billing_address_zip='94103',
-        collec_country_iso2='US',
-        collec_zip='94103',
-        company='Shippo',
-        email='hippo@shippo.com',
-        full_name='Shippo Meister',
-        has_invoice=False,
-        phone='1112223333',
-        title='Manager',
-        ups_agreements=True,
-        aia_country_iso2='US',
-        billing_address_street2='STE 200',
-        currency_code='USD',
-        invoice_controlid='1234',
-        invoice_date='20210529',
-        invoice_number='1112234',
-        invoice_value='11.23',
-    ),
-))
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.carrier_accounts.update(carrier_account_id="<id>", carrier_account_base={
+        "account_id": "****",
+        "carrier": "usps",
+        "parameters": {
+            "account_number": "94567e",
+            "aia_country_iso2": "US",
+            "billing_address_city": "San Francisco",
+            "billing_address_country_iso2": "US",
+            "billing_address_state": "CA",
+            "billing_address_street1": "731 Market St",
+            "billing_address_street2": "STE 200",
+            "billing_address_zip": "94103",
+            "collec_country_iso2": "US",
+            "collec_zip": "94103",
+            "company": "Shippo",
+            "currency_code": "USD",
+            "email": "hippo@shippo.com",
+            "full_name": "Shippo Meister",
+            "has_invoice": False,
+            "invoice_controlid": "1234",
+            "invoice_date": "20210529",
+            "invoice_number": "1112234",
+            "invoice_value": "11.23",
+            "phone": "1112223333",
+            "title": "Manager",
+            "ups_agreements": True,
+        },
+    })
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -212,6 +216,7 @@ if res is not None:
 | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | `carrier_account_id`                                                                     | *str*                                                                                    | :heavy_check_mark:                                                                       | Object ID of the carrier account                                                         |
 | `carrier_account_base`                                                                   | [Optional[components.CarrierAccountBase]](../../models/components/carrieraccountbase.md) | :heavy_minus_sign:                                                                       | Examples.                                                                                |
+| `retries`                                                                                | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                         | :heavy_minus_sign:                                                                       | Configuration to override the default retry behavior of the client.                      |
 
 ### Response
 
@@ -230,19 +235,18 @@ Used by client applications to setup or reconnect an existing carrier account wi
 ### Example Usage
 
 ```python
-import shippo
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.carrier_accounts.initiate_oauth2_signin(carrier_account_object_id='<value>', redirect_uri='https://enlightened-mortise.com/')
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.carrier_accounts.initiate_oauth2_signin(carrier_account_object_id="<id>", redirect_uri="https://enlightened-mortise.com/")
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -253,6 +257,7 @@ if res is not None:
 | `carrier_account_object_id`                                                                                                                                                                                    | *str*                                                                                                                                                                                                          | :heavy_check_mark:                                                                                                                                                                                             | The carrier account ID (UUID) to start a signin process.                                                                                                                                                       |
 | `redirect_uri`                                                                                                                                                                                                 | *str*                                                                                                                                                                                                          | :heavy_check_mark:                                                                                                                                                                                             | Callback URL. The URL that tells the authorization server where to send the user back to after they approve the request.                                                                                       |
 | `state`                                                                                                                                                                                                        | *Optional[str]*                                                                                                                                                                                                | :heavy_minus_sign:                                                                                                                                                                                             | A random string generated by the consuming application and included in the request to prevent CSRF attacks. The consuming application checks that the same value is returned after the user authorizes Shippo. |
+| `retries`                                                                                                                                                                                                      | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                               | :heavy_minus_sign:                                                                                                                                                                                             | Configuration to override the default retry behavior of the client.                                                                                                                                            |
 
 ### Response
 
@@ -260,12 +265,12 @@ if res is not None:
 
 ### Errors
 
-| Error Type                                                     | Status Code                                                    | Content Type                                                   |
-| -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- |
-| errors.InitiateOauth2SigninResponseBody                        | 400                                                            | application/json                                               |
-| errors.InitiateOauth2SigninCarrierAccountsResponseBody         | 401                                                            | application/json                                               |
-| errors.InitiateOauth2SigninCarrierAccountsResponseResponseBody | 404                                                            | application/json                                               |
-| errors.SDKError                                                | 4XX, 5XX                                                       | \*/\*                                                          |
+| Error Type               | Status Code              | Content Type             |
+| ------------------------ | ------------------------ | ------------------------ |
+| errors.BadRequestError   | 400                      | application/json         |
+| errors.UnauthorizedError | 401                      | application/json         |
+| errors.NotFoundError     | 404                      | application/json         |
+| errors.SDKError          | 4XX, 5XX                 | \*/\*                    |
 
 ## register
 
@@ -274,50 +279,32 @@ Adds a Shippo carrier account
 ### Example Usage
 
 ```python
-import shippo
-from shippo.models import components
-
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
+from shippo import Shippo
 
 
-res = s.carrier_accounts.register(request=components.CarrierAccountUPSCreateRequest(
-    carrier='ups',
-    parameters=components.CarrierAccountUPSCreateRequestParameters(
-        billing_address_city='San Francisco',
-        billing_address_country_iso2='US',
-        billing_address_state='CA',
-        billing_address_street1='731 Market St',
-        billing_address_zip='94103',
-        pickup_address_city='San Francisco',
-        pickup_address_country_iso2='US',
-        pickup_address_state='CA',
-        pickup_address_street1='731 Market St',
-        pickup_address_zip='94103',
-        ups_agreements=True,
-        billing_address_street2='STE 200',
-        company='Shippo',
-        email='hippo@shippo.com',
-        full_name='Shippo Meister',
-        phone='1112223333',
-        pickup_address_same_as_billing_address=False,
-        pickup_address_street2='STE 200',
-    ),
-))
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-if res is not None:
-    # handle response
-    pass
+    res = s_client.carrier_accounts.register(request={
+        "parameters": {},
+        "carrier": "correos",
+    })
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 ### Parameters
 
-| Parameter                                                                                                    | Type                                                                                                         | Required                                                                                                     | Description                                                                                                  |
-| ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                    | [operations.RegisterCarrierAccountRequestBody](../../models/operations/registercarrieraccountrequestbody.md) | :heavy_check_mark:                                                                                           | The request object to use for the request.                                                                   |
+| Parameter                                                                                            | Type                                                                                                 | Required                                                                                             | Description                                                                                          |
+| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `request`                                                                                            | [operations.RegisterCarrierAccountRequest](../../models/operations/registercarrieraccountrequest.md) | :heavy_check_mark:                                                                                   | The request object to use for the request.                                                           |
+| `retries`                                                                                            | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                     | :heavy_minus_sign:                                                                                   | Configuration to override the default retry behavior of the client.                                  |
 
 ### Response
 
@@ -336,28 +323,30 @@ Returns the registration status for the given account for the given carrier
 ### Example Usage
 
 ```python
-import shippo
+from shippo import Shippo
 from shippo.models import operations
 
-s = shippo.Shippo(
-    api_key_header='<YOUR_API_KEY_HERE>',
-    shippo_api_version='2018-02-08',
-)
 
+with Shippo(
+    api_key_header="<YOUR_API_KEY_HERE>",
+    shippo_api_version="2018-02-08",
+) as s_client:
 
-res = s.carrier_accounts.get_registration_status(carrier=operations.Carrier.USPS)
+    res = s_client.carrier_accounts.get_registration_status(carrier=operations.Carrier.USPS)
 
-if res is not None:
-    # handle response
-    pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
 ### Parameters
 
-| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `carrier`                                                | [operations.Carrier](../../models/operations/carrier.md) | :heavy_check_mark:                                       | filter by specific carrier                               |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `carrier`                                                           | [operations.Carrier](../../models/operations/carrier.md)            | :heavy_check_mark:                                                  | filter by specific carrier                                          |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
 

@@ -9,8 +9,9 @@ class CustomsDeclarationEelPfcEnum(str, Enum):
     other shipments from the US, `NOEEI_30_37_a` is applicable.
     Allowed values available <a href=\"#tag/Customs-Declaration-EELPFC\">here</a>
     """
-    NOEEI_30_37_A = 'NOEEI_30_37_a'
-    NOEEI_30_37_H = 'NOEEI_30_37_h'
-    NOEEI_30_37_F = 'NOEEI_30_37_f'
-    NOEEI_30_36 = 'NOEEI_30_36'
-    AES_ITN = 'AES_ITN'
+
+    NOEEI_30_37_A = "NOEEI_30_37_a"
+    NOEEI_30_37_H = "NOEEI_30_37_h"
+    NOEEI_30_37_F = "NOEEI_30_37_f"
+    NOEEI_30_36 = "NOEEI_30_36"
+    AES_ITN = "AES_ITN"

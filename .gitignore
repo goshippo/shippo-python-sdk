@@ -1,3 +1,6 @@
+.venv/
+pyrightconfig.json
+.speakeasy/reports
 venv/
 src/*.egg-info/
 __pycache__/

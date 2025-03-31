@@ -19,16 +19,34 @@ class ServiceLevelGlobegisticsEnum(str, Enum):
     | globegistics_ecom_extra | Globegistics eCom Extra|
     | globegistics_ecom_international_priority_airmail | Globegistics eCom International Priority Airmail|
     | globegistics_ecom_international_surface_airlift | Globegistics eCom International Surface Air Lift|
+
     """
-    GLOBEGISTICS_PRIORITY_MAIL_EXPRESS_INTERNATIONAL = 'globegistics_priority_mail_express_international'
-    GLOBEGISTICS_PRIORITY_MAIL_INTERNATIONAL = 'globegistics_priority_mail_international'
-    GLOBEGISTICS_PRIORITY_MAIL_EXPRESS_INTERNATIONAL_PDS = 'globegistics_priority_mail_express_international_pds'
-    GLOBEGISTICS_PRIORITY_MAIL_INTERNATIONAL_PDS = 'globegistics_priority_mail_international_pds'
-    GLOBEGISTICS_EPACKET = 'globegistics_epacket'
-    GLOBEGISTICS_ECOM_TRACKED_DDP = 'globegistics_ecom_tracked_ddp'
-    GLOBEGISTICS_ECOM_PACKET_DDP = 'globegistics_ecom_packet_ddp'
-    GLOBEGISTICS_ECOM_PRIORITY_MAIL_INTERNATIONAL_DDP = 'globegistics_ecom_priority_mail_international_ddp'
-    GLOBEGISTICS_ECOM_PRIORITY_MAIL_EXPRESS_INTERNATIONAL_DDP = 'globegistics_ecom_priority_mail_express_international_ddp'
-    GLOBEGISTICS_ECOM_EXTRA = 'globegistics_ecom_extra'
-    GLOBEGISTICS_ECOM_INTERNATIONAL_PRIORITY_AIRMAIL = 'globegistics_ecom_international_priority_airmail'
-    GLOBEGISTICS_ECOM_INTERNATIONAL_SURFACE_AIRLIFT = 'globegistics_ecom_international_surface_airlift'
+
+    GLOBEGISTICS_PRIORITY_MAIL_EXPRESS_INTERNATIONAL = (
+        "globegistics_priority_mail_express_international"
+    )
+    GLOBEGISTICS_PRIORITY_MAIL_INTERNATIONAL = (
+        "globegistics_priority_mail_international"
+    )
+    GLOBEGISTICS_PRIORITY_MAIL_EXPRESS_INTERNATIONAL_PDS = (
+        "globegistics_priority_mail_express_international_pds"
+    )
+    GLOBEGISTICS_PRIORITY_MAIL_INTERNATIONAL_PDS = (
+        "globegistics_priority_mail_international_pds"
+    )
+    GLOBEGISTICS_EPACKET = "globegistics_epacket"
+    GLOBEGISTICS_ECOM_TRACKED_DDP = "globegistics_ecom_tracked_ddp"
+    GLOBEGISTICS_ECOM_PACKET_DDP = "globegistics_ecom_packet_ddp"
+    GLOBEGISTICS_ECOM_PRIORITY_MAIL_INTERNATIONAL_DDP = (
+        "globegistics_ecom_priority_mail_international_ddp"
+    )
+    GLOBEGISTICS_ECOM_PRIORITY_MAIL_EXPRESS_INTERNATIONAL_DDP = (
+        "globegistics_ecom_priority_mail_express_international_ddp"
+    )
+    GLOBEGISTICS_ECOM_EXTRA = "globegistics_ecom_extra"
+    GLOBEGISTICS_ECOM_INTERNATIONAL_PRIORITY_AIRMAIL = (
+        "globegistics_ecom_international_priority_airmail"
+    )
+    GLOBEGISTICS_ECOM_INTERNATIONAL_SURFACE_AIRLIFT = (
+        "globegistics_ecom_international_surface_airlift"
+    )

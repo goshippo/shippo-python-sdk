@@ -7,24 +7,34 @@ generation:
   useClassNamesForArrayFields: true
   fixes:
     nameResolutionDec2023: true
+    nameResolutionFeb2025: true
     parameterOrderingFeb2024: true
     requestResponseComponentNamesFeb2024: true
+    securityFeb2025: false
   auth:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: false
 python:
-  version: 3.9.0
+  version: 4.0.0
   additionalDependencies:
-    dependencies: {}
-    extraDependencies:
-      dev:
-        httpretty: ==1.1.4
-        pytest: ==8.1.1
-  author: Shippo
+    dev:
+      httpretty: ==1.1.4
+      marshmallow: ==3.23.1
+      pytest: ==8.3.3
+      pytest-asyncio: ==0.25.3
+    main: {}
+  authors:
+    - Shippo
   clientServerStatusCodesAsErrors: true
   defaultErrorName: SDKError
   description: Shipping API Python library (USPS, FedEx, UPS and more)
+  enableCustomCodeRegions: false
+  enumFormat: enum
+  fixFlags:
+    responseRequiredSep2024: false
   flattenGlobalSecurity: true
+  flattenRequests: false
+  flatteningOrder: parameters-first
   imports:
     option: openapi
     paths:
@@ -40,5 +50,6 @@ python:
   outputModelSuffix: output
   packageName: shippo
   projectUrls: {}
+  pytestTimeout: 0
   responseFormat: flat
-  templateVersion: v1
+  templateVersion: v2

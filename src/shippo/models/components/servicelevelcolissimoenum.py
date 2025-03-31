@@ -10,7 +10,9 @@ class ServiceLevelColissimoEnum(str, Enum):
     | colissimo_home | Domicile|
     | colissimo_pick_up_point | Point Retrait|
     | colissimo_return_mainland_france | Retour France|
+
     """
-    COLISSIMO_HOME = 'colissimo_home'
-    COLISSIMO_PICK_UP_POINT = 'colissimo_pick_up_point'
-    COLISSIMO_RETURN_MAINLAND_FRANCE = 'colissimo_return_mainland_france'
+
+    COLISSIMO_HOME = "colissimo_home"
+    COLISSIMO_PICK_UP_POINT = "colissimo_pick_up_point"
+    COLISSIMO_RETURN_MAINLAND_FRANCE = "colissimo_return_mainland_france"

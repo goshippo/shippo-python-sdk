@@ -32,29 +32,31 @@ class ServiceLevelUPSEnum(str, Enum):
     | ups_expedited | Expedited®|
     | ups_express_early | Express® Early|
     | ups_access_point_economy | Access Point™ Economy|
+
     """
-    UPS_STANDARD = 'ups_standard'
-    UPS_GROUND = 'ups_ground'
-    UPS_SAVER = 'ups_saver'
-    UPS_3_DAY_SELECT = 'ups_3_day_select'
-    UPS_SECOND_DAY_AIR = 'ups_second_day_air'
-    UPS_SECOND_DAY_AIR_AM = 'ups_second_day_air_am'
-    UPS_NEXT_DAY_AIR = 'ups_next_day_air'
-    UPS_NEXT_DAY_AIR_SAVER = 'ups_next_day_air_saver'
-    UPS_NEXT_DAY_AIR_EARLY_AM = 'ups_next_day_air_early_am'
-    UPS_MAIL_INNOVATIONS_BPM_FLAT = 'ups_mail_innovations_bpm_flat'
-    UPS_MAIL_INNOVATIONS_BPM_PARCEL = 'ups_mail_innovations_bpm_parcel'
-    UPS_MAIL_INNOVATIONS_IRREGULAR = 'ups_mail_innovations_irregular'
-    UPS_MAIL_INNOVATIONS_MEDIA_MAIL = 'ups_mail_innovations_media_mail'
-    UPS_MAIL_INNOVATIONS_PARCEL = 'ups_mail_innovations_parcel'
-    UPS_MAIL_INNOVATIONS_STANDARD_FLAT = 'ups_mail_innovations_standard_flat'
-    UPS_SUREPOST = 'ups_surepost'
-    UPS_SUREPOST_BOUND_PRINTED_MATTER = 'ups_surepost_bound_printed_matter'
-    UPS_SUREPOST_LIGHTWEIGHT = 'ups_surepost_lightweight'
-    UPS_SUREPOST_MEDIA = 'ups_surepost_media'
-    UPS_EXPRESS = 'ups_express'
-    UPS_EXPRESS_1200 = 'ups_express_1200'
-    UPS_EXPRESS_PLUS = 'ups_express_plus'
-    UPS_EXPEDITED = 'ups_expedited'
-    UPS_EXPRESS_EARLY = 'ups_express_early'
-    UPS_ACCESS_POINT_ECONOMY = 'ups_access_point_economy'
+
+    UPS_STANDARD = "ups_standard"
+    UPS_GROUND = "ups_ground"
+    UPS_SAVER = "ups_saver"
+    UPS_3_DAY_SELECT = "ups_3_day_select"
+    UPS_SECOND_DAY_AIR = "ups_second_day_air"
+    UPS_SECOND_DAY_AIR_AM = "ups_second_day_air_am"
+    UPS_NEXT_DAY_AIR = "ups_next_day_air"
+    UPS_NEXT_DAY_AIR_SAVER = "ups_next_day_air_saver"
+    UPS_NEXT_DAY_AIR_EARLY_AM = "ups_next_day_air_early_am"
+    UPS_MAIL_INNOVATIONS_BPM_FLAT = "ups_mail_innovations_bpm_flat"
+    UPS_MAIL_INNOVATIONS_BPM_PARCEL = "ups_mail_innovations_bpm_parcel"
+    UPS_MAIL_INNOVATIONS_IRREGULAR = "ups_mail_innovations_irregular"
+    UPS_MAIL_INNOVATIONS_MEDIA_MAIL = "ups_mail_innovations_media_mail"
+    UPS_MAIL_INNOVATIONS_PARCEL = "ups_mail_innovations_parcel"
+    UPS_MAIL_INNOVATIONS_STANDARD_FLAT = "ups_mail_innovations_standard_flat"
+    UPS_SUREPOST = "ups_surepost"
+    UPS_SUREPOST_BOUND_PRINTED_MATTER = "ups_surepost_bound_printed_matter"
+    UPS_SUREPOST_LIGHTWEIGHT = "ups_surepost_lightweight"
+    UPS_SUREPOST_MEDIA = "ups_surepost_media"
+    UPS_EXPRESS = "ups_express"
+    UPS_EXPRESS_1200 = "ups_express_1200"
+    UPS_EXPRESS_PLUS = "ups_express_plus"
+    UPS_EXPEDITED = "ups_expedited"
+    UPS_EXPRESS_EARLY = "ups_express_early"
+    UPS_ACCESS_POINT_ECONOMY = "ups_access_point_economy"

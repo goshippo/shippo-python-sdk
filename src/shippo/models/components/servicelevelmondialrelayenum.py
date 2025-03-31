@@ -8,5 +8,7 @@ class ServiceLevelMondialRelayEnum(str, Enum):
     r"""|Token | Service name|
     |:---|:---|
     | mondial_relay_pointrelais | Point Relais|
+
     """
-    MONDIAL_RELAY_POINTRELAIS = 'mondial_relay_pointrelais'
+
+    MONDIAL_RELAY_POINTRELAIS = "mondial_relay_pointrelais"
