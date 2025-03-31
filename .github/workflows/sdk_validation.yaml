@@ -39,6 +39,8 @@ jobs:
           make install
       - name: Check
         run: make check
+        env:
+          SHIPPO_TOKEN: ${{ secrets.SHIPPO_TOKEN }}
       - name: Test Reports
         if: always()
         uses: xportation/junit-coverage-report@main
