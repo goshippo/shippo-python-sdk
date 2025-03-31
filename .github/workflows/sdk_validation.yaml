@@ -40,9 +40,11 @@ jobs:
           key: python-${{ steps.setup_python.outputs.python-version }}-${{ hashFiles('setup.py') }}
       - name: Install dependencies
         run: |
-          make install
+          poetry install
+        env:
+          SHIPPO_TOKEN: ${{ secrets.SHIPPO_TOKEN }}
       - name: Check
-        run: make check
+        run: poetry run pytest --junitxml=build/test_results/report.xml
         env:
           SHIPPO_TOKEN: ${{ secrets.SHIPPO_TOKEN }}
       - name: Test Reports
