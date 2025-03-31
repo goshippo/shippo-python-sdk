@@ -40,13 +40,9 @@ jobs:
           key: python-${{ steps.setup_python.outputs.python-version }}-${{ hashFiles('setup.py') }}
       - name: Install dependencies
         run: |
-          poetry install
-        env:
-          SHIPPO_TOKEN: ${{ secrets.SHIPPO_TOKEN }}
+          make install
       - name: Check
-        run: poetry run pytest --junitxml=build/test_results/report.xml
-        env:
-          SHIPPO_TOKEN: ${{ secrets.SHIPPO_TOKEN }}
+        run: make check
       - name: Test Reports
         if: always()
         uses: xportation/junit-coverage-report@main
