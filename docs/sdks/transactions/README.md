@@ -74,10 +74,10 @@ with Shippo(
 ) as s_client:
 
     res = s_client.transactions.create(request={
-        "rate": "ec9f0d3adc9441449c85d315f0997fd5",
         "async_": False,
         "label_file_type": components.LabelFileTypeEnum.PDF_4X6,
         "metadata": "Order ID #12345",
+        "rate": "ec9f0d3adc9441449c85d315f0997fd5",
         "order": "adcfdddf8ec64b84ad22772bce3ea37a",
     })
 

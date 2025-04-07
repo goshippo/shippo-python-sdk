@@ -33,14 +33,14 @@ with Shippo(
         "location": {
             "address": {
                 "name": "Shwan Ippotle",
+                "company": "Shippo",
                 "street1": "215 Clayton St.",
+                "street3": "",
+                "street_no": "",
                 "city": "San Francisco",
                 "state": "CA",
                 "zip": "94117",
                 "country": "US",
-                "company": "Shippo",
-                "street3": "",
-                "street_no": "",
                 "phone": "+1 555 341 9393",
                 "email": "shippotle@shippo.com",
                 "is_residential": True,
