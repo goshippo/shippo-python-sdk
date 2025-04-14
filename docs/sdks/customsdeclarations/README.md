@@ -72,25 +72,9 @@ with Shippo(
 ) as s_client:
 
     res = s_client.customs_declarations.create(request={
+        "b13a_filing_option": components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,
         "certify": True,
         "certify_signer": "Shawn Ippotle",
-        "contents_type": components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,
-        "items": [
-            {
-                "description": "T-Shirt",
-                "mass_unit": components.WeightUnitEnum.LB,
-                "net_weight": "5",
-                "origin_country": "<value>",
-                "quantity": 20,
-                "value_amount": "200",
-                "value_currency": "USD",
-                "metadata": "Order ID \"123454\"",
-                "sku_code": "HM-123",
-                "hs_code": "0901.21",
-            },
-        ],
-        "non_delivery_option": components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
-        "b13a_filing_option": components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,
         "contents_explanation": "T-Shirt purchase",
         "duties_payor": {
             "account": "2323434543",
@@ -124,8 +108,24 @@ with Shippo(
             "email": "shippotle@shippo.com",
             "is_residential": True,
         },
+        "contents_type": components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,
         "eel_pfc": components.CustomsDeclarationEelPfcEnum.NOEEI_30_37_A,
         "incoterm": components.CustomsDeclarationIncotermEnum.DDP,
+        "items": [
+            {
+                "description": "T-Shirt",
+                "mass_unit": components.WeightUnitEnum.LB,
+                "metadata": "Order ID \"123454\"",
+                "net_weight": "5",
+                "origin_country": "<value>",
+                "quantity": 20,
+                "sku_code": "HM-123",
+                "hs_code": "0901.21",
+                "value_amount": "200",
+                "value_currency": "USD",
+            },
+        ],
+        "non_delivery_option": components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
         "test": True,
     })
 
