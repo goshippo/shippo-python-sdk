@@ -41,16 +41,17 @@ with Shippo(
 ) as s_client:
 
     res = s_client.rates_at_checkout.create(request=components.LiveRateCreateRequest(
+        address_from="<value>",
         address_to=components.AddressCompleteCreateRequest(
             name="Shwan Ippotle",
+            company="Shippo",
             street1="215 Clayton St.",
+            street3="",
+            street_no="",
             city="San Francisco",
             state="CA",
             zip="94117",
             country="US",
-            company="Shippo",
-            street3="",
-            street_no="",
             phone="+1 555 341 9393",
             email="shippotle@shippo.com",
             is_residential=True,
@@ -73,7 +74,6 @@ with Shippo(
                 object_id="abf7d5675d744b6ea9fdb6f796b28f28",
             ),
         ],
-        address_from="<value>",
         parcel="5df144dca289442cv7a06",
     ))
 
