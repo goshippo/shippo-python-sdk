@@ -3,10 +3,10 @@ id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
   docChecksum: ace15c0d1b81b595278d710d80bb795b
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.521.1
-  generationVersion: 2.558.5
-  releaseVersion: 4.0.0
-  configChecksum: 2bfc606265cf61a2b40af4e9c57595e5
+  speakeasyVersion: 1.543.4
+  generationVersion: 2.598.22
+  releaseVersion: 4.1.0
+  configChecksum: b7857f17af87ce6a3cfddf72ffa7e88d
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
@@ -14,7 +14,7 @@ features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.5
-    core: 5.12.4
+    core: 5.17.1
     defaultEnabledRetries: 0.2.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.3.2
@@ -22,7 +22,7 @@ features:
     globalSecurity: 3.0.3
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
-    globalServerURLs: 3.1.0
+    globalServerURLs: 3.1.1
     globals: 3.0.0
     hiddenGlobals: 1.0.0
     includes: 3.0.0
@@ -753,6 +753,7 @@ generatedFiles:
   - src/shippo/user_parcel_templates.py
   - src/shippo/utils/__init__.py
   - src/shippo/utils/annotations.py
+  - src/shippo/utils/datetimes.py
   - src/shippo/utils/enums.py
   - src/shippo/utils/eventstreaming.py
   - src/shippo/utils/forms.py
@@ -1491,5 +1492,5 @@ examples:
       parameters:
         path:
           webhookId: "<id>"
-examplesVersion: 1.0.0
+examplesVersion: 1.0.1
 generatedTests: {}

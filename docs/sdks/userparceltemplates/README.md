@@ -208,9 +208,9 @@ with Shippo(
         "height": "6",
         "length": "10",
         "name": "My Custom Template",
-        "width": "8",
         "weight": "12",
         "weight_unit": components.WeightUnitEnum.LB,
+        "width": "8",
     })
 
     assert res is not None

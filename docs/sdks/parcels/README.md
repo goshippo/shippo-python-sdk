@@ -75,12 +75,6 @@ with Shippo(
 ) as s_client:
 
     res = s_client.parcels.create(request={
-        "mass_unit": components.WeightUnitEnum.LB,
-        "weight": "1",
-        "distance_unit": components.DistanceUnitEnum.IN,
-        "height": "1",
-        "length": "1",
-        "width": "1",
         "extra": {
             "cod": {
                 "amount": "5.5",
@@ -95,6 +89,12 @@ with Shippo(
             },
         },
         "metadata": "Customer ID 123456",
+        "mass_unit": components.WeightUnitEnum.LB,
+        "weight": "1",
+        "distance_unit": components.DistanceUnitEnum.IN,
+        "height": "1",
+        "length": "1",
+        "width": "1",
     })
 
     assert res is not None
