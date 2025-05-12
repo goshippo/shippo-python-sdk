@@ -80,6 +80,7 @@ with Shippo(
     res = s_client.carrier_accounts.create(request={
         "account_id": "321123",
         "carrier": "fedex",
+        "metadata": "FEDEX Account",
         "parameters": {
             "first_name": "Loyal",
             "last_name": "Collier",
@@ -90,7 +91,6 @@ with Shippo(
             "from_address_zip": "<value>",
             "from_address_country_iso2": "<value>",
         },
-        "metadata": "FEDEX Account",
         "test": False,
     })
 
@@ -288,8 +288,8 @@ with Shippo(
 ) as s_client:
 
     res = s_client.carrier_accounts.register(request={
-        "parameters": {},
         "carrier": "correos",
+        "parameters": {},
     })
 
     assert res is not None

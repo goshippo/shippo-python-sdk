@@ -28,8 +28,8 @@ with Shippo(
 ) as s_client:
 
     res = s_client.refunds.create(request={
-        "transaction": "915d94940ea54c3a80cbfa328722f5a1",
         "async_": False,
+        "transaction": "915d94940ea54c3a80cbfa328722f5a1",
     })
 
     assert res is not None
