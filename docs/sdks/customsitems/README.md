@@ -73,14 +73,14 @@ with Shippo(
     res = s_client.customs_items.create(request={
         "description": "T-Shirt",
         "mass_unit": components.WeightUnitEnum.LB,
+        "metadata": "Order ID \"123454\"",
         "net_weight": "5",
         "origin_country": "<value>",
         "quantity": 20,
-        "value_amount": "200",
-        "value_currency": "USD",
-        "metadata": "Order ID \"123454\"",
         "sku_code": "HM-123",
         "hs_code": "0901.21",
+        "value_amount": "200",
+        "value_currency": "USD",
     })
 
     assert res is not None

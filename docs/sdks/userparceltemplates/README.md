@@ -83,8 +83,13 @@ with Shippo(
 ) as s_client:
 
     res = s_client.user_parcel_templates.create(request={
+        "distance_unit": components.DistanceUnitEnum.IN,
+        "height": "6",
+        "length": "10",
+        "name": "My Custom Template",
         "weight": "12",
         "weight_unit": components.WeightUnitEnum.LB,
+        "width": "8",
     })
 
     assert res is not None
@@ -208,9 +213,9 @@ with Shippo(
         "height": "6",
         "length": "10",
         "name": "My Custom Template",
-        "width": "8",
         "weight": "12",
         "weight_unit": components.WeightUnitEnum.LB,
+        "width": "8",
     })
 
     assert res is not None
