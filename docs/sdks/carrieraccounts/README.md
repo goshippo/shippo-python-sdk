@@ -80,17 +80,17 @@ with Shippo(
     res = s_client.carrier_accounts.create(request={
         "account_id": "321123",
         "carrier": "fedex",
+        "metadata": "FEDEX Account",
         "parameters": {
-            "first_name": "Loyal",
-            "last_name": "Collier",
-            "phone_number": "(890) 307-8579",
+            "first_name": "Abdullah",
+            "last_name": "Ward",
+            "phone_number": "915-577-4415 x207",
             "from_address_st": "<value>",
             "from_address_city": "<value>",
             "from_address_state": "<value>",
             "from_address_zip": "<value>",
             "from_address_country_iso2": "<value>",
         },
-        "metadata": "FEDEX Account",
         "test": False,
     })
 
@@ -178,28 +178,14 @@ with Shippo(
         "account_id": "****",
         "carrier": "usps",
         "parameters": {
-            "account_number": "94567e",
-            "aia_country_iso2": "US",
-            "billing_address_city": "San Francisco",
-            "billing_address_country_iso2": "US",
-            "billing_address_state": "CA",
-            "billing_address_street1": "731 Market St",
-            "billing_address_street2": "STE 200",
-            "billing_address_zip": "94103",
-            "collec_country_iso2": "US",
-            "collec_zip": "94103",
-            "company": "Shippo",
-            "currency_code": "USD",
-            "email": "hippo@shippo.com",
-            "full_name": "Shippo Meister",
-            "has_invoice": False,
-            "invoice_controlid": "1234",
-            "invoice_date": "20210529",
-            "invoice_number": "1112234",
-            "invoice_value": "11.23",
-            "phone": "1112223333",
-            "title": "Manager",
-            "ups_agreements": True,
+            "first_name": "Eldora",
+            "last_name": "Weber",
+            "phone_number": "1-505-428-6798",
+            "from_address_st": "<value>",
+            "from_address_city": "<value>",
+            "from_address_state": "<value>",
+            "from_address_zip": "<value>",
+            "from_address_country_iso2": "<value>",
         },
     })
 
@@ -243,7 +229,7 @@ with Shippo(
     shippo_api_version="2018-02-08",
 ) as s_client:
 
-    res = s_client.carrier_accounts.initiate_oauth2_signin(carrier_account_object_id="<id>", redirect_uri="https://enlightened-mortise.com/")
+    res = s_client.carrier_accounts.initiate_oauth2_signin(carrier_account_object_id="<id>", redirect_uri="https://ashamed-reporter.biz")
 
     # Handle response
     print(res)
@@ -288,8 +274,8 @@ with Shippo(
 ) as s_client:
 
     res = s_client.carrier_accounts.register(request={
+        "carrier": "deutsche_post",
         "parameters": {},
-        "carrier": "correos",
     })
 
     assert res is not None
@@ -332,7 +318,7 @@ with Shippo(
     shippo_api_version="2018-02-08",
 ) as s_client:
 
-    res = s_client.carrier_accounts.get_registration_status(carrier=operations.Carrier.USPS)
+    res = s_client.carrier_accounts.get_registration_status(carrier=operations.Carrier.UPS)
 
     assert res is not None
 
