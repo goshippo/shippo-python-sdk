@@ -71,7 +71,6 @@ with Shippo(
 ) as s_client:
 
     res = s_client.addresses.create(request={
-        "country": "US",
         "name": "Shwan Ippotle",
         "company": "Shippo",
         "street1": "215 Clayton St.",
@@ -80,6 +79,7 @@ with Shippo(
         "city": "San Francisco",
         "state": "CA",
         "zip": "94117",
+        "country": "US",
         "phone": "+1 555 341 9393",
         "email": "shippotle@shippo.com",
         "is_residential": True,

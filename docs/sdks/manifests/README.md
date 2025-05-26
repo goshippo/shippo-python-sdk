@@ -78,25 +78,10 @@ with Shippo(
     res = s_client.manifests.create(request={
         "carrier_account": "adcfdddf8ec64b84ad22772bce3ea37a",
         "shipment_date": "2014-05-16T23:59:59Z",
-        "address_from": {
-            "country": "US",
-            "name": "Shwan Ippotle",
-            "company": "Shippo",
-            "street1": "215 Clayton St.",
-            "street3": "",
-            "street_no": "",
-            "city": "San Francisco",
-            "state": "CA",
-            "zip": "94117",
-            "phone": "+1 555 341 9393",
-            "email": "shippotle@shippo.com",
-            "is_residential": True,
-            "metadata": "Customer ID 123456",
-            "validate_": True,
-        },
         "transactions": [
             "adcfdddf8ec64b84ad22772bce3ea37a",
         ],
+        "address_from": "<value>",
     })
 
     assert res is not None
