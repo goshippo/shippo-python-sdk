@@ -73,7 +73,12 @@ with Shippo(
 
     res = s_client.service_groups.create(request={
         "description": "USPS shipping options",
+        "flat_rate": "5",
+        "flat_rate_currency": "USD",
+        "free_shipping_threshold_currency": "USD",
+        "free_shipping_threshold_min": "5",
         "name": "USPS Shipping",
+        "rate_adjustment": 15,
         "type": components.ServiceGroupTypeEnum.FLAT_RATE,
         "service_levels": [
             {
@@ -81,11 +86,6 @@ with Shippo(
                 "service_level_token": "ups_next_day_air_saver",
             },
         ],
-        "flat_rate": "5",
-        "flat_rate_currency": "USD",
-        "free_shipping_threshold_currency": "USD",
-        "free_shipping_threshold_min": "5",
-        "rate_adjustment": 15,
     })
 
     assert res is not None
@@ -130,7 +130,12 @@ with Shippo(
 
     res = s_client.service_groups.update(request={
         "description": "USPS shipping options",
+        "flat_rate": "5",
+        "flat_rate_currency": "USD",
+        "free_shipping_threshold_currency": "USD",
+        "free_shipping_threshold_min": "5",
         "name": "USPS Shipping",
+        "rate_adjustment": 15,
         "type": components.ServiceGroupTypeEnum.FLAT_RATE,
         "object_id": "80feb1633d4a43c898f005850",
         "is_active": True,
@@ -148,11 +153,6 @@ with Shippo(
                 "service_level_token": "ups_next_day_air_saver",
             },
         ],
-        "flat_rate": "5",
-        "flat_rate_currency": "USD",
-        "free_shipping_threshold_currency": "USD",
-        "free_shipping_threshold_min": "5",
-        "rate_adjustment": 15,
     })
 
     assert res is not None

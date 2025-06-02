@@ -83,6 +83,7 @@ class CarrierAccounts(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListCarrierAccounts",
                 oauth2_scopes=[],
@@ -186,6 +187,7 @@ class CarrierAccounts(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListCarrierAccounts",
                 oauth2_scopes=[],
@@ -294,6 +296,7 @@ class CarrierAccounts(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateCarrierAccount",
                 oauth2_scopes=[],
@@ -402,6 +405,7 @@ class CarrierAccounts(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateCarrierAccount",
                 oauth2_scopes=[],
@@ -498,6 +502,7 @@ class CarrierAccounts(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetCarrierAccount",
                 oauth2_scopes=[],
@@ -594,6 +599,7 @@ class CarrierAccounts(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetCarrierAccount",
                 oauth2_scopes=[],
@@ -704,6 +710,7 @@ class CarrierAccounts(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateCarrierAccount",
                 oauth2_scopes=[],
@@ -814,6 +821,7 @@ class CarrierAccounts(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateCarrierAccount",
                 oauth2_scopes=[],
@@ -916,6 +924,7 @@ class CarrierAccounts(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="InitiateOauth2Signin",
                 oauth2_scopes=[],
@@ -1034,6 +1043,7 @@ class CarrierAccounts(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="InitiateOauth2Signin",
                 oauth2_scopes=[],
@@ -1152,6 +1162,7 @@ class CarrierAccounts(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="RegisterCarrierAccount",
                 oauth2_scopes=[],
@@ -1254,6 +1265,7 @@ class CarrierAccounts(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="RegisterCarrierAccount",
                 oauth2_scopes=[],
@@ -1350,6 +1362,7 @@ class CarrierAccounts(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetCarrierRegistrationStatus",
                 oauth2_scopes=[],
@@ -1446,6 +1459,7 @@ class CarrierAccounts(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetCarrierRegistrationStatus",
                 oauth2_scopes=[],

@@ -78,6 +78,7 @@ class Addresses(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListAddresses",
                 oauth2_scopes=[],
@@ -177,6 +178,7 @@ class Addresses(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListAddresses",
                 oauth2_scopes=[],
@@ -278,6 +280,7 @@ class Addresses(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateAddress",
                 oauth2_scopes=[],
@@ -377,6 +380,7 @@ class Addresses(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateAddress",
                 oauth2_scopes=[],
@@ -471,6 +475,7 @@ class Addresses(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetAddress",
                 oauth2_scopes=[],
@@ -565,6 +570,7 @@ class Addresses(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetAddress",
                 oauth2_scopes=[],
@@ -659,6 +665,7 @@ class Addresses(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ValidateAddress",
                 oauth2_scopes=[],
@@ -753,6 +760,7 @@ class Addresses(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ValidateAddress",
                 oauth2_scopes=[],
