@@ -37,8 +37,8 @@ with Shippo(
 
     res = s_client.tracking_status.create(request={
         "carrier": "usps",
-        "tracking_number": "9205590164917312751089",
         "metadata": "Order 000123",
+        "tracking_number": "9205590164917312751089",
     })
 
     assert res is not None
