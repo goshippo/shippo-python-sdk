@@ -31,11 +31,10 @@ from shippo.models import components
 
 with Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version="2018-02-08",
 ) as s_client:
 
     res = s_client.webhooks.create_webhook(request={
-        "event": components.WebhookEventTypeEnum.BATCH_CREATED,
+        "event": components.WebhookEventTypeEnum.TRANSACTION_UPDATED,
         "url": "https://example.com/shippo-webhook",
         "active": True,
         "is_test": False,
@@ -77,7 +76,6 @@ from shippo import Shippo
 
 with Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version="2018-02-08",
 ) as s_client:
 
     res = s_client.webhooks.list_webhooks()
@@ -117,7 +115,6 @@ from shippo import Shippo
 
 with Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version="2018-02-08",
 ) as s_client:
 
     res = s_client.webhooks.get_webhook(webhook_id="<id>")
@@ -159,11 +156,10 @@ from shippo.models import components
 
 with Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version="2018-02-08",
 ) as s_client:
 
     res = s_client.webhooks.update_webhook(webhook_id="<id>", webhook_update_request={
-        "event": components.WebhookEventTypeEnum.BATCH_CREATED,
+        "event": components.WebhookEventTypeEnum.ALL,
         "url": "https://example.com/shippo-webhook",
         "active": True,
         "is_test": False,
@@ -206,7 +202,6 @@ from shippo import Shippo
 
 with Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version="2018-02-08",
 ) as s_client:
 
     s_client.webhooks.delete_webhook(webhook_id="<id>")

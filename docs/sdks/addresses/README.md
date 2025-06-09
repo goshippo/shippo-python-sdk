@@ -24,11 +24,11 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.addresses.list()
+    res = s_client.addresses.list(page=1, results=5)
 
     assert res is not None
 
@@ -66,12 +66,11 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.addresses.create(request={
-        "country": "US",
         "name": "Shwan Ippotle",
         "company": "Shippo",
         "street1": "215 Clayton St.",
@@ -80,6 +79,7 @@ with Shippo(
         "city": "San Francisco",
         "state": "CA",
         "zip": "94117",
+        "country": "US",
         "phone": "+1 555 341 9393",
         "email": "shippotle@shippo.com",
         "is_residential": True,
@@ -122,8 +122,8 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.addresses.get(address_id="<id>")
@@ -163,8 +163,8 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.addresses.validate(address_id="<id>")

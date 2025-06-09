@@ -24,8 +24,8 @@ from shippo.models import components
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.transactions.list(request={
@@ -69,15 +69,15 @@ from shippo.models import components
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.transactions.create(request={
-        "rate": "ec9f0d3adc9441449c85d315f0997fd5",
         "async_": False,
         "label_file_type": components.LabelFileTypeEnum.PDF_4X6,
         "metadata": "Order ID #12345",
+        "rate": "ec9f0d3adc9441449c85d315f0997fd5",
         "order": "adcfdddf8ec64b84ad22772bce3ea37a",
     })
 
@@ -116,8 +116,8 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.transactions.get(transaction_id="<id>")
