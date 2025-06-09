@@ -23,8 +23,8 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.rates.get(rate_id="<id>")
@@ -64,11 +64,11 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.rates.list_shipment_rates(shipment_id="<id>")
+    res = s_client.rates.list_shipment_rates(shipment_id="<id>", page=1, results=25)
 
     assert res is not None
 
@@ -113,13 +113,12 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.rates.list_shipment_rates_by_currency_code(request={
         "shipment_id": "<id>",
-        "currency_code": "USD",
     })
 
     assert res is not None

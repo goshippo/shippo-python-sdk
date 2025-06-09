@@ -27,11 +27,11 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.parcels.list()
+    res = s_client.parcels.list(page=1, results=25)
 
     assert res is not None
 
@@ -70,17 +70,11 @@ from shippo.models import components
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.parcels.create(request={
-        "mass_unit": components.WeightUnitEnum.LB,
-        "weight": "1",
-        "distance_unit": components.DistanceUnitEnum.IN,
-        "height": "1",
-        "length": "1",
-        "width": "1",
         "extra": {
             "cod": {
                 "amount": "5.5",
@@ -95,6 +89,12 @@ with Shippo(
             },
         },
         "metadata": "Customer ID 123456",
+        "mass_unit": components.WeightUnitEnum.LB,
+        "weight": "1",
+        "distance_unit": components.DistanceUnitEnum.IN,
+        "height": "1",
+        "length": "1",
+        "width": "1",
     })
 
     assert res is not None
@@ -132,8 +132,8 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.parcels.get(parcel_id="<id>")
