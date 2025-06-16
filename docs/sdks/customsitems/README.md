@@ -23,11 +23,11 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.customs_items.list()
+    res = s_client.customs_items.list(page=1, results=25)
 
     assert res is not None
 
@@ -66,21 +66,21 @@ from shippo.models import components
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.customs_items.create(request={
         "description": "T-Shirt",
         "mass_unit": components.WeightUnitEnum.LB,
+        "metadata": "Order ID \"123454\"",
         "net_weight": "5",
         "origin_country": "<value>",
         "quantity": 20,
-        "value_amount": "200",
-        "value_currency": "USD",
-        "metadata": "Order ID \"123454\"",
         "sku_code": "HM-123",
         "hs_code": "0901.21",
+        "value_amount": "200",
+        "value_currency": "USD",
     })
 
     assert res is not None
@@ -118,11 +118,11 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.customs_items.get(customs_item_id="<id>")
+    res = s_client.customs_items.get(customs_item_id="<id>", page=1)
 
     assert res is not None
 

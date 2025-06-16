@@ -5,11 +5,11 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.addresses.list()
+    res = s_client.addresses.list(page=1, results=5)
 
     assert res is not None
 
@@ -28,11 +28,11 @@ from shippo import Shippo
 async def main():
 
     async with Shippo(
-        api_key_header="<YOUR_API_KEY_HERE>",
         shippo_api_version="2018-02-08",
+        api_key_header="<YOUR_API_KEY_HERE>",
     ) as s_client:
 
-        res = await s_client.addresses.list_async()
+        res = await s_client.addresses.list_async(page=1, results=5)
 
         assert res is not None
 
