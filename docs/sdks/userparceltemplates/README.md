@@ -30,8 +30,8 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.user_parcel_templates.list(request={})
@@ -78,13 +78,18 @@ from shippo.models import components
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.user_parcel_templates.create(request={
+        "distance_unit": components.DistanceUnitEnum.IN,
+        "height": "6",
+        "length": "10",
+        "name": "My Custom Template",
         "weight": "12",
         "weight_unit": components.WeightUnitEnum.LB,
+        "width": "8",
     })
 
     assert res is not None
@@ -122,8 +127,8 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     s_client.user_parcel_templates.delete(user_parcel_template_object_id="<id>")
@@ -157,8 +162,8 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.user_parcel_templates.get(user_parcel_template_object_id="<id>")
@@ -199,8 +204,8 @@ from shippo.models import components
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.user_parcel_templates.update(user_parcel_template_object_id="<id>", user_parcel_template_update_request={
@@ -208,9 +213,9 @@ with Shippo(
         "height": "6",
         "length": "10",
         "name": "My Custom Template",
-        "width": "8",
         "weight": "12",
         "weight_unit": components.WeightUnitEnum.LB,
+        "width": "8",
     })
 
     assert res is not None

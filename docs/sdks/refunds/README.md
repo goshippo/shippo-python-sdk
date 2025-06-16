@@ -23,13 +23,13 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.refunds.create(request={
-        "transaction": "915d94940ea54c3a80cbfa328722f5a1",
         "async_": False,
+        "transaction": "915d94940ea54c3a80cbfa328722f5a1",
     })
 
     assert res is not None
@@ -67,8 +67,8 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.refunds.list(request={})
@@ -108,8 +108,8 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.refunds.get(refund_id="<id>")

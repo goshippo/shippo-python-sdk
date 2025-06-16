@@ -31,14 +31,14 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.tracking_status.create(request={
         "carrier": "usps",
-        "tracking_number": "9205590164917312751089",
         "metadata": "Order 000123",
+        "tracking_number": "9205590164917312751089",
     })
 
     assert res is not None
@@ -76,8 +76,8 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.tracking_status.get(tracking_number="<value>", carrier="<value>")

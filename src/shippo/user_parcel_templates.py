@@ -85,6 +85,7 @@ class UserParcelTemplates(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListUserParcelTemplates",
                 oauth2_scopes=[],
@@ -186,6 +187,7 @@ class UserParcelTemplates(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListUserParcelTemplates",
                 oauth2_scopes=[],
@@ -300,6 +302,7 @@ class UserParcelTemplates(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateUserParcelTemplate",
                 oauth2_scopes=[],
@@ -414,6 +417,7 @@ class UserParcelTemplates(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateUserParcelTemplate",
                 oauth2_scopes=[],
@@ -510,6 +514,7 @@ class UserParcelTemplates(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteUserParcelTemplate",
                 oauth2_scopes=[],
@@ -604,6 +609,7 @@ class UserParcelTemplates(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteUserParcelTemplate",
                 oauth2_scopes=[],
@@ -699,6 +705,7 @@ class UserParcelTemplates(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetUserParcelTemplate",
                 oauth2_scopes=[],
@@ -796,6 +803,7 @@ class UserParcelTemplates(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetUserParcelTemplate",
                 oauth2_scopes=[],
@@ -910,6 +918,7 @@ class UserParcelTemplates(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateUserParcelTemplate",
                 oauth2_scopes=[],
@@ -1024,6 +1033,7 @@ class UserParcelTemplates(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateUserParcelTemplate",
                 oauth2_scopes=[],

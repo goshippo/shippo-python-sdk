@@ -140,11 +140,11 @@ from shippo.utils import BackoffStrategy, RetryConfig
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.addresses.list(,
+    res = s_client.addresses.list(page=1, results=5,
         RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
     assert res is not None
@@ -162,11 +162,11 @@ from shippo.utils import BackoffStrategy, RetryConfig
 
 with Shippo(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.addresses.list()
+    res = s_client.addresses.list(page=1, results=5)
 
     assert res is not None
 
@@ -294,8 +294,8 @@ from shippo import Shippo
 def main():
 
     with Shippo(
-        api_key_header="<YOUR_API_KEY_HERE>",
         shippo_api_version="2018-02-08",
+        api_key_header="<YOUR_API_KEY_HERE>",
     ) as s_client:
         # Rest of application here...
 
@@ -304,8 +304,8 @@ def main():
 async def amain():
 
     async with Shippo(
-        api_key_header="<YOUR_API_KEY_HERE>",
         shippo_api_version="2018-02-08",
+        api_key_header="<YOUR_API_KEY_HERE>",
     ) as s_client:
         # Rest of application here...
 ```
