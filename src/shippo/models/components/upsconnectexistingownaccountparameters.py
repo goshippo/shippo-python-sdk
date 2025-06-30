@@ -10,6 +10,13 @@ class UPSConnectExistingOwnAccountParametersTypedDict(TypedDict):
     r"""An array of additional parameters for the account, such as e.g. password or token.
     Please check the <a href=\"https://docs.goshippo.com/docs/carriers/carrieraccounts/\">carrier accounts tutorial</a> page for the parameters per carrier.<br>
     To protect account information, this field will be masked in any API response.
+    In the case of masked fields, they should be handled carefully.
+
+    Fields also must consider:
+    - Not providing a *fields* in parameters will not result in a change to any configured value
+    - Providing a value in a *masked field* with ****** (exactly 6 asterisks) will not change the configured value
+    - Providing *field* with null will clear the configured value
+    - Providing *field* with any other value will change the configured value and may affect the behavior of the account.
     """
 
     account_number: str
@@ -52,6 +59,13 @@ class UPSConnectExistingOwnAccountParameters(BaseModel):
     r"""An array of additional parameters for the account, such as e.g. password or token.
     Please check the <a href=\"https://docs.goshippo.com/docs/carriers/carrieraccounts/\">carrier accounts tutorial</a> page for the parameters per carrier.<br>
     To protect account information, this field will be masked in any API response.
+    In the case of masked fields, they should be handled carefully.
+
+    Fields also must consider:
+    - Not providing a *fields* in parameters will not result in a change to any configured value
+    - Providing a value in a *masked field* with ****** (exactly 6 asterisks) will not change the configured value
+    - Providing *field* with null will clear the configured value
+    - Providing *field* with any other value will change the configured value and may affect the behavior of the account.
     """
 
     account_number: str
