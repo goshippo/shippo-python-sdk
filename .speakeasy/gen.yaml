@@ -4,6 +4,7 @@ generation:
   maintainOpenAPIOrder: true
   usageSnippets:
     optionalPropertyRendering: withExample
+    sdkInitStyle: constructor
   useClassNamesForArrayFields: true
   fixes:
     nameResolutionDec2023: true
@@ -11,11 +12,16 @@ generation:
     parameterOrderingFeb2024: true
     requestResponseComponentNamesFeb2024: true
     securityFeb2025: false
+    sharedErrorComponentsApr2025: false
   auth:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: false
+  tests:
+    generateTests: true
+    generateNewTests: false
+    skipResponseBodyAssertions: false
 python:
-  version: 4.0.0
+  version: 4.1.0
   additionalDependencies:
     dev:
       httpretty: ==1.1.4
@@ -25,6 +31,7 @@ python:
     main: {}
   authors:
     - Shippo
+  baseErrorName: ShippoError
   clientServerStatusCodesAsErrors: true
   defaultErrorName: SDKError
   description: Shipping API Python library (USPS, FedEx, UPS and more)
@@ -47,9 +54,11 @@ python:
   license: MIT License
   maxMethodParams: 3
   methodArguments: require-security-and-request
+  moduleName: ""
   outputModelSuffix: output
   packageName: shippo
   projectUrls: {}
+  pytestFilterWarnings: []
   pytestTimeout: 0
   responseFormat: flat
   templateVersion: v2
