@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 from .distanceunitenum import DistanceUnitEnum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -50,3 +51,30 @@ class CarrierParcelTemplate(BaseModel):
 
     width: Optional[str] = None
     r"""The width of the package, in units specified by the distance_unit attribute"""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "carrier",
+                "distance_unit",
+                "height",
+                "is_variable_dimensions",
+                "length",
+                "name",
+                "token",
+                "width",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

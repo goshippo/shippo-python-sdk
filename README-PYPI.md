@@ -47,7 +47,15 @@ Shippo external API.: Use this API to integrate with the Shippo service
 >
 > Once a Python version reaches its [official end of life date](https://devguide.python.org/versions/), a 3-month grace period is provided for users to upgrade. Following this grace period, the minimum python version supported in the SDK will be updated.
 
-The SDK can be installed with either *pip* or *poetry* package managers.
+The SDK can be installed with *uv*, *pip*, or *poetry* package managers.
+
+### uv
+
+*uv* is a fast Python package installer and resolver, designed as a drop-in replacement for pip and pip-tools. It's recommended for its speed and modern Python tooling capabilities.
+
+```bash
+uv add shippo
+```
 
 ### PIP
 
@@ -140,14 +148,12 @@ from shippo.utils import BackoffStrategy, RetryConfig
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.addresses.list(,
+    res = s_client.addresses.list(page=1, results=5,
         RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -162,13 +168,11 @@ from shippo.utils import BackoffStrategy, RetryConfig
 
 with Shippo(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.addresses.list()
-
-    assert res is not None
+    res = s_client.addresses.list(page=1, results=5)
 
     # Handle response
     print(res)
@@ -294,8 +298,8 @@ from shippo import Shippo
 def main():
 
     with Shippo(
-        api_key_header="<YOUR_API_KEY_HERE>",
         shippo_api_version="2018-02-08",
+        api_key_header="<YOUR_API_KEY_HERE>",
     ) as s_client:
         # Rest of application here...
 
@@ -304,8 +308,8 @@ def main():
 async def amain():
 
     async with Shippo(
-        api_key_header="<YOUR_API_KEY_HERE>",
         shippo_api_version="2018-02-08",
+        api_key_header="<YOUR_API_KEY_HERE>",
     ) as s_client:
         # Rest of application here...
 ```
@@ -344,14 +348,14 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 <details open>
 <summary>Available methods</summary>
 
-### [addresses](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/addresses/README.md)
+### [Addresses](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/addresses/README.md)
 
 * [list](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/addresses/README.md#list) - List all addresses
 * [create](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/addresses/README.md#create) - Create a new address
 * [get](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/addresses/README.md#get) - Retrieve an address
 * [validate](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/addresses/README.md#validate) - Validate an address
 
-### [batches](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/batches/README.md)
+### [Batches](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/batches/README.md)
 
 * [create](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/batches/README.md#create) - Create a batch
 * [get](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/batches/README.md#get) - Retrieve a batch
@@ -359,7 +363,7 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 * [purchase](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/batches/README.md#purchase) - Purchase a batch
 * [remove_shipments](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/batches/README.md#remove_shipments) - Remove shipments from a batch
 
-### [carrier_accounts](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/carrieraccounts/README.md)
+### [CarrierAccounts](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/carrieraccounts/README.md)
 
 * [list](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/carrieraccounts/README.md#list) - List all carrier accounts
 * [create](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/carrieraccounts/README.md#create) - Create a new carrier account
@@ -369,97 +373,96 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 * [register](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/carrieraccounts/README.md#register) - Add a Shippo carrier account
 * [get_registration_status](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/carrieraccounts/README.md#get_registration_status) - Get Carrier Registration status
 
-### [carrier_parcel_templates](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/carrierparceltemplates/README.md)
+### [CarrierParcelTemplates](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/carrierparceltemplates/README.md)
 
 * [list](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/carrierparceltemplates/README.md#list) - List all carrier parcel templates
 * [get](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/carrierparceltemplates/README.md#get) - Retrieve a carrier parcel templates
 
-### [customs_declarations](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/customsdeclarations/README.md)
+### [CustomsDeclarations](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/customsdeclarations/README.md)
 
 * [list](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/customsdeclarations/README.md#list) - List all customs declarations
 * [create](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/customsdeclarations/README.md#create) - Create a new customs declaration
 * [get](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/customsdeclarations/README.md#get) - Retrieve a customs declaration
 
-### [customs_items](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/customsitems/README.md)
+### [CustomsItems](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/customsitems/README.md)
 
 * [list](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/customsitems/README.md#list) - List all customs items
 * [create](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/customsitems/README.md#create) - Create a new customs item
 * [get](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/customsitems/README.md#get) - Retrieve a customs item
 
-### [manifests](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/manifests/README.md)
+### [Manifests](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/manifests/README.md)
 
 * [list](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/manifests/README.md#list) - List all manifests
 * [create](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/manifests/README.md#create) - Create a new manifest
 * [get](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/manifests/README.md#get) - Retrieve a manifest
 
-### [orders](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/orders/README.md)
+### [Orders](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/orders/README.md)
 
 * [list](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/orders/README.md#list) - List all orders
 * [create](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/orders/README.md#create) - Create a new order
 * [get](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/orders/README.md#get) - Retrieve an order
 
-### [parcels](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/parcels/README.md)
+### [Parcels](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/parcels/README.md)
 
 * [list](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/parcels/README.md#list) - List all parcels
 * [create](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/parcels/README.md#create) - Create a new parcel
 * [get](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/parcels/README.md#get) - Retrieve an existing parcel
 
-### [pickups](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/pickups/README.md)
+### [Pickups](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/pickups/README.md)
 
 * [create](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/pickups/README.md#create) - Create a pickup
 
-### [rates](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/rates/README.md)
+### [Rates](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/rates/README.md)
 
 * [get](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/rates/README.md#get) - Retrieve a rate
 * [list_shipment_rates](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/rates/README.md#list_shipment_rates) - Retrieve shipment rates
 * [list_shipment_rates_by_currency_code](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/rates/README.md#list_shipment_rates_by_currency_code) - Retrieve shipment rates in currency
 
-### [rates_at_checkout](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/ratesatcheckout/README.md)
+### [RatesAtCheckout](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/ratesatcheckout/README.md)
 
 * [create](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/ratesatcheckout/README.md#create) - Generate a live rates request
 * [get_default_parcel_template](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/ratesatcheckout/README.md#get_default_parcel_template) - Show current default parcel template
 * [update_default_parcel_template](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/ratesatcheckout/README.md#update_default_parcel_template) - Update default parcel template
 * [delete_default_parcel_template](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/ratesatcheckout/README.md#delete_default_parcel_template) - Clear current default parcel template
 
-### [refunds](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/refunds/README.md)
+### [Refunds](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/refunds/README.md)
 
 * [create](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/refunds/README.md#create) - Create a refund
 * [list](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/refunds/README.md#list) - List all refunds
 * [get](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/refunds/README.md#get) - Retrieve a refund
 
-### [service_groups](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/servicegroups/README.md)
+### [ServiceGroups](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/servicegroups/README.md)
 
 * [list](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/servicegroups/README.md#list) - List all service groups
 * [create](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/servicegroups/README.md#create) - Create a new service group
 * [update](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/servicegroups/README.md#update) - Update an existing service group
 * [delete](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/servicegroups/README.md#delete) - Delete a service group
 
-### [shipments](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/shipments/README.md)
+### [Shipments](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/shipments/README.md)
 
 * [list](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/shipments/README.md#list) - List all shipments
 * [create](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/shipments/README.md#create) - Create a new shipment
 * [get](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/shipments/README.md#get) - Retrieve a shipment
 
-
-### [shippo_accounts](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/shippoaccounts/README.md)
+### [ShippoAccounts](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/shippoaccounts/README.md)
 
 * [list](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/shippoaccounts/README.md#list) - List all Shippo Accounts
 * [create](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/shippoaccounts/README.md#create) - Create a Shippo Account
 * [get](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/shippoaccounts/README.md#get) - Retrieve a Shippo Account
 * [update](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/shippoaccounts/README.md#update) - Update a Shippo Account
 
-### [tracking_status](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/trackingstatus/README.md)
+### [TrackingStatus](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/trackingstatus/README.md)
 
 * [create](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/trackingstatus/README.md#create) - Register a tracking webhook
 * [get](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/trackingstatus/README.md#get) - Get a tracking status
 
-### [transactions](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/transactions/README.md)
+### [Transactions](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/transactions/README.md)
 
 * [list](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/transactions/README.md#list) - List all shipping labels
 * [create](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/transactions/README.md#create) - Create a shipping label
 * [get](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/transactions/README.md#get) - Retrieve a shipping label
 
-### [user_parcel_templates](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/userparceltemplates/README.md)
+### [UserParcelTemplates](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/userparceltemplates/README.md)
 
 * [list](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/userparceltemplates/README.md#list) - List all user parcel templates
 * [create](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/userparceltemplates/README.md#create) - Create a new user parcel template
@@ -467,7 +470,7 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 * [get](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/userparceltemplates/README.md#get) - Retrieves a user parcel template
 * [update](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/userparceltemplates/README.md#update) - Update an existing user parcel template
 
-### [webhooks](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/webhooks/README.md)
+### [Webhooks](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/webhooks/README.md)
 
 * [create_webhook](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/webhooks/README.md#create_webhook) - Create a new webhook
 * [list_webhooks](https://github.com/goshippo/shippo-python-sdk/blob/master/docs/sdks/webhooks/README.md#list_webhooks) - List all webhooks

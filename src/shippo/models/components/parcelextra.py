@@ -4,7 +4,8 @@ from __future__ import annotations
 from .cod import Cod, CodTypedDict
 from .parcelinsurance import ParcelInsurance, ParcelInsuranceTypedDict
 import pydantic
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
@@ -40,3 +41,19 @@ class ParcelExtra(BaseModel):
 
     reference_2: Optional[str] = None
     r"""Optional text to be printed on the shipping label if supported by carrier. Up to 50 characters."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["COD", "insurance", "reference_1", "reference_2"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

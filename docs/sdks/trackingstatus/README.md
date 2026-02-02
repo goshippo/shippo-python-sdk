@@ -1,5 +1,4 @@
 # TrackingStatus
-(*tracking_status*)
 
 ## Overview
 
@@ -26,22 +25,21 @@ Registers a webhook that will send HTTP notifications to you when the status of 
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateTrack" method="post" path="/tracks" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.tracking_status.create(request={
         "carrier": "usps",
-        "tracking_number": "9205590164917312751089",
         "metadata": "Order 000123",
+        "tracking_number": "9205590164917312751089",
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -71,18 +69,17 @@ Returns the tracking status of a shipment using a carrier name and a tracking nu
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetTrack" method="get" path="/tracks/{Carrier}/{TrackingNumber}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.tracking_status.get(tracking_number="<value>", carrier="<value>")
-
-    assert res is not None
 
     # Handle response
     print(res)

@@ -1,5 +1,4 @@
 # Addresses
-(*addresses*)
 
 ## Overview
 
@@ -19,18 +18,17 @@ Returns a list of all address objects that have been created in this account.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListAddresses" method="get" path="/addresses" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.addresses.list()
-
-    assert res is not None
+    res = s_client.addresses.list(page=1, results=5)
 
     # Handle response
     print(res)
@@ -61,17 +59,17 @@ Creates a new address object. You can use address objects to create new shipment
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateAddress" method="post" path="/addresses" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.addresses.create(request={
-        "country": "US",
         "name": "Shwan Ippotle",
         "company": "Shippo",
         "street1": "215 Clayton St.",
@@ -80,14 +78,13 @@ with Shippo(
         "city": "San Francisco",
         "state": "CA",
         "zip": "94117",
+        "country": "US",
         "phone": "+1 555 341 9393",
         "email": "shippotle@shippo.com",
         "is_residential": True,
         "metadata": "Customer ID 123456",
         "validate_": True,
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -117,18 +114,17 @@ Returns an existing address using an object ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetAddress" method="get" path="/addresses/{AddressId}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.addresses.get(address_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -158,18 +154,17 @@ Validates an existing address using an object ID
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ValidateAddress" method="get" path="/addresses/{AddressId}/validate" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.addresses.validate(address_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)

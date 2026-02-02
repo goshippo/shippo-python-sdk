@@ -1,5 +1,4 @@
 # UserParcelTemplates
-(*user_parcel_templates*)
 
 ## Overview
 
@@ -25,18 +24,17 @@ Returns a list all of all user parcel template objects.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListUserParcelTemplates" method="get" path="/user-parcel-templates" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.user_parcel_templates.list(request={})
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -72,22 +70,26 @@ and depth, as well as their units."
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateUserParcelTemplate" method="post" path="/user-parcel-templates" -->
 ```python
 from shippo import Shippo
 from shippo.models import components
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.user_parcel_templates.create(request={
+        "distance_unit": components.DistanceUnitEnum.IN,
+        "height": "6",
+        "length": "10",
+        "name": "My Custom Template",
         "weight": "12",
         "weight_unit": components.WeightUnitEnum.LB,
+        "width": "8",
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -117,13 +119,14 @@ Deletes a user parcel template using an object ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DeleteUserParcelTemplate" method="delete" path="/user-parcel-templates/{UserParcelTemplateObjectId}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     s_client.user_parcel_templates.delete(user_parcel_template_object_id="<id>")
@@ -152,18 +155,17 @@ template, identified by the object ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetUserParcelTemplate" method="get" path="/user-parcel-templates/{UserParcelTemplateObjectId}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.user_parcel_templates.get(user_parcel_template_object_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -193,14 +195,15 @@ Updates an existing user parcel template.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateUserParcelTemplate" method="put" path="/user-parcel-templates/{UserParcelTemplateObjectId}" -->
 ```python
 from shippo import Shippo
 from shippo.models import components
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.user_parcel_templates.update(user_parcel_template_object_id="<id>", user_parcel_template_update_request={
@@ -208,12 +211,10 @@ with Shippo(
         "height": "6",
         "length": "10",
         "name": "My Custom Template",
-        "width": "8",
         "weight": "12",
         "weight_unit": components.WeightUnitEnum.LB,
+        "width": "8",
     })
-
-    assert res is not None
 
     # Handle response
     print(res)

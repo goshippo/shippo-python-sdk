@@ -13,7 +13,8 @@ from .parcelcreatefromtemplaterequest import (
 from .parcelcreaterequest import ParcelCreateRequest, ParcelCreateRequestTypedDict
 from .shipmentextra import ShipmentExtra, ShipmentExtraTypedDict
 import pydantic
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -121,3 +122,29 @@ class ShipmentCreateRequest(BaseModel):
     r"""List of <a href=\"#tag/Carrier-Accounts/\">Carrier Accounts</a> `object_id`s used to filter
     the returned rates.  If set, only rates from these carriers will be returned.
     """
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "extra",
+                "metadata",
+                "shipment_date",
+                "address_return",
+                "customs_declaration",
+                "async",
+                "carrier_accounts",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

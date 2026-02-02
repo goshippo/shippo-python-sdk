@@ -11,7 +11,8 @@ from .trackingstatussubstatus import (
     TrackingStatusSubstatusTypedDict,
 )
 from datetime import datetime
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -57,3 +58,19 @@ class TrackingStatus(BaseModel):
 
     status_date: Optional[datetime] = None
     r"""Date and time when the carrier scanned this tracking event. This is displayed in UTC."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["location", "substatus", "status_date"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

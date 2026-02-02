@@ -1,5 +1,4 @@
 # ServiceGroups
-(*service_groups*)
 
 ## Overview
 
@@ -20,18 +19,17 @@ Returns a list of service group objects.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListServiceGroups" method="get" path="/service-groups" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.service_groups.list(request={})
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -61,34 +59,28 @@ Creates a new service group.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateServiceGroup" method="post" path="/service-groups" -->
 ```python
 from shippo import Shippo
 from shippo.models import components
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.service_groups.create(request={
         "description": "USPS shipping options",
-        "name": "USPS Shipping",
-        "type": components.ServiceGroupTypeEnum.FLAT_RATE,
-        "service_levels": [
-            {
-                "account_object_id": "80feb1633d4a43c898f0058506cfd82d",
-                "service_level_token": "ups_next_day_air_saver",
-            },
-        ],
         "flat_rate": "5",
         "flat_rate_currency": "USD",
         "free_shipping_threshold_currency": "USD",
         "free_shipping_threshold_min": "5",
+        "name": "USPS Shipping",
         "rate_adjustment": 15,
+        "type": components.ServiceGroupTypeEnum.FLAT_RATE,
+        "service_levels": [],
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -118,19 +110,25 @@ Updates an existing service group object. <br>The object_id cannot be updated as
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateServiceGroup" method="put" path="/service-groups" -->
 ```python
 from shippo import Shippo
 from shippo.models import components
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.service_groups.update(request={
         "description": "USPS shipping options",
+        "flat_rate": "5",
+        "flat_rate_currency": "USD",
+        "free_shipping_threshold_currency": "USD",
+        "free_shipping_threshold_min": "5",
         "name": "USPS Shipping",
+        "rate_adjustment": 15,
         "type": components.ServiceGroupTypeEnum.FLAT_RATE,
         "object_id": "80feb1633d4a43c898f005850",
         "is_active": True,
@@ -139,23 +137,8 @@ with Shippo(
                 "account_object_id": "80feb1633d4a43c898f0058506cfd82d",
                 "service_level_token": "ups_next_day_air_saver",
             },
-            {
-                "account_object_id": "80feb1633d4a43c898f0058506cfd82d",
-                "service_level_token": "ups_next_day_air_saver",
-            },
-            {
-                "account_object_id": "80feb1633d4a43c898f0058506cfd82d",
-                "service_level_token": "ups_next_day_air_saver",
-            },
         ],
-        "flat_rate": "5",
-        "flat_rate_currency": "USD",
-        "free_shipping_threshold_currency": "USD",
-        "free_shipping_threshold_min": "5",
-        "rate_adjustment": 15,
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -185,13 +168,14 @@ Deletes an existing service group using an object ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DeleteServiceGroup" method="delete" path="/service-groups/{ServiceGroupId}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     s_client.service_groups.delete(service_group_id="<id>")

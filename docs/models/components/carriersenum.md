@@ -51,9 +51,9 @@
 | posti | Posti|
 | purolator | Purolator|
 | royal_mail | Royal Mail|
+| royal_mail_sf | Royal Mail Storefeeder|
 | rr_donnelley | ePost Global|
 | russian_post | Russian Post|
-| sendle | Sendle|
 | skypostal | SkyPostal|
 | stuart | Stuart|
 | swyft | Swyft|
@@ -117,9 +117,9 @@
 | `POSTI`              | posti                |
 | `PUROLATOR`          | purolator            |
 | `ROYAL_MAIL`         | royal_mail           |
+| `ROYAL_MAIL_SF`      | royal_mail_sf        |
 | `RR_DONNELLEY`       | rr_donnelley         |
 | `RUSSIAN_POST`       | russian_post         |
-| `SENDLE`             | sendle               |
 | `SKYPOSTAL`          | skypostal            |
 | `STUART`             | stuart               |
 | `SWYFT`              | swyft                |

@@ -4,7 +4,8 @@ from __future__ import annotations
 from .shipmentcreaterequest import ShipmentCreateRequest, ShipmentCreateRequestTypedDict
 from enum import Enum
 import pydantic
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
@@ -45,3 +46,19 @@ class InstantTransactionCreateRequest(BaseModel):
     metadata: Optional[str] = None
 
     order: Optional[str] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["async", "label_file_type", "metadata", "order"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

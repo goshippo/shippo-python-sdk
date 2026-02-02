@@ -20,7 +20,8 @@ from .shipmentextrareturnservicetypeupsenum import ShipmentExtraReturnServiceTyp
 from .upsreferencefields import UPSReferenceFields, UPSReferenceFieldsTypedDict
 from enum import Enum
 import pydantic
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -191,6 +192,17 @@ class ShipmentExtraTypedDict(TypedDict):
     """
     store_number: NotRequired[UPSReferenceFieldsTypedDict]
     transaction_reference_number: NotRequired[UPSReferenceFieldsTypedDict]
+    usmca_eligible: NotRequired[bool]
+    r"""UPS only. Request USMCA (United States-Mexico-Canada Agreement) preferential tariff treatment.
+    When enabled, it includes the USMCA eligibility declaration in customs documentation.
+
+    Supported routes and value limits:
+    - USA/Canada → Mexico: ≤ $1,000 USD
+    - Canada/Mexico → USA: ≤ $2,500 USD
+    - USA/Mexico → Canada: ≤ $3,300 CAD
+
+    Only for declaration-only shipments, full USMCA - FormType 04 (Certificate of Origin) is not supported.
+    """
 
 
 class ShipmentExtra(BaseModel):
@@ -344,3 +356,85 @@ class ShipmentExtra(BaseModel):
     store_number: Optional[UPSReferenceFields] = None
 
     transaction_reference_number: Optional[UPSReferenceFields] = None
+
+    usmca_eligible: Optional[bool] = None
+    r"""UPS only. Request USMCA (United States-Mexico-Canada Agreement) preferential tariff treatment.
+    When enabled, it includes the USMCA eligibility declaration in customs documentation.
+
+    Supported routes and value limits:
+    - USA/Canada → Mexico: ≤ $1,000 USD
+    - Canada/Mexico → USA: ≤ $2,500 USD
+    - USA/Mexico → Canada: ≤ $3,300 CAD
+
+    Only for declaration-only shipments, full USMCA - FormType 04 (Certificate of Origin) is not supported.
+    """
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "accounts_receivable_customer_account",
+                "alcohol",
+                "ancillary_endorsement",
+                "appropriation_number",
+                "authority_to_leave",
+                "bill_of_lading_number",
+                "billing",
+                "bypass_address_validation",
+                "carbon_neutral",
+                "carrier_hub_id",
+                "carrier_hub_travel_time",
+                "COD",
+                "cod_number",
+                "container_type",
+                "critical_pull_time",
+                "customer_branch",
+                "customer_reference",
+                "dangerous_goods",
+                "dangerous_goods_code",
+                "dealer_order_number",
+                "delivery_instructions",
+                "dept_number",
+                "dry_ice",
+                "fda_product_code",
+                "fulfillment_center",
+                "insurance",
+                "invoice_number",
+                "is_return",
+                "lasership_attrs",
+                "lasership_declared_value",
+                "manifest_number",
+                "model_number",
+                "part_number",
+                "po_number",
+                "preferred_delivery_timeframe",
+                "premium",
+                "production_code",
+                "purchase_request_number",
+                "qr_code_requested",
+                "reference_1",
+                "reference_2",
+                "request_retail_rates",
+                "return_service_type",
+                "rma_number",
+                "saturday_delivery",
+                "salesperson_number",
+                "serial_number",
+                "signature_confirmation",
+                "store_number",
+                "transaction_reference_number",
+                "usmca_eligible",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

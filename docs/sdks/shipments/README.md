@@ -1,5 +1,4 @@
 # Shipments
-(*shipments*)
 
 ## Overview
 
@@ -39,18 +38,17 @@ Optional path parameters:<br>
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListShipments" method="get" path="/shipments" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.shipments.list(request={})
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -80,96 +78,18 @@ Creates a new shipment object.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateShipment" method="post" path="/shipments" -->
 ```python
 from shippo import Shippo
 from shippo.models import components
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.shipments.create(request=components.ShipmentCreateRequest(
-        address_from=components.AddressCreateRequest(
-            country="US",
-            name="Shwan Ippotle",
-            company="Shippo",
-            street1="215 Clayton St.",
-            street3="",
-            street_no="",
-            city="San Francisco",
-            state="CA",
-            zip="94117",
-            phone="+1 555 341 9393",
-            email="shippotle@shippo.com",
-            is_residential=True,
-            metadata="Customer ID 123456",
-            validate_=True,
-        ),
-        address_to=components.AddressCreateRequest(
-            country="US",
-            name="Shwan Ippotle",
-            company="Shippo",
-            street1="215 Clayton St.",
-            street3="",
-            street_no="",
-            city="San Francisco",
-            state="CA",
-            zip="94117",
-            phone="+1 555 341 9393",
-            email="shippotle@shippo.com",
-            is_residential=True,
-            metadata="Customer ID 123456",
-            validate_=True,
-        ),
-        parcels=[
-            "<value>",
-            components.ParcelCreateRequest(
-                mass_unit=components.WeightUnitEnum.LB,
-                weight="1",
-                distance_unit=components.DistanceUnitEnum.IN,
-                height="1",
-                length="1",
-                width="1",
-                extra=components.ParcelExtra(
-                    cod=components.Cod(
-                        amount="5.5",
-                        currency="USD",
-                        payment_method=components.PaymentMethod.CASH,
-                    ),
-                    insurance=components.ParcelInsurance(
-                        amount="5.5",
-                        content="Laptop",
-                        currency="USD",
-                        provider=components.ParcelInsuranceProvider.UPS,
-                    ),
-                ),
-                metadata="Customer ID 123456",
-            ),
-            components.ParcelCreateRequest(
-                mass_unit=components.WeightUnitEnum.LB,
-                weight="1",
-                distance_unit=components.DistanceUnitEnum.IN,
-                height="1",
-                length="1",
-                width="1",
-                extra=components.ParcelExtra(
-                    cod=components.Cod(
-                        amount="5.5",
-                        currency="USD",
-                        payment_method=components.PaymentMethod.CASH,
-                    ),
-                    insurance=components.ParcelInsurance(
-                        amount="5.5",
-                        content="Laptop",
-                        currency="USD",
-                        provider=components.ParcelInsuranceProvider.UPS,
-                    ),
-                ),
-                metadata="Customer ID 123456",
-            ),
-        ],
         extra=components.ShipmentExtra(
             accounts_receivable_customer_account=components.UPSReferenceFields(
                 prefix="ABC",
@@ -273,60 +193,18 @@ with Shippo(
         ),
         metadata="Customer ID 123456",
         shipment_date="2021-03-22T12:00:00Z",
+        address_from="d799c2679e644279b59fe661ac8fa488",
         address_return="d799c2679e644279b59fe661ac8fa488",
-        customs_declaration=components.CustomsDeclarationCreateRequest(
-            certify=True,
-            certify_signer="Shawn Ippotle",
-            contents_type=components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,
-            items=[
-
-            ],
-            non_delivery_option=components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
-            b13a_filing_option=components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,
-            contents_explanation="T-Shirt purchase",
-            duties_payor=components.CustomsDeclarationCreateRequestDutiesPayor(
-                account="2323434543",
-                type=components.CustomsDeclarationCreateRequestType.THIRD_PARTY,
-                address=components.CustomsDeclarationCreateRequestAddress(
-                    name="Patrick Kavanagh",
-                    zip="80331",
-                    country="DE",
-                ),
-            ),
-            exporter_identification=components.CustomsExporterIdentification(
-                eori_number="PL123456790ABCDE",
-                tax_id=components.CustomsTaxIdentification(
-                    number="123456789",
-                    type=components.CustomsTaxIdentificationType.EIN,
-                ),
-            ),
-            invoice="#123123",
-            metadata="Order ID #123123",
-            address_importer=components.AddressImporter(
-                name="Shwan Ippotle",
-                company="Shippo",
-                street1="Blumenstraße",
-                street3="",
-                street_no="22",
-                city="München",
-                state="CA",
-                zip="80331",
-                country="DE",
-                phone="80331",
-                email="shippotle@shippo.com",
-                is_residential=True,
-            ),
-            eel_pfc=components.CustomsDeclarationEelPfcEnum.NOEEI_30_37_A,
-            incoterm=components.CustomsDeclarationIncotermEnum.DDP,
-            test=True,
-        ),
+        address_to="d799c2679e644279b59fe661ac8fa489",
+        customs_declaration="adcfdddf8ec64b84ad22772bce3ea37a",
         carrier_accounts=[
             "065a4a8c10d24a34ab932163a1b87f52",
             "73f706f4bdb94b54a337563840ce52b0",
         ],
+        parcels=[
+            "<value>",
+        ],
     ))
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -356,18 +234,17 @@ Returns an existing shipment using an object ID
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetShipment" method="get" path="/shipments/{ShipmentId}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.shipments.get(shipment_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)

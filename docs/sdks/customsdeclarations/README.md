@@ -1,5 +1,4 @@
 # CustomsDeclarations
-(*customs_declarations*)
 
 ## Overview
 
@@ -19,18 +18,17 @@ Returns a a list of all customs declaration objects
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListCustomsDeclarations" method="get" path="/customs/declarations" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.customs_declarations.list()
-
-    assert res is not None
+    res = s_client.customs_declarations.list(page=1, results=5)
 
     # Handle response
     print(res)
@@ -61,36 +59,21 @@ Creates a new customs declaration object
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateCustomsDeclaration" method="post" path="/customs/declarations" -->
 ```python
 from shippo import Shippo
 from shippo.models import components
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.customs_declarations.create(request={
+        "b13a_filing_option": components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,
         "certify": True,
         "certify_signer": "Shawn Ippotle",
-        "contents_type": components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,
-        "items": [
-            {
-                "description": "T-Shirt",
-                "mass_unit": components.WeightUnitEnum.LB,
-                "net_weight": "5",
-                "origin_country": "<value>",
-                "quantity": 20,
-                "value_amount": "200",
-                "value_currency": "USD",
-                "metadata": "Order ID \"123454\"",
-                "sku_code": "HM-123",
-                "hs_code": "0901.21",
-            },
-        ],
-        "non_delivery_option": components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
-        "b13a_filing_option": components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,
         "contents_explanation": "T-Shirt purchase",
         "duties_payor": {
             "account": "2323434543",
@@ -124,12 +107,13 @@ with Shippo(
             "email": "shippotle@shippo.com",
             "is_residential": True,
         },
+        "contents_type": components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,
         "eel_pfc": components.CustomsDeclarationEelPfcEnum.NOEEI_30_37_A,
         "incoterm": components.CustomsDeclarationIncotermEnum.DDP,
+        "items": [],
+        "non_delivery_option": components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,
         "test": True,
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -159,18 +143,17 @@ Returns an existing customs declaration using an object ID
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetCustomsDeclaration" method="get" path="/customs/declarations/{CustomsDeclarationId}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.customs_declarations.get(customs_declaration_id="<id>")
-
-    assert res is not None
+    res = s_client.customs_declarations.get(customs_declaration_id="<id>", page=1)
 
     # Handle response
     print(res)

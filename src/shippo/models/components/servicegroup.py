@@ -6,7 +6,8 @@ from .servicegroupaccountandservicelevel import (
     ServiceGroupAccountAndServiceLevelTypedDict,
 )
 from .servicegrouptypeenum import ServiceGroupTypeEnum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -91,3 +92,28 @@ class ServiceGroup(BaseModel):
 
     is_active: Optional[bool] = None
     r"""True if the service group is enabled, false otherwise."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "flat_rate",
+                "flat_rate_currency",
+                "free_shipping_threshold_currency",
+                "free_shipping_threshold_min",
+                "rate_adjustment",
+                "is_active",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

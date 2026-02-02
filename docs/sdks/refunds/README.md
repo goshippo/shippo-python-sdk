@@ -1,5 +1,4 @@
 # Refunds
-(*refunds*)
 
 ## Overview
 
@@ -18,21 +17,20 @@ Creates a new refund object.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateRefund" method="post" path="/refunds" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.refunds.create(request={
-        "transaction": "915d94940ea54c3a80cbfa328722f5a1",
         "async_": False,
+        "transaction": "915d94940ea54c3a80cbfa328722f5a1",
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -62,18 +60,17 @@ Returns a list all refund objects.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListRefunds" method="get" path="/refunds/" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.refunds.list(request={})
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -103,18 +100,17 @@ Returns an existing rate using a rate object ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetRefund" method="get" path="/refunds/{RefundId}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.refunds.get(refund_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)

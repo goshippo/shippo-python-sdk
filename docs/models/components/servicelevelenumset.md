@@ -183,10 +183,10 @@ value: components.ServiceLevelePostGlobalEnum = /* values here */
 value: components.ServiceLevelRoyalMailEnum = /* values here */
 ```
 
-### `components.ServiceLevelSendleEnum`
+### `components.ServiceLevelRoyalMailSFEnum`
 
 ```python
-value: components.ServiceLevelSendleEnum = /* values here */
+value: components.ServiceLevelRoyalMailSFEnum = /* values here */
 ```
 
 ### `components.ServiceLevelOnTracEnum`

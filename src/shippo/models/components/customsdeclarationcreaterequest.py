@@ -20,7 +20,8 @@ from .customsitemcreaterequest import (
     CustomsItemCreateRequestTypedDict,
 )
 from enum import Enum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -52,6 +53,22 @@ class CustomsDeclarationCreateRequestAddress(BaseModel):
     country: Optional[str] = None
     r"""Country ISO code of account number to be billed."""
 
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["name", "zip", "country"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
 
 class CustomsDeclarationCreateRequestDutiesPayorTypedDict(TypedDict):
     r"""Specifies who will pay the duties for the shipment. Only accepted for FedEx shipments."""
@@ -73,6 +90,22 @@ class CustomsDeclarationCreateRequestDutiesPayor(BaseModel):
     r"""Party to be billed for duties."""
 
     address: Optional[CustomsDeclarationCreateRequestAddress] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["account", "type", "address"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
 
 
 class CustomsDeclarationCreateRequestTypedDict(TypedDict):
@@ -211,3 +244,42 @@ class CustomsDeclarationCreateRequest(BaseModel):
     incoterm: Optional[CustomsDeclarationIncotermEnum] = None
 
     test: Optional[bool] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "aes_itn",
+                "b13a_filing_option",
+                "b13a_number",
+                "certificate",
+                "commercial_invoice",
+                "contents_explanation",
+                "disclaimer",
+                "duties_payor",
+                "exporter_identification",
+                "exporter_reference",
+                "importer_reference",
+                "is_vat_collected",
+                "invoice",
+                "license",
+                "metadata",
+                "notes",
+                "address_importer",
+                "eel_pfc",
+                "incoterm",
+                "test",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

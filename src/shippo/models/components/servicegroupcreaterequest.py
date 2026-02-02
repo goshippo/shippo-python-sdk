@@ -6,7 +6,8 @@ from .servicegroupaccountandservicelevel import (
     ServiceGroupAccountAndServiceLevelTypedDict,
 )
 from .servicegrouptypeenum import ServiceGroupTypeEnum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -81,3 +82,27 @@ class ServiceGroupCreateRequest(BaseModel):
 
     rate_adjustment: Optional[int] = None
     r"""The amount in percent (%) that the service group's returned rate should be adjusted. For example, if this field is set to 5 and the matched rate price is $5.00, the returned value of the service group will be $5.25. Negative integers are also accepted and will discount the rate price by the defined percentage amount."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "flat_rate",
+                "flat_rate_currency",
+                "free_shipping_threshold_currency",
+                "free_shipping_threshold_min",
+                "rate_adjustment",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

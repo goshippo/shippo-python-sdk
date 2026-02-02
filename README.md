@@ -47,7 +47,15 @@ Shippo external API.: Use this API to integrate with the Shippo service
 >
 > Once a Python version reaches its [official end of life date](https://devguide.python.org/versions/), a 3-month grace period is provided for users to upgrade. Following this grace period, the minimum python version supported in the SDK will be updated.
 
-The SDK can be installed with either *pip* or *poetry* package managers.
+The SDK can be installed with *uv*, *pip*, or *poetry* package managers.
+
+### uv
+
+*uv* is a fast Python package installer and resolver, designed as a drop-in replacement for pip and pip-tools. It's recommended for its speed and modern Python tooling capabilities.
+
+```bash
+uv add shippo
+```
 
 ### PIP
 
@@ -140,14 +148,12 @@ from shippo.utils import BackoffStrategy, RetryConfig
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.addresses.list(,
+    res = s_client.addresses.list(page=1, results=5,
         RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -162,13 +168,11 @@ from shippo.utils import BackoffStrategy, RetryConfig
 
 with Shippo(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.addresses.list()
-
-    assert res is not None
+    res = s_client.addresses.list(page=1, results=5)
 
     # Handle response
     print(res)
@@ -294,8 +298,8 @@ from shippo import Shippo
 def main():
 
     with Shippo(
-        api_key_header="<YOUR_API_KEY_HERE>",
         shippo_api_version="2018-02-08",
+        api_key_header="<YOUR_API_KEY_HERE>",
     ) as s_client:
         # Rest of application here...
 
@@ -304,8 +308,8 @@ def main():
 async def amain():
 
     async with Shippo(
-        api_key_header="<YOUR_API_KEY_HERE>",
         shippo_api_version="2018-02-08",
+        api_key_header="<YOUR_API_KEY_HERE>",
     ) as s_client:
         # Rest of application here...
 ```
@@ -344,14 +348,14 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 <details open>
 <summary>Available methods</summary>
 
-### [addresses](docs/sdks/addresses/README.md)
+### [Addresses](docs/sdks/addresses/README.md)
 
 * [list](docs/sdks/addresses/README.md#list) - List all addresses
 * [create](docs/sdks/addresses/README.md#create) - Create a new address
 * [get](docs/sdks/addresses/README.md#get) - Retrieve an address
 * [validate](docs/sdks/addresses/README.md#validate) - Validate an address
 
-### [batches](docs/sdks/batches/README.md)
+### [Batches](docs/sdks/batches/README.md)
 
 * [create](docs/sdks/batches/README.md#create) - Create a batch
 * [get](docs/sdks/batches/README.md#get) - Retrieve a batch
@@ -359,7 +363,7 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 * [purchase](docs/sdks/batches/README.md#purchase) - Purchase a batch
 * [remove_shipments](docs/sdks/batches/README.md#remove_shipments) - Remove shipments from a batch
 
-### [carrier_accounts](docs/sdks/carrieraccounts/README.md)
+### [CarrierAccounts](docs/sdks/carrieraccounts/README.md)
 
 * [list](docs/sdks/carrieraccounts/README.md#list) - List all carrier accounts
 * [create](docs/sdks/carrieraccounts/README.md#create) - Create a new carrier account
@@ -369,97 +373,96 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 * [register](docs/sdks/carrieraccounts/README.md#register) - Add a Shippo carrier account
 * [get_registration_status](docs/sdks/carrieraccounts/README.md#get_registration_status) - Get Carrier Registration status
 
-### [carrier_parcel_templates](docs/sdks/carrierparceltemplates/README.md)
+### [CarrierParcelTemplates](docs/sdks/carrierparceltemplates/README.md)
 
 * [list](docs/sdks/carrierparceltemplates/README.md#list) - List all carrier parcel templates
 * [get](docs/sdks/carrierparceltemplates/README.md#get) - Retrieve a carrier parcel templates
 
-### [customs_declarations](docs/sdks/customsdeclarations/README.md)
+### [CustomsDeclarations](docs/sdks/customsdeclarations/README.md)
 
 * [list](docs/sdks/customsdeclarations/README.md#list) - List all customs declarations
 * [create](docs/sdks/customsdeclarations/README.md#create) - Create a new customs declaration
 * [get](docs/sdks/customsdeclarations/README.md#get) - Retrieve a customs declaration
 
-### [customs_items](docs/sdks/customsitems/README.md)
+### [CustomsItems](docs/sdks/customsitems/README.md)
 
 * [list](docs/sdks/customsitems/README.md#list) - List all customs items
 * [create](docs/sdks/customsitems/README.md#create) - Create a new customs item
 * [get](docs/sdks/customsitems/README.md#get) - Retrieve a customs item
 
-### [manifests](docs/sdks/manifests/README.md)
+### [Manifests](docs/sdks/manifests/README.md)
 
 * [list](docs/sdks/manifests/README.md#list) - List all manifests
 * [create](docs/sdks/manifests/README.md#create) - Create a new manifest
 * [get](docs/sdks/manifests/README.md#get) - Retrieve a manifest
 
-### [orders](docs/sdks/orders/README.md)
+### [Orders](docs/sdks/orders/README.md)
 
 * [list](docs/sdks/orders/README.md#list) - List all orders
 * [create](docs/sdks/orders/README.md#create) - Create a new order
 * [get](docs/sdks/orders/README.md#get) - Retrieve an order
 
-### [parcels](docs/sdks/parcels/README.md)
+### [Parcels](docs/sdks/parcels/README.md)
 
 * [list](docs/sdks/parcels/README.md#list) - List all parcels
 * [create](docs/sdks/parcels/README.md#create) - Create a new parcel
 * [get](docs/sdks/parcels/README.md#get) - Retrieve an existing parcel
 
-### [pickups](docs/sdks/pickups/README.md)
+### [Pickups](docs/sdks/pickups/README.md)
 
 * [create](docs/sdks/pickups/README.md#create) - Create a pickup
 
-### [rates](docs/sdks/rates/README.md)
+### [Rates](docs/sdks/rates/README.md)
 
 * [get](docs/sdks/rates/README.md#get) - Retrieve a rate
 * [list_shipment_rates](docs/sdks/rates/README.md#list_shipment_rates) - Retrieve shipment rates
 * [list_shipment_rates_by_currency_code](docs/sdks/rates/README.md#list_shipment_rates_by_currency_code) - Retrieve shipment rates in currency
 
-### [rates_at_checkout](docs/sdks/ratesatcheckout/README.md)
+### [RatesAtCheckout](docs/sdks/ratesatcheckout/README.md)
 
 * [create](docs/sdks/ratesatcheckout/README.md#create) - Generate a live rates request
 * [get_default_parcel_template](docs/sdks/ratesatcheckout/README.md#get_default_parcel_template) - Show current default parcel template
 * [update_default_parcel_template](docs/sdks/ratesatcheckout/README.md#update_default_parcel_template) - Update default parcel template
 * [delete_default_parcel_template](docs/sdks/ratesatcheckout/README.md#delete_default_parcel_template) - Clear current default parcel template
 
-### [refunds](docs/sdks/refunds/README.md)
+### [Refunds](docs/sdks/refunds/README.md)
 
 * [create](docs/sdks/refunds/README.md#create) - Create a refund
 * [list](docs/sdks/refunds/README.md#list) - List all refunds
 * [get](docs/sdks/refunds/README.md#get) - Retrieve a refund
 
-### [service_groups](docs/sdks/servicegroups/README.md)
+### [ServiceGroups](docs/sdks/servicegroups/README.md)
 
 * [list](docs/sdks/servicegroups/README.md#list) - List all service groups
 * [create](docs/sdks/servicegroups/README.md#create) - Create a new service group
 * [update](docs/sdks/servicegroups/README.md#update) - Update an existing service group
 * [delete](docs/sdks/servicegroups/README.md#delete) - Delete a service group
 
-### [shipments](docs/sdks/shipments/README.md)
+### [Shipments](docs/sdks/shipments/README.md)
 
 * [list](docs/sdks/shipments/README.md#list) - List all shipments
 * [create](docs/sdks/shipments/README.md#create) - Create a new shipment
 * [get](docs/sdks/shipments/README.md#get) - Retrieve a shipment
 
-
-### [shippo_accounts](docs/sdks/shippoaccounts/README.md)
+### [ShippoAccounts](docs/sdks/shippoaccounts/README.md)
 
 * [list](docs/sdks/shippoaccounts/README.md#list) - List all Shippo Accounts
 * [create](docs/sdks/shippoaccounts/README.md#create) - Create a Shippo Account
 * [get](docs/sdks/shippoaccounts/README.md#get) - Retrieve a Shippo Account
 * [update](docs/sdks/shippoaccounts/README.md#update) - Update a Shippo Account
 
-### [tracking_status](docs/sdks/trackingstatus/README.md)
+### [TrackingStatus](docs/sdks/trackingstatus/README.md)
 
 * [create](docs/sdks/trackingstatus/README.md#create) - Register a tracking webhook
 * [get](docs/sdks/trackingstatus/README.md#get) - Get a tracking status
 
-### [transactions](docs/sdks/transactions/README.md)
+### [Transactions](docs/sdks/transactions/README.md)
 
 * [list](docs/sdks/transactions/README.md#list) - List all shipping labels
 * [create](docs/sdks/transactions/README.md#create) - Create a shipping label
 * [get](docs/sdks/transactions/README.md#get) - Retrieve a shipping label
 
-### [user_parcel_templates](docs/sdks/userparceltemplates/README.md)
+### [UserParcelTemplates](docs/sdks/userparceltemplates/README.md)
 
 * [list](docs/sdks/userparceltemplates/README.md#list) - List all user parcel templates
 * [create](docs/sdks/userparceltemplates/README.md#create) - Create a new user parcel template
@@ -467,7 +470,7 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 * [get](docs/sdks/userparceltemplates/README.md#get) - Retrieves a user parcel template
 * [update](docs/sdks/userparceltemplates/README.md#update) - Update an existing user parcel template
 
-### [webhooks](docs/sdks/webhooks/README.md)
+### [Webhooks](docs/sdks/webhooks/README.md)
 
 * [create_webhook](docs/sdks/webhooks/README.md#create_webhook) - Create a new webhook
 * [list_webhooks](docs/sdks/webhooks/README.md#list_webhooks) - List all webhooks

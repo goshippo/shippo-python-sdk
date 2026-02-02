@@ -1,5 +1,4 @@
 # Rates
-(*rates*)
 
 ## Overview
 
@@ -18,18 +17,17 @@ Returns an existing rate using a rate object ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetRate" method="get" path="/rates/{RateId}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.rates.get(rate_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -59,18 +57,17 @@ Returns a paginated list of rates associated with a shipment
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListShipmentRates" method="get" path="/shipments/{ShipmentId}/rates" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.rates.list_shipment_rates(shipment_id="<id>")
-
-    assert res is not None
+    res = s_client.rates.list_shipment_rates(shipment_id="<id>", page=1, results=25)
 
     # Handle response
     print(res)
@@ -108,21 +105,19 @@ Note: re-requesting the rates with a different currency code will re-queue the s
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListShipmentRatesByCurrencyCode" method="get" path="/shipments/{ShipmentId}/rates/{CurrencyCode}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.rates.list_shipment_rates_by_currency_code(request={
         "shipment_id": "<id>",
-        "currency_code": "USD",
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
