@@ -6,7 +6,8 @@ from .addresscompletecreaterequest import (
     AddressCompleteCreateRequestTypedDict,
 )
 from enum import Enum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -78,3 +79,19 @@ class Location(BaseModel):
 
     instructions: Optional[str] = None
     r"""Pickup instructions for the courier. This is a mandatory field if the building_location_type is \"Other\"."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["building_type", "instructions"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

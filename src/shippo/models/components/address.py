@@ -6,21 +6,26 @@ from .addressvalidationresults import (
     AddressValidationResultsTypedDict,
 )
 from datetime import datetime
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
 LatitudeTypedDict = TypeAliasType("LatitudeTypedDict", Union[float, str])
+r"""Latitude of address"""
 
 
 Latitude = TypeAliasType("Latitude", Union[float, str])
+r"""Latitude of address"""
 
 
 LongitudeTypedDict = TypeAliasType("LongitudeTypedDict", Union[float, str])
+r"""Longitude of address"""
 
 
 Longitude = TypeAliasType("Longitude", Union[float, str])
+r"""Longitude of address"""
 
 
 class AddressTypedDict(TypedDict):
@@ -217,3 +222,44 @@ class Address(BaseModel):
 
     test: Optional[bool] = None
     r"""Indicates whether the object has been created in test mode."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "name",
+                "company",
+                "street1",
+                "street2",
+                "street3",
+                "street_no",
+                "city",
+                "state",
+                "zip",
+                "phone",
+                "email",
+                "is_residential",
+                "metadata",
+                "is_complete",
+                "latitude",
+                "longitude",
+                "object_created",
+                "object_id",
+                "object_owner",
+                "object_updated",
+                "validation_results",
+                "test",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

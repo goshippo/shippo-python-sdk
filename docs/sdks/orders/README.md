@@ -1,5 +1,4 @@
 # Orders
-(*orders*)
 
 ## Overview
 
@@ -29,14 +28,15 @@ Returns a list of all order objects.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListOrders" method="get" path="/orders" -->
 ```python
 from shippo import Shippo
 from shippo.models import components
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.orders.list(request={
@@ -45,8 +45,6 @@ with Shippo(
         ],
         "shop_app": components.OrderShopAppEnum.SHIPPO,
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -76,39 +74,24 @@ Creates a new order object.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateOrder" method="post" path="/orders" -->
 ```python
-import dateutil.parser
 from shippo import Shippo
 from shippo.models import components
+from shippo.utils import parse_datetime
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.orders.create(request=components.OrderCreateRequest(
-        placed_at="2016-09-23T01:28:12Z",
-        to_address=components.AddressCreateRequest(
-            country="US",
-            name="Shwan Ippotle",
-            company="Shippo",
-            street1="215 Clayton St.",
-            street3="",
-            street_no="",
-            city="San Francisco",
-            state="CA",
-            zip="94117",
-            phone="+1 555 341 9393",
-            email="shippotle@shippo.com",
-            is_residential=True,
-            metadata="Customer ID 123456",
-            validate_=True,
-        ),
         currency="USD",
         notes="This customer is a VIP",
         order_number="#1068",
         order_status=components.OrderStatusEnum.PAID,
+        placed_at="2016-09-23T01:28:12Z",
         shipping_cost="12.83",
         shipping_cost_currency="USD",
         shipping_method="USPS First Class Package",
@@ -118,7 +101,6 @@ with Shippo(
         weight="0.4",
         weight_unit=components.WeightUnitEnum.LB,
         from_address=components.AddressCreateRequest(
-            country="US",
             name="Shwan Ippotle",
             company="Shippo",
             street1="215 Clayton St.",
@@ -127,6 +109,23 @@ with Shippo(
             city="San Francisco",
             state="CA",
             zip="94117",
+            country="US",
+            phone="+1 555 341 9393",
+            email="shippotle@shippo.com",
+            is_residential=True,
+            metadata="Customer ID 123456",
+            validate_=True,
+        ),
+        to_address=components.AddressCreateRequest(
+            name="Shwan Ippotle",
+            company="Shippo",
+            street1="215 Clayton St.",
+            street3="",
+            street_no="",
+            city="San Francisco",
+            state="CA",
+            zip="94117",
+            country="US",
             phone="+1 555 341 9393",
             email="shippotle@shippo.com",
             is_residential=True,
@@ -137,21 +136,8 @@ with Shippo(
             components.LineItemBase(
                 currency="USD",
                 manufacture_country="US",
-                max_delivery_time=dateutil.parser.isoparse("2016-07-23T00:00:00Z"),
-                max_ship_time=dateutil.parser.isoparse("2016-07-23T00:00:00Z"),
-                quantity=20,
-                sku="HM-123",
-                title="Hippo Magazines",
-                total_price="12.1",
-                variant_title="June Edition",
-                weight="0.4",
-                weight_unit=components.WeightUnitEnum.LB,
-            ),
-            components.LineItemBase(
-                currency="USD",
-                manufacture_country="US",
-                max_delivery_time=dateutil.parser.isoparse("2016-07-23T00:00:00Z"),
-                max_ship_time=dateutil.parser.isoparse("2016-07-23T00:00:00Z"),
+                max_delivery_time=parse_datetime("2016-07-23T00:00:00Z"),
+                max_ship_time=parse_datetime("2016-07-23T00:00:00Z"),
                 quantity=20,
                 sku="HM-123",
                 title="Hippo Magazines",
@@ -162,8 +148,6 @@ with Shippo(
             ),
         ],
     ))
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -193,18 +177,17 @@ Retrieves an existing order using an object ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetOrder" method="get" path="/orders/{OrderId}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.orders.get(order_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)

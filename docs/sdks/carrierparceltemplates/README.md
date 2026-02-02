@@ -1,5 +1,4 @@
 # CarrierParcelTemplates
-(*carrier_parcel_templates*)
 
 ## Overview
 
@@ -24,18 +23,17 @@ List all carrier parcel template objects. <br> Use the following query string pa
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListCarrierParcelTemplates" method="get" path="/parcel-templates" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.carrier_parcel_templates.list(carrier="fedex")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -66,18 +64,17 @@ Fetches the parcel template information for a specific carrier parcel template, 
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetCarrierParcelTemplate" method="get" path="/parcel-templates/{CarrierParcelTemplateToken}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.carrier_parcel_templates.get(carrier_parcel_template_token="<value>")
-
-    assert res is not None
 
     # Handle response
     print(res)

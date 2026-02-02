@@ -5,7 +5,8 @@ from .customstaxidentification import (
     CustomsTaxIdentification,
     CustomsTaxIdentificationTypedDict,
 )
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -37,3 +38,19 @@ class CustomsExporterIdentification(BaseModel):
     r"""Tax identification that may be required to ship in certain countries. Typically used to assess duties on
     goods that are crossing a border.
     """
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["eori_number", "tax_id"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

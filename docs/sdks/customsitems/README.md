@@ -1,5 +1,4 @@
 # CustomsItems
-(*customs_items*)
 
 ## Overview
 
@@ -18,18 +17,17 @@ Returns a list all customs items objects.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListCustomsItems" method="get" path="/customs/items" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.customs_items.list()
-
-    assert res is not None
+    res = s_client.customs_items.list(page=1, results=25)
 
     # Handle response
     print(res)
@@ -60,30 +58,29 @@ Creates a new customs item object.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateCustomsItem" method="post" path="/customs/items" -->
 ```python
 from shippo import Shippo
 from shippo.models import components
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.customs_items.create(request={
         "description": "T-Shirt",
         "mass_unit": components.WeightUnitEnum.LB,
+        "metadata": "Order ID \"123454\"",
         "net_weight": "5",
         "origin_country": "<value>",
         "quantity": 20,
-        "value_amount": "200",
-        "value_currency": "USD",
-        "metadata": "Order ID \"123454\"",
         "sku_code": "HM-123",
         "hs_code": "0901.21",
+        "value_amount": "200",
+        "value_currency": "USD",
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -113,18 +110,17 @@ Returns an existing customs item using an object ID
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetCustomsItem" method="get" path="/customs/items/{CustomsItemId}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.customs_items.get(customs_item_id="<id>")
-
-    assert res is not None
+    res = s_client.customs_items.get(customs_item_id="<id>", page=1)
 
     # Handle response
     print(res)

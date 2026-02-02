@@ -1,5 +1,4 @@
 # Transactions
-(*transactions*)
 
 ## Overview
 
@@ -18,22 +17,21 @@ Returns a list of all transaction objects.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListTransactions" method="get" path="/transactions" -->
 ```python
 from shippo import Shippo
 from shippo.models import components
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.transactions.list(request={
         "object_status": components.TransactionStatusEnum.SUCCESS,
         "tracking_status": components.TrackingStatusEnum.DELIVERED,
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -63,25 +61,24 @@ Creates a new transaction object and purchases the shipping label using a rate o
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateTransaction" method="post" path="/transactions" -->
 ```python
 from shippo import Shippo
 from shippo.models import components
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.transactions.create(request={
-        "rate": "ec9f0d3adc9441449c85d315f0997fd5",
         "async_": False,
         "label_file_type": components.LabelFileTypeEnum.PDF_4X6,
         "metadata": "Order ID #12345",
+        "rate": "ec9f0d3adc9441449c85d315f0997fd5",
         "order": "adcfdddf8ec64b84ad22772bce3ea37a",
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -111,18 +108,17 @@ Returns an existing transaction using an object ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetTransaction" method="get" path="/transactions/{TransactionId}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.transactions.get(transaction_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)

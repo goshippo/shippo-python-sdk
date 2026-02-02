@@ -1,5 +1,4 @@
 # CarrierAccounts
-(*carrier_accounts*)
 
 ## Overview
 
@@ -27,18 +26,17 @@ By default, if the query parameter is omitted, the `service_levels` property wil
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListCarrierAccounts" method="get" path="/carrier_accounts" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.carrier_accounts.list(request={})
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -68,33 +66,32 @@ Creates a new carrier account or connects an existing carrier account to the Shi
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateCarrierAccount" method="post" path="/carrier_accounts" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.carrier_accounts.create(request={
         "account_id": "321123",
         "carrier": "fedex",
+        "metadata": "FEDEX Account",
         "parameters": {
-            "first_name": "Loyal",
-            "last_name": "Collier",
-            "phone_number": "(890) 307-8579",
+            "first_name": "Abdullah",
+            "last_name": "Ward",
+            "phone_number": "915-577-4415 x207",
             "from_address_st": "<value>",
             "from_address_city": "<value>",
             "from_address_state": "<value>",
             "from_address_zip": "<value>",
             "from_address_country_iso2": "<value>",
         },
-        "metadata": "FEDEX Account",
         "test": False,
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -124,18 +121,17 @@ Returns an existing carrier account using an object ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetCarrierAccount" method="get" path="/carrier_accounts/{CarrierAccountId}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.carrier_accounts.get(carrier_account_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -165,45 +161,30 @@ Updates an existing carrier account object. The account_id and carrier can't be 
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateCarrierAccount" method="put" path="/carrier_accounts/{CarrierAccountId}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.carrier_accounts.update(carrier_account_id="<id>", carrier_account_base={
         "account_id": "****",
         "carrier": "usps",
         "parameters": {
-            "account_number": "94567e",
-            "aia_country_iso2": "US",
-            "billing_address_city": "San Francisco",
-            "billing_address_country_iso2": "US",
-            "billing_address_state": "CA",
-            "billing_address_street1": "731 Market St",
-            "billing_address_street2": "STE 200",
-            "billing_address_zip": "94103",
-            "collec_country_iso2": "US",
-            "collec_zip": "94103",
-            "company": "Shippo",
-            "currency_code": "USD",
-            "email": "hippo@shippo.com",
-            "full_name": "Shippo Meister",
-            "has_invoice": False,
-            "invoice_controlid": "1234",
-            "invoice_date": "20210529",
-            "invoice_number": "1112234",
-            "invoice_value": "11.23",
-            "phone": "1112223333",
-            "title": "Manager",
-            "ups_agreements": True,
+            "first_name": "Eldora",
+            "last_name": "Weber",
+            "phone_number": "1-505-428-6798",
+            "from_address_st": "<value>",
+            "from_address_city": "<value>",
+            "from_address_state": "<value>",
+            "from_address_zip": "<value>",
+            "from_address_country_iso2": "<value>",
         },
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -234,16 +215,17 @@ Used by client applications to setup or reconnect an existing carrier account wi
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="InitiateOauth2Signin" method="get" path="/carrier_accounts/{CarrierAccountObjectId}/signin/initiate" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.carrier_accounts.initiate_oauth2_signin(carrier_account_object_id="<id>", redirect_uri="https://enlightened-mortise.com/")
+    res = s_client.carrier_accounts.initiate_oauth2_signin(carrier_account_object_id="<id>", redirect_uri="https://ashamed-reporter.biz")
 
     # Handle response
     print(res)
@@ -278,21 +260,20 @@ Adds a Shippo carrier account
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="RegisterCarrierAccount" method="post" path="/carrier_accounts/register/new" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.carrier_accounts.register(request={
+        "carrier": "deutsche_post",
         "parameters": {},
-        "carrier": "correos",
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -322,19 +303,18 @@ Returns the registration status for the given account for the given carrier
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetCarrierRegistrationStatus" method="get" path="/carrier_accounts/reg-status" -->
 ```python
 from shippo import Shippo
 from shippo.models import operations
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.carrier_accounts.get_registration_status(carrier=operations.Carrier.USPS)
-
-    assert res is not None
+    res = s_client.carrier_accounts.get_registration_status(carrier=operations.Carrier.UPS)
 
     # Handle response
     print(res)

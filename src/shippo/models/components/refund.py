@@ -3,7 +3,8 @@
 from __future__ import annotations
 from datetime import datetime
 from enum import Enum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -55,3 +56,29 @@ class Refund(BaseModel):
 
     transaction: Optional[str] = None
     r"""Object ID of the Transaction to be refunded."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "object_created",
+                "object_id",
+                "object_owner",
+                "object_updated",
+                "status",
+                "test",
+                "transaction",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

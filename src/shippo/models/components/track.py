@@ -11,7 +11,8 @@ from .trackingstatuslocationbase import (
     TrackingStatusLocationBaseTypedDict,
 )
 from datetime import datetime
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -83,3 +84,30 @@ class Track(BaseModel):
     r"""The <code>object_id</code> of the transaction associated with this tracking object.
     This field is visible only to the object owner of the transaction.
     """
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "address_from",
+                "address_to",
+                "eta",
+                "metadata",
+                "original_eta",
+                "servicelevel",
+                "tracking_status",
+                "transaction",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

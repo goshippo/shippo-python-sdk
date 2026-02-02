@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 from enum import Enum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -46,3 +47,19 @@ class Cod(BaseModel):
     <a href=\"https://www.ups.com/content/us/en/shipping/time/service/value_added/cod.html\">UPS</a> for details).
     If no payment_method inputted the value defaults to \"ANY\".)
     """
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["amount", "currency", "payment_method"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

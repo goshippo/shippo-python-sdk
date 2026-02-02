@@ -6,7 +6,8 @@ from .batchshipmentcreaterequest import (
     BatchShipmentCreateRequestTypedDict,
 )
 from .labelfiletypeenum import LabelFileTypeEnum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -55,3 +56,19 @@ class BatchCreateRequest(BaseModel):
 
     metadata: Optional[str] = None
     r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["label_filetype", "metadata"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

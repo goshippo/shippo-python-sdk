@@ -5,7 +5,8 @@ from .addresscreaterequest import AddressCreateRequest, AddressCreateRequestType
 from .lineitembase import LineItemBase, LineItemBaseTypedDict
 from .orderstatusenum import OrderStatusEnum
 from .weightunitenum import WeightUnitEnum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -111,3 +112,36 @@ class OrderCreateRequest(BaseModel):
     r"""Array of <a href=\"#section/Line-Item\">line item</a> objects representing the items in this order.
     All objects will be returned expanded by default.
     """
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "currency",
+                "notes",
+                "order_number",
+                "order_status",
+                "shipping_cost",
+                "shipping_cost_currency",
+                "shipping_method",
+                "subtotal_price",
+                "total_price",
+                "total_tax",
+                "weight",
+                "weight_unit",
+                "from_address",
+                "line_items",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

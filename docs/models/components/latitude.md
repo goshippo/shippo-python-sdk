@@ -1,5 +1,7 @@
 # Latitude
 
+Latitude of address
+
 
 ## Supported Types
 

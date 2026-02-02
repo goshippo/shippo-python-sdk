@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 import pydantic
+from pydantic import model_serializer
 from shippo.models.components import (
     parcelcreatefromtemplaterequest as components_parcelcreatefromtemplaterequest,
     parcelcreaterequest as components_parcelcreaterequest,
 )
-from shippo.types import BaseModel
+from shippo.types import BaseModel, UNSET_SENTINEL
 from shippo.utils import FieldMetadata, HeaderMetadata
 from typing import Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
@@ -24,6 +25,22 @@ class CreateParcelGlobals(BaseModel):
         FieldMetadata(header=HeaderMetadata(style="simple", explode=False)),
     ] = None
     r"""Optional string used to pick a non-default API version to use. See our <a href=\"https://docs.goshippo.com/docs/api_concepts/apiversioning/\">API version</a> guide."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["SHIPPO-API-VERSION"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
 
 
 CreateParcelRequestTypedDict = TypeAliasType(

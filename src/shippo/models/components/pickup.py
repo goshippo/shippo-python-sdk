@@ -4,7 +4,8 @@ from __future__ import annotations
 from .location import Location, LocationTypedDict
 from datetime import datetime
 from enum import Enum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -140,3 +141,34 @@ class Pickup(BaseModel):
 
     is_test: Optional[bool] = None
     r"""Indicates whether the object has been created in test mode."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "metadata",
+                "object_created",
+                "object_id",
+                "object_updated",
+                "confirmed_start_time",
+                "confirmed_end_time",
+                "cancel_by_time",
+                "status",
+                "confirmation_code",
+                "timezone",
+                "messages",
+                "is_test",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

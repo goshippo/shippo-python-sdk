@@ -6,42 +6,46 @@ from .sdkconfiguration import SDKConfiguration
 from .utils.logger import Logger, get_default_logger
 from .utils.retries import RetryConfig
 import httpx
+import importlib
 from shippo import utils
 from shippo._hooks import SDKHooks
-from shippo.addresses import Addresses
-from shippo.batches import Batches
-from shippo.carrier_accounts import CarrierAccounts
-from shippo.carrier_parcel_templates import CarrierParcelTemplates
-from shippo.customs_declarations import CustomsDeclarations
-from shippo.customs_items import CustomsItems
-from shippo.manifests import Manifests
 from shippo.models import components, internal
-from shippo.orders import Orders
-from shippo.parcels import Parcels
-from shippo.pickups import Pickups
-from shippo.rates import Rates
-from shippo.rates_at_checkout import RatesAtCheckout
-from shippo.refunds import Refunds
-from shippo.service_groups import ServiceGroups
-from shippo.shipments import Shipments
-from shippo.shippo_accounts import ShippoAccounts
-from shippo.tracking_status import TrackingStatus
-from shippo.transactions import Transactions
 from shippo.types import OptionalNullable, UNSET
-from shippo.user_parcel_templates import UserParcelTemplates
-from shippo.webhooks import Webhooks
-from typing import Any, Callable, Dict, Optional, Union, cast
+import sys
+from typing import Any, Callable, Dict, Optional, TYPE_CHECKING, Union, cast
 import weakref
+
+if TYPE_CHECKING:
+    from shippo.addresses import Addresses
+    from shippo.batches import Batches
+    from shippo.carrier_accounts import CarrierAccounts
+    from shippo.carrier_parcel_templates import CarrierParcelTemplates
+    from shippo.customs_declarations import CustomsDeclarations
+    from shippo.customs_items import CustomsItems
+    from shippo.manifests import Manifests
+    from shippo.orders import Orders
+    from shippo.parcels import Parcels
+    from shippo.pickups import Pickups
+    from shippo.rates import Rates
+    from shippo.rates_at_checkout import RatesAtCheckout
+    from shippo.refunds import Refunds
+    from shippo.service_groups import ServiceGroups
+    from shippo.shipments import Shipments
+    from shippo.shippo_accounts import ShippoAccounts
+    from shippo.tracking_status import TrackingStatus
+    from shippo.transactions import Transactions
+    from shippo.user_parcel_templates import UserParcelTemplates
+    from shippo.webhooks import Webhooks
 
 
 class Shippo(BaseSDK):
     r"""Shippo external API.: Use this API to integrate with the Shippo service"""
 
-    addresses: Addresses
+    addresses: "Addresses"
     r"""Addresses are the locations a parcel is being shipped **from** and **to**. They represent company and residential places. Among other things, you can use address objects to create shipments, calculate shipping rates, and purchase shipping labels.
     <SchemaDefinition schemaRef=\"#/components/schemas/Address\"/>
     """
-    batches: Batches
+    batches: "Batches"
     r"""A batch is a technique for creating multiple labels at once. Use the  batch object to create and purchase many shipments in two API calls. After creating the batch, retrieve the batch to verify that all shipments are valid. You can add and remove shipments after you have created the batch. When all shipments are valid you can purchase the batch and retrieve all the shipping labels.
     <SchemaDefinition schemaRef=\"#/components/schemas/Batch\"/>
 
@@ -53,21 +57,21 @@ class Shippo(BaseSDK):
     the `/batches/{BATCH_OBJECT_ID}/add_shipments` endpoint
     <SchemaDefinition schemaRef=\"#/components/schemas/BatchShipment\"/>
     """
-    carrier_accounts: CarrierAccounts
+    carrier_accounts: "CarrierAccounts"
     r"""Carriers are the companies who deliver your package. Shippo uses Carrier account objects as credentials to retrieve shipping rates and purchase labels from shipping Carriers.
 
     <SchemaDefinition schemaRef=\"#/components/schemas/CarrierAccount\"/>
     """
-    customs_declarations: CustomsDeclarations
+    customs_declarations: "CustomsDeclarations"
     r"""Customs declarations are relevant information, including one or multiple customs items, you need to provide for
     customs clearance for your international shipments.
     <SchemaDefinition schemaRef=\"#/components/schemas/CustomsDeclaration\"/>
     """
-    customs_items: CustomsItems
+    customs_items: "CustomsItems"
     r"""Customs declarations are relevant information, including one or multiple customs items, you need to provide for customs clearance for your international shipments.
     <SchemaDefinition schemaRef=\"#/components/schemas/CustomsItem\"/>
     """
-    rates_at_checkout: RatesAtCheckout
+    rates_at_checkout: "RatesAtCheckout"
     r"""Rates at checkout is a tool for merchants to display up-to-date shipping estimates based on what's in their customers cart and where they’re shipping to.
     Merchants set up curated shipping options for customers in the checkout flow based on data in the shopping cart. The request must include the **to** address and item information. Optional fields are the **from** address and package information. If the optional fields are not included, the service will use the default address and/or package configured for rates at checkout. The response is a list of shipping options based on the Service Group configuration.
     (see <a href=\"#tag/Service-Groups\">Service Group configuration</a> for details).
@@ -78,7 +82,7 @@ class Shippo(BaseSDK):
     Assign one of your user parcel templates to be the default used when generating Live Rates. This template will be used by default when generating Live Rates, unless you explicitly provide a parcel in the Live Rates request.
     <SchemaDefinition schemaRef=\"#/components/schemas/UserParcelTemplate\"/>
     """
-    manifests: Manifests
+    manifests: "Manifests"
     r"""A manifest is a single-page document with a barcode that carriers can scan to accept all packages into transit without the need to scan each item individually.
     They are close-outs of shipping labels of a certain day. Some carriers require manifests to  process the shipments.
 
@@ -88,7 +92,7 @@ class Shippo(BaseSDK):
     The following codes and messages are the possible errors that may occur when creating Manifests.
     <SchemaDefinition schemaRef=\"#/components/schemas/ManifestErrors\"/>
     """
-    orders: Orders
+    orders: "Orders"
     r"""An order is a request from a customer to purchase goods from a merchant.
     Use the orders object to load orders from your system to the Shippo dashboard.
     You can use the orders object to create, retrieve, list, and manage orders programmatically.
@@ -103,12 +107,12 @@ class Shippo(BaseSDK):
     A line item is an individual object in an order. For example, if your order contains a t-shirt, shorts, and a jacket, each item is represented by a line item.
     <SchemaDefinition schemaRef=\"#/components/schemas/LineItem\"/>
     """
-    carrier_parcel_templates: CarrierParcelTemplates
+    carrier_parcel_templates: "CarrierParcelTemplates"
     r"""A carrier parcel template represents a package used for shipping that has preset dimensions defined by a carrier. Some examples of a carrier parcel template include USPS Flat Rate Box and Fedex Small Pak. When using a carrier parcel template, the rates returned may be limited to the carrier that provides the box. You can create user parcel templates using a carrier parcel template. Shippo takes the dimensions of the carrier parcel template but you must configure the weight.
 
     <SchemaDefinition schemaRef=\"#/components/schemas/CarrierParcelTemplate\"/>
     """
-    parcels: Parcels
+    parcels: "Parcels"
     r"""A parcel is an item you are shipping. The parcel object includes details about its physical make-up of the parcel. It includes dimensions and weight that Shippo uses to calculate rates.
     <SchemaDefinition schemaRef=\"#/components/schemas/Parcel\"/>
 
@@ -116,25 +120,25 @@ class Shippo(BaseSDK):
     The following values are supported for the `extra` field of the parcel object.
     <SchemaDefinition schemaRef=\"#/components/schemas/ParcelExtra\"/>
     """
-    pickups: Pickups
+    pickups: "Pickups"
     r"""A pickup is when you schedule a carrier to collect a package for delivery.
     Use Shippo’s pickups endpoint to schedule pickups with USPS and DHL Express for eligible shipments that you have already created.
     <SchemaDefinition schemaRef=\"#/components/schemas/Pickup\"/>
     """
-    rates: Rates
+    rates: "Rates"
     r"""A rate is the cost to ship a parcel from a carrier. The rate object details the service level including the cost and transit time.
     <SchemaDefinition schemaRef=\"#/components/schemas/Rate\"/>
     """
-    refunds: Refunds
+    refunds: "Refunds"
     r"""Refunds are reimbursements for successfully created but unused shipping labels or other charges.
     <SchemaDefinition schemaRef=\"#/components/schemas/Refund\"/>
     """
-    service_groups: ServiceGroups
+    service_groups: "ServiceGroups"
     r"""A service group is a set of service levels grouped together.
     Rates at checkout uses services groups to present available shipping options to customers in their shopping basket.
     <SchemaDefinition schemaRef=\"#/components/schemas/ServiceGroup\"/>
     """
-    shipments: Shipments
+    shipments: "Shipments"
     r"""A shipment is the act of transporting goods. A shipment object contains **to** and **from** addresses, and the parcel details that you are shipping. You can use the shipment object to retrieve shipping rates and purchase a shipping label.
     <SchemaDefinition schemaRef=\"#/components/schemas/Shipment\"/>
 
@@ -142,7 +146,7 @@ class Shippo(BaseSDK):
     The following values are supported for the `extra` field of the shipment object.
     <SchemaDefinition schemaRef=\"#/components/schemas/ShipmentExtra\"/>
     """
-    tracking_status: TrackingStatus
+    tracking_status: "TrackingStatus"
     r"""<p style=\"text-align: center; background-color: #F2F3F4;\"></br>
     If you purchased your shipping label through Shippo, you can also get all the tracking details of your Shipment
     from the <a href=\"#tag/Transactions\">Transaction</a> object.
@@ -155,11 +159,11 @@ class Shippo(BaseSDK):
     payloads look like.
     <SchemaDefinition schemaRef=\"#/components/schemas/Track\"/>
     """
-    transactions: Transactions
+    transactions: "Transactions"
     r"""A transaction is the purchase of a shipping label from a shipping provider for a specific service. You can print purchased labels and used them to ship a parcel with a carrier, such as USPS or FedEx.
     <SchemaDefinition schemaRef=\"#/components/schemas/Transaction\"/>
     """
-    user_parcel_templates: UserParcelTemplates
+    user_parcel_templates: "UserParcelTemplates"
     r"""A user parcel template represents a package used for shipping that has preset dimensions and attributes defined
     by you. They are useful for capturing attributes of parcel-types you frequently use for shipping, allowing
     them to be defined once and then used for many shipments. These parcel templates can also be used for live rates.
@@ -168,13 +172,13 @@ class Shippo(BaseSDK):
     the carrier presets, but the weight can be configured by you.
     <SchemaDefinition schemaRef=\"#/components/schemas/UserParcelTemplate\"/>
     """
-    shippo_accounts: ShippoAccounts
+    shippo_accounts: "ShippoAccounts"
     r"""Shippo Accounts are used by Shippo Platform Accounts to create and manage Managed Shippo Accounts.
     Managed Shippo Accounts are headless accounts that represent your customers. They are opaque to your end customers, meaning customers do not need to create their own Shippo login or have a billing relationship with Shippo.
     They can be used by marketplaces, e-commerce platforms, and third-party logistics providers who want to offer, seamless, built-in shipping functionality to their customers. See our <a href=\"https://docs.goshippo.com/docs/platformaccounts/platform_accounts/\">guide</a> for more details.
     <SchemaDefinition schemaRef=\"#/components/schemas/ShippoAccount\"/>
     """
-    webhooks: Webhooks
+    webhooks: "Webhooks"
     r"""Webhooks are a way for Shippo to notify your application when a specific event occurs. For example, when a label is purchased or when a shipment tracking status has changed. You can use webhooks to trigger actions in your application, such as sending an email or updating a database.
     <SchemaDefinition schemaRef=\"#/components/schemas/Webhook\"/>
 
@@ -182,6 +186,34 @@ class Shippo(BaseSDK):
     The payload is the body of the POST request Shippo sends to the URL specified at the time of webhook registration.
     <SchemaDefinition schemaRef=\"#/components/schemas/WebhookPayload\"/>
     """
+    _sub_sdk_map = {
+        "addresses": ("shippo.addresses", "Addresses"),
+        "batches": ("shippo.batches", "Batches"),
+        "carrier_accounts": ("shippo.carrier_accounts", "CarrierAccounts"),
+        "customs_declarations": ("shippo.customs_declarations", "CustomsDeclarations"),
+        "customs_items": ("shippo.customs_items", "CustomsItems"),
+        "rates_at_checkout": ("shippo.rates_at_checkout", "RatesAtCheckout"),
+        "manifests": ("shippo.manifests", "Manifests"),
+        "orders": ("shippo.orders", "Orders"),
+        "carrier_parcel_templates": (
+            "shippo.carrier_parcel_templates",
+            "CarrierParcelTemplates",
+        ),
+        "parcels": ("shippo.parcels", "Parcels"),
+        "pickups": ("shippo.pickups", "Pickups"),
+        "rates": ("shippo.rates", "Rates"),
+        "refunds": ("shippo.refunds", "Refunds"),
+        "service_groups": ("shippo.service_groups", "ServiceGroups"),
+        "shipments": ("shippo.shipments", "Shipments"),
+        "tracking_status": ("shippo.tracking_status", "TrackingStatus"),
+        "transactions": ("shippo.transactions", "Transactions"),
+        "user_parcel_templates": (
+            "shippo.user_parcel_templates",
+            "UserParcelTemplates",
+        ),
+        "shippo_accounts": ("shippo.shippo_accounts", "ShippoAccounts"),
+        "webhooks": ("shippo.webhooks", "Webhooks"),
+    }
 
     def __init__(
         self,
@@ -210,7 +242,7 @@ class Shippo(BaseSDK):
         """
         client_supplied = True
         if client is None:
-            client = httpx.Client()
+            client = httpx.Client(follow_redirects=True)
             client_supplied = False
 
         assert issubclass(
@@ -219,7 +251,7 @@ class Shippo(BaseSDK):
 
         async_client_supplied = True
         if async_client is None:
-            async_client = httpx.AsyncClient()
+            async_client = httpx.AsyncClient(follow_redirects=True)
             async_client_supplied = False
 
         if debug_logger is None:
@@ -261,9 +293,13 @@ class Shippo(BaseSDK):
                 timeout_ms=timeout_ms,
                 debug_logger=debug_logger,
             ),
+            parent_ref=self,
         )
 
         hooks = SDKHooks()
+
+        # pylint: disable=protected-access
+        self.sdk_configuration.__dict__["_hooks"] = hooks
 
         current_server_url, *_ = self.sdk_configuration.get_server_details()
         server_url, self.sdk_configuration.client = hooks.sdk_init(
@@ -271,9 +307,6 @@ class Shippo(BaseSDK):
         )
         if current_server_url != server_url:
             self.sdk_configuration.server_url = server_url
-
-        # pylint: disable=protected-access
-        self.sdk_configuration.__dict__["_hooks"] = hooks
 
         weakref.finalize(
             self,
@@ -285,29 +318,43 @@ class Shippo(BaseSDK):
             self.sdk_configuration.async_client_supplied,
         )
 
-        self._init_sdks()
+    def dynamic_import(self, modname, retries=3):
+        for attempt in range(retries):
+            try:
+                return importlib.import_module(modname)
+            except KeyError:
+                # Clear any half-initialized module and retry
+                sys.modules.pop(modname, None)
+                if attempt == retries - 1:
+                    break
+        raise KeyError(f"Failed to import module '{modname}' after {retries} attempts")
 
-    def _init_sdks(self):
-        self.addresses = Addresses(self.sdk_configuration)
-        self.batches = Batches(self.sdk_configuration)
-        self.carrier_accounts = CarrierAccounts(self.sdk_configuration)
-        self.customs_declarations = CustomsDeclarations(self.sdk_configuration)
-        self.customs_items = CustomsItems(self.sdk_configuration)
-        self.rates_at_checkout = RatesAtCheckout(self.sdk_configuration)
-        self.manifests = Manifests(self.sdk_configuration)
-        self.orders = Orders(self.sdk_configuration)
-        self.carrier_parcel_templates = CarrierParcelTemplates(self.sdk_configuration)
-        self.parcels = Parcels(self.sdk_configuration)
-        self.pickups = Pickups(self.sdk_configuration)
-        self.rates = Rates(self.sdk_configuration)
-        self.refunds = Refunds(self.sdk_configuration)
-        self.service_groups = ServiceGroups(self.sdk_configuration)
-        self.shipments = Shipments(self.sdk_configuration)
-        self.tracking_status = TrackingStatus(self.sdk_configuration)
-        self.transactions = Transactions(self.sdk_configuration)
-        self.user_parcel_templates = UserParcelTemplates(self.sdk_configuration)
-        self.shippo_accounts = ShippoAccounts(self.sdk_configuration)
-        self.webhooks = Webhooks(self.sdk_configuration)
+    def __getattr__(self, name: str):
+        if name in self._sub_sdk_map:
+            module_path, class_name = self._sub_sdk_map[name]
+            try:
+                module = self.dynamic_import(module_path)
+                klass = getattr(module, class_name)
+                instance = klass(self.sdk_configuration, parent_ref=self)
+                setattr(self, name, instance)
+                return instance
+            except ImportError as e:
+                raise AttributeError(
+                    f"Failed to import module {module_path} for attribute {name}: {e}"
+                ) from e
+            except AttributeError as e:
+                raise AttributeError(
+                    f"Failed to find class {class_name} in module {module_path} for attribute {name}: {e}"
+                ) from e
+
+        raise AttributeError(
+            f"'{type(self).__name__}' object has no attribute '{name}'"
+        )
+
+    def __dir__(self):
+        default_attrs = list(super().__dir__())
+        lazy_attrs = list(self._sub_sdk_map.keys())
+        return sorted(list(set(default_attrs + lazy_attrs)))
 
     def __enter__(self):
         return self

@@ -39,6 +39,22 @@ class CreatedBy(BaseModel):
 
     username: Optional[str] = None
 
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["first_name", "last_name", "username"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
 
 RateUnionTypedDict = TypeAliasType("RateUnionTypedDict", Union[CoreRateTypedDict, str])
 r"""ID of the Rate object for which a Label has to be obtained.
@@ -194,51 +210,48 @@ class Transaction(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = [
-            "commercial_invoice_url",
-            "created_by",
-            "eta",
-            "label_file_type",
-            "label_url",
-            "messages",
-            "metadata",
-            "object_created",
-            "object_id",
-            "object_owner",
-            "object_state",
-            "object_updated",
-            "parcel",
-            "qr_code_url",
-            "rate",
-            "status",
-            "test",
-            "tracking_number",
-            "tracking_status",
-            "tracking_url_provider",
-        ]
-        nullable_fields = ["created_by"]
-        null_default_fields = []
-
+        optional_fields = set(
+            [
+                "commercial_invoice_url",
+                "created_by",
+                "eta",
+                "label_file_type",
+                "label_url",
+                "messages",
+                "metadata",
+                "object_created",
+                "object_id",
+                "object_owner",
+                "object_state",
+                "object_updated",
+                "parcel",
+                "qr_code_url",
+                "rate",
+                "status",
+                "test",
+                "tracking_number",
+                "tracking_status",
+                "tracking_url_provider",
+            ]
+        )
+        nullable_fields = set(["created_by"])
         serialized = handler(self)
-
         m = {}
 
-        for n, f in self.model_fields.items():
+        for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
