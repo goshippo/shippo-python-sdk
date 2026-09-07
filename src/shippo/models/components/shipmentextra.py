@@ -20,7 +20,8 @@ from .shipmentextrareturnservicetypeupsenum import ShipmentExtraReturnServiceTyp
 from .upsreferencefields import UPSReferenceFields, UPSReferenceFieldsTypedDict
 from enum import Enum
 import pydantic
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -33,7 +34,7 @@ class AncillaryEndorsement(str, Enum):
 
 
 class DangerousGoodsCode(str, Enum):
-    r"""Dangerous Goods Code (DHL eCommerce only). See <a href=\"https://api-legacy.dhlecs.com/docs/v2/appendix.html#dangerous-goods\">Category Codes</a>"""
+    r"""Dangerous Goods Code (DHL eCommerce only). See [Category Codes](https://api-legacy.dhlecs.com/docs/v2/appendix.html#dangerous-goods)"""
 
     ONE = "01"
     TWO = "02"
@@ -130,10 +131,10 @@ class ShipmentExtraTypedDict(TypedDict):
     dangerous_goods: NotRequired[DangerousGoodsObjectTypedDict]
     r"""Container for specifying the presence of dangerous materials. This is specific to USPS, and if any contents
     are provided, only certain USPS service levels will be eligible. For more information, see our
-    <a href=\"https://docs.goshippo.com/docs/shipments/hazmat/\">guide on hazardous or dangerous materials shipping</a>.
+    [guide on hazardous or dangerous materials shipping](https://docs.goshippo.com/docs/shipments/hazmat/).
     """
     dangerous_goods_code: NotRequired[DangerousGoodsCode]
-    r"""Dangerous Goods Code (DHL eCommerce only). See <a href=\"https://api-legacy.dhlecs.com/docs/v2/appendix.html#dangerous-goods\">Category Codes</a>"""
+    r"""Dangerous Goods Code (DHL eCommerce only). See [Category Codes](https://api-legacy.dhlecs.com/docs/v2/appendix.html#dangerous-goods)"""
     dealer_order_number: NotRequired[UPSReferenceFieldsTypedDict]
     delivery_instructions: NotRequired[str]
     r"""Specify delivery instructions. Up to 500 characters. (FedEx and OnTrac only)."""
@@ -145,15 +146,17 @@ class ShipmentExtraTypedDict(TypedDict):
     fulfillment_center: NotRequired[str]
     r"""The fulfilment center where the package originates from."""
     insurance: NotRequired[InsuranceTypedDict]
-    r"""To add 3rd party insurance powered by <a href=\"https://docs.goshippo.com/docs/shipments/shippinginsurance/\">XCover</a>,
-    specify <br> `amount`, `content`, and `currency`. <br> Alternatively, you can choose carrier provided insurance
-    by additionally specifying `provider` (UPS, FedEx and OnTrac only). <br><br> If you do not want to add insurance
+    r"""To add 3rd party insurance powered by [XCover](https://docs.goshippo.com/docs/shipments/shippinginsurance/),
+    specify `amount`, `content`, and `currency`. Alternatively, you can choose carrier provided insurance
+    by additionally specifying `provider` (UPS, FedEx and OnTrac only).
+
+    If you do not want to add insurance
     to your shipment, do not set these parameters.
     """
     invoice_number: NotRequired[InvoiceNumberTypedDict]
     r"""Specify the invoice number field on the label (FedEx and UPS only)."""
     is_return: NotRequired[bool]
-    r"""This field specifies if it is a scan-based return shipment. See the <a href=\"https://docs.goshippo.com/docs/shipments/returns/\">Create a return shipment</a> section for more details."""
+    r"""This field specifies if it is a scan-based return shipment. See the [Create a return shipment](https://docs.goshippo.com/docs/shipments/returns/) section for more details."""
     lasership_attrs: NotRequired[List[ShipmentExtraLasershipAttributesEnum]]
     r"""Specify Lasership Attributes (Lasership only). Multiple options accepted."""
     lasership_declared_value: NotRequired[str]
@@ -172,9 +175,21 @@ class ShipmentExtraTypedDict(TypedDict):
     qr_code_requested: NotRequired[bool]
     r"""Request a QR code for a given transaction when creating a shipping label (USPS domestic and Evri UK only)."""
     reference_1: NotRequired[str]
-    r"""Optional text to be printed on the shipping label if supported by carrier. Up to 50 characters."""
+    r"""Optional text to be printed on the shipping label if supported by carrier. Up to 50 characters.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Max 40 characters (Express services); Max 30 characters (Ground services) |
+    """
     reference_2: NotRequired[str]
-    r"""Optional text to be printed on the shipping label if supported by carrier. Up to 50 characters. For DHL eCommerce, this field can be used for billing reference."""
+    r"""Optional text to be printed on the shipping label if supported by carrier. Up to 50 characters. For DHL eCommerce, this field can be used for billing reference.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Max 30 characters |
+    """
     request_retail_rates: NotRequired[bool]
     r"""Returns retail rates instead of account-based rates (UPS and FedEx only)."""
     return_service_type: NotRequired[ReturnServiceTypeTypedDict]
@@ -191,6 +206,17 @@ class ShipmentExtraTypedDict(TypedDict):
     """
     store_number: NotRequired[UPSReferenceFieldsTypedDict]
     transaction_reference_number: NotRequired[UPSReferenceFieldsTypedDict]
+    usmca_eligible: NotRequired[bool]
+    r"""UPS only. Request USMCA (United States-Mexico-Canada Agreement) preferential tariff treatment.
+    When enabled, it includes the USMCA eligibility declaration in customs documentation.
+
+    Supported routes and value limits:
+    - USA/Canada → Mexico: ≤ $1,000 USD
+    - Canada/Mexico → USA: ≤ $2,500 USD
+    - USA/Mexico → Canada: ≤ $3,300 CAD
+
+    Only for declaration-only shipments, full USMCA - FormType 04 (Certificate of Origin) is not supported.
+    """
 
 
 class ShipmentExtra(BaseModel):
@@ -251,11 +277,11 @@ class ShipmentExtra(BaseModel):
     dangerous_goods: Optional[DangerousGoodsObject] = None
     r"""Container for specifying the presence of dangerous materials. This is specific to USPS, and if any contents
     are provided, only certain USPS service levels will be eligible. For more information, see our
-    <a href=\"https://docs.goshippo.com/docs/shipments/hazmat/\">guide on hazardous or dangerous materials shipping</a>.
+    [guide on hazardous or dangerous materials shipping](https://docs.goshippo.com/docs/shipments/hazmat/).
     """
 
     dangerous_goods_code: Optional[DangerousGoodsCode] = None
-    r"""Dangerous Goods Code (DHL eCommerce only). See <a href=\"https://api-legacy.dhlecs.com/docs/v2/appendix.html#dangerous-goods\">Category Codes</a>"""
+    r"""Dangerous Goods Code (DHL eCommerce only). See [Category Codes](https://api-legacy.dhlecs.com/docs/v2/appendix.html#dangerous-goods)"""
 
     dealer_order_number: Optional[UPSReferenceFields] = None
 
@@ -274,9 +300,11 @@ class ShipmentExtra(BaseModel):
     r"""The fulfilment center where the package originates from."""
 
     insurance: Optional[Insurance] = None
-    r"""To add 3rd party insurance powered by <a href=\"https://docs.goshippo.com/docs/shipments/shippinginsurance/\">XCover</a>,
-    specify <br> `amount`, `content`, and `currency`. <br> Alternatively, you can choose carrier provided insurance
-    by additionally specifying `provider` (UPS, FedEx and OnTrac only). <br><br> If you do not want to add insurance
+    r"""To add 3rd party insurance powered by [XCover](https://docs.goshippo.com/docs/shipments/shippinginsurance/),
+    specify `amount`, `content`, and `currency`. Alternatively, you can choose carrier provided insurance
+    by additionally specifying `provider` (UPS, FedEx and OnTrac only).
+
+    If you do not want to add insurance
     to your shipment, do not set these parameters.
     """
 
@@ -284,7 +312,7 @@ class ShipmentExtra(BaseModel):
     r"""Specify the invoice number field on the label (FedEx and UPS only)."""
 
     is_return: Optional[bool] = None
-    r"""This field specifies if it is a scan-based return shipment. See the <a href=\"https://docs.goshippo.com/docs/shipments/returns/\">Create a return shipment</a> section for more details."""
+    r"""This field specifies if it is a scan-based return shipment. See the [Create a return shipment](https://docs.goshippo.com/docs/shipments/returns/) section for more details."""
 
     lasership_attrs: Optional[List[ShipmentExtraLasershipAttributesEnum]] = None
     r"""Specify Lasership Attributes (Lasership only). Multiple options accepted."""
@@ -315,10 +343,22 @@ class ShipmentExtra(BaseModel):
     r"""Request a QR code for a given transaction when creating a shipping label (USPS domestic and Evri UK only)."""
 
     reference_1: Optional[str] = None
-    r"""Optional text to be printed on the shipping label if supported by carrier. Up to 50 characters."""
+    r"""Optional text to be printed on the shipping label if supported by carrier. Up to 50 characters.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Max 40 characters (Express services); Max 30 characters (Ground services) |
+    """
 
     reference_2: Optional[str] = None
-    r"""Optional text to be printed on the shipping label if supported by carrier. Up to 50 characters. For DHL eCommerce, this field can be used for billing reference."""
+    r"""Optional text to be printed on the shipping label if supported by carrier. Up to 50 characters. For DHL eCommerce, this field can be used for billing reference.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Max 30 characters |
+    """
 
     request_retail_rates: Optional[bool] = None
     r"""Returns retail rates instead of account-based rates (UPS and FedEx only)."""
@@ -344,3 +384,91 @@ class ShipmentExtra(BaseModel):
     store_number: Optional[UPSReferenceFields] = None
 
     transaction_reference_number: Optional[UPSReferenceFields] = None
+
+    usmca_eligible: Optional[bool] = None
+    r"""UPS only. Request USMCA (United States-Mexico-Canada Agreement) preferential tariff treatment.
+    When enabled, it includes the USMCA eligibility declaration in customs documentation.
+
+    Supported routes and value limits:
+    - USA/Canada → Mexico: ≤ $1,000 USD
+    - Canada/Mexico → USA: ≤ $2,500 USD
+    - USA/Mexico → Canada: ≤ $3,300 CAD
+
+    Only for declaration-only shipments, full USMCA - FormType 04 (Certificate of Origin) is not supported.
+    """
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "accounts_receivable_customer_account",
+                "alcohol",
+                "ancillary_endorsement",
+                "appropriation_number",
+                "authority_to_leave",
+                "bill_of_lading_number",
+                "billing",
+                "bypass_address_validation",
+                "carbon_neutral",
+                "carrier_hub_id",
+                "carrier_hub_travel_time",
+                "COD",
+                "cod_number",
+                "container_type",
+                "critical_pull_time",
+                "customer_branch",
+                "customer_reference",
+                "dangerous_goods",
+                "dangerous_goods_code",
+                "dealer_order_number",
+                "delivery_instructions",
+                "dept_number",
+                "dry_ice",
+                "fda_product_code",
+                "fulfillment_center",
+                "insurance",
+                "invoice_number",
+                "is_return",
+                "lasership_attrs",
+                "lasership_declared_value",
+                "manifest_number",
+                "model_number",
+                "part_number",
+                "po_number",
+                "preferred_delivery_timeframe",
+                "premium",
+                "production_code",
+                "purchase_request_number",
+                "qr_code_requested",
+                "reference_1",
+                "reference_2",
+                "request_retail_rates",
+                "return_service_type",
+                "rma_number",
+                "saturday_delivery",
+                "salesperson_number",
+                "serial_number",
+                "signature_confirmation",
+                "store_number",
+                "transaction_reference_number",
+                "usmca_eligible",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
+try:
+    ShipmentExtra.model_rebuild()
+except NameError:
+    pass

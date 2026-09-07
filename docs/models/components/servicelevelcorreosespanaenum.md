@@ -6,6 +6,14 @@
 | correos_premium_home | Paquete Premium|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelCorreosEspanaEnum
+
+value = ServiceLevelCorreosEspanaEnum.CORREOS_STANDARD_HOME
+```
+
 
 ## Values
 

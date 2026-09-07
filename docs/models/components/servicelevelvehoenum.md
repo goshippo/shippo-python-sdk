@@ -6,6 +6,14 @@
 | veho_premium_economy | Veho Premium Economy
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelVehoEnum
+
+value = ServiceLevelVehoEnum.VEHO_GROUND_PLUS
+```
+
 
 ## Values
 

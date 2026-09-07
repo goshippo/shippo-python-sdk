@@ -2,6 +2,14 @@
 
 filter by specific carrier
 
+## Example Usage
+
+```python
+from shippo.models.operations import Carrier
+
+value = Carrier.UPS
+```
+
 
 ## Values
 

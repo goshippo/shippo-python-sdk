@@ -1,6 +1,14 @@
 # DangerousGoodsCode
 
-Dangerous Goods Code (DHL eCommerce only). See <a href="https://api-legacy.dhlecs.com/docs/v2/appendix.html#dangerous-goods">Category Codes</a>
+Dangerous Goods Code (DHL eCommerce only). See [Category Codes](https://api-legacy.dhlecs.com/docs/v2/appendix.html#dangerous-goods)
+
+## Example Usage
+
+```python
+from shippo.models.components import DangerousGoodsCode
+
+value = DangerousGoodsCode.ONE
+```
 
 
 ## Values

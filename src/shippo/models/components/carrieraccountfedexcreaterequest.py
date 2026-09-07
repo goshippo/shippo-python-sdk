@@ -29,3 +29,9 @@ class CarrierAccountFedExCreateRequest(BaseModel):
         Annotated[Literal["fedex"], AfterValidator(validate_const("fedex"))],
         pydantic.Field(alias="carrier"),
     ] = "fedex"
+
+
+try:
+    CarrierAccountFedExCreateRequest.model_rebuild()
+except NameError:
+    pass

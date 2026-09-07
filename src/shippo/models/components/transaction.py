@@ -39,12 +39,28 @@ class CreatedBy(BaseModel):
 
     username: Optional[str] = None
 
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["first_name", "last_name", "username"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
 
 RateUnionTypedDict = TypeAliasType("RateUnionTypedDict", Union[CoreRateTypedDict, str])
 r"""ID of the Rate object for which a Label has to be obtained.
 If you purchase a label by calling the transaction endpoint without a rate (instalabel),
 this field will be a simplified Rate object in the Transaction model returned from the POST request.
-</br>Note, only rates less than 7 days old can be purchased to ensure up-to-date pricing.
+Note, only rates less than 7 days old can be purchased to ensure up-to-date pricing.
 """
 
 
@@ -52,7 +68,7 @@ RateUnion = TypeAliasType("RateUnion", Union[CoreRate, str])
 r"""ID of the Rate object for which a Label has to be obtained.
 If you purchase a label by calling the transaction endpoint without a rate (instalabel),
 this field will be a simplified Rate object in the Transaction model returned from the POST request.
-</br>Note, only rates less than 7 days old can be purchased to ensure up-to-date pricing.
+Note, only rates less than 7 days old can be purchased to ensure up-to-date pricing.
 """
 
 
@@ -65,8 +81,8 @@ class TransactionTypedDict(TypedDict):
     eta: NotRequired[str]
     r"""The estimated time of arrival according to the carrier."""
     label_file_type: NotRequired[LabelFileTypeEnum]
-    r"""Print format of the <a href=\"https://docs.goshippo.com/docs/shipments/shippinglabelsizes/\">label</a>. If empty, will use the default format set from
-    <a href=\"https://apps.goshippo.com/settings/labels\">the Shippo dashboard.</a>
+    r"""Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from
+    [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)
     """
     label_url: NotRequired[str]
     r"""A URL pointing directly to the label in the format you've set in your settings.
@@ -97,7 +113,7 @@ class TransactionTypedDict(TypedDict):
     r"""ID of the Rate object for which a Label has to be obtained.
     If you purchase a label by calling the transaction endpoint without a rate (instalabel),
     this field will be a simplified Rate object in the Transaction model returned from the POST request.
-    </br>Note, only rates less than 7 days old can be purchased to ensure up-to-date pricing.
+    Note, only rates less than 7 days old can be purchased to ensure up-to-date pricing.
     """
     status: NotRequired[TransactionStatusEnum]
     r"""Indicates the status of the Transaction."""
@@ -127,8 +143,8 @@ class Transaction(BaseModel):
     r"""The estimated time of arrival according to the carrier."""
 
     label_file_type: Optional[LabelFileTypeEnum] = None
-    r"""Print format of the <a href=\"https://docs.goshippo.com/docs/shipments/shippinglabelsizes/\">label</a>. If empty, will use the default format set from
-    <a href=\"https://apps.goshippo.com/settings/labels\">the Shippo dashboard.</a>
+    r"""Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from
+    [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)
     """
 
     label_url: Optional[str] = None
@@ -170,7 +186,7 @@ class Transaction(BaseModel):
     r"""ID of the Rate object for which a Label has to be obtained.
     If you purchase a label by calling the transaction endpoint without a rate (instalabel),
     this field will be a simplified Rate object in the Transaction model returned from the POST request.
-    </br>Note, only rates less than 7 days old can be purchased to ensure up-to-date pricing.
+    Note, only rates less than 7 days old can be purchased to ensure up-to-date pricing.
     """
 
     status: Optional[TransactionStatusEnum] = None
@@ -194,51 +210,48 @@ class Transaction(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = [
-            "commercial_invoice_url",
-            "created_by",
-            "eta",
-            "label_file_type",
-            "label_url",
-            "messages",
-            "metadata",
-            "object_created",
-            "object_id",
-            "object_owner",
-            "object_state",
-            "object_updated",
-            "parcel",
-            "qr_code_url",
-            "rate",
-            "status",
-            "test",
-            "tracking_number",
-            "tracking_status",
-            "tracking_url_provider",
-        ]
-        nullable_fields = ["created_by"]
-        null_default_fields = []
-
+        optional_fields = set(
+            [
+                "commercial_invoice_url",
+                "created_by",
+                "eta",
+                "label_file_type",
+                "label_url",
+                "messages",
+                "metadata",
+                "object_created",
+                "object_id",
+                "object_owner",
+                "object_state",
+                "object_updated",
+                "parcel",
+                "qr_code_url",
+                "rate",
+                "status",
+                "test",
+                "tracking_number",
+                "tracking_status",
+                "tracking_url_provider",
+            ]
+        )
+        nullable_fields = set(["created_by"])
         serialized = handler(self)
-
         m = {}
 
-        for n, f in self.model_fields.items():
+        for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k)
-            serialized.pop(k, None)
+            val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m

@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 from .batchshipment import BatchShipment, BatchShipmentTypedDict
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
 class BatchShipmentPaginatedListTypedDict(TypedDict):
-    r"""Array of <a href=\"#section/Batch-Shipment\">BatchShipment</a> objects.
+    r"""Array of [BatchShipment](/shippoapi/public-api/batches/batchshipment) objects.
     The response keeps the same order as in the request array.
     """
 
@@ -18,7 +19,7 @@ class BatchShipmentPaginatedListTypedDict(TypedDict):
 
 
 class BatchShipmentPaginatedList(BaseModel):
-    r"""Array of <a href=\"#section/Batch-Shipment\">BatchShipment</a> objects.
+    r"""Array of [BatchShipment](/shippoapi/public-api/batches/batchshipment) objects.
     The response keeps the same order as in the request array.
     """
 
@@ -27,3 +28,19 @@ class BatchShipmentPaginatedList(BaseModel):
     previous: Optional[str] = None
 
     results: Optional[List[BatchShipment]] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["next", "previous", "results"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

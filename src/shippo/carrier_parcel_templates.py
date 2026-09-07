@@ -5,14 +5,12 @@ from shippo import utils
 from shippo._hooks import HookContext
 from shippo.models import components, errors, operations
 from shippo.types import OptionalNullable, UNSET
+from shippo.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Mapping, Optional
 
 
 class CarrierParcelTemplates(BaseSDK):
-    r"""A carrier parcel template represents a package used for shipping that has preset dimensions defined by a carrier. Some examples of a carrier parcel template include USPS Flat Rate Box and Fedex Small Pak. When using a carrier parcel template, the rates returned may be limited to the carrier that provides the box. You can create user parcel templates using a carrier parcel template. Shippo takes the dimensions of the carrier parcel template but you must configure the weight.
-
-    <SchemaDefinition schemaRef=\"#/components/schemas/CarrierParcelTemplate\"/>
-    """
+    r"""A carrier parcel template represents a package used for shipping that has preset dimensions defined by a carrier. Some examples of a carrier parcel template include USPS Flat Rate Box and Fedex Small Pak. When using a carrier parcel template, the rates returned may be limited to the carrier that provides the box. You can create user parcel templates using a carrier parcel template. Shippo takes the dimensions of the carrier parcel template but you must configure the weight."""
 
     def list(
         self,
@@ -23,16 +21,17 @@ class CarrierParcelTemplates(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CarrierParcelTemplateList]:
+    ) -> components.CarrierParcelTemplateList:
         r"""List all carrier parcel templates
 
-        List all carrier parcel template objects. <br> Use the following query string params to filter the results as needed. <br>
-        <ul>
-        <li>`include=all` (the default). Includes templates from all carriers </li>
-        <li>`include=user`. Includes templates only from carriers which the user has added (whether or not they're currently enabled) </li>
-        <li>`include=enabled`. includes templates only for carriers which the user has added and enabled </li>
-        <li>`carrier=*token*`. filter by specific carrier, e.g. fedex, usps </li>
-        </ul>
+        List all carrier parcel template objects.
+
+        Use the following query string params to filter the results as needed:
+
+        - `include=all` (the default): includes templates from all carriers
+        - `include=user`: includes templates only from carriers which the user has added (whether or not they're currently enabled)
+        - `include=enabled`: includes templates only for carriers which the user has added and enabled
+        - `carrier=<token>`: filter by specific carrier, e.g. `fedex`, `usps`
 
         :param include: filter by user or enabled
         :param carrier: filter by specific carrier
@@ -72,6 +71,7 @@ class CarrierParcelTemplates(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -85,39 +85,64 @@ class CarrierParcelTemplates(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListCarrierParcelTemplates",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Carrier Parcel Templates"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/parcel-templates  \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-H "Content-Type: application/json"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.carrier_parcel_templates.list(carrier='fedex')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.carrierParcelTemplates.list("fedex");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing Shippo.Models.Requests;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.CarrierParcelTemplates.ListAsync(\n    include: Include.Enabled,\n    carrier: "fedex",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Operations;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->carrierParcelTemplates->list(\n    include: Operations\\IncludeT::Enabled,\n    carrier: 'fedex',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->carrierParcelTemplateList !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.Include;\nimport com.goshippo.shippo_sdk.models.operations.ListCarrierParcelTemplatesResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        ListCarrierParcelTemplatesResponse res = sdk.carrierParcelTemplates().list()\n                .include(Include.ENABLED)\n                .carrier("fedex")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.carrierParcelTemplateList().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CarrierParcelTemplateList]
+            return unmarshal_json_response(
+                components.CarrierParcelTemplateList, http_res
             )
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def list_async(
         self,
@@ -128,16 +153,17 @@ class CarrierParcelTemplates(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CarrierParcelTemplateList]:
+    ) -> components.CarrierParcelTemplateList:
         r"""List all carrier parcel templates
 
-        List all carrier parcel template objects. <br> Use the following query string params to filter the results as needed. <br>
-        <ul>
-        <li>`include=all` (the default). Includes templates from all carriers </li>
-        <li>`include=user`. Includes templates only from carriers which the user has added (whether or not they're currently enabled) </li>
-        <li>`include=enabled`. includes templates only for carriers which the user has added and enabled </li>
-        <li>`carrier=*token*`. filter by specific carrier, e.g. fedex, usps </li>
-        </ul>
+        List all carrier parcel template objects.
+
+        Use the following query string params to filter the results as needed:
+
+        - `include=all` (the default): includes templates from all carriers
+        - `include=user`: includes templates only from carriers which the user has added (whether or not they're currently enabled)
+        - `include=enabled`: includes templates only for carriers which the user has added and enabled
+        - `carrier=<token>`: filter by specific carrier, e.g. `fedex`, `usps`
 
         :param include: filter by user or enabled
         :param carrier: filter by specific carrier
@@ -177,6 +203,7 @@ class CarrierParcelTemplates(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -190,39 +217,64 @@ class CarrierParcelTemplates(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListCarrierParcelTemplates",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Carrier Parcel Templates"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/parcel-templates  \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-H "Content-Type: application/json"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.carrier_parcel_templates.list(carrier='fedex')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.carrierParcelTemplates.list("fedex");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing Shippo.Models.Requests;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.CarrierParcelTemplates.ListAsync(\n    include: Include.Enabled,\n    carrier: "fedex",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Operations;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->carrierParcelTemplates->list(\n    include: Operations\\IncludeT::Enabled,\n    carrier: 'fedex',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->carrierParcelTemplateList !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.Include;\nimport com.goshippo.shippo_sdk.models.operations.ListCarrierParcelTemplatesResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        ListCarrierParcelTemplatesResponse res = sdk.carrierParcelTemplates().list()\n                .include(Include.ENABLED)\n                .carrier("fedex")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.carrierParcelTemplateList().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CarrierParcelTemplateList]
+            return unmarshal_json_response(
+                components.CarrierParcelTemplateList, http_res
             )
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def get(
         self,
@@ -232,7 +284,7 @@ class CarrierParcelTemplates(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CarrierParcelTemplate]:
+    ) -> components.CarrierParcelTemplate:
         r"""Retrieve a carrier parcel templates
 
         Fetches the parcel template information for a specific carrier parcel template, identified by the token.
@@ -273,6 +325,7 @@ class CarrierParcelTemplates(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -286,39 +339,62 @@ class CarrierParcelTemplates(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetCarrierParcelTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Carrier Parcel Templates"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/parcel-templates/Fedex_Box_Small_1  \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-H "Content-Type: application/json"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.carrier_parcel_templates.get(carrier_parcel_template_token='<value>')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.carrierParcelTemplates.get("<value>");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.CarrierParcelTemplates.GetAsync(\n    carrierParcelTemplateToken: "<value>",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->carrierParcelTemplates->get(\n    carrierParcelTemplateToken: '<value>',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->carrierParcelTemplate !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.GetCarrierParcelTemplateResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetCarrierParcelTemplateResponse res = sdk.carrierParcelTemplates().get()\n                .carrierParcelTemplateToken("<value>")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.carrierParcelTemplate().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CarrierParcelTemplate]
-            )
+            return unmarshal_json_response(components.CarrierParcelTemplate, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def get_async(
         self,
@@ -328,7 +404,7 @@ class CarrierParcelTemplates(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CarrierParcelTemplate]:
+    ) -> components.CarrierParcelTemplate:
         r"""Retrieve a carrier parcel templates
 
         Fetches the parcel template information for a specific carrier parcel template, identified by the token.
@@ -369,6 +445,7 @@ class CarrierParcelTemplates(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -382,36 +459,59 @@ class CarrierParcelTemplates(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetCarrierParcelTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Carrier Parcel Templates"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/parcel-templates/Fedex_Box_Small_1  \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-H "Content-Type: application/json"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.carrier_parcel_templates.get(carrier_parcel_template_token='<value>')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.carrierParcelTemplates.get("<value>");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.CarrierParcelTemplates.GetAsync(\n    carrierParcelTemplateToken: "<value>",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->carrierParcelTemplates->get(\n    carrierParcelTemplateToken: '<value>',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->carrierParcelTemplate !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.GetCarrierParcelTemplateResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetCarrierParcelTemplateResponse res = sdk.carrierParcelTemplates().get()\n                .carrierParcelTemplateToken("<value>")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.carrierParcelTemplate().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CarrierParcelTemplate]
-            )
+            return unmarshal_json_response(components.CarrierParcelTemplate, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)

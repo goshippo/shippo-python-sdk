@@ -1,5 +1,13 @@
 # LabelFileType
 
+## Example Usage
+
+```python
+from shippo.models.components import LabelFileType
+
+value = LabelFileType.PNG
+```
+
 
 ## Values
 

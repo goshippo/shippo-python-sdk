@@ -5,13 +5,13 @@ from shippo import utils
 from shippo._hooks import HookContext
 from shippo.models import components, errors, operations
 from shippo.types import BaseModel, OptionalNullable, UNSET
+from shippo.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Mapping, Optional, Union, cast
 
 
 class Pickups(BaseSDK):
     r"""A pickup is when you schedule a carrier to collect a package for delivery.
     Use Shippo’s pickups endpoint to schedule pickups with USPS and DHL Express for eligible shipments that you have already created.
-    <SchemaDefinition schemaRef=\"#/components/schemas/Pickup\"/>
     """
 
     def create(
@@ -22,7 +22,7 @@ class Pickups(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Pickup]:
+    ) -> components.Pickup:
         r"""Create a pickup
 
         Creates a pickup object. This request is for a carrier to come to a specified location to take a package for shipping.
@@ -66,6 +66,7 @@ class Pickups(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", components.PickupBase
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -79,37 +80,62 @@ class Pickups(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreatePickup",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Pickups"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/pickups/  \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-H "Content-Type: application/json"  \\\n-d \'{\n      "carrier_account":"6c51273296864869829b96a80fb13ea1",\n      "location":{\n              "building_location_type": "Other",\n              "building_type": "suite",\n              "instructions": "Behind screen door",\n              "address": {\n                      "name": "Mrs Hippo",\n                      "company": "Hungry Hippos",\n                      "street1": "965 Mission St #201",\n                      "city": "San Francisco",\n                      "state": "CA",\n                      "zip": "95122",\n                      "country": "US",\n                      "phone": "+14159876543",\n                      "email": "mrshippo@shippo.com"\n                  }\n      },\n      "transactions": ["7439c279b374494c9a80ca24f59e6fc5"],\n      "requested_start_time":"2020-05-12T12:00:00Z",\n      "requested_end_time": "2020-05-12T16:00:00Z",\n      "metadata": "Customer ID 123456",\n      "is_test": false\n    }\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import dateutil.parser\nimport shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.pickups.create(request=components.PickupBase(\n    carrier_account='adcfdddf8ec64b84ad22772bce3ea37a',\n    location=components.Location(\n        address=components.AddressCompleteCreateRequest(\n            name='Shwan Ippotle',\n            company='Shippo',\n            street1='215 Clayton St.',\n            street3='',\n            street_no='',\n            city='San Francisco',\n            state='CA',\n            zip='94117',\n            country='US',\n            phone='+1 555 341 9393',\n            email='shippotle@shippo.com',\n            is_residential=True,\n            metadata='Customer ID 123456',\n            validate=True,\n        ),\n        building_location_type=components.BuildingLocationType.FRONT_DOOR,\n        building_type=components.BuildingType.APARTMENT,\n        instructions='Behind screen door',\n    ),\n    requested_end_time=dateutil.parser.isoparse('2024-06-17T07:14:55.338Z'),\n    requested_start_time=dateutil.parser.isoparse('2024-11-30T17:06:07.804Z'),\n    transactions=[\n        'adcfdddf8ec64b84ad22772bce3ea37a',\n    ],\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.pickups.create({\n    carrierAccount: "adcfdddf8ec64b84ad22772bce3ea37a",\n    location: {\n      address: {\n        name: "Shwan Ippotle",\n        company: "Shippo",\n        street1: "215 Clayton St.",\n        street3: "",\n        streetNo: "",\n        city: "San Francisco",\n        state: "CA",\n        zip: "94117",\n        country: "US",\n        phone: "+1 555 341 9393",\n        email: "shippotle@shippo.com",\n        isResidential: true,\n        metadata: "Customer ID 123456",\n        validate: true,\n      },\n      buildingLocationType: "Front Door",\n      buildingType: "apartment",\n      instructions: "Behind screen door",\n    },\n    requestedEndTime: new Date("2024-06-17T07:14:55.338Z"),\n    requestedStartTime: new Date("2024-11-30T17:06:07.804Z"),\n    transactions: [\n      "adcfdddf8ec64b84ad22772bce3ea37a",\n    ],\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing System;\nusing System.Collections.Generic;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Pickups.CreateAsync(\n    pickupBase: new PickupBase() {\n        CarrierAccount = "adcfdddf8ec64b84ad22772bce3ea37a",\n        Location = new Location() {\n            Address = new AddressCompleteCreateRequest() {\n                Name = "Shwan Ippotle",\n                Company = "Shippo",\n                Street1 = "215 Clayton St.",\n                Street3 = "",\n                StreetNo = "",\n                City = "San Francisco",\n                State = "CA",\n                Zip = "94117",\n                Country = "US",\n                Phone = "+1 555 341 9393",\n                Email = "shippotle@shippo.com",\n                IsResidential = true,\n                Metadata = "Customer ID 123456",\n                Validate = true,\n            },\n            BuildingLocationType = BuildingLocationType.FrontDoor,\n            BuildingType = BuildingType.Apartment,\n            Instructions = "Behind screen door",\n        },\n        RequestedEndTime = System.DateTime.Parse("2024-06-17T07:14:55.338Z"),\n        RequestedStartTime = System.DateTime.Parse("2024-11-30T17:06:07.804Z"),\n        Transactions = new List<string>() {\n            "adcfdddf8ec64b84ad22772bce3ea37a",\n        },\n    },\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\nuse Shippo\\API\\Utils;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$pickupBase = new Components\\PickupBase(\n    carrierAccount: 'adcfdddf8ec64b84ad22772bce3ea37a',\n    location: new Components\\Location(\n        address: new Components\\AddressCompleteCreateRequest(\n            name: 'Shwan Ippotle',\n            company: 'Shippo',\n            street1: '215 Clayton St.',\n            street3: '',\n            streetNo: '',\n            city: 'San Francisco',\n            state: 'CA',\n            zip: '94117',\n            country: 'US',\n            phone: '+1 555 341 9393',\n            email: 'shippotle@shippo.com',\n            isResidential: true,\n            metadata: 'Customer ID 123456',\n            validate: true,\n        ),\n        buildingLocationType: Components\\BuildingLocationType::FrontDoor,\n        buildingType: Components\\BuildingType::Apartment,\n        instructions: 'Behind screen door',\n    ),\n    requestedEndTime: Utils\\Utils::parseDateTime('2024-06-17T07:14:55.338Z'),\n    requestedStartTime: Utils\\Utils::parseDateTime('2024-11-30T17:06:07.804Z'),\n    transactions: [\n        'adcfdddf8ec64b84ad22772bce3ea37a',\n    ],\n);\n\n$response = $sdk->pickups->create(\n    pickupBase: $pickupBase,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->pickup !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.AddressCompleteCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.BuildingLocationType;\nimport com.goshippo.shippo_sdk.models.components.BuildingType;\nimport com.goshippo.shippo_sdk.models.components.Location;\nimport com.goshippo.shippo_sdk.models.components.PickupBase;\nimport com.goshippo.shippo_sdk.models.operations.CreatePickupResponse;\nimport java.lang.Exception;\nimport java.time.OffsetDateTime;\nimport java.util.List;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreatePickupResponse res = sdk.pickups().create()\n                .shippoApiVersion("2018-02-08")\n                .pickupBase(PickupBase.builder()\n                    .carrierAccount("adcfdddf8ec64b84ad22772bce3ea37a")\n                    .location(Location.builder()\n                        .address(AddressCompleteCreateRequest.builder()\n                            .name("Shwan Ippotle")\n                            .street1("215 Clayton St.")\n                            .city("San Francisco")\n                            .state("CA")\n                            .zip("94117")\n                            .country("US")\n                            .company("Shippo")\n                            .street3("")\n                            .streetNo("")\n                            .phone("+1 555 341 9393")\n                            .email("shippotle@shippo.com")\n                            .isResidential(true)\n                            .metadata("Customer ID 123456")\n                            .validate(true)\n                            .build())\n                        .buildingLocationType(BuildingLocationType.FRONT_DOOR)\n                        .buildingType(BuildingType.APARTMENT)\n                        .instructions("Behind screen door")\n                        .build())\n                    .requestedEndTime(OffsetDateTime.parse("2024-06-17T07:14:55.338Z"))\n                    .requestedStartTime(OffsetDateTime.parse("2024-11-30T17:06:07.804Z"))\n                    .transactions(List.of(\n                        "adcfdddf8ec64b84ad22772bce3ea37a"))\n                    .build())\n                .call();\n\n        if (res.pickup().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Pickup])
+            return unmarshal_json_response(components.Pickup, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def create_async(
         self,
@@ -119,7 +145,7 @@ class Pickups(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Pickup]:
+    ) -> components.Pickup:
         r"""Create a pickup
 
         Creates a pickup object. This request is for a carrier to come to a specified location to take a package for shipping.
@@ -163,6 +189,7 @@ class Pickups(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", components.PickupBase
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -176,34 +203,59 @@ class Pickups(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreatePickup",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Pickups"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/pickups/  \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-H "Content-Type: application/json"  \\\n-d \'{\n      "carrier_account":"6c51273296864869829b96a80fb13ea1",\n      "location":{\n              "building_location_type": "Other",\n              "building_type": "suite",\n              "instructions": "Behind screen door",\n              "address": {\n                      "name": "Mrs Hippo",\n                      "company": "Hungry Hippos",\n                      "street1": "965 Mission St #201",\n                      "city": "San Francisco",\n                      "state": "CA",\n                      "zip": "95122",\n                      "country": "US",\n                      "phone": "+14159876543",\n                      "email": "mrshippo@shippo.com"\n                  }\n      },\n      "transactions": ["7439c279b374494c9a80ca24f59e6fc5"],\n      "requested_start_time":"2020-05-12T12:00:00Z",\n      "requested_end_time": "2020-05-12T16:00:00Z",\n      "metadata": "Customer ID 123456",\n      "is_test": false\n    }\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import dateutil.parser\nimport shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.pickups.create(request=components.PickupBase(\n    carrier_account='adcfdddf8ec64b84ad22772bce3ea37a',\n    location=components.Location(\n        address=components.AddressCompleteCreateRequest(\n            name='Shwan Ippotle',\n            company='Shippo',\n            street1='215 Clayton St.',\n            street3='',\n            street_no='',\n            city='San Francisco',\n            state='CA',\n            zip='94117',\n            country='US',\n            phone='+1 555 341 9393',\n            email='shippotle@shippo.com',\n            is_residential=True,\n            metadata='Customer ID 123456',\n            validate=True,\n        ),\n        building_location_type=components.BuildingLocationType.FRONT_DOOR,\n        building_type=components.BuildingType.APARTMENT,\n        instructions='Behind screen door',\n    ),\n    requested_end_time=dateutil.parser.isoparse('2024-06-17T07:14:55.338Z'),\n    requested_start_time=dateutil.parser.isoparse('2024-11-30T17:06:07.804Z'),\n    transactions=[\n        'adcfdddf8ec64b84ad22772bce3ea37a',\n    ],\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.pickups.create({\n    carrierAccount: "adcfdddf8ec64b84ad22772bce3ea37a",\n    location: {\n      address: {\n        name: "Shwan Ippotle",\n        company: "Shippo",\n        street1: "215 Clayton St.",\n        street3: "",\n        streetNo: "",\n        city: "San Francisco",\n        state: "CA",\n        zip: "94117",\n        country: "US",\n        phone: "+1 555 341 9393",\n        email: "shippotle@shippo.com",\n        isResidential: true,\n        metadata: "Customer ID 123456",\n        validate: true,\n      },\n      buildingLocationType: "Front Door",\n      buildingType: "apartment",\n      instructions: "Behind screen door",\n    },\n    requestedEndTime: new Date("2024-06-17T07:14:55.338Z"),\n    requestedStartTime: new Date("2024-11-30T17:06:07.804Z"),\n    transactions: [\n      "adcfdddf8ec64b84ad22772bce3ea37a",\n    ],\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing System;\nusing System.Collections.Generic;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Pickups.CreateAsync(\n    pickupBase: new PickupBase() {\n        CarrierAccount = "adcfdddf8ec64b84ad22772bce3ea37a",\n        Location = new Location() {\n            Address = new AddressCompleteCreateRequest() {\n                Name = "Shwan Ippotle",\n                Company = "Shippo",\n                Street1 = "215 Clayton St.",\n                Street3 = "",\n                StreetNo = "",\n                City = "San Francisco",\n                State = "CA",\n                Zip = "94117",\n                Country = "US",\n                Phone = "+1 555 341 9393",\n                Email = "shippotle@shippo.com",\n                IsResidential = true,\n                Metadata = "Customer ID 123456",\n                Validate = true,\n            },\n            BuildingLocationType = BuildingLocationType.FrontDoor,\n            BuildingType = BuildingType.Apartment,\n            Instructions = "Behind screen door",\n        },\n        RequestedEndTime = System.DateTime.Parse("2024-06-17T07:14:55.338Z"),\n        RequestedStartTime = System.DateTime.Parse("2024-11-30T17:06:07.804Z"),\n        Transactions = new List<string>() {\n            "adcfdddf8ec64b84ad22772bce3ea37a",\n        },\n    },\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\nuse Shippo\\API\\Utils;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$pickupBase = new Components\\PickupBase(\n    carrierAccount: 'adcfdddf8ec64b84ad22772bce3ea37a',\n    location: new Components\\Location(\n        address: new Components\\AddressCompleteCreateRequest(\n            name: 'Shwan Ippotle',\n            company: 'Shippo',\n            street1: '215 Clayton St.',\n            street3: '',\n            streetNo: '',\n            city: 'San Francisco',\n            state: 'CA',\n            zip: '94117',\n            country: 'US',\n            phone: '+1 555 341 9393',\n            email: 'shippotle@shippo.com',\n            isResidential: true,\n            metadata: 'Customer ID 123456',\n            validate: true,\n        ),\n        buildingLocationType: Components\\BuildingLocationType::FrontDoor,\n        buildingType: Components\\BuildingType::Apartment,\n        instructions: 'Behind screen door',\n    ),\n    requestedEndTime: Utils\\Utils::parseDateTime('2024-06-17T07:14:55.338Z'),\n    requestedStartTime: Utils\\Utils::parseDateTime('2024-11-30T17:06:07.804Z'),\n    transactions: [\n        'adcfdddf8ec64b84ad22772bce3ea37a',\n    ],\n);\n\n$response = $sdk->pickups->create(\n    pickupBase: $pickupBase,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->pickup !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.AddressCompleteCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.BuildingLocationType;\nimport com.goshippo.shippo_sdk.models.components.BuildingType;\nimport com.goshippo.shippo_sdk.models.components.Location;\nimport com.goshippo.shippo_sdk.models.components.PickupBase;\nimport com.goshippo.shippo_sdk.models.operations.CreatePickupResponse;\nimport java.lang.Exception;\nimport java.time.OffsetDateTime;\nimport java.util.List;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreatePickupResponse res = sdk.pickups().create()\n                .shippoApiVersion("2018-02-08")\n                .pickupBase(PickupBase.builder()\n                    .carrierAccount("adcfdddf8ec64b84ad22772bce3ea37a")\n                    .location(Location.builder()\n                        .address(AddressCompleteCreateRequest.builder()\n                            .name("Shwan Ippotle")\n                            .street1("215 Clayton St.")\n                            .city("San Francisco")\n                            .state("CA")\n                            .zip("94117")\n                            .country("US")\n                            .company("Shippo")\n                            .street3("")\n                            .streetNo("")\n                            .phone("+1 555 341 9393")\n                            .email("shippotle@shippo.com")\n                            .isResidential(true)\n                            .metadata("Customer ID 123456")\n                            .validate(true)\n                            .build())\n                        .buildingLocationType(BuildingLocationType.FRONT_DOOR)\n                        .buildingType(BuildingType.APARTMENT)\n                        .instructions("Behind screen door")\n                        .build())\n                    .requestedEndTime(OffsetDateTime.parse("2024-06-17T07:14:55.338Z"))\n                    .requestedStartTime(OffsetDateTime.parse("2024-11-30T17:06:07.804Z"))\n                    .transactions(List.of(\n                        "adcfdddf8ec64b84ad22772bce3ea37a"))\n                    .build())\n                .call();\n\n        if (res.pickup().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Pickup])
+            return unmarshal_json_response(components.Pickup, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)

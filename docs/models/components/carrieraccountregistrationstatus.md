@@ -1,5 +1,7 @@
 # CarrierAccountRegistrationStatus
 
+Carrier account registration status
+
 
 ## Fields
 

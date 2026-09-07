@@ -11,6 +11,14 @@
 | usps_ground_advantage | Ground Advantage |
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelUSPSEnum
+
+value = ServiceLevelUSPSEnum.USPS_PRIORITY
+```
+
 
 ## Values
 

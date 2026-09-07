@@ -29,3 +29,9 @@ class CarrierAccountDPDUKCreateRequest(BaseModel):
         Annotated[Literal["dpd_uk"], AfterValidator(validate_const("dpd_uk"))],
         pydantic.Field(alias="carrier"),
     ] = "dpd_uk"
+
+
+try:
+    CarrierAccountDPDUKCreateRequest.model_rebuild()
+except NameError:
+    pass

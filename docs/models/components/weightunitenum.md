@@ -2,6 +2,14 @@
 
 The unit used for weight.
 
+## Example Usage
+
+```python
+from shippo.models.components import WeightUnitEnum
+
+value = WeightUnitEnum.G
+```
+
 
 ## Values
 

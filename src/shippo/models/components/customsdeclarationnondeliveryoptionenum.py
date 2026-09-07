@@ -6,7 +6,7 @@ from enum import Enum
 
 class CustomsDeclarationNonDeliveryOptionEnum(str, Enum):
     r"""Indicates how the carrier should proceed in case the shipment can't be delivered.
-    Allowed values available <a href=\"#tag/Customs-Declaration-Non-Delivery-Option\">here</a>
+    Allowed values available [here](/shippoapi/public-api/customs-declaration-non-delivery-option)
     """
 
     ABANDON = "ABANDON"

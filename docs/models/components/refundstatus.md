@@ -2,6 +2,14 @@
 
 Indicates the status of the Refund.
 
+## Example Usage
+
+```python
+from shippo.models.components import RefundStatus
+
+value = RefundStatus.QUEUED
+```
+
 
 ## Values
 

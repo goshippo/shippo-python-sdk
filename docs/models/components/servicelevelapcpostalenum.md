@@ -13,6 +13,14 @@
 | apc_postal_parcelconnect_epmei | parcelConnect ePMEI|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelAPCPostalEnum
+
+value = ServiceLevelAPCPostalEnum.APC_POSTAL_PARCELCONNECT_EXPEDITED
+```
+
 
 ## Values
 

@@ -29,6 +29,14 @@
 | UPS_Pallet | Pallet | 120.00 x 80.00 x 200.00 cm|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ParcelTemplateUPSEnum
+
+value = ParcelTemplateUPSEnum.UPS_BOX_10KG
+```
+
 
 ## Values
 

@@ -1,6 +1,6 @@
 # ObjectResults
 
-An object containing the following counts:<br>`creation_succeeded`<br>`creation_failed`<br>`purchase_succeeded`<br>`purchase_failed`
+An object containing the following counts: `creation_succeeded`, `creation_failed`, `purchase_succeeded`, `purchase_failed`
 
 
 ## Fields

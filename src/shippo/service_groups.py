@@ -5,13 +5,13 @@ from shippo import utils
 from shippo._hooks import HookContext
 from shippo.models import components, errors, operations
 from shippo.types import BaseModel, OptionalNullable, UNSET
+from shippo.utils.unmarshal_json_response import unmarshal_json_response
 from typing import List, Mapping, Optional, Union, cast
 
 
 class ServiceGroups(BaseSDK):
     r"""A service group is a set of service levels grouped together.
     Rates at checkout uses services groups to present available shipping options to customers in their shopping basket.
-    <SchemaDefinition schemaRef=\"#/components/schemas/ServiceGroup\"/>
     """
 
     def list(
@@ -25,7 +25,7 @@ class ServiceGroups(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[List[components.ServiceGroup]]:
+    ) -> List[components.ServiceGroup]:
         r"""List all service groups
 
         Returns a list of service group objects.
@@ -66,6 +66,7 @@ class ServiceGroups(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -79,39 +80,62 @@ class ServiceGroups(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListServiceGroups",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Service Groups"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/service-groups  \\\n  -H "Authorization: ShippoToken <API_TOKEN>" \\\n  -H "Content-Type: application/json"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import operations\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.service_groups.list(request=operations.ListServiceGroupsRequest())\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.serviceGroups.list({});\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.ServiceGroups.ListAsync(shippoApiVersion: "2018-02-08");\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->serviceGroups->list(\n    shippoApiVersion: '2018-02-08'\n);\n\nif ($response->serviceGroupListResponse !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.ListServiceGroupsResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        ListServiceGroupsResponse res = sdk.serviceGroups().list()\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.serviceGroupListResponse().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[List[components.ServiceGroup]]
-            )
+            return unmarshal_json_response(List[components.ServiceGroup], http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def list_async(
         self,
@@ -124,7 +148,7 @@ class ServiceGroups(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[List[components.ServiceGroup]]:
+    ) -> List[components.ServiceGroup]:
         r"""List all service groups
 
         Returns a list of service group objects.
@@ -165,6 +189,7 @@ class ServiceGroups(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -178,39 +203,62 @@ class ServiceGroups(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListServiceGroups",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Service Groups"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/service-groups  \\\n  -H "Authorization: ShippoToken <API_TOKEN>" \\\n  -H "Content-Type: application/json"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import operations\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.service_groups.list(request=operations.ListServiceGroupsRequest())\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.serviceGroups.list({});\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.ServiceGroups.ListAsync(shippoApiVersion: "2018-02-08");\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->serviceGroups->list(\n    shippoApiVersion: '2018-02-08'\n);\n\nif ($response->serviceGroupListResponse !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.ListServiceGroupsResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        ListServiceGroupsResponse res = sdk.serviceGroups().list()\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.serviceGroupListResponse().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[List[components.ServiceGroup]]
-            )
+            return unmarshal_json_response(List[components.ServiceGroup], http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def create(
         self,
@@ -223,7 +271,7 @@ class ServiceGroups(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.ServiceGroup]:
+    ) -> components.ServiceGroup:
         r"""Create a new service group
 
         Creates a new service group.
@@ -267,6 +315,7 @@ class ServiceGroups(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", components.ServiceGroupCreateRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -280,39 +329,62 @@ class ServiceGroups(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateServiceGroup",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Service Groups"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl -X POST https://api.goshippo.com/service-groups  \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-H "Content-Type: application/json"  \\\n-d \'{\n        "name": "UPS shipping",\n        "description": "UPS shipping options",\n        "flat_rate": "5",\n        "flat_rate_currency": "USD",\n        "type": "LIVE_RATE",\n        "rate_adjustment": 15,\n        "service_levels": [\n            {\n                "account_object_id": "80feb1633d4a43c898f0058506cfd82d",\n                "service_level_token": "ups_next_day_air_saver"\n            },\n            {\n                "account_object_id": "80feb1633d4a43c898f0058506cfd82d",\n                "service_level_token": "ups_ground"\n            }\n        ]\n    }\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.service_groups.create(request=components.ServiceGroupCreateRequest(\n    description='USPS shipping options',\n    flat_rate='5',\n    flat_rate_currency='USD',\n    free_shipping_threshold_currency='USD',\n    free_shipping_threshold_min='5',\n    name='USPS Shipping',\n    rate_adjustment=15,\n    type=components.ServiceGroupTypeEnum.FLAT_RATE,\n    service_levels=[\n        components.ServiceGroupAccountAndServiceLevel(\n            account_object_id='80feb1633d4a43c898f0058506cfd82d',\n            service_level_token='ups_next_day_air_saver',\n        ),\n    ],\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.serviceGroups.create({\n    description: "USPS shipping options",\n    flatRate: "5",\n    flatRateCurrency: "USD",\n    freeShippingThresholdCurrency: "USD",\n    freeShippingThresholdMin: "5",\n    name: "USPS Shipping",\n    rateAdjustment: 15,\n    type: "FLAT_RATE",\n    serviceLevels: [\n      {\n        accountObjectId: "80feb1633d4a43c898f0058506cfd82d",\n        serviceLevelToken: "ups_next_day_air_saver",\n      },\n    ],\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing System.Collections.Generic;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.ServiceGroups.CreateAsync(\n    serviceGroupCreateRequest: new ServiceGroupCreateRequest() {\n        Description = "USPS shipping options",\n        FlatRate = "5",\n        FlatRateCurrency = "USD",\n        FreeShippingThresholdCurrency = "USD",\n        FreeShippingThresholdMin = "5",\n        Name = "USPS Shipping",\n        RateAdjustment = 15,\n        Type = ServiceGroupTypeEnum.FlatRate,\n        ServiceLevels = new List<ServiceGroupAccountAndServiceLevel>() {\n            new ServiceGroupAccountAndServiceLevel() {\n                AccountObjectId = "80feb1633d4a43c898f0058506cfd82d",\n                ServiceLevelToken = "ups_next_day_air_saver",\n            },\n        },\n    },\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$serviceGroupCreateRequest = new Components\\ServiceGroupCreateRequest(\n    description: 'USPS shipping options',\n    flatRate: '5',\n    flatRateCurrency: 'USD',\n    freeShippingThresholdCurrency: 'USD',\n    freeShippingThresholdMin: '5',\n    name: 'USPS Shipping',\n    rateAdjustment: 15,\n    type: Components\\ServiceGroupTypeEnum::FlatRate,\n    serviceLevels: [\n        new Components\\ServiceGroupAccountAndServiceLevel(\n            accountObjectId: '80feb1633d4a43c898f0058506cfd82d',\n            serviceLevelToken: 'ups_next_day_air_saver',\n        ),\n    ],\n);\n\n$response = $sdk->serviceGroups->create(\n    serviceGroupCreateRequest: $serviceGroupCreateRequest,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->serviceGroup !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.ServiceGroupAccountAndServiceLevel;\nimport com.goshippo.shippo_sdk.models.components.ServiceGroupCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.ServiceGroupTypeEnum;\nimport com.goshippo.shippo_sdk.models.operations.CreateServiceGroupResponse;\nimport java.lang.Exception;\nimport java.util.List;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreateServiceGroupResponse res = sdk.serviceGroups().create()\n                .shippoApiVersion("2018-02-08")\n                .serviceGroupCreateRequest(ServiceGroupCreateRequest.builder()\n                    .description("USPS shipping options")\n                    .name("USPS Shipping")\n                    .type(ServiceGroupTypeEnum.FLAT_RATE)\n                    .serviceLevels(List.of(\n                        ServiceGroupAccountAndServiceLevel.builder()\n                            .accountObjectId("80feb1633d4a43c898f0058506cfd82d")\n                            .serviceLevelToken("ups_next_day_air_saver")\n                            .build()))\n                    .flatRate("5")\n                    .flatRateCurrency("USD")\n                    .freeShippingThresholdCurrency("USD")\n                    .freeShippingThresholdMin("5")\n                    .rateAdjustment(15L)\n                    .build())\n                .call();\n\n        if (res.serviceGroup().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.ServiceGroup]
-            )
+            return unmarshal_json_response(components.ServiceGroup, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def create_async(
         self,
@@ -325,7 +397,7 @@ class ServiceGroups(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.ServiceGroup]:
+    ) -> components.ServiceGroup:
         r"""Create a new service group
 
         Creates a new service group.
@@ -369,6 +441,7 @@ class ServiceGroups(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", components.ServiceGroupCreateRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -382,39 +455,62 @@ class ServiceGroups(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateServiceGroup",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Service Groups"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl -X POST https://api.goshippo.com/service-groups  \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-H "Content-Type: application/json"  \\\n-d \'{\n        "name": "UPS shipping",\n        "description": "UPS shipping options",\n        "flat_rate": "5",\n        "flat_rate_currency": "USD",\n        "type": "LIVE_RATE",\n        "rate_adjustment": 15,\n        "service_levels": [\n            {\n                "account_object_id": "80feb1633d4a43c898f0058506cfd82d",\n                "service_level_token": "ups_next_day_air_saver"\n            },\n            {\n                "account_object_id": "80feb1633d4a43c898f0058506cfd82d",\n                "service_level_token": "ups_ground"\n            }\n        ]\n    }\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.service_groups.create(request=components.ServiceGroupCreateRequest(\n    description='USPS shipping options',\n    flat_rate='5',\n    flat_rate_currency='USD',\n    free_shipping_threshold_currency='USD',\n    free_shipping_threshold_min='5',\n    name='USPS Shipping',\n    rate_adjustment=15,\n    type=components.ServiceGroupTypeEnum.FLAT_RATE,\n    service_levels=[\n        components.ServiceGroupAccountAndServiceLevel(\n            account_object_id='80feb1633d4a43c898f0058506cfd82d',\n            service_level_token='ups_next_day_air_saver',\n        ),\n    ],\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.serviceGroups.create({\n    description: "USPS shipping options",\n    flatRate: "5",\n    flatRateCurrency: "USD",\n    freeShippingThresholdCurrency: "USD",\n    freeShippingThresholdMin: "5",\n    name: "USPS Shipping",\n    rateAdjustment: 15,\n    type: "FLAT_RATE",\n    serviceLevels: [\n      {\n        accountObjectId: "80feb1633d4a43c898f0058506cfd82d",\n        serviceLevelToken: "ups_next_day_air_saver",\n      },\n    ],\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing System.Collections.Generic;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.ServiceGroups.CreateAsync(\n    serviceGroupCreateRequest: new ServiceGroupCreateRequest() {\n        Description = "USPS shipping options",\n        FlatRate = "5",\n        FlatRateCurrency = "USD",\n        FreeShippingThresholdCurrency = "USD",\n        FreeShippingThresholdMin = "5",\n        Name = "USPS Shipping",\n        RateAdjustment = 15,\n        Type = ServiceGroupTypeEnum.FlatRate,\n        ServiceLevels = new List<ServiceGroupAccountAndServiceLevel>() {\n            new ServiceGroupAccountAndServiceLevel() {\n                AccountObjectId = "80feb1633d4a43c898f0058506cfd82d",\n                ServiceLevelToken = "ups_next_day_air_saver",\n            },\n        },\n    },\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$serviceGroupCreateRequest = new Components\\ServiceGroupCreateRequest(\n    description: 'USPS shipping options',\n    flatRate: '5',\n    flatRateCurrency: 'USD',\n    freeShippingThresholdCurrency: 'USD',\n    freeShippingThresholdMin: '5',\n    name: 'USPS Shipping',\n    rateAdjustment: 15,\n    type: Components\\ServiceGroupTypeEnum::FlatRate,\n    serviceLevels: [\n        new Components\\ServiceGroupAccountAndServiceLevel(\n            accountObjectId: '80feb1633d4a43c898f0058506cfd82d',\n            serviceLevelToken: 'ups_next_day_air_saver',\n        ),\n    ],\n);\n\n$response = $sdk->serviceGroups->create(\n    serviceGroupCreateRequest: $serviceGroupCreateRequest,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->serviceGroup !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.ServiceGroupAccountAndServiceLevel;\nimport com.goshippo.shippo_sdk.models.components.ServiceGroupCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.ServiceGroupTypeEnum;\nimport com.goshippo.shippo_sdk.models.operations.CreateServiceGroupResponse;\nimport java.lang.Exception;\nimport java.util.List;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreateServiceGroupResponse res = sdk.serviceGroups().create()\n                .shippoApiVersion("2018-02-08")\n                .serviceGroupCreateRequest(ServiceGroupCreateRequest.builder()\n                    .description("USPS shipping options")\n                    .name("USPS Shipping")\n                    .type(ServiceGroupTypeEnum.FLAT_RATE)\n                    .serviceLevels(List.of(\n                        ServiceGroupAccountAndServiceLevel.builder()\n                            .accountObjectId("80feb1633d4a43c898f0058506cfd82d")\n                            .serviceLevelToken("ups_next_day_air_saver")\n                            .build()))\n                    .flatRate("5")\n                    .flatRateCurrency("USD")\n                    .freeShippingThresholdCurrency("USD")\n                    .freeShippingThresholdMin("5")\n                    .rateAdjustment(15L)\n                    .build())\n                .call();\n\n        if (res.serviceGroup().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.ServiceGroup]
-            )
+            return unmarshal_json_response(components.ServiceGroup, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def update(
         self,
@@ -429,10 +525,10 @@ class ServiceGroups(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.ServiceGroup]:
+    ) -> components.ServiceGroup:
         r"""Update an existing service group
 
-        Updates an existing service group object. <br>The object_id cannot be updated as it is the unique identifier for the object.
+        Updates an existing service group object. The object_id cannot be updated as it is the unique identifier for the object.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -479,6 +575,7 @@ class ServiceGroups(BaseSDK):
                 "json",
                 Optional[components.ServiceGroupUpdateRequest],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -492,39 +589,62 @@ class ServiceGroups(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateServiceGroup",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Service Groups"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl -X PUT https://api.goshippo.com/service-groups  \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-H "Content-Type: application/json"  \\\n-d \'{\n        "object_id": "7552000a5f71473c9378e98fc7322c99",\n        "name": "UPS shipping",\n        "description": "UPS shipping options, updated",\n        "flat_rate": "20",\n        "flat_rate_currency": "USD",\n        "type": "LIVE_RATE",\n        "rate_adjustment": 15,\n        "service_levels": [\n            {\n                "account_object_id": "80feb1633d4a43c898f0058506cfd82d",\n                "service_level_token": "ups_next_day_air_saver"\n            },\n            {\n                "account_object_id": "80feb1633d4a43c898f0058506cfd82d",\n                "service_level_token": "ups_ground"\n            }\n        ]\n    }\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.service_groups.update(request=components.ServiceGroupUpdateRequest(\n    description='USPS shipping options',\n    flat_rate='5',\n    flat_rate_currency='USD',\n    free_shipping_threshold_currency='USD',\n    free_shipping_threshold_min='5',\n    name='USPS Shipping',\n    rate_adjustment=15,\n    type=components.ServiceGroupTypeEnum.FLAT_RATE,\n    object_id='80feb1633d4a43c898f005850',\n    is_active=True,\n    service_levels=[\n        components.ServiceGroupAccountAndServiceLevel(\n            account_object_id='80feb1633d4a43c898f0058506cfd82d',\n            service_level_token='ups_next_day_air_saver',\n        ),\n        components.ServiceGroupAccountAndServiceLevel(\n            account_object_id='80feb1633d4a43c898f0058506cfd82d',\n            service_level_token='ups_next_day_air_saver',\n        ),\n        components.ServiceGroupAccountAndServiceLevel(\n            account_object_id='80feb1633d4a43c898f0058506cfd82d',\n            service_level_token='ups_next_day_air_saver',\n        ),\n    ],\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.serviceGroups.update({\n    description: "USPS shipping options",\n    flatRate: "5",\n    flatRateCurrency: "USD",\n    freeShippingThresholdCurrency: "USD",\n    freeShippingThresholdMin: "5",\n    name: "USPS Shipping",\n    rateAdjustment: 15,\n    type: "FLAT_RATE",\n    objectId: "80feb1633d4a43c898f005850",\n    isActive: true,\n    serviceLevels: [\n      {\n        accountObjectId: "80feb1633d4a43c898f0058506cfd82d",\n        serviceLevelToken: "ups_next_day_air_saver",\n      },\n      {\n        accountObjectId: "80feb1633d4a43c898f0058506cfd82d",\n        serviceLevelToken: "ups_next_day_air_saver",\n      },\n      {\n        accountObjectId: "80feb1633d4a43c898f0058506cfd82d",\n        serviceLevelToken: "ups_next_day_air_saver",\n      },\n    ],\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing System.Collections.Generic;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.ServiceGroups.UpdateAsync(\n    shippoApiVersion: "2018-02-08",\n    serviceGroupUpdateRequest: new ServiceGroupUpdateRequest() {\n        Description = "USPS shipping options",\n        FlatRate = "5",\n        FlatRateCurrency = "USD",\n        FreeShippingThresholdCurrency = "USD",\n        FreeShippingThresholdMin = "5",\n        Name = "USPS Shipping",\n        RateAdjustment = 15,\n        Type = ServiceGroupTypeEnum.FlatRate,\n        ObjectId = "80feb1633d4a43c898f005850",\n        IsActive = true,\n        ServiceLevels = new List<ServiceGroupAccountAndServiceLevel>() {\n            new ServiceGroupAccountAndServiceLevel() {\n                AccountObjectId = "80feb1633d4a43c898f0058506cfd82d",\n                ServiceLevelToken = "ups_next_day_air_saver",\n            },\n        },\n    }\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$serviceGroupUpdateRequest = new Components\\ServiceGroupUpdateRequest(\n    description: 'USPS shipping options',\n    flatRate: '5',\n    flatRateCurrency: 'USD',\n    freeShippingThresholdCurrency: 'USD',\n    freeShippingThresholdMin: '5',\n    name: 'USPS Shipping',\n    rateAdjustment: 15,\n    type: Components\\ServiceGroupTypeEnum::FlatRate,\n    objectId: '80feb1633d4a43c898f005850',\n    isActive: true,\n    serviceLevels: [\n        new Components\\ServiceGroupAccountAndServiceLevel(\n            accountObjectId: '80feb1633d4a43c898f0058506cfd82d',\n            serviceLevelToken: 'ups_next_day_air_saver',\n        ),\n    ],\n);\n\n$response = $sdk->serviceGroups->update(\n    shippoApiVersion: '2018-02-08',\n    serviceGroupUpdateRequest: $serviceGroupUpdateRequest\n\n);\n\nif ($response->serviceGroup !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.ServiceGroupAccountAndServiceLevel;\nimport com.goshippo.shippo_sdk.models.components.ServiceGroupTypeEnum;\nimport com.goshippo.shippo_sdk.models.components.ServiceGroupUpdateRequest;\nimport com.goshippo.shippo_sdk.models.operations.UpdateServiceGroupResponse;\nimport java.lang.Exception;\nimport java.util.List;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        UpdateServiceGroupResponse res = sdk.serviceGroups().update()\n                .shippoApiVersion("2018-02-08")\n                .serviceGroupUpdateRequest(ServiceGroupUpdateRequest.builder()\n                    .description("USPS shipping options")\n                    .name("USPS Shipping")\n                    .type(ServiceGroupTypeEnum.FLAT_RATE)\n                    .objectId("80feb1633d4a43c898f005850")\n                    .isActive(true)\n                    .serviceLevels(List.of(\n                        ServiceGroupAccountAndServiceLevel.builder()\n                            .accountObjectId("80feb1633d4a43c898f0058506cfd82d")\n                            .serviceLevelToken("ups_next_day_air_saver")\n                            .build(),\n                        ServiceGroupAccountAndServiceLevel.builder()\n                            .accountObjectId("80feb1633d4a43c898f0058506cfd82d")\n                            .serviceLevelToken("ups_next_day_air_saver")\n                            .build(),\n                        ServiceGroupAccountAndServiceLevel.builder()\n                            .accountObjectId("80feb1633d4a43c898f0058506cfd82d")\n                            .serviceLevelToken("ups_next_day_air_saver")\n                            .build()))\n                    .flatRate("5")\n                    .flatRateCurrency("USD")\n                    .freeShippingThresholdCurrency("USD")\n                    .freeShippingThresholdMin("5")\n                    .rateAdjustment(15L)\n                    .build())\n                .call();\n\n        if (res.serviceGroup().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.ServiceGroup]
-            )
+            return unmarshal_json_response(components.ServiceGroup, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def update_async(
         self,
@@ -539,10 +659,10 @@ class ServiceGroups(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.ServiceGroup]:
+    ) -> components.ServiceGroup:
         r"""Update an existing service group
 
-        Updates an existing service group object. <br>The object_id cannot be updated as it is the unique identifier for the object.
+        Updates an existing service group object. The object_id cannot be updated as it is the unique identifier for the object.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -589,6 +709,7 @@ class ServiceGroups(BaseSDK):
                 "json",
                 Optional[components.ServiceGroupUpdateRequest],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -602,39 +723,62 @@ class ServiceGroups(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateServiceGroup",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Service Groups"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl -X PUT https://api.goshippo.com/service-groups  \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-H "Content-Type: application/json"  \\\n-d \'{\n        "object_id": "7552000a5f71473c9378e98fc7322c99",\n        "name": "UPS shipping",\n        "description": "UPS shipping options, updated",\n        "flat_rate": "20",\n        "flat_rate_currency": "USD",\n        "type": "LIVE_RATE",\n        "rate_adjustment": 15,\n        "service_levels": [\n            {\n                "account_object_id": "80feb1633d4a43c898f0058506cfd82d",\n                "service_level_token": "ups_next_day_air_saver"\n            },\n            {\n                "account_object_id": "80feb1633d4a43c898f0058506cfd82d",\n                "service_level_token": "ups_ground"\n            }\n        ]\n    }\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.service_groups.update(request=components.ServiceGroupUpdateRequest(\n    description='USPS shipping options',\n    flat_rate='5',\n    flat_rate_currency='USD',\n    free_shipping_threshold_currency='USD',\n    free_shipping_threshold_min='5',\n    name='USPS Shipping',\n    rate_adjustment=15,\n    type=components.ServiceGroupTypeEnum.FLAT_RATE,\n    object_id='80feb1633d4a43c898f005850',\n    is_active=True,\n    service_levels=[\n        components.ServiceGroupAccountAndServiceLevel(\n            account_object_id='80feb1633d4a43c898f0058506cfd82d',\n            service_level_token='ups_next_day_air_saver',\n        ),\n        components.ServiceGroupAccountAndServiceLevel(\n            account_object_id='80feb1633d4a43c898f0058506cfd82d',\n            service_level_token='ups_next_day_air_saver',\n        ),\n        components.ServiceGroupAccountAndServiceLevel(\n            account_object_id='80feb1633d4a43c898f0058506cfd82d',\n            service_level_token='ups_next_day_air_saver',\n        ),\n    ],\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.serviceGroups.update({\n    description: "USPS shipping options",\n    flatRate: "5",\n    flatRateCurrency: "USD",\n    freeShippingThresholdCurrency: "USD",\n    freeShippingThresholdMin: "5",\n    name: "USPS Shipping",\n    rateAdjustment: 15,\n    type: "FLAT_RATE",\n    objectId: "80feb1633d4a43c898f005850",\n    isActive: true,\n    serviceLevels: [\n      {\n        accountObjectId: "80feb1633d4a43c898f0058506cfd82d",\n        serviceLevelToken: "ups_next_day_air_saver",\n      },\n      {\n        accountObjectId: "80feb1633d4a43c898f0058506cfd82d",\n        serviceLevelToken: "ups_next_day_air_saver",\n      },\n      {\n        accountObjectId: "80feb1633d4a43c898f0058506cfd82d",\n        serviceLevelToken: "ups_next_day_air_saver",\n      },\n    ],\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing System.Collections.Generic;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.ServiceGroups.UpdateAsync(\n    shippoApiVersion: "2018-02-08",\n    serviceGroupUpdateRequest: new ServiceGroupUpdateRequest() {\n        Description = "USPS shipping options",\n        FlatRate = "5",\n        FlatRateCurrency = "USD",\n        FreeShippingThresholdCurrency = "USD",\n        FreeShippingThresholdMin = "5",\n        Name = "USPS Shipping",\n        RateAdjustment = 15,\n        Type = ServiceGroupTypeEnum.FlatRate,\n        ObjectId = "80feb1633d4a43c898f005850",\n        IsActive = true,\n        ServiceLevels = new List<ServiceGroupAccountAndServiceLevel>() {\n            new ServiceGroupAccountAndServiceLevel() {\n                AccountObjectId = "80feb1633d4a43c898f0058506cfd82d",\n                ServiceLevelToken = "ups_next_day_air_saver",\n            },\n        },\n    }\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$serviceGroupUpdateRequest = new Components\\ServiceGroupUpdateRequest(\n    description: 'USPS shipping options',\n    flatRate: '5',\n    flatRateCurrency: 'USD',\n    freeShippingThresholdCurrency: 'USD',\n    freeShippingThresholdMin: '5',\n    name: 'USPS Shipping',\n    rateAdjustment: 15,\n    type: Components\\ServiceGroupTypeEnum::FlatRate,\n    objectId: '80feb1633d4a43c898f005850',\n    isActive: true,\n    serviceLevels: [\n        new Components\\ServiceGroupAccountAndServiceLevel(\n            accountObjectId: '80feb1633d4a43c898f0058506cfd82d',\n            serviceLevelToken: 'ups_next_day_air_saver',\n        ),\n    ],\n);\n\n$response = $sdk->serviceGroups->update(\n    shippoApiVersion: '2018-02-08',\n    serviceGroupUpdateRequest: $serviceGroupUpdateRequest\n\n);\n\nif ($response->serviceGroup !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.ServiceGroupAccountAndServiceLevel;\nimport com.goshippo.shippo_sdk.models.components.ServiceGroupTypeEnum;\nimport com.goshippo.shippo_sdk.models.components.ServiceGroupUpdateRequest;\nimport com.goshippo.shippo_sdk.models.operations.UpdateServiceGroupResponse;\nimport java.lang.Exception;\nimport java.util.List;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        UpdateServiceGroupResponse res = sdk.serviceGroups().update()\n                .shippoApiVersion("2018-02-08")\n                .serviceGroupUpdateRequest(ServiceGroupUpdateRequest.builder()\n                    .description("USPS shipping options")\n                    .name("USPS Shipping")\n                    .type(ServiceGroupTypeEnum.FLAT_RATE)\n                    .objectId("80feb1633d4a43c898f005850")\n                    .isActive(true)\n                    .serviceLevels(List.of(\n                        ServiceGroupAccountAndServiceLevel.builder()\n                            .accountObjectId("80feb1633d4a43c898f0058506cfd82d")\n                            .serviceLevelToken("ups_next_day_air_saver")\n                            .build(),\n                        ServiceGroupAccountAndServiceLevel.builder()\n                            .accountObjectId("80feb1633d4a43c898f0058506cfd82d")\n                            .serviceLevelToken("ups_next_day_air_saver")\n                            .build(),\n                        ServiceGroupAccountAndServiceLevel.builder()\n                            .accountObjectId("80feb1633d4a43c898f0058506cfd82d")\n                            .serviceLevelToken("ups_next_day_air_saver")\n                            .build()))\n                    .flatRate("5")\n                    .flatRateCurrency("USD")\n                    .freeShippingThresholdCurrency("USD")\n                    .freeShippingThresholdMin("5")\n                    .rateAdjustment(15L)\n                    .build())\n                .call();\n\n        if (res.serviceGroup().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.ServiceGroup]
-            )
+            return unmarshal_json_response(components.ServiceGroup, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def delete(
         self,
@@ -685,6 +829,7 @@ class ServiceGroups(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -698,13 +843,49 @@ class ServiceGroups(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteServiceGroup",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Service Groups"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl -x DELETE https://api.goshippo.com/service-groups/80feb1633d4a43c898f0058506cfd82d  \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\ns.service_groups.delete(service_group_id='<id>')\n\n# Use the SDK ...",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  await shippo.serviceGroups.delete("<id>");\n\n\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nawait sdk.ServiceGroups.DeleteAsync(\n    serviceGroupId: "<id>",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->serviceGroups->delete(\n    serviceGroupId: '<id>',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->statusCode === 200) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.DeleteServiceGroupResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        DeleteServiceGroupResponse res = sdk.serviceGroups().delete()\n                .serviceGroupId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        // handle response\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -712,23 +893,12 @@ class ServiceGroups(BaseSDK):
             return
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def delete_async(
         self,
@@ -779,6 +949,7 @@ class ServiceGroups(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -792,13 +963,49 @@ class ServiceGroups(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteServiceGroup",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Service Groups"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl -x DELETE https://api.goshippo.com/service-groups/80feb1633d4a43c898f0058506cfd82d  \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\ns.service_groups.delete(service_group_id='<id>')\n\n# Use the SDK ...",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  await shippo.serviceGroups.delete("<id>");\n\n\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nawait sdk.ServiceGroups.DeleteAsync(\n    serviceGroupId: "<id>",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->serviceGroups->delete(\n    serviceGroupId: '<id>',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->statusCode === 200) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.DeleteServiceGroupResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        DeleteServiceGroupResponse res = sdk.serviceGroups().delete()\n                .serviceGroupId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        // handle response\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -806,20 +1013,9 @@ class ServiceGroups(BaseSDK):
             return
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)

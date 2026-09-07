@@ -6,6 +6,14 @@
 | DHLeC_SM_Flats | Flats | 27.00 x 17.00 x 17.00 in|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ParcelTemplateDHLeCommerceEnum
+
+value = ParcelTemplateDHLeCommerceEnum.DH_LE_C_IRREGULAR
+```
+
 
 ## Values
 
