@@ -6,7 +6,8 @@ from .lineitem import LineItem, LineItemTypedDict
 from .ordershopappenum import OrderShopAppEnum
 from .orderstatusenum import OrderStatusEnum
 from .weightunitenum import WeightUnitEnum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -23,24 +24,26 @@ class OrderTypedDict(TypedDict):
     placed_at: str
     r"""Date and time when the order was placed. This datetime can be different from the datetime of the order object creation on Shippo."""
     to_address: AddressTypedDict
-    r"""<a href=\"#tag/Addresses\">Address</a> object of the recipient / buyer. Will be returned expanded by default."""
+    r"""[Address](/shippoapi/public-api/addresses) object of the recipient / buyer. Will be returned expanded by default."""
     currency: NotRequired[str]
-    r"""**Required if total_price is provided**<br>
-    Currency of the <code>total_price</code> and <code>total_tax</code> amounts.
+    r"""**Required if total_price is provided**
+
+    Currency of the `total_price` and `total_tax` amounts.
     """
     notes: NotRequired[str]
     r"""Custom buyer- or seller-provided notes about the order."""
     order_number: NotRequired[str]
     r"""An alphanumeric identifier for the order used by the seller/buyer. This identifier doesn't need to be unique."""
     order_status: NotRequired[OrderStatusEnum]
-    r"""Current state of the order. See the <a href=\"https://docs.goshippo.com/docs/orders/orders/\">orders tutorial</a>
+    r"""Current state of the order. See the [orders tutorial](https://docs.goshippo.com/docs/orders/orders/)
     for the logic of how the status is handled.
     """
     shipping_cost: NotRequired[str]
     r"""Amount paid by the buyer for shipping. This amount can be different from the price the seller will actually pay for shipping."""
     shipping_cost_currency: NotRequired[str]
-    r"""**Required if shipping_cost is provided**<br>
-    Currency of the <code>shipping_cost</code> amount.
+    r"""**Required if shipping_cost is provided**
+
+    Currency of the `shipping_cost` amount.
     """
     shipping_method: NotRequired[str]
     r"""Shipping method (carrier + service or other free text description) chosen by the buyer.
@@ -56,9 +59,9 @@ class OrderTypedDict(TypedDict):
     weight_unit: NotRequired[WeightUnitEnum]
     r"""The unit used for weight."""
     from_address: NotRequired[AddressTypedDict]
-    r"""<a href=\"#tag/Addresses\">Address</a> object of the sender / seller. Will be returned expanded by default."""
+    r"""[Address](/shippoapi/public-api/addresses) object of the sender / seller. Will be returned expanded by default."""
     line_items: NotRequired[List[LineItemTypedDict]]
-    r"""Array of <a href=\"#section/Line-Item\">line item</a> objects representing the items in this order.
+    r"""Array of [line item](/shippoapi/public-api/orders/lineitem) objects representing the items in this order.
     All objects will be returned expanded by default.
     """
     object_id: NotRequired[str]
@@ -70,7 +73,7 @@ class OrderTypedDict(TypedDict):
     Orders created via the Shippo API or dashboard will have the value \"Shippo\".
     """
     transactions: NotRequired[List[OrderTransactionTypedDict]]
-    r"""Array of <a href=\"#tag/Transactions\">transaction</a> objects representing all shipping labels purchased for this order.
+    r"""Array of [transaction](/shippoapi/public-api/transactions) objects representing all shipping labels purchased for this order.
     All objects are returned expanded with a limited number of fields by default.
     """
 
@@ -80,11 +83,12 @@ class Order(BaseModel):
     r"""Date and time when the order was placed. This datetime can be different from the datetime of the order object creation on Shippo."""
 
     to_address: Address
-    r"""<a href=\"#tag/Addresses\">Address</a> object of the recipient / buyer. Will be returned expanded by default."""
+    r"""[Address](/shippoapi/public-api/addresses) object of the recipient / buyer. Will be returned expanded by default."""
 
     currency: Optional[str] = None
-    r"""**Required if total_price is provided**<br>
-    Currency of the <code>total_price</code> and <code>total_tax</code> amounts.
+    r"""**Required if total_price is provided**
+
+    Currency of the `total_price` and `total_tax` amounts.
     """
 
     notes: Optional[str] = None
@@ -94,7 +98,7 @@ class Order(BaseModel):
     r"""An alphanumeric identifier for the order used by the seller/buyer. This identifier doesn't need to be unique."""
 
     order_status: Optional[OrderStatusEnum] = None
-    r"""Current state of the order. See the <a href=\"https://docs.goshippo.com/docs/orders/orders/\">orders tutorial</a>
+    r"""Current state of the order. See the [orders tutorial](https://docs.goshippo.com/docs/orders/orders/)
     for the logic of how the status is handled.
     """
 
@@ -102,8 +106,9 @@ class Order(BaseModel):
     r"""Amount paid by the buyer for shipping. This amount can be different from the price the seller will actually pay for shipping."""
 
     shipping_cost_currency: Optional[str] = None
-    r"""**Required if shipping_cost is provided**<br>
-    Currency of the <code>shipping_cost</code> amount.
+    r"""**Required if shipping_cost is provided**
+
+    Currency of the `shipping_cost` amount.
     """
 
     shipping_method: Optional[str] = None
@@ -126,10 +131,10 @@ class Order(BaseModel):
     r"""The unit used for weight."""
 
     from_address: Optional[Address] = None
-    r"""<a href=\"#tag/Addresses\">Address</a> object of the sender / seller. Will be returned expanded by default."""
+    r"""[Address](/shippoapi/public-api/addresses) object of the sender / seller. Will be returned expanded by default."""
 
     line_items: Optional[List[LineItem]] = None
-    r"""Array of <a href=\"#section/Line-Item\">line item</a> objects representing the items in this order.
+    r"""Array of [line item](/shippoapi/public-api/orders/lineitem) objects representing the items in this order.
     All objects will be returned expanded by default.
     """
 
@@ -145,6 +150,43 @@ class Order(BaseModel):
     """
 
     transactions: Optional[List[OrderTransaction]] = None
-    r"""Array of <a href=\"#tag/Transactions\">transaction</a> objects representing all shipping labels purchased for this order.
+    r"""Array of [transaction](/shippoapi/public-api/transactions) objects representing all shipping labels purchased for this order.
     All objects are returned expanded with a limited number of fields by default.
     """
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "currency",
+                "notes",
+                "order_number",
+                "order_status",
+                "shipping_cost",
+                "shipping_cost_currency",
+                "shipping_method",
+                "subtotal_price",
+                "total_price",
+                "total_tax",
+                "weight",
+                "weight_unit",
+                "from_address",
+                "line_items",
+                "object_id",
+                "object_owner",
+                "shop_app",
+                "transactions",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 import pydantic
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from shippo.utils import FieldMetadata, HeaderMetadata, PathParamMetadata
 from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
@@ -10,7 +11,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class GetCarrierParcelTemplateGlobalsTypedDict(TypedDict):
     shippo_api_version: NotRequired[str]
-    r"""Optional string used to pick a non-default API version to use. See our <a href=\"https://docs.goshippo.com/docs/api_concepts/apiversioning/\">API version</a> guide."""
+    r"""Optional string used to pick a non-default API version to use. See our [API version](https://docs.goshippo.com/docs/api_concepts/apiversioning/) guide."""
 
 
 class GetCarrierParcelTemplateGlobals(BaseModel):
@@ -18,8 +19,24 @@ class GetCarrierParcelTemplateGlobals(BaseModel):
         Optional[str],
         pydantic.Field(alias="SHIPPO-API-VERSION"),
         FieldMetadata(header=HeaderMetadata(style="simple", explode=False)),
-    ] = None
-    r"""Optional string used to pick a non-default API version to use. See our <a href=\"https://docs.goshippo.com/docs/api_concepts/apiversioning/\">API version</a> guide."""
+    ] = "2018-02-08"
+    r"""Optional string used to pick a non-default API version to use. See our [API version](https://docs.goshippo.com/docs/api_concepts/apiversioning/) guide."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["SHIPPO-API-VERSION"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
 
 
 class GetCarrierParcelTemplateRequestTypedDict(TypedDict):

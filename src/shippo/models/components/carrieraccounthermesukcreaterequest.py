@@ -29,3 +29,9 @@ class CarrierAccountHermesUKCreateRequest(BaseModel):
         Annotated[Literal["hermes_uk"], AfterValidator(validate_const("hermes_uk"))],
         pydantic.Field(alias="carrier"),
     ] = "hermes_uk"
+
+
+try:
+    CarrierAccountHermesUKCreateRequest.model_rebuild()
+except NameError:
+    pass

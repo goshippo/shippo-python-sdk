@@ -13,7 +13,8 @@ from .upsconnectexistingownaccountparameters import (
     UPSConnectExistingOwnAccountParameters,
     UPSConnectExistingOwnAccountParametersTypedDict,
 )
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Any, Dict, List, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
@@ -40,13 +41,13 @@ CarrierAccountParameters = TypeAliasType(
 
 class CarrierAccountTypedDict(TypedDict):
     account_id: str
-    r"""Unique identifier of the account. Please check the <a href=\"https://docs.goshippo.com/docs/carriers/carrieraccounts/\">carrier accounts tutorial</a>
-    page for the `account_id` per carrier.<br>
+    r"""Unique identifier of the account. Please check the [carrier accounts tutorial](https://docs.goshippo.com/docs/carriers/carrieraccounts/)
+    page for the `account_id` per carrier.
     To protect account information, this field will be masked in any API response.
     """
     carrier: str
-    r"""Carrier token, see <a href=\"#tag/Carriers\">Carriers</a><br>
-    Please check the <a href=\"https://docs.goshippo.com/docs/carriers/carrieraccounts/\">carrier accounts tutorial</a> page for all supported carriers.
+    r"""Carrier token, see [Carriers](/shippoapi/public-api/carriers)
+    Please check the [carrier accounts tutorial](https://docs.goshippo.com/docs/carriers/carrieraccounts/) page for all supported carriers.
     """
     active: NotRequired[bool]
     r"""Determines whether the account is active. When creating a shipment, if no `carrier_accounts` are explicitly
@@ -54,7 +55,7 @@ class CarrierAccountTypedDict(TypedDict):
     """
     parameters: NotRequired[CarrierAccountParametersTypedDict]
     carrier_name: NotRequired[Any]
-    r"""Carrier name, see <a href=\"#tag/Carriers\">Carriers</a><br>"""
+    r"""Carrier name, see [Carriers](/shippoapi/public-api/carriers)"""
     is_shippo_account: NotRequired[bool]
     metadata: NotRequired[str]
     object_id: NotRequired[str]
@@ -68,14 +69,14 @@ class CarrierAccountTypedDict(TypedDict):
 
 class CarrierAccount(BaseModel):
     account_id: str
-    r"""Unique identifier of the account. Please check the <a href=\"https://docs.goshippo.com/docs/carriers/carrieraccounts/\">carrier accounts tutorial</a>
-    page for the `account_id` per carrier.<br>
+    r"""Unique identifier of the account. Please check the [carrier accounts tutorial](https://docs.goshippo.com/docs/carriers/carrieraccounts/)
+    page for the `account_id` per carrier.
     To protect account information, this field will be masked in any API response.
     """
 
     carrier: str
-    r"""Carrier token, see <a href=\"#tag/Carriers\">Carriers</a><br>
-    Please check the <a href=\"https://docs.goshippo.com/docs/carriers/carrieraccounts/\">carrier accounts tutorial</a> page for all supported carriers.
+    r"""Carrier token, see [Carriers](/shippoapi/public-api/carriers)
+    Please check the [carrier accounts tutorial](https://docs.goshippo.com/docs/carriers/carrieraccounts/) page for all supported carriers.
     """
 
     active: Optional[bool] = None
@@ -86,7 +87,7 @@ class CarrierAccount(BaseModel):
     parameters: Optional[CarrierAccountParameters] = None
 
     carrier_name: Optional[Any] = None
-    r"""Carrier name, see <a href=\"#tag/Carriers\">Carriers</a><br>"""
+    r"""Carrier name, see [Carriers](/shippoapi/public-api/carriers)"""
 
     is_shippo_account: Optional[bool] = None
 
@@ -102,3 +103,31 @@ class CarrierAccount(BaseModel):
 
     test: Optional[bool] = None
     r"""Indicates whether the object has been created in test mode."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "active",
+                "parameters",
+                "carrier_name",
+                "is_shippo_account",
+                "metadata",
+                "object_id",
+                "object_owner",
+                "service_levels",
+                "test",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

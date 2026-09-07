@@ -8,7 +8,8 @@ from .servicelevelwithparent import (
 )
 from datetime import datetime
 from enum import Enum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -26,11 +27,11 @@ class RateTypedDict(TypedDict):
     r"""Final Rate price, expressed in the currency used in the recipient's country."""
     currency: str
     r"""Currency used in the sender's country, refers to `amount`.
-    The <a href=\"http://www.xe.com/iso4217.php\">official ISO 4217</a> currency codes are used, e.g. `USD` or `EUR`.
+    The [official ISO 4217](http://www.xe.com/iso4217.php) currency codes are used, e.g. `USD` or `EUR`.
     """
     currency_local: str
     r"""Currency used in the recipient's country, refers to `amount_local`.
-    The <a href=\"http://www.xe.com/iso4217.php\">official ISO 4217</a> currency codes are used, e.g. `USD` or \"EUR\".
+    The [official ISO 4217](http://www.xe.com/iso4217.php) currency codes are used, e.g. `USD` or \"EUR\".
     """
     attributes: List[Attribute]
     r"""An array containing specific attributes of this Rate in context of the entire shipment.
@@ -88,12 +89,12 @@ class Rate(BaseModel):
 
     currency: str
     r"""Currency used in the sender's country, refers to `amount`.
-    The <a href=\"http://www.xe.com/iso4217.php\">official ISO 4217</a> currency codes are used, e.g. `USD` or `EUR`.
+    The [official ISO 4217](http://www.xe.com/iso4217.php) currency codes are used, e.g. `USD` or `EUR`.
     """
 
     currency_local: str
     r"""Currency used in the recipient's country, refers to `amount_local`.
-    The <a href=\"http://www.xe.com/iso4217.php\">official ISO 4217</a> currency codes are used, e.g. `USD` or \"EUR\".
+    The [official ISO 4217](http://www.xe.com/iso4217.php) currency codes are used, e.g. `USD` or \"EUR\".
     """
 
     attributes: List[Attribute]
@@ -157,3 +158,31 @@ class Rate(BaseModel):
 
     zone: Optional[str] = None
     r"""The parcel's transit zone token. These tokens can vary depending on the provider."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "arrives_by",
+                "duration_terms",
+                "estimated_days",
+                "included_insurance_price",
+                "messages",
+                "provider_image_75",
+                "provider_image_200",
+                "test",
+                "zone",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

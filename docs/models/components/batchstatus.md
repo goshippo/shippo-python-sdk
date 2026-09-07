@@ -1,10 +1,18 @@
 # BatchStatus
 
-Batches that are `VALIDATING` are being created and validated<br>
-`VALID` batches can be purchased<br>
-`INVALID` batches cannot be purchased, `INVALID` BatchShipments must be removed<br>
-Batches that are in the `PURCHASING` state are being purchased<br>
-`PURCHASED` batches are finished purchasing.
+- `VALIDATING`: the batch is being created and validated
+- `VALID`: the batch can be purchased
+- `INVALID`: the batch cannot be purchased; `INVALID` BatchShipments must be removed
+- `PURCHASING`: the batch is being purchased
+- `PURCHASED`: the batch is finished purchasing
+
+## Example Usage
+
+```python
+from shippo.models.components import BatchStatus
+
+value = BatchStatus.VALIDATING
+```
 
 
 ## Values

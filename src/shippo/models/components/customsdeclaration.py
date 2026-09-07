@@ -12,7 +12,8 @@ from .customsinvoicedcharges import (
 from .objectstateenum import ObjectStateEnum
 from datetime import datetime
 from enum import Enum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -44,6 +45,22 @@ class CustomsDeclarationAddress(BaseModel):
     country: Optional[str] = None
     r"""Country ISO code of account number to be billed."""
 
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["name", "zip", "country"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
 
 class CustomsDeclarationDutiesPayorTypedDict(TypedDict):
     r"""Specifies who will pay the duties for the shipment. Only accepted for FedEx shipments."""
@@ -66,6 +83,22 @@ class CustomsDeclarationDutiesPayor(BaseModel):
 
     address: Optional[CustomsDeclarationAddress] = None
 
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["account", "type", "address"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
 
 class CustomsDeclarationTypedDict(TypedDict):
     certify: bool
@@ -76,38 +109,45 @@ class CustomsDeclarationTypedDict(TypedDict):
     """
     contents_type: str
     r"""Type of goods of the shipment.
-    Allowed values available <a href=\"#tag/Customs-Declaration-Contents-Type\">here</a>
+    Allowed values available [here](/shippoapi/public-api/customs-declaration-contents-type)
     """
     items: List[str]
     r"""Distinct Parcel content items as Customs Items object_ids."""
     non_delivery_option: str
     r"""Indicates how the carrier should proceed in case the shipment can't be delivered.
-    Allowed values available <a href=\"#tag/Customs-Declaration-Non-Delivery-Option\">here</a>
+    Allowed values available [here](/shippoapi/public-api/customs-declaration-non-delivery-option)
     """
     aes_itn: NotRequired[str]
-    r"""**required if eel_pfc is `AES_ITN`**<br>
+    r"""**required if eel_pfc is `AES_ITN`**
+
     AES / ITN reference of the shipment.
     """
     b13a_filing_option: NotRequired[str]
     r"""B13A Option details are obtained by filing a B13A Canada Export Declaration via the Canadian Export Reporting System (CERS).
-    <a href=\"https://www.cbsa-asfc.gc.ca/services/export/guide-eng.html\" target=\"_blank\" rel=\"noopener noreferrer\"> More information on reporting commercial exports from Canada. </a>
-    Allowed values available <a href=\"#tag/Customs-Declaration-B13A-Filing-Option\">here</a>
+    [More information on reporting commercial exports from Canada.](https://www.cbsa-asfc.gc.ca/services/export/guide-eng.html)
+    Allowed values available [here](/shippoapi/public-api/customs-declaration-b13a-filing-option)
     """
     b13a_number: NotRequired[str]
-    r"""**must be provided if and only if b13a_filing_option is provided**<br>
-    Represents:<br> the Proof of Report (POR) Number when b13a_filing_option is `FILED_ELECTRONICALLY`;<br>
-    the Summary ID Number when b13a_filing_option is `SUMMARY_REPORTING`;<br>
-    or the Exemption Number when b13a_filing_option is `NOT_REQUIRED`.
+    r"""**must be provided if and only if b13a_filing_option is provided**
+
+    Represents the Proof of Report (POR) Number when b13a_filing_option is `FILED_ELECTRONICALLY`; the Summary ID Number when b13a_filing_option is `SUMMARY_REPORTING`; or the Exemption Number when b13a_filing_option is `NOT_REQUIRED`.
     """
     certificate: NotRequired[str]
     r"""Certificate reference of the shipment."""
     commercial_invoice: NotRequired[bool]
     contents_explanation: NotRequired[str]
-    r"""**required if contents_type is `OTHER`**<br>
+    r"""**required if contents_type is `OTHER`**
+
     Explanation of the type of goods of the shipment.
     """
     disclaimer: NotRequired[str]
-    r"""Disclaimer for the shipment and customs information that have been provided."""
+    r"""Disclaimer for the shipment and customs information that have been provided.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Max 554 characters |
+    """
     duties_payor: NotRequired[CustomsDeclarationDutiesPayorTypedDict]
     r"""Specifies who will pay the duties for the shipment. Only accepted for FedEx shipments."""
     exporter_identification: NotRequired[CustomsExporterIdentificationTypedDict]
@@ -133,13 +173,19 @@ class CustomsDeclarationTypedDict(TypedDict):
     eel_pfc: NotRequired[str]
     r"""EEL / PFC type of the shipment. For most shipments from the US to CA, `NOEEI_30_36` is applicable; for most
     other shipments from the US, `NOEEI_30_37_a` is applicable.
-    Allowed values available <a href=\"#tag/Customs-Declaration-EELPFC\">here</a>
+    Allowed values available [here](/shippoapi/public-api/customs-declaration-eelpfc)
     """
     incoterm: NotRequired[str]
     r"""The incoterm reference of the shipment. FCA is available for DHL Express and FedEx only.
-    eDAP is available for DPD UK only. DAP is available for DHL Express and DPD UK.
+    eDAP is available for DPD UK only. DAP is available for DHL Express, FedEx, and DPD UK.
     If expecting DAP for other carriers, please use DDU.
-    Allowed values available <a href=\"#tag/Customs-Declaration-Incoterm\">here</a>
+    Allowed values available [here](/shippoapi/public-api/customs-declaration-incoterm)
+    Carrier-specific restrictions are in the table below.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Must be one of DDP, DDU, FCA, DAP |
     """
     invoiced_charges: NotRequired[CustomsInvoicedChargesTypedDict]
     r"""Additional invoiced charges to be shown on the Customs Declaration Commercial Invoice."""
@@ -168,7 +214,7 @@ class CustomsDeclaration(BaseModel):
 
     contents_type: str
     r"""Type of goods of the shipment.
-    Allowed values available <a href=\"#tag/Customs-Declaration-Contents-Type\">here</a>
+    Allowed values available [here](/shippoapi/public-api/customs-declaration-contents-type)
     """
 
     items: List[str]
@@ -176,25 +222,25 @@ class CustomsDeclaration(BaseModel):
 
     non_delivery_option: str
     r"""Indicates how the carrier should proceed in case the shipment can't be delivered.
-    Allowed values available <a href=\"#tag/Customs-Declaration-Non-Delivery-Option\">here</a>
+    Allowed values available [here](/shippoapi/public-api/customs-declaration-non-delivery-option)
     """
 
     aes_itn: Optional[str] = None
-    r"""**required if eel_pfc is `AES_ITN`**<br>
+    r"""**required if eel_pfc is `AES_ITN`**
+
     AES / ITN reference of the shipment.
     """
 
     b13a_filing_option: Optional[str] = None
     r"""B13A Option details are obtained by filing a B13A Canada Export Declaration via the Canadian Export Reporting System (CERS).
-    <a href=\"https://www.cbsa-asfc.gc.ca/services/export/guide-eng.html\" target=\"_blank\" rel=\"noopener noreferrer\"> More information on reporting commercial exports from Canada. </a>
-    Allowed values available <a href=\"#tag/Customs-Declaration-B13A-Filing-Option\">here</a>
+    [More information on reporting commercial exports from Canada.](https://www.cbsa-asfc.gc.ca/services/export/guide-eng.html)
+    Allowed values available [here](/shippoapi/public-api/customs-declaration-b13a-filing-option)
     """
 
     b13a_number: Optional[str] = None
-    r"""**must be provided if and only if b13a_filing_option is provided**<br>
-    Represents:<br> the Proof of Report (POR) Number when b13a_filing_option is `FILED_ELECTRONICALLY`;<br>
-    the Summary ID Number when b13a_filing_option is `SUMMARY_REPORTING`;<br>
-    or the Exemption Number when b13a_filing_option is `NOT_REQUIRED`.
+    r"""**must be provided if and only if b13a_filing_option is provided**
+
+    Represents the Proof of Report (POR) Number when b13a_filing_option is `FILED_ELECTRONICALLY`; the Summary ID Number when b13a_filing_option is `SUMMARY_REPORTING`; or the Exemption Number when b13a_filing_option is `NOT_REQUIRED`.
     """
 
     certificate: Optional[str] = None
@@ -203,12 +249,19 @@ class CustomsDeclaration(BaseModel):
     commercial_invoice: Optional[bool] = None
 
     contents_explanation: Optional[str] = None
-    r"""**required if contents_type is `OTHER`**<br>
+    r"""**required if contents_type is `OTHER`**
+
     Explanation of the type of goods of the shipment.
     """
 
     disclaimer: Optional[str] = None
-    r"""Disclaimer for the shipment and customs information that have been provided."""
+    r"""Disclaimer for the shipment and customs information that have been provided.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Max 554 characters |
+    """
 
     duties_payor: Optional[CustomsDeclarationDutiesPayor] = None
     r"""Specifies who will pay the duties for the shipment. Only accepted for FedEx shipments."""
@@ -245,14 +298,20 @@ class CustomsDeclaration(BaseModel):
     eel_pfc: Optional[str] = None
     r"""EEL / PFC type of the shipment. For most shipments from the US to CA, `NOEEI_30_36` is applicable; for most
     other shipments from the US, `NOEEI_30_37_a` is applicable.
-    Allowed values available <a href=\"#tag/Customs-Declaration-EELPFC\">here</a>
+    Allowed values available [here](/shippoapi/public-api/customs-declaration-eelpfc)
     """
 
     incoterm: Optional[str] = None
     r"""The incoterm reference of the shipment. FCA is available for DHL Express and FedEx only.
-    eDAP is available for DPD UK only. DAP is available for DHL Express and DPD UK.
+    eDAP is available for DPD UK only. DAP is available for DHL Express, FedEx, and DPD UK.
     If expecting DAP for other carriers, please use DDU.
-    Allowed values available <a href=\"#tag/Customs-Declaration-Incoterm\">here</a>
+    Allowed values available [here](/shippoapi/public-api/customs-declaration-incoterm)
+    Carrier-specific restrictions are in the table below.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Must be one of DDP, DDU, FCA, DAP |
     """
 
     invoiced_charges: Optional[CustomsInvoicedCharges] = None
@@ -275,3 +334,48 @@ class CustomsDeclaration(BaseModel):
 
     test: Optional[bool] = None
     r"""Indicates whether the object has been created in test mode."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "aes_itn",
+                "b13a_filing_option",
+                "b13a_number",
+                "certificate",
+                "commercial_invoice",
+                "contents_explanation",
+                "disclaimer",
+                "duties_payor",
+                "exporter_identification",
+                "exporter_reference",
+                "importer_reference",
+                "is_vat_collected",
+                "invoice",
+                "license",
+                "metadata",
+                "notes",
+                "address_importer",
+                "eel_pfc",
+                "incoterm",
+                "invoiced_charges",
+                "object_created",
+                "object_id",
+                "object_owner",
+                "object_state",
+                "object_updated",
+                "test",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

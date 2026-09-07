@@ -5,6 +5,7 @@ from shippo import utils
 from shippo._hooks import HookContext
 from shippo.models import components, errors, operations
 from shippo.types import BaseModel, OptionalNullable, UNSET
+from shippo.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Mapping, Optional, Union, cast
 
 
@@ -15,7 +16,6 @@ class UserParcelTemplates(BaseSDK):
 
     User parcel templates can also be created using a carrier parcel template, where the dimensions will be copied from
     the carrier presets, but the weight can be configured by you.
-    <SchemaDefinition schemaRef=\"#/components/schemas/UserParcelTemplate\"/>
     """
 
     def list(
@@ -29,7 +29,7 @@ class UserParcelTemplates(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.UserParcelTemplateList]:
+    ) -> components.UserParcelTemplateList:
         r"""List all user parcel templates
 
         Returns a list all of all user parcel template objects.
@@ -72,6 +72,7 @@ class UserParcelTemplates(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -85,39 +86,62 @@ class UserParcelTemplates(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListUserParcelTemplates",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["User Parcel Templates"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/user-parcel-templates  \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-H "Content-Type: application/json"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import operations\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.user_parcel_templates.list(request=operations.ListUserParcelTemplatesRequest())\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.userParcelTemplates.list({});\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.UserParcelTemplates.ListAsync(shippoApiVersion: "2018-02-08");\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->userParcelTemplates->list(\n    shippoApiVersion: '2018-02-08'\n);\n\nif ($response->userParcelTemplateList !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.ListUserParcelTemplatesResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        ListUserParcelTemplatesResponse res = sdk.userParcelTemplates().list()\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.userParcelTemplateList().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.UserParcelTemplateList]
-            )
+            return unmarshal_json_response(components.UserParcelTemplateList, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def list_async(
         self,
@@ -130,7 +154,7 @@ class UserParcelTemplates(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.UserParcelTemplateList]:
+    ) -> components.UserParcelTemplateList:
         r"""List all user parcel templates
 
         Returns a list all of all user parcel template objects.
@@ -173,6 +197,7 @@ class UserParcelTemplates(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -186,39 +211,62 @@ class UserParcelTemplates(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListUserParcelTemplates",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["User Parcel Templates"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/user-parcel-templates  \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-H "Content-Type: application/json"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import operations\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.user_parcel_templates.list(request=operations.ListUserParcelTemplatesRequest())\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.userParcelTemplates.list({});\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.UserParcelTemplates.ListAsync(shippoApiVersion: "2018-02-08");\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->userParcelTemplates->list(\n    shippoApiVersion: '2018-02-08'\n);\n\nif ($response->userParcelTemplateList !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.ListUserParcelTemplatesResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        ListUserParcelTemplatesResponse res = sdk.userParcelTemplates().list()\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.userParcelTemplateList().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.UserParcelTemplateList]
-            )
+            return unmarshal_json_response(components.UserParcelTemplateList, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def create(
         self,
@@ -231,13 +279,15 @@ class UserParcelTemplates(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.UserParcelTemplate]:
+    ) -> components.UserParcelTemplate:
         r"""Create a new user parcel template
 
-        Creates a new user parcel template. <br>You can choose to create a
+        Creates a new user parcel template.
+
+        You can choose to create a
         parcel template using a preset carrier template as a starting point, or
         you can create an entirely custom one. To use a preset carrier template,
-        pass in a unique template token from <a href=\"#tag/Parcel-Templates\">this list</a>
+        pass in a unique template token from [this list](/shippoapi/public-api/parcel-templates)
         plus the weight fields (**weight** and **weight_unit**). Otherwise, omit
         the template field and pass the other fields, for the weight, length, height,
         and depth, as well as their units.\"
@@ -287,6 +337,7 @@ class UserParcelTemplates(BaseSDK):
                 "json",
                 components.UserParcelTemplateCreateRequest,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -300,39 +351,62 @@ class UserParcelTemplates(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateUserParcelTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["User Parcel Templates"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl -X POST https://api.goshippo.com/user-parcel-templates  \\\n  -H "Authorization: ShippoToken <API_TOKEN>" \\\n  -H "Content-Type: application/json"\n  -d \'{\n      "name": "My Custom Template",\n      "length": "10",\n      "width": "8",\n      "height": "6",\n      "distance_unit": "in",\n      "weight": "12",\n      "weight_unit": "lb"\n  }\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.user_parcel_templates.create(request=components.UserParcelTemplateWithCarrierTemplateCreateRequest(\n    weight='12',\n    weight_unit=components.WeightUnitEnum.LB,\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.userParcelTemplates.create({\n    weight: "12",\n    weightUnit: "lb",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.UserParcelTemplates.CreateAsync(\n    userParcelTemplateCreateRequest: UserParcelTemplateCreateRequest.CreateUserParcelTemplateWithCarrierTemplateCreateRequest(\n        new UserParcelTemplateWithCarrierTemplateCreateRequest() {\n            Weight = "12",\n            WeightUnit = WeightUnitEnum.Lb,\n        }\n    ),\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->userParcelTemplates->create(\n    userParcelTemplateCreateRequest: new Components\\UserParcelTemplateWithCarrierTemplateCreateRequest(\n        weight: '12',\n        weightUnit: Components\\WeightUnitEnum::Lb,\n    ),\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->userParcelTemplate !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.UserParcelTemplateCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.UserParcelTemplateWithCarrierTemplateCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.WeightUnitEnum;\nimport com.goshippo.shippo_sdk.models.operations.CreateUserParcelTemplateResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreateUserParcelTemplateResponse res = sdk.userParcelTemplates().create()\n                .shippoApiVersion("2018-02-08")\n                .userParcelTemplateCreateRequest(UserParcelTemplateCreateRequest.of(UserParcelTemplateWithCarrierTemplateCreateRequest.builder()\n                    .weight("12")\n                    .weightUnit(WeightUnitEnum.LB)\n                    .build()))\n                .call();\n\n        if (res.userParcelTemplate().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.UserParcelTemplate]
-            )
+            return unmarshal_json_response(components.UserParcelTemplate, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def create_async(
         self,
@@ -345,13 +419,15 @@ class UserParcelTemplates(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.UserParcelTemplate]:
+    ) -> components.UserParcelTemplate:
         r"""Create a new user parcel template
 
-        Creates a new user parcel template. <br>You can choose to create a
+        Creates a new user parcel template.
+
+        You can choose to create a
         parcel template using a preset carrier template as a starting point, or
         you can create an entirely custom one. To use a preset carrier template,
-        pass in a unique template token from <a href=\"#tag/Parcel-Templates\">this list</a>
+        pass in a unique template token from [this list](/shippoapi/public-api/parcel-templates)
         plus the weight fields (**weight** and **weight_unit**). Otherwise, omit
         the template field and pass the other fields, for the weight, length, height,
         and depth, as well as their units.\"
@@ -401,6 +477,7 @@ class UserParcelTemplates(BaseSDK):
                 "json",
                 components.UserParcelTemplateCreateRequest,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -414,39 +491,62 @@ class UserParcelTemplates(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateUserParcelTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["User Parcel Templates"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl -X POST https://api.goshippo.com/user-parcel-templates  \\\n  -H "Authorization: ShippoToken <API_TOKEN>" \\\n  -H "Content-Type: application/json"\n  -d \'{\n      "name": "My Custom Template",\n      "length": "10",\n      "width": "8",\n      "height": "6",\n      "distance_unit": "in",\n      "weight": "12",\n      "weight_unit": "lb"\n  }\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.user_parcel_templates.create(request=components.UserParcelTemplateWithCarrierTemplateCreateRequest(\n    weight='12',\n    weight_unit=components.WeightUnitEnum.LB,\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.userParcelTemplates.create({\n    weight: "12",\n    weightUnit: "lb",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.UserParcelTemplates.CreateAsync(\n    userParcelTemplateCreateRequest: UserParcelTemplateCreateRequest.CreateUserParcelTemplateWithCarrierTemplateCreateRequest(\n        new UserParcelTemplateWithCarrierTemplateCreateRequest() {\n            Weight = "12",\n            WeightUnit = WeightUnitEnum.Lb,\n        }\n    ),\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->userParcelTemplates->create(\n    userParcelTemplateCreateRequest: new Components\\UserParcelTemplateWithCarrierTemplateCreateRequest(\n        weight: '12',\n        weightUnit: Components\\WeightUnitEnum::Lb,\n    ),\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->userParcelTemplate !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.UserParcelTemplateCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.UserParcelTemplateWithCarrierTemplateCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.WeightUnitEnum;\nimport com.goshippo.shippo_sdk.models.operations.CreateUserParcelTemplateResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreateUserParcelTemplateResponse res = sdk.userParcelTemplates().create()\n                .shippoApiVersion("2018-02-08")\n                .userParcelTemplateCreateRequest(UserParcelTemplateCreateRequest.of(UserParcelTemplateWithCarrierTemplateCreateRequest.builder()\n                    .weight("12")\n                    .weightUnit(WeightUnitEnum.LB)\n                    .build()))\n                .call();\n\n        if (res.userParcelTemplate().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.UserParcelTemplate]
-            )
+            return unmarshal_json_response(components.UserParcelTemplate, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def delete(
         self,
@@ -497,6 +597,7 @@ class UserParcelTemplates(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -510,13 +611,49 @@ class UserParcelTemplates(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteUserParcelTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["User Parcel Templates"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl -X DELETE https://api.goshippo.com/user-parcel-templates/{UserParcelTemplateObjectId}  \\\n  -H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\ns.user_parcel_templates.delete(user_parcel_template_object_id='<id>')\n\n# Use the SDK ...",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  await shippo.userParcelTemplates.delete("<id>");\n\n\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nawait sdk.UserParcelTemplates.DeleteAsync(\n    userParcelTemplateObjectId: "<id>",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->userParcelTemplates->delete(\n    userParcelTemplateObjectId: '<id>',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->statusCode === 200) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.DeleteUserParcelTemplateResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        DeleteUserParcelTemplateResponse res = sdk.userParcelTemplates().delete()\n                .userParcelTemplateObjectId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        // handle response\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -524,23 +661,12 @@ class UserParcelTemplates(BaseSDK):
             return
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def delete_async(
         self,
@@ -591,6 +717,7 @@ class UserParcelTemplates(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -604,13 +731,49 @@ class UserParcelTemplates(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteUserParcelTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["User Parcel Templates"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl -X DELETE https://api.goshippo.com/user-parcel-templates/{UserParcelTemplateObjectId}  \\\n  -H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\ns.user_parcel_templates.delete(user_parcel_template_object_id='<id>')\n\n# Use the SDK ...",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  await shippo.userParcelTemplates.delete("<id>");\n\n\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nawait sdk.UserParcelTemplates.DeleteAsync(\n    userParcelTemplateObjectId: "<id>",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->userParcelTemplates->delete(\n    userParcelTemplateObjectId: '<id>',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->statusCode === 200) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.DeleteUserParcelTemplateResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        DeleteUserParcelTemplateResponse res = sdk.userParcelTemplates().delete()\n                .userParcelTemplateObjectId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        // handle response\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -618,23 +781,12 @@ class UserParcelTemplates(BaseSDK):
             return
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def get(
         self,
@@ -644,7 +796,7 @@ class UserParcelTemplates(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.UserParcelTemplate]:
+    ) -> components.UserParcelTemplate:
         r"""Retrieves a user parcel template
 
         Returns the parcel template information for a specific user parcel
@@ -686,6 +838,7 @@ class UserParcelTemplates(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -699,39 +852,62 @@ class UserParcelTemplates(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetUserParcelTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["User Parcel Templates"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "CLI",
+                            "lang": "cURL",
+                            "source": 'curl /user-parcel-templates/{UserParcelTemplateToken}  \\\n  -H "Authorization: ShippoToken <API_TOKEN>" \\\n  -H "Content-Type: application/json"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.user_parcel_templates.get(user_parcel_template_object_id='<id>')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.userParcelTemplates.get("<id>");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.UserParcelTemplates.GetAsync(\n    userParcelTemplateObjectId: "<id>",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->userParcelTemplates->get(\n    userParcelTemplateObjectId: '<id>',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->userParcelTemplate !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.GetUserParcelTemplateResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetUserParcelTemplateResponse res = sdk.userParcelTemplates().get()\n                .userParcelTemplateObjectId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.userParcelTemplate().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.UserParcelTemplate]
-            )
+            return unmarshal_json_response(components.UserParcelTemplate, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def get_async(
         self,
@@ -741,7 +917,7 @@ class UserParcelTemplates(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.UserParcelTemplate]:
+    ) -> components.UserParcelTemplate:
         r"""Retrieves a user parcel template
 
         Returns the parcel template information for a specific user parcel
@@ -783,6 +959,7 @@ class UserParcelTemplates(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -796,39 +973,62 @@ class UserParcelTemplates(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetUserParcelTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["User Parcel Templates"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "CLI",
+                            "lang": "cURL",
+                            "source": 'curl /user-parcel-templates/{UserParcelTemplateToken}  \\\n  -H "Authorization: ShippoToken <API_TOKEN>" \\\n  -H "Content-Type: application/json"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.user_parcel_templates.get(user_parcel_template_object_id='<id>')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.userParcelTemplates.get("<id>");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.UserParcelTemplates.GetAsync(\n    userParcelTemplateObjectId: "<id>",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->userParcelTemplates->get(\n    userParcelTemplateObjectId: '<id>',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->userParcelTemplate !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.GetUserParcelTemplateResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetUserParcelTemplateResponse res = sdk.userParcelTemplates().get()\n                .userParcelTemplateObjectId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.userParcelTemplate().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.UserParcelTemplate]
-            )
+            return unmarshal_json_response(components.UserParcelTemplate, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def update(
         self,
@@ -844,7 +1044,7 @@ class UserParcelTemplates(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.UserParcelTemplate]:
+    ) -> components.UserParcelTemplate:
         r"""Update an existing user parcel template
 
         Updates an existing user parcel template.
@@ -891,12 +1091,15 @@ class UserParcelTemplates(BaseSDK):
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.user_parcel_template_update_request,
+                request.user_parcel_template_update_request
+                if request is not None
+                else None,
                 False,
                 True,
                 "json",
                 Optional[components.UserParcelTemplateUpdateRequest],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -910,39 +1113,62 @@ class UserParcelTemplates(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateUserParcelTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["User Parcel Templates"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/user-parcel-templates/b958d3690bb04bb8b2986724872750f5  \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-H "Content-Type: application/json"\n  -d \'{\n      "name": "My Custom Template",\n      "length": "10",\n      "width": "8",\n      "height": "6",\n      "distance_unit": "in",\n      "weight": "12",\n      "weight_unit": "lb"\n  }\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.user_parcel_templates.update(user_parcel_template_object_id='<id>', user_parcel_template_update_request=components.UserParcelTemplateUpdateRequest(\n    distance_unit=components.DistanceUnitEnum.IN,\n    height='6',\n    length='10',\n    name='My Custom Template',\n    weight='12',\n    weight_unit=components.WeightUnitEnum.LB,\n    width='8',\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.userParcelTemplates.update("<id>", {\n    distanceUnit: "in",\n    height: "6",\n    length: "10",\n    name: "My Custom Template",\n    weight: "12",\n    weightUnit: "lb",\n    width: "8",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.UserParcelTemplates.UpdateAsync(\n    userParcelTemplateObjectId: "<id>",\n    shippoApiVersion: "2018-02-08",\n    userParcelTemplateUpdateRequest: new UserParcelTemplateUpdateRequest() {\n        DistanceUnit = DistanceUnitEnum.In,\n        Height = "6",\n        Length = "10",\n        Name = "My Custom Template",\n        Weight = "12",\n        WeightUnit = WeightUnitEnum.Lb,\n        Width = "8",\n    }\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$userParcelTemplateUpdateRequest = new Components\\UserParcelTemplateUpdateRequest(\n    distanceUnit: Components\\DistanceUnitEnum::In,\n    height: '6',\n    length: '10',\n    name: 'My Custom Template',\n    weight: '12',\n    weightUnit: Components\\WeightUnitEnum::Lb,\n    width: '8',\n);\n\n$response = $sdk->userParcelTemplates->update(\n    userParcelTemplateObjectId: '<id>',\n    shippoApiVersion: '2018-02-08',\n    userParcelTemplateUpdateRequest: $userParcelTemplateUpdateRequest\n\n);\n\nif ($response->userParcelTemplate !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.DistanceUnitEnum;\nimport com.goshippo.shippo_sdk.models.components.UserParcelTemplateUpdateRequest;\nimport com.goshippo.shippo_sdk.models.components.WeightUnitEnum;\nimport com.goshippo.shippo_sdk.models.operations.UpdateUserParcelTemplateResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        UpdateUserParcelTemplateResponse res = sdk.userParcelTemplates().update()\n                .userParcelTemplateObjectId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .userParcelTemplateUpdateRequest(UserParcelTemplateUpdateRequest.builder()\n                    .distanceUnit(DistanceUnitEnum.IN)\n                    .height("6")\n                    .length("10")\n                    .name("My Custom Template")\n                    .width("8")\n                    .weight("12")\n                    .weightUnit(WeightUnitEnum.LB)\n                    .build())\n                .call();\n\n        if (res.userParcelTemplate().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.UserParcelTemplate]
-            )
+            return unmarshal_json_response(components.UserParcelTemplate, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def update_async(
         self,
@@ -958,7 +1184,7 @@ class UserParcelTemplates(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.UserParcelTemplate]:
+    ) -> components.UserParcelTemplate:
         r"""Update an existing user parcel template
 
         Updates an existing user parcel template.
@@ -1005,12 +1231,15 @@ class UserParcelTemplates(BaseSDK):
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.user_parcel_template_update_request,
+                request.user_parcel_template_update_request
+                if request is not None
+                else None,
                 False,
                 True,
                 "json",
                 Optional[components.UserParcelTemplateUpdateRequest],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1024,36 +1253,59 @@ class UserParcelTemplates(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateUserParcelTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["User Parcel Templates"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/user-parcel-templates/b958d3690bb04bb8b2986724872750f5  \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-H "Content-Type: application/json"\n  -d \'{\n      "name": "My Custom Template",\n      "length": "10",\n      "width": "8",\n      "height": "6",\n      "distance_unit": "in",\n      "weight": "12",\n      "weight_unit": "lb"\n  }\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.user_parcel_templates.update(user_parcel_template_object_id='<id>', user_parcel_template_update_request=components.UserParcelTemplateUpdateRequest(\n    distance_unit=components.DistanceUnitEnum.IN,\n    height='6',\n    length='10',\n    name='My Custom Template',\n    weight='12',\n    weight_unit=components.WeightUnitEnum.LB,\n    width='8',\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.userParcelTemplates.update("<id>", {\n    distanceUnit: "in",\n    height: "6",\n    length: "10",\n    name: "My Custom Template",\n    weight: "12",\n    weightUnit: "lb",\n    width: "8",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.UserParcelTemplates.UpdateAsync(\n    userParcelTemplateObjectId: "<id>",\n    shippoApiVersion: "2018-02-08",\n    userParcelTemplateUpdateRequest: new UserParcelTemplateUpdateRequest() {\n        DistanceUnit = DistanceUnitEnum.In,\n        Height = "6",\n        Length = "10",\n        Name = "My Custom Template",\n        Weight = "12",\n        WeightUnit = WeightUnitEnum.Lb,\n        Width = "8",\n    }\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$userParcelTemplateUpdateRequest = new Components\\UserParcelTemplateUpdateRequest(\n    distanceUnit: Components\\DistanceUnitEnum::In,\n    height: '6',\n    length: '10',\n    name: 'My Custom Template',\n    weight: '12',\n    weightUnit: Components\\WeightUnitEnum::Lb,\n    width: '8',\n);\n\n$response = $sdk->userParcelTemplates->update(\n    userParcelTemplateObjectId: '<id>',\n    shippoApiVersion: '2018-02-08',\n    userParcelTemplateUpdateRequest: $userParcelTemplateUpdateRequest\n\n);\n\nif ($response->userParcelTemplate !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.DistanceUnitEnum;\nimport com.goshippo.shippo_sdk.models.components.UserParcelTemplateUpdateRequest;\nimport com.goshippo.shippo_sdk.models.components.WeightUnitEnum;\nimport com.goshippo.shippo_sdk.models.operations.UpdateUserParcelTemplateResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        UpdateUserParcelTemplateResponse res = sdk.userParcelTemplates().update()\n                .userParcelTemplateObjectId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .userParcelTemplateUpdateRequest(UserParcelTemplateUpdateRequest.builder()\n                    .distanceUnit(DistanceUnitEnum.IN)\n                    .height("6")\n                    .length("10")\n                    .name("My Custom Template")\n                    .width("8")\n                    .weight("12")\n                    .weightUnit(WeightUnitEnum.LB)\n                    .build())\n                .call();\n\n        if (res.userParcelTemplate().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.UserParcelTemplate]
-            )
+            return unmarshal_json_response(components.UserParcelTemplate, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)

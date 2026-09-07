@@ -5,14 +5,14 @@ from shippo import utils
 from shippo._hooks import HookContext
 from shippo.models import components, errors, operations
 from shippo.types import BaseModel, OptionalNullable, UNSET
+from shippo.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Mapping, Optional, Union, cast
 
 
 class ShippoAccounts(BaseSDK):
     r"""Shippo Accounts are used by Shippo Platform Accounts to create and manage Managed Shippo Accounts.
     Managed Shippo Accounts are headless accounts that represent your customers. They are opaque to your end customers, meaning customers do not need to create their own Shippo login or have a billing relationship with Shippo.
-    They can be used by marketplaces, e-commerce platforms, and third-party logistics providers who want to offer, seamless, built-in shipping functionality to their customers. See our <a href=\"https://docs.goshippo.com/docs/platformaccounts/platform_accounts/\">guide</a> for more details.
-    <SchemaDefinition schemaRef=\"#/components/schemas/ShippoAccount\"/>
+    They can be used by marketplaces, e-commerce platforms, and third-party logistics providers who want to offer, seamless, built-in shipping functionality to their customers. See our [guide](https://docs.goshippo.com/docs/platformaccounts/platform_accounts/) for more details.
     """
 
     def list(
@@ -24,7 +24,7 @@ class ShippoAccounts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.ShippoAccountPaginatedList]:
+    ) -> components.ShippoAccountPaginatedList:
         r"""List all Shippo Accounts
 
         Returns a list of Shippo Managed Accounts objects.
@@ -67,6 +67,7 @@ class ShippoAccounts(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -80,39 +81,59 @@ class ShippoAccounts(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListShippoAccounts",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Shippo Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.shippo_accounts.list()\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.shippoAccounts.list();\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.ShippoAccounts.ListAsync(\n    page: 1,\n    results: 25,\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->shippoAccounts->list(\n    page: 1,\n    results: 25,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->shippoAccountPaginatedList !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.ListShippoAccountsResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        ListShippoAccountsResponse res = sdk.shippoAccounts().list()\n                .page(1L)\n                .results(25L)\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.shippoAccountPaginatedList().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.ShippoAccountPaginatedList]
+            return unmarshal_json_response(
+                components.ShippoAccountPaginatedList, http_res
             )
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def list_async(
         self,
@@ -123,7 +144,7 @@ class ShippoAccounts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.ShippoAccountPaginatedList]:
+    ) -> components.ShippoAccountPaginatedList:
         r"""List all Shippo Accounts
 
         Returns a list of Shippo Managed Accounts objects.
@@ -166,6 +187,7 @@ class ShippoAccounts(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -179,39 +201,59 @@ class ShippoAccounts(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListShippoAccounts",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Shippo Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.shippo_accounts.list()\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.shippoAccounts.list();\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.ShippoAccounts.ListAsync(\n    page: 1,\n    results: 25,\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->shippoAccounts->list(\n    page: 1,\n    results: 25,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->shippoAccountPaginatedList !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.ListShippoAccountsResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        ListShippoAccountsResponse res = sdk.shippoAccounts().list()\n                .page(1L)\n                .results(25L)\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.shippoAccountPaginatedList().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.ShippoAccountPaginatedList]
+            return unmarshal_json_response(
+                components.ShippoAccountPaginatedList, http_res
             )
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def create(
         self,
@@ -224,10 +266,10 @@ class ShippoAccounts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.ShippoAccount]:
+    ) -> components.ShippoAccount:
         r"""Create a Shippo Account
 
-        Creates a new <a href=\"https://docs.goshippo.com/docs/platformaccounts/platform_using_accounts/\">Shippo Managed Account</a>.
+        Creates a new [Shippo Managed Account](https://docs.goshippo.com/docs/platformaccounts/platform_using_accounts/).
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -268,6 +310,7 @@ class ShippoAccounts(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", components.ShippoAccountUpdateRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -281,39 +324,57 @@ class ShippoAccounts(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateShippoAccount",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Shippo Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.shippo_accounts.create(request=components.ShippoAccountUpdateRequest(\n    email='hippo@shippo.com',\n    first_name='Shippo',\n    last_name='Meister',\n    company_name='Acme',\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.shippoAccounts.create({\n    email: "hippo@shippo.com",\n    firstName: "Shippo",\n    lastName: "Meister",\n    companyName: "Acme",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.ShippoAccounts.CreateAsync(\n    shippoAccountUpdateRequest: new ShippoAccountUpdateRequest() {\n        Email = "hippo@shippo.com",\n        FirstName = "Shippo",\n        LastName = "Meister",\n        CompanyName = "Acme",\n    },\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$shippoAccountUpdateRequest = new Components\\ShippoAccountUpdateRequest(\n    email: 'hippo@shippo.com',\n    firstName: 'Shippo',\n    lastName: 'Meister',\n    companyName: 'Acme',\n);\n\n$response = $sdk->shippoAccounts->create(\n    shippoAccountUpdateRequest: $shippoAccountUpdateRequest,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->shippoAccount !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.ShippoAccountUpdateRequest;\nimport com.goshippo.shippo_sdk.models.operations.CreateShippoAccountResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreateShippoAccountResponse res = sdk.shippoAccounts().create()\n                .shippoApiVersion("2018-02-08")\n                .shippoAccountUpdateRequest(ShippoAccountUpdateRequest.builder()\n                    .email("hippo@shippo.com")\n                    .firstName("Shippo")\n                    .lastName("Meister")\n                    .companyName("Acme")\n                    .build())\n                .call();\n\n        if (res.shippoAccount().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.ShippoAccount]
-            )
+            return unmarshal_json_response(components.ShippoAccount, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def create_async(
         self,
@@ -326,10 +387,10 @@ class ShippoAccounts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.ShippoAccount]:
+    ) -> components.ShippoAccount:
         r"""Create a Shippo Account
 
-        Creates a new <a href=\"https://docs.goshippo.com/docs/platformaccounts/platform_using_accounts/\">Shippo Managed Account</a>.
+        Creates a new [Shippo Managed Account](https://docs.goshippo.com/docs/platformaccounts/platform_using_accounts/).
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -370,6 +431,7 @@ class ShippoAccounts(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", components.ShippoAccountUpdateRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -383,39 +445,57 @@ class ShippoAccounts(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateShippoAccount",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Shippo Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.shippo_accounts.create(request=components.ShippoAccountUpdateRequest(\n    email='hippo@shippo.com',\n    first_name='Shippo',\n    last_name='Meister',\n    company_name='Acme',\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.shippoAccounts.create({\n    email: "hippo@shippo.com",\n    firstName: "Shippo",\n    lastName: "Meister",\n    companyName: "Acme",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.ShippoAccounts.CreateAsync(\n    shippoAccountUpdateRequest: new ShippoAccountUpdateRequest() {\n        Email = "hippo@shippo.com",\n        FirstName = "Shippo",\n        LastName = "Meister",\n        CompanyName = "Acme",\n    },\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$shippoAccountUpdateRequest = new Components\\ShippoAccountUpdateRequest(\n    email: 'hippo@shippo.com',\n    firstName: 'Shippo',\n    lastName: 'Meister',\n    companyName: 'Acme',\n);\n\n$response = $sdk->shippoAccounts->create(\n    shippoAccountUpdateRequest: $shippoAccountUpdateRequest,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->shippoAccount !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.ShippoAccountUpdateRequest;\nimport com.goshippo.shippo_sdk.models.operations.CreateShippoAccountResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreateShippoAccountResponse res = sdk.shippoAccounts().create()\n                .shippoApiVersion("2018-02-08")\n                .shippoAccountUpdateRequest(ShippoAccountUpdateRequest.builder()\n                    .email("hippo@shippo.com")\n                    .firstName("Shippo")\n                    .lastName("Meister")\n                    .companyName("Acme")\n                    .build())\n                .call();\n\n        if (res.shippoAccount().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.ShippoAccount]
-            )
+            return unmarshal_json_response(components.ShippoAccount, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def get(
         self,
@@ -425,7 +505,7 @@ class ShippoAccounts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.ShippoAccount]:
+    ) -> components.ShippoAccount:
         r"""Retrieve a Shippo Account
 
         Returns a Shippo Managed Account using an object ID.
@@ -466,6 +546,7 @@ class ShippoAccounts(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -479,39 +560,57 @@ class ShippoAccounts(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetShippoAccount",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Shippo Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.shippo_accounts.get(shippo_account_id='<id>')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.shippoAccounts.get("<id>");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.ShippoAccounts.GetAsync(\n    shippoAccountId: "<id>",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->shippoAccounts->get(\n    shippoAccountId: '<id>',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->shippoAccount !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.GetShippoAccountResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetShippoAccountResponse res = sdk.shippoAccounts().get()\n                .shippoAccountId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.shippoAccount().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.ShippoAccount]
-            )
+            return unmarshal_json_response(components.ShippoAccount, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def get_async(
         self,
@@ -521,7 +620,7 @@ class ShippoAccounts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.ShippoAccount]:
+    ) -> components.ShippoAccount:
         r"""Retrieve a Shippo Account
 
         Returns a Shippo Managed Account using an object ID.
@@ -562,6 +661,7 @@ class ShippoAccounts(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -575,39 +675,57 @@ class ShippoAccounts(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetShippoAccount",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Shippo Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.shippo_accounts.get(shippo_account_id='<id>')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.shippoAccounts.get("<id>");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.ShippoAccounts.GetAsync(\n    shippoAccountId: "<id>",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->shippoAccounts->get(\n    shippoAccountId: '<id>',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->shippoAccount !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.GetShippoAccountResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetShippoAccountResponse res = sdk.shippoAccounts().get()\n                .shippoAccountId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.shippoAccount().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.ShippoAccount]
-            )
+            return unmarshal_json_response(components.ShippoAccount, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def update(
         self,
@@ -623,7 +741,7 @@ class ShippoAccounts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.ShippoAccount]:
+    ) -> components.ShippoAccount:
         r"""Update a Shippo Account
 
         Updates a Shippo Managed Account using an object ID.
@@ -670,12 +788,13 @@ class ShippoAccounts(BaseSDK):
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.shippo_account_update_request,
+                request.shippo_account_update_request if request is not None else None,
                 False,
                 True,
                 "json",
                 Optional[components.ShippoAccountUpdateRequest],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -689,39 +808,57 @@ class ShippoAccounts(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateShippoAccount",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Shippo Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.shippo_accounts.update(shippo_account_id='<id>', shippo_account_update_request=components.ShippoAccountUpdateRequest(\n    email='hippo@shippo.com',\n    first_name='Shippo',\n    last_name='Meister',\n    company_name='Acme',\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.shippoAccounts.update("<id>", {\n    email: "hippo@shippo.com",\n    firstName: "Shippo",\n    lastName: "Meister",\n    companyName: "Acme",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.ShippoAccounts.UpdateAsync(\n    shippoAccountId: "<id>",\n    shippoApiVersion: "2018-02-08",\n    shippoAccountUpdateRequest: new ShippoAccountUpdateRequest() {\n        Email = "hippo@shippo.com",\n        FirstName = "Shippo",\n        LastName = "Meister",\n        CompanyName = "Acme",\n    }\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$shippoAccountUpdateRequest = new Components\\ShippoAccountUpdateRequest(\n    email: 'hippo@shippo.com',\n    firstName: 'Shippo',\n    lastName: 'Meister',\n    companyName: 'Acme',\n);\n\n$response = $sdk->shippoAccounts->update(\n    shippoAccountId: '<id>',\n    shippoApiVersion: '2018-02-08',\n    shippoAccountUpdateRequest: $shippoAccountUpdateRequest\n\n);\n\nif ($response->shippoAccount !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.ShippoAccountUpdateRequest;\nimport com.goshippo.shippo_sdk.models.operations.UpdateShippoAccountResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        UpdateShippoAccountResponse res = sdk.shippoAccounts().update()\n                .shippoAccountId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .shippoAccountUpdateRequest(ShippoAccountUpdateRequest.builder()\n                    .email("hippo@shippo.com")\n                    .firstName("Shippo")\n                    .lastName("Meister")\n                    .companyName("Acme")\n                    .build())\n                .call();\n\n        if (res.shippoAccount().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.ShippoAccount]
-            )
+            return unmarshal_json_response(components.ShippoAccount, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def update_async(
         self,
@@ -737,7 +874,7 @@ class ShippoAccounts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.ShippoAccount]:
+    ) -> components.ShippoAccount:
         r"""Update a Shippo Account
 
         Updates a Shippo Managed Account using an object ID.
@@ -784,12 +921,13 @@ class ShippoAccounts(BaseSDK):
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.shippo_account_update_request,
+                request.shippo_account_update_request if request is not None else None,
                 False,
                 True,
                 "json",
                 Optional[components.ShippoAccountUpdateRequest],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -803,36 +941,54 @@ class ShippoAccounts(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateShippoAccount",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Shippo Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.shippo_accounts.update(shippo_account_id='<id>', shippo_account_update_request=components.ShippoAccountUpdateRequest(\n    email='hippo@shippo.com',\n    first_name='Shippo',\n    last_name='Meister',\n    company_name='Acme',\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.shippoAccounts.update("<id>", {\n    email: "hippo@shippo.com",\n    firstName: "Shippo",\n    lastName: "Meister",\n    companyName: "Acme",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.ShippoAccounts.UpdateAsync(\n    shippoAccountId: "<id>",\n    shippoApiVersion: "2018-02-08",\n    shippoAccountUpdateRequest: new ShippoAccountUpdateRequest() {\n        Email = "hippo@shippo.com",\n        FirstName = "Shippo",\n        LastName = "Meister",\n        CompanyName = "Acme",\n    }\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$shippoAccountUpdateRequest = new Components\\ShippoAccountUpdateRequest(\n    email: 'hippo@shippo.com',\n    firstName: 'Shippo',\n    lastName: 'Meister',\n    companyName: 'Acme',\n);\n\n$response = $sdk->shippoAccounts->update(\n    shippoAccountId: '<id>',\n    shippoApiVersion: '2018-02-08',\n    shippoAccountUpdateRequest: $shippoAccountUpdateRequest\n\n);\n\nif ($response->shippoAccount !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.ShippoAccountUpdateRequest;\nimport com.goshippo.shippo_sdk.models.operations.UpdateShippoAccountResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        UpdateShippoAccountResponse res = sdk.shippoAccounts().update()\n                .shippoAccountId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .shippoAccountUpdateRequest(ShippoAccountUpdateRequest.builder()\n                    .email("hippo@shippo.com")\n                    .firstName("Shippo")\n                    .lastName("Meister")\n                    .companyName("Acme")\n                    .build())\n                .call();\n\n        if (res.shippoAccount().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.ShippoAccount]
-            )
+            return unmarshal_json_response(components.ShippoAccount, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)

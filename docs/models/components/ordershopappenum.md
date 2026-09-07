@@ -3,6 +3,14 @@
 Platform the order was created on and, if applicable, imported from. 
 Orders created via the Shippo API or dashboard will have the value "Shippo".
 
+## Example Usage
+
+```python
+from shippo.models.components import OrderShopAppEnum
+
+value = OrderShopAppEnum.AMAZON
+```
+
 
 ## Values
 

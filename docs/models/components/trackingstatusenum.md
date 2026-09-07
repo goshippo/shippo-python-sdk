@@ -2,6 +2,14 @@
 
 Indicates the high level status of the shipment.
 
+## Example Usage
+
+```python
+from shippo.models.components import TrackingStatusEnum
+
+value = TrackingStatusEnum.UNKNOWN
+```
+
 
 ## Values
 

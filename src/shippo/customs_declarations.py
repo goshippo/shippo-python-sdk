@@ -5,13 +5,13 @@ from shippo import utils
 from shippo._hooks import HookContext
 from shippo.models import components, errors, operations
 from shippo.types import BaseModel, OptionalNullable, UNSET
+from shippo.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Mapping, Optional, Union, cast
 
 
 class CustomsDeclarations(BaseSDK):
     r"""Customs declarations are relevant information, including one or multiple customs items, you need to provide for
     customs clearance for your international shipments.
-    <SchemaDefinition schemaRef=\"#/components/schemas/CustomsDeclaration\"/>
     """
 
     def list(
@@ -23,10 +23,10 @@ class CustomsDeclarations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CustomsDeclarationPaginatedList]:
+    ) -> components.CustomsDeclarationPaginatedList:
         r"""List all customs declarations
 
-        Returns a a list of all customs declaration objects
+        Returns a list of all customs declaration objects
 
         :param page: The page number you want to select
         :param results: The number of results to return per page (max 100, default 5)
@@ -66,6 +66,7 @@ class CustomsDeclarations(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -79,39 +80,64 @@ class CustomsDeclarations(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListCustomsDeclarations",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Customs Declarations"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/customs/declarations/ \\\n-H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.customs_declarations.list()\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.customsDeclarations.list();\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->customsDeclarations->list(\n    page: 1,\n    results: 5,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->customsDeclarationPaginatedList !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.CustomsDeclarations.ListAsync(\n    page: 1,\n    results: 5,\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.ListCustomsDeclarationsResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        ListCustomsDeclarationsResponse res = sdk.customsDeclarations().list()\n                .page(1L)\n                .results(5L)\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.customsDeclarationPaginatedList().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CustomsDeclarationPaginatedList]
+            return unmarshal_json_response(
+                components.CustomsDeclarationPaginatedList, http_res
             )
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def list_async(
         self,
@@ -122,10 +148,10 @@ class CustomsDeclarations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CustomsDeclarationPaginatedList]:
+    ) -> components.CustomsDeclarationPaginatedList:
         r"""List all customs declarations
 
-        Returns a a list of all customs declaration objects
+        Returns a list of all customs declaration objects
 
         :param page: The page number you want to select
         :param results: The number of results to return per page (max 100, default 5)
@@ -165,6 +191,7 @@ class CustomsDeclarations(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -178,39 +205,64 @@ class CustomsDeclarations(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListCustomsDeclarations",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Customs Declarations"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/customs/declarations/ \\\n-H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.customs_declarations.list()\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.customsDeclarations.list();\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->customsDeclarations->list(\n    page: 1,\n    results: 5,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->customsDeclarationPaginatedList !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.CustomsDeclarations.ListAsync(\n    page: 1,\n    results: 5,\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.ListCustomsDeclarationsResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        ListCustomsDeclarationsResponse res = sdk.customsDeclarations().list()\n                .page(1L)\n                .results(5L)\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.customsDeclarationPaginatedList().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CustomsDeclarationPaginatedList]
+            return unmarshal_json_response(
+                components.CustomsDeclarationPaginatedList, http_res
             )
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def create(
         self,
@@ -223,7 +275,7 @@ class CustomsDeclarations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CustomsDeclaration]:
+    ) -> components.CustomsDeclaration:
         r"""Create a new customs declaration
 
         Creates a new customs declaration object
@@ -273,6 +325,7 @@ class CustomsDeclarations(BaseSDK):
                 "json",
                 components.CustomsDeclarationCreateRequest,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -286,39 +339,62 @@ class CustomsDeclarations(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateCustomsDeclaration",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Customs Declarations"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/customs/declarations/ \\\n-H "Authorization: ShippoToken " \\\n-H "Content-Type: application/json"  \\\n-d \'{          \n      "contents_type": "MERCHANDISE",\n      "non_delivery_option": "RETURN",\n      "certify": true,\n      "certify_signer": "Simon Kreuz",\n      "incoterm": "DDU",\n      "items": [{\n                "description": "T-shirt",\n                "quantity": 20,\n                "net_weight": "5",\n                "mass_unit": "lb",\n                "value_amount": "200",\n                "value_currency": "USD",\n                "tariff_number": "",\n                "origin_country": "US"\n        }]\n}\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.customs_declarations.create(request=components.CustomsDeclarationCreateRequest(\n    b13a_filing_option=components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,\n    certify=True,\n    certify_signer='Shawn Ippotle',\n    contents_explanation='T-Shirt purchase',\n    duties_payor=components.DutiesPayor(\n        account='2323434543',\n        type=components.CustomsDeclarationCreateRequestType.THIRD_PARTY,\n        address=components.CustomsDeclarationCreateRequestAddress(\n            name='Patrick Kavanagh',\n            zip='80331',\n            country='DE',\n        ),\n    ),\n    exporter_identification=components.CustomsExporterIdentification(\n        eori_number='PL123456790ABCDE',\n        tax_id=components.CustomsTaxIdentification(\n            number='123456789',\n            type=components.CustomsTaxIdentificationType.EIN,\n        ),\n    ),\n    invoice='#123123',\n    metadata='Order ID #123123',\n    address_importer=components.AddressImporter(\n        name='Shwan Ippotle',\n        company='Shippo',\n        street1='Blumenstraße',\n        street3='',\n        street_no='22',\n        city='München',\n        state='CA',\n        zip='80331',\n        country='DE',\n        phone='80331',\n        email='shippotle@shippo.com',\n        is_residential=True,\n    ),\n    contents_type=components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,\n    eel_pfc=components.CustomsDeclarationEelPfcEnum.NOEEI_30_37_A,\n    incoterm=components.CustomsDeclarationIncotermEnum.DDP,\n    items=[\n        components.CustomsItemCreateRequest(\n            description='T-Shirt',\n            mass_unit=components.WeightUnitEnum.LB,\n            metadata='Order ID \"123454\"',\n            net_weight='5',\n            origin_country='<value>',\n            quantity=20,\n            sku_code='HM-123',\n            hs_code='0901.21',\n            value_amount='200',\n            value_currency='USD',\n        ),\n    ],\n    non_delivery_option=components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,\n    test=True,\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.customsDeclarations.create({\n    b13aFilingOption: "FILED_ELECTRONICALLY",\n    certify: true,\n    certifySigner: "Shawn Ippotle",\n    contentsExplanation: "T-Shirt purchase",\n    dutiesPayor: {\n      account: "2323434543",\n      type: "THIRD_PARTY",\n      address: {\n        name: "Patrick Kavanagh",\n        zip: "80331",\n        country: "DE",\n      },\n    },\n    exporterIdentification: {\n      eoriNumber: "PL123456790ABCDE",\n      taxId: {\n        number: "123456789",\n        type: "EIN",\n      },\n    },\n    invoice: "#123123",\n    metadata: "Order ID #123123",\n    addressImporter: {\n      name: "Shwan Ippotle",\n      company: "Shippo",\n      street1: "Blumenstraße",\n      street3: "",\n      streetNo: "22",\n      city: "München",\n      state: "CA",\n      zip: "80331",\n      country: "DE",\n      phone: "80331",\n      email: "shippotle@shippo.com",\n      isResidential: true,\n    },\n    contentsType: "MERCHANDISE",\n    eelPfc: "NOEEI_30_37_a",\n    incoterm: "DDP",\n    items: [\n      {\n        description: "T-Shirt",\n        massUnit: "lb",\n        metadata: "Order ID \\"123454\\"",\n        netWeight: "5",\n        originCountry: "<value>",\n        quantity: 20,\n        skuCode: "HM-123",\n        hsCode: "0901.21",\n        valueAmount: "200",\n        valueCurrency: "USD",\n      },\n    ],\n    nonDeliveryOption: "RETURN",\n    test: true,\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$customsDeclarationCreateRequest = new Components\\CustomsDeclarationCreateRequest(\n    b13aFilingOption: Components\\CustomsDeclarationB13AFilingOptionEnum::FiledElectronically,\n    certify: true,\n    certifySigner: 'Shawn Ippotle',\n    contentsExplanation: 'T-Shirt purchase',\n    dutiesPayor: new Components\\DutiesPayor(\n        account: '2323434543',\n        type: Components\\CustomsDeclarationCreateRequestType::ThirdParty,\n        address: new Components\\CustomsDeclarationCreateRequestAddress(\n            name: 'Patrick Kavanagh',\n            zip: '80331',\n            country: 'DE',\n        ),\n    ),\n    exporterIdentification: new Components\\CustomsExporterIdentification(\n        eoriNumber: 'PL123456790ABCDE',\n        taxId: new Components\\CustomsTaxIdentification(\n            number: '123456789',\n            type: Components\\CustomsTaxIdentificationType::Ein,\n        ),\n    ),\n    invoice: '#123123',\n    metadata: 'Order ID #123123',\n    addressImporter: new Components\\AddressImporter(\n        name: 'Shwan Ippotle',\n        company: 'Shippo',\n        street1: 'Blumenstraße',\n        street3: '',\n        streetNo: '22',\n        city: 'München',\n        state: 'CA',\n        zip: '80331',\n        country: 'DE',\n        phone: '80331',\n        email: 'shippotle@shippo.com',\n        isResidential: true,\n    ),\n    contentsType: Components\\CustomsDeclarationContentsTypeEnum::Merchandise,\n    eelPfc: Components\\CustomsDeclarationEelPfcEnum::NOEEI3037A,\n    incoterm: Components\\CustomsDeclarationIncotermEnum::Ddp,\n    items: [\n        new Components\\CustomsItemCreateRequest(\n            description: 'T-Shirt',\n            massUnit: Components\\WeightUnitEnum::Lb,\n            metadata: 'Order ID \"123454\"',\n            netWeight: '5',\n            originCountry: '<value>',\n            quantity: 20,\n            skuCode: 'HM-123',\n            hsCode: '0901.21',\n            valueAmount: '200',\n            valueCurrency: 'USD',\n        ),\n    ],\n    nonDeliveryOption: Components\\CustomsDeclarationNonDeliveryOptionEnum::Return,\n    test: true,\n);\n\n$response = $sdk->customsDeclarations->create(\n    customsDeclarationCreateRequest: $customsDeclarationCreateRequest,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->customsDeclaration !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing System.Collections.Generic;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.CustomsDeclarations.CreateAsync(\n    customsDeclarationCreateRequest: new CustomsDeclarationCreateRequest() {\n        B13aFilingOption = CustomsDeclarationB13AFilingOptionEnum.FiledElectronically,\n        Certify = true,\n        CertifySigner = "Shawn Ippotle",\n        ContentsExplanation = "T-Shirt purchase",\n        DutiesPayor = new DutiesPayor() {\n            Account = "2323434543",\n            Type = CustomsDeclarationCreateRequestType.ThirdParty,\n            Address = new CustomsDeclarationCreateRequestAddress() {\n                Name = "Patrick Kavanagh",\n                Zip = "80331",\n                Country = "DE",\n            },\n        },\n        ExporterIdentification = new CustomsExporterIdentification() {\n            EoriNumber = "PL123456790ABCDE",\n            TaxId = new CustomsTaxIdentification() {\n                Number = "123456789",\n                Type = CustomsTaxIdentificationType.Ein,\n            },\n        },\n        Invoice = "#123123",\n        Metadata = "Order ID #123123",\n        AddressImporter = new AddressImporter() {\n            Name = "Shwan Ippotle",\n            Company = "Shippo",\n            Street1 = "Blumenstraße",\n            Street3 = "",\n            StreetNo = "22",\n            City = "München",\n            State = "CA",\n            Zip = "80331",\n            Country = "DE",\n            Phone = "80331",\n            Email = "shippotle@shippo.com",\n            IsResidential = true,\n        },\n        ContentsType = CustomsDeclarationContentsTypeEnum.Merchandise,\n        EelPfc = CustomsDeclarationEelPfcEnum.Noeei3037A,\n        Incoterm = CustomsDeclarationIncotermEnum.Ddp,\n        Items = new List<CustomsItemCreateRequest>() {\n            new CustomsItemCreateRequest() {\n                Description = "T-Shirt",\n                MassUnit = WeightUnitEnum.Lb,\n                Metadata = "Order ID \\"123454\\"",\n                NetWeight = "5",\n                OriginCountry = "<value>",\n                Quantity = 20,\n                SkuCode = "HM-123",\n                HsCode = "0901.21",\n                ValueAmount = "200",\n                ValueCurrency = "USD",\n            },\n        },\n        NonDeliveryOption = CustomsDeclarationNonDeliveryOptionEnum.Return,\n        Test = true,\n    },\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.AddressImporter;\nimport com.goshippo.shippo_sdk.models.components.CustomsDeclarationB13AFilingOptionEnum;\nimport com.goshippo.shippo_sdk.models.components.CustomsDeclarationContentsTypeEnum;\nimport com.goshippo.shippo_sdk.models.components.CustomsDeclarationCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.CustomsDeclarationCreateRequestAddress;\nimport com.goshippo.shippo_sdk.models.components.CustomsDeclarationCreateRequestType;\nimport com.goshippo.shippo_sdk.models.components.CustomsDeclarationEelPfcEnum;\nimport com.goshippo.shippo_sdk.models.components.CustomsDeclarationIncotermEnum;\nimport com.goshippo.shippo_sdk.models.components.CustomsDeclarationNonDeliveryOptionEnum;\nimport com.goshippo.shippo_sdk.models.components.CustomsExporterIdentification;\nimport com.goshippo.shippo_sdk.models.components.CustomsItemCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.CustomsTaxIdentification;\nimport com.goshippo.shippo_sdk.models.components.CustomsTaxIdentificationType;\nimport com.goshippo.shippo_sdk.models.components.DutiesPayor;\nimport com.goshippo.shippo_sdk.models.components.WeightUnitEnum;\nimport com.goshippo.shippo_sdk.models.operations.CreateCustomsDeclarationResponse;\nimport java.lang.Exception;\nimport java.util.List;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreateCustomsDeclarationResponse res = sdk.customsDeclarations().create()\n                .shippoApiVersion("2018-02-08")\n                .customsDeclarationCreateRequest(CustomsDeclarationCreateRequest.builder()\n                    .certify(true)\n                    .certifySigner("Shawn Ippotle")\n                    .contentsType(CustomsDeclarationContentsTypeEnum.MERCHANDISE)\n                    .items(List.of(\n                        CustomsItemCreateRequest.builder()\n                            .description("T-Shirt")\n                            .massUnit(WeightUnitEnum.LB)\n                            .netWeight("5")\n                            .originCountry("<value>")\n                            .quantity(20L)\n                            .valueAmount("200")\n                            .valueCurrency("USD")\n                            .metadata("Order ID \\"123454\\"")\n                            .skuCode("HM-123")\n                            .hsCode("0901.21")\n                            .build()))\n                    .nonDeliveryOption(CustomsDeclarationNonDeliveryOptionEnum.RETURN)\n                    .b13aFilingOption(CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY)\n                    .contentsExplanation("T-Shirt purchase")\n                    .dutiesPayor(DutiesPayor.builder()\n                        .account("2323434543")\n                        .type(CustomsDeclarationCreateRequestType.THIRD_PARTY)\n                        .address(CustomsDeclarationCreateRequestAddress.builder()\n                            .name("Patrick Kavanagh")\n                            .zip("80331")\n                            .country("DE")\n                            .build())\n                        .build())\n                    .exporterIdentification(CustomsExporterIdentification.builder()\n                        .eoriNumber("PL123456790ABCDE")\n                        .taxId(CustomsTaxIdentification.builder()\n                            .number("123456789")\n                            .type(CustomsTaxIdentificationType.EIN)\n                            .build())\n                        .build())\n                    .invoice("#123123")\n                    .metadata("Order ID #123123")\n                    .addressImporter(AddressImporter.builder()\n                        .name("Shwan Ippotle")\n                        .company("Shippo")\n                        .street1("Blumenstraße")\n                        .street3("")\n                        .streetNo("22")\n                        .city("München")\n                        .state("CA")\n                        .zip("80331")\n                        .country("DE")\n                        .phone("80331")\n                        .email("shippotle@shippo.com")\n                        .isResidential(true)\n                        .build())\n                    .eelPfc(CustomsDeclarationEelPfcEnum.NOEEI3037_A)\n                    .incoterm(CustomsDeclarationIncotermEnum.DDP)\n                    .test(true)\n                    .build())\n                .call();\n\n        if (res.customsDeclaration().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CustomsDeclaration]
-            )
+            return unmarshal_json_response(components.CustomsDeclaration, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def create_async(
         self,
@@ -331,7 +407,7 @@ class CustomsDeclarations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CustomsDeclaration]:
+    ) -> components.CustomsDeclaration:
         r"""Create a new customs declaration
 
         Creates a new customs declaration object
@@ -381,6 +457,7 @@ class CustomsDeclarations(BaseSDK):
                 "json",
                 components.CustomsDeclarationCreateRequest,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -394,39 +471,62 @@ class CustomsDeclarations(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateCustomsDeclaration",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Customs Declarations"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/customs/declarations/ \\\n-H "Authorization: ShippoToken " \\\n-H "Content-Type: application/json"  \\\n-d \'{          \n      "contents_type": "MERCHANDISE",\n      "non_delivery_option": "RETURN",\n      "certify": true,\n      "certify_signer": "Simon Kreuz",\n      "incoterm": "DDU",\n      "items": [{\n                "description": "T-shirt",\n                "quantity": 20,\n                "net_weight": "5",\n                "mass_unit": "lb",\n                "value_amount": "200",\n                "value_currency": "USD",\n                "tariff_number": "",\n                "origin_country": "US"\n        }]\n}\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.customs_declarations.create(request=components.CustomsDeclarationCreateRequest(\n    b13a_filing_option=components.CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY,\n    certify=True,\n    certify_signer='Shawn Ippotle',\n    contents_explanation='T-Shirt purchase',\n    duties_payor=components.DutiesPayor(\n        account='2323434543',\n        type=components.CustomsDeclarationCreateRequestType.THIRD_PARTY,\n        address=components.CustomsDeclarationCreateRequestAddress(\n            name='Patrick Kavanagh',\n            zip='80331',\n            country='DE',\n        ),\n    ),\n    exporter_identification=components.CustomsExporterIdentification(\n        eori_number='PL123456790ABCDE',\n        tax_id=components.CustomsTaxIdentification(\n            number='123456789',\n            type=components.CustomsTaxIdentificationType.EIN,\n        ),\n    ),\n    invoice='#123123',\n    metadata='Order ID #123123',\n    address_importer=components.AddressImporter(\n        name='Shwan Ippotle',\n        company='Shippo',\n        street1='Blumenstraße',\n        street3='',\n        street_no='22',\n        city='München',\n        state='CA',\n        zip='80331',\n        country='DE',\n        phone='80331',\n        email='shippotle@shippo.com',\n        is_residential=True,\n    ),\n    contents_type=components.CustomsDeclarationContentsTypeEnum.MERCHANDISE,\n    eel_pfc=components.CustomsDeclarationEelPfcEnum.NOEEI_30_37_A,\n    incoterm=components.CustomsDeclarationIncotermEnum.DDP,\n    items=[\n        components.CustomsItemCreateRequest(\n            description='T-Shirt',\n            mass_unit=components.WeightUnitEnum.LB,\n            metadata='Order ID \"123454\"',\n            net_weight='5',\n            origin_country='<value>',\n            quantity=20,\n            sku_code='HM-123',\n            hs_code='0901.21',\n            value_amount='200',\n            value_currency='USD',\n        ),\n    ],\n    non_delivery_option=components.CustomsDeclarationNonDeliveryOptionEnum.RETURN,\n    test=True,\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.customsDeclarations.create({\n    b13aFilingOption: "FILED_ELECTRONICALLY",\n    certify: true,\n    certifySigner: "Shawn Ippotle",\n    contentsExplanation: "T-Shirt purchase",\n    dutiesPayor: {\n      account: "2323434543",\n      type: "THIRD_PARTY",\n      address: {\n        name: "Patrick Kavanagh",\n        zip: "80331",\n        country: "DE",\n      },\n    },\n    exporterIdentification: {\n      eoriNumber: "PL123456790ABCDE",\n      taxId: {\n        number: "123456789",\n        type: "EIN",\n      },\n    },\n    invoice: "#123123",\n    metadata: "Order ID #123123",\n    addressImporter: {\n      name: "Shwan Ippotle",\n      company: "Shippo",\n      street1: "Blumenstraße",\n      street3: "",\n      streetNo: "22",\n      city: "München",\n      state: "CA",\n      zip: "80331",\n      country: "DE",\n      phone: "80331",\n      email: "shippotle@shippo.com",\n      isResidential: true,\n    },\n    contentsType: "MERCHANDISE",\n    eelPfc: "NOEEI_30_37_a",\n    incoterm: "DDP",\n    items: [\n      {\n        description: "T-Shirt",\n        massUnit: "lb",\n        metadata: "Order ID \\"123454\\"",\n        netWeight: "5",\n        originCountry: "<value>",\n        quantity: 20,\n        skuCode: "HM-123",\n        hsCode: "0901.21",\n        valueAmount: "200",\n        valueCurrency: "USD",\n      },\n    ],\n    nonDeliveryOption: "RETURN",\n    test: true,\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$customsDeclarationCreateRequest = new Components\\CustomsDeclarationCreateRequest(\n    b13aFilingOption: Components\\CustomsDeclarationB13AFilingOptionEnum::FiledElectronically,\n    certify: true,\n    certifySigner: 'Shawn Ippotle',\n    contentsExplanation: 'T-Shirt purchase',\n    dutiesPayor: new Components\\DutiesPayor(\n        account: '2323434543',\n        type: Components\\CustomsDeclarationCreateRequestType::ThirdParty,\n        address: new Components\\CustomsDeclarationCreateRequestAddress(\n            name: 'Patrick Kavanagh',\n            zip: '80331',\n            country: 'DE',\n        ),\n    ),\n    exporterIdentification: new Components\\CustomsExporterIdentification(\n        eoriNumber: 'PL123456790ABCDE',\n        taxId: new Components\\CustomsTaxIdentification(\n            number: '123456789',\n            type: Components\\CustomsTaxIdentificationType::Ein,\n        ),\n    ),\n    invoice: '#123123',\n    metadata: 'Order ID #123123',\n    addressImporter: new Components\\AddressImporter(\n        name: 'Shwan Ippotle',\n        company: 'Shippo',\n        street1: 'Blumenstraße',\n        street3: '',\n        streetNo: '22',\n        city: 'München',\n        state: 'CA',\n        zip: '80331',\n        country: 'DE',\n        phone: '80331',\n        email: 'shippotle@shippo.com',\n        isResidential: true,\n    ),\n    contentsType: Components\\CustomsDeclarationContentsTypeEnum::Merchandise,\n    eelPfc: Components\\CustomsDeclarationEelPfcEnum::NOEEI3037A,\n    incoterm: Components\\CustomsDeclarationIncotermEnum::Ddp,\n    items: [\n        new Components\\CustomsItemCreateRequest(\n            description: 'T-Shirt',\n            massUnit: Components\\WeightUnitEnum::Lb,\n            metadata: 'Order ID \"123454\"',\n            netWeight: '5',\n            originCountry: '<value>',\n            quantity: 20,\n            skuCode: 'HM-123',\n            hsCode: '0901.21',\n            valueAmount: '200',\n            valueCurrency: 'USD',\n        ),\n    ],\n    nonDeliveryOption: Components\\CustomsDeclarationNonDeliveryOptionEnum::Return,\n    test: true,\n);\n\n$response = $sdk->customsDeclarations->create(\n    customsDeclarationCreateRequest: $customsDeclarationCreateRequest,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->customsDeclaration !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing System.Collections.Generic;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.CustomsDeclarations.CreateAsync(\n    customsDeclarationCreateRequest: new CustomsDeclarationCreateRequest() {\n        B13aFilingOption = CustomsDeclarationB13AFilingOptionEnum.FiledElectronically,\n        Certify = true,\n        CertifySigner = "Shawn Ippotle",\n        ContentsExplanation = "T-Shirt purchase",\n        DutiesPayor = new DutiesPayor() {\n            Account = "2323434543",\n            Type = CustomsDeclarationCreateRequestType.ThirdParty,\n            Address = new CustomsDeclarationCreateRequestAddress() {\n                Name = "Patrick Kavanagh",\n                Zip = "80331",\n                Country = "DE",\n            },\n        },\n        ExporterIdentification = new CustomsExporterIdentification() {\n            EoriNumber = "PL123456790ABCDE",\n            TaxId = new CustomsTaxIdentification() {\n                Number = "123456789",\n                Type = CustomsTaxIdentificationType.Ein,\n            },\n        },\n        Invoice = "#123123",\n        Metadata = "Order ID #123123",\n        AddressImporter = new AddressImporter() {\n            Name = "Shwan Ippotle",\n            Company = "Shippo",\n            Street1 = "Blumenstraße",\n            Street3 = "",\n            StreetNo = "22",\n            City = "München",\n            State = "CA",\n            Zip = "80331",\n            Country = "DE",\n            Phone = "80331",\n            Email = "shippotle@shippo.com",\n            IsResidential = true,\n        },\n        ContentsType = CustomsDeclarationContentsTypeEnum.Merchandise,\n        EelPfc = CustomsDeclarationEelPfcEnum.Noeei3037A,\n        Incoterm = CustomsDeclarationIncotermEnum.Ddp,\n        Items = new List<CustomsItemCreateRequest>() {\n            new CustomsItemCreateRequest() {\n                Description = "T-Shirt",\n                MassUnit = WeightUnitEnum.Lb,\n                Metadata = "Order ID \\"123454\\"",\n                NetWeight = "5",\n                OriginCountry = "<value>",\n                Quantity = 20,\n                SkuCode = "HM-123",\n                HsCode = "0901.21",\n                ValueAmount = "200",\n                ValueCurrency = "USD",\n            },\n        },\n        NonDeliveryOption = CustomsDeclarationNonDeliveryOptionEnum.Return,\n        Test = true,\n    },\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.AddressImporter;\nimport com.goshippo.shippo_sdk.models.components.CustomsDeclarationB13AFilingOptionEnum;\nimport com.goshippo.shippo_sdk.models.components.CustomsDeclarationContentsTypeEnum;\nimport com.goshippo.shippo_sdk.models.components.CustomsDeclarationCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.CustomsDeclarationCreateRequestAddress;\nimport com.goshippo.shippo_sdk.models.components.CustomsDeclarationCreateRequestType;\nimport com.goshippo.shippo_sdk.models.components.CustomsDeclarationEelPfcEnum;\nimport com.goshippo.shippo_sdk.models.components.CustomsDeclarationIncotermEnum;\nimport com.goshippo.shippo_sdk.models.components.CustomsDeclarationNonDeliveryOptionEnum;\nimport com.goshippo.shippo_sdk.models.components.CustomsExporterIdentification;\nimport com.goshippo.shippo_sdk.models.components.CustomsItemCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.CustomsTaxIdentification;\nimport com.goshippo.shippo_sdk.models.components.CustomsTaxIdentificationType;\nimport com.goshippo.shippo_sdk.models.components.DutiesPayor;\nimport com.goshippo.shippo_sdk.models.components.WeightUnitEnum;\nimport com.goshippo.shippo_sdk.models.operations.CreateCustomsDeclarationResponse;\nimport java.lang.Exception;\nimport java.util.List;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreateCustomsDeclarationResponse res = sdk.customsDeclarations().create()\n                .shippoApiVersion("2018-02-08")\n                .customsDeclarationCreateRequest(CustomsDeclarationCreateRequest.builder()\n                    .certify(true)\n                    .certifySigner("Shawn Ippotle")\n                    .contentsType(CustomsDeclarationContentsTypeEnum.MERCHANDISE)\n                    .items(List.of(\n                        CustomsItemCreateRequest.builder()\n                            .description("T-Shirt")\n                            .massUnit(WeightUnitEnum.LB)\n                            .netWeight("5")\n                            .originCountry("<value>")\n                            .quantity(20L)\n                            .valueAmount("200")\n                            .valueCurrency("USD")\n                            .metadata("Order ID \\"123454\\"")\n                            .skuCode("HM-123")\n                            .hsCode("0901.21")\n                            .build()))\n                    .nonDeliveryOption(CustomsDeclarationNonDeliveryOptionEnum.RETURN)\n                    .b13aFilingOption(CustomsDeclarationB13AFilingOptionEnum.FILED_ELECTRONICALLY)\n                    .contentsExplanation("T-Shirt purchase")\n                    .dutiesPayor(DutiesPayor.builder()\n                        .account("2323434543")\n                        .type(CustomsDeclarationCreateRequestType.THIRD_PARTY)\n                        .address(CustomsDeclarationCreateRequestAddress.builder()\n                            .name("Patrick Kavanagh")\n                            .zip("80331")\n                            .country("DE")\n                            .build())\n                        .build())\n                    .exporterIdentification(CustomsExporterIdentification.builder()\n                        .eoriNumber("PL123456790ABCDE")\n                        .taxId(CustomsTaxIdentification.builder()\n                            .number("123456789")\n                            .type(CustomsTaxIdentificationType.EIN)\n                            .build())\n                        .build())\n                    .invoice("#123123")\n                    .metadata("Order ID #123123")\n                    .addressImporter(AddressImporter.builder()\n                        .name("Shwan Ippotle")\n                        .company("Shippo")\n                        .street1("Blumenstraße")\n                        .street3("")\n                        .streetNo("22")\n                        .city("München")\n                        .state("CA")\n                        .zip("80331")\n                        .country("DE")\n                        .phone("80331")\n                        .email("shippotle@shippo.com")\n                        .isResidential(true)\n                        .build())\n                    .eelPfc(CustomsDeclarationEelPfcEnum.NOEEI3037_A)\n                    .incoterm(CustomsDeclarationIncotermEnum.DDP)\n                    .test(true)\n                    .build())\n                .call();\n\n        if (res.customsDeclaration().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CustomsDeclaration]
-            )
+            return unmarshal_json_response(components.CustomsDeclaration, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def get(
         self,
@@ -437,7 +537,7 @@ class CustomsDeclarations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CustomsDeclaration]:
+    ) -> components.CustomsDeclaration:
         r"""Retrieve a customs declaration
 
         Returns an existing customs declaration using an object ID
@@ -480,6 +580,7 @@ class CustomsDeclarations(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -493,39 +594,62 @@ class CustomsDeclarations(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetCustomsDeclaration",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Customs Declarations"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/customs/declarations/e2197a54da9d470480f4f8796cc419cb \\\n-H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.customs_declarations.get(customs_declaration_id='<id>')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.customsDeclarations.get("<id>");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->customsDeclarations->get(\n    customsDeclarationId: '<id>',\n    page: 1,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->customsDeclaration !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.CustomsDeclarations.GetAsync(\n    customsDeclarationId: "<id>",\n    page: 1,\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.GetCustomsDeclarationResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetCustomsDeclarationResponse res = sdk.customsDeclarations().get()\n                .customsDeclarationId("<id>")\n                .page(1L)\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.customsDeclaration().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CustomsDeclaration]
-            )
+            return unmarshal_json_response(components.CustomsDeclaration, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def get_async(
         self,
@@ -536,7 +660,7 @@ class CustomsDeclarations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CustomsDeclaration]:
+    ) -> components.CustomsDeclaration:
         r"""Retrieve a customs declaration
 
         Returns an existing customs declaration using an object ID
@@ -579,6 +703,7 @@ class CustomsDeclarations(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -592,36 +717,59 @@ class CustomsDeclarations(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetCustomsDeclaration",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Customs Declarations"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/customs/declarations/e2197a54da9d470480f4f8796cc419cb \\\n-H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.customs_declarations.get(customs_declaration_id='<id>')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.customsDeclarations.get("<id>");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->customsDeclarations->get(\n    customsDeclarationId: '<id>',\n    page: 1,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->customsDeclaration !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.CustomsDeclarations.GetAsync(\n    customsDeclarationId: "<id>",\n    page: 1,\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.GetCustomsDeclarationResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetCustomsDeclarationResponse res = sdk.customsDeclarations().get()\n                .customsDeclarationId("<id>")\n                .page(1L)\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.customsDeclaration().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CustomsDeclaration]
-            )
+            return unmarshal_json_response(components.CustomsDeclaration, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)

@@ -28,6 +28,14 @@
 | fedex_standard_overnight_extra_hours | Standard Overnight® EH |
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelFedExEnum
+
+value = ServiceLevelFedExEnum.FEDEX_GROUND
+```
+
 
 ## Values
 

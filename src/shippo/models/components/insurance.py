@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 from enum import Enum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -16,9 +17,11 @@ class InsuranceProvider(str, Enum):
 
 
 class InsuranceTypedDict(TypedDict):
-    r"""To add 3rd party insurance powered by <a href=\"https://docs.goshippo.com/docs/shipments/shippinginsurance/\">XCover</a>,
-    specify <br> `amount`, `content`, and `currency`. <br> Alternatively, you can choose carrier provided insurance
-    by additionally specifying `provider` (UPS, FedEx and OnTrac only). <br><br> If you do not want to add insurance
+    r"""To add 3rd party insurance powered by [XCover](https://docs.goshippo.com/docs/shipments/shippinginsurance/),
+    specify `amount`, `content`, and `currency`. Alternatively, you can choose carrier provided insurance
+    by additionally specifying `provider` (UPS, FedEx and OnTrac only).
+
+    If you do not want to add insurance
     to your shipment, do not set these parameters.
     """
 
@@ -35,9 +38,11 @@ class InsuranceTypedDict(TypedDict):
 
 
 class Insurance(BaseModel):
-    r"""To add 3rd party insurance powered by <a href=\"https://docs.goshippo.com/docs/shipments/shippinginsurance/\">XCover</a>,
-    specify <br> `amount`, `content`, and `currency`. <br> Alternatively, you can choose carrier provided insurance
-    by additionally specifying `provider` (UPS, FedEx and OnTrac only). <br><br> If you do not want to add insurance
+    r"""To add 3rd party insurance powered by [XCover](https://docs.goshippo.com/docs/shipments/shippinginsurance/),
+    specify `amount`, `content`, and `currency`. Alternatively, you can choose carrier provided insurance
+    by additionally specifying `provider` (UPS, FedEx and OnTrac only).
+
+    If you do not want to add insurance
     to your shipment, do not set these parameters.
     """
 
@@ -54,3 +59,19 @@ class Insurance(BaseModel):
 
     provider: Optional[InsuranceProvider] = None
     r"""To have insurance cover provided by a carrier directly instead of Shippo's provider (XCover), set `provider` to `FEDEX`, `UPS`, or `ONTRAC`."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["amount", "content", "currency", "provider"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

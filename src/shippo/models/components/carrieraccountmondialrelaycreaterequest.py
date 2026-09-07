@@ -31,3 +31,9 @@ class CarrierAccountMondialRelayCreateRequest(BaseModel):
         ],
         pydantic.Field(alias="carrier"),
     ] = "mondial_relay"
+
+
+try:
+    CarrierAccountMondialRelayCreateRequest.model_rebuild()
+except NameError:
+    pass

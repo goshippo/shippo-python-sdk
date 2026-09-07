@@ -14,7 +14,8 @@ from .upsconnectexistingownaccountparameters import (
     UPSConnectExistingOwnAccountParametersTypedDict,
 )
 from enum import Enum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Any, Dict, List, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
@@ -68,11 +69,61 @@ class Authentication(BaseModel):
     status: Optional[CarrierAccountWithExtraInfoStatus] = None
     r"""Current authentication status. Possible values: 'disconnected' (authorization lost, reconnect needed), 'connected' (authorized and active), 'authorization_pending' (awaiting initial authorization flow)."""
 
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["type", "status"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
+class Policy(str, Enum):
+    r"""Policy to indicate if the Account needs multi-factor verification."""
+
+    REQUIRED = "required"
+    NOT_REQUIRED = "not-required"
+
+
+class VerificationTypedDict(TypedDict):
+    policy: NotRequired[Policy]
+    r"""Policy to indicate if the Account needs multi-factor verification."""
+
+
+class Verification(BaseModel):
+    policy: Optional[Policy] = None
+    r"""Policy to indicate if the Account needs multi-factor verification."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["policy"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
 
 class ObjectInfoTypedDict(TypedDict):
     r"""Holds internal state relevant to users."""
 
     authentication: NotRequired[AuthenticationTypedDict]
+    verification: NotRequired[VerificationTypedDict]
 
 
 class ObjectInfo(BaseModel):
@@ -80,16 +131,34 @@ class ObjectInfo(BaseModel):
 
     authentication: Optional[Authentication] = None
 
+    verification: Optional[Verification] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["authentication", "verification"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
 
 class CarrierAccountWithExtraInfoTypedDict(TypedDict):
     account_id: str
-    r"""Unique identifier of the account. Please check the <a href=\"https://docs.goshippo.com/docs/carriers/carrieraccounts/\">carrier accounts tutorial</a>
-    page for the `account_id` per carrier.<br>
+    r"""Unique identifier of the account. Please check the [carrier accounts tutorial](https://docs.goshippo.com/docs/carriers/carrieraccounts/)
+    page for the `account_id` per carrier.
     To protect account information, this field will be masked in any API response.
     """
     carrier: str
-    r"""Carrier token, see <a href=\"#tag/Carriers\">Carriers</a><br>
-    Please check the <a href=\"https://docs.goshippo.com/docs/carriers/carrieraccounts/\">carrier accounts tutorial</a> page for all supported carriers.
+    r"""Carrier token, see [Carriers](/shippoapi/public-api/carriers)
+    Please check the [carrier accounts tutorial](https://docs.goshippo.com/docs/carriers/carrieraccounts/) page for all supported carriers.
     """
     active: NotRequired[bool]
     r"""Determines whether the account is active. When creating a shipment, if no `carrier_accounts` are explicitly
@@ -97,7 +166,7 @@ class CarrierAccountWithExtraInfoTypedDict(TypedDict):
     """
     parameters: NotRequired[CarrierAccountWithExtraInfoParametersTypedDict]
     carrier_name: NotRequired[Any]
-    r"""Carrier name, see <a href=\"#tag/Carriers\">Carriers</a><br>"""
+    r"""Carrier name, see [Carriers](/shippoapi/public-api/carriers)"""
     is_shippo_account: NotRequired[bool]
     metadata: NotRequired[str]
     object_id: NotRequired[str]
@@ -113,14 +182,14 @@ class CarrierAccountWithExtraInfoTypedDict(TypedDict):
 
 class CarrierAccountWithExtraInfo(BaseModel):
     account_id: str
-    r"""Unique identifier of the account. Please check the <a href=\"https://docs.goshippo.com/docs/carriers/carrieraccounts/\">carrier accounts tutorial</a>
-    page for the `account_id` per carrier.<br>
+    r"""Unique identifier of the account. Please check the [carrier accounts tutorial](https://docs.goshippo.com/docs/carriers/carrieraccounts/)
+    page for the `account_id` per carrier.
     To protect account information, this field will be masked in any API response.
     """
 
     carrier: str
-    r"""Carrier token, see <a href=\"#tag/Carriers\">Carriers</a><br>
-    Please check the <a href=\"https://docs.goshippo.com/docs/carriers/carrieraccounts/\">carrier accounts tutorial</a> page for all supported carriers.
+    r"""Carrier token, see [Carriers](/shippoapi/public-api/carriers)
+    Please check the [carrier accounts tutorial](https://docs.goshippo.com/docs/carriers/carrieraccounts/) page for all supported carriers.
     """
 
     active: Optional[bool] = None
@@ -131,7 +200,7 @@ class CarrierAccountWithExtraInfo(BaseModel):
     parameters: Optional[CarrierAccountWithExtraInfoParameters] = None
 
     carrier_name: Optional[Any] = None
-    r"""Carrier name, see <a href=\"#tag/Carriers\">Carriers</a><br>"""
+    r"""Carrier name, see [Carriers](/shippoapi/public-api/carriers)"""
 
     is_shippo_account: Optional[bool] = None
 
@@ -150,3 +219,32 @@ class CarrierAccountWithExtraInfo(BaseModel):
 
     object_info: Optional[ObjectInfo] = None
     r"""Holds internal state relevant to users."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "active",
+                "parameters",
+                "carrier_name",
+                "is_shippo_account",
+                "metadata",
+                "object_id",
+                "object_owner",
+                "service_levels",
+                "test",
+                "object_info",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

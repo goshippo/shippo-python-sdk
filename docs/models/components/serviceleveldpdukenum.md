@@ -21,6 +21,14 @@
 | dpd_uk_pickup_returns | Pickup Returns|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelDPDUKEnum
+
+value = ServiceLevelDPDUKEnum.DPD_UK_SHIP_TO_SHOP
+```
+
 
 ## Values
 

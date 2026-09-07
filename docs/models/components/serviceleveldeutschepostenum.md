@@ -14,6 +14,14 @@
 | deutsche_post_warenpost_international_l | Warenpost International L|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelDeutschePostEnum
+
+value = ServiceLevelDeutschePostEnum.DEUTSCHE_POST_POSTKARTE
+```
+
 
 ## Values
 

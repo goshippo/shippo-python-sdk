@@ -1,5 +1,13 @@
 # AddressValidationResultsMessageCodeEnum
 
+## Example Usage
+
+```python
+from shippo.models.components import AddressValidationResultsMessageCodeEnum
+
+value = AddressValidationResultsMessageCodeEnum.VERIFICATION_ERROR
+```
+
 
 ## Values
 

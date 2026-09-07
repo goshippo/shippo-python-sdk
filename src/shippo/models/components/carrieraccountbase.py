@@ -9,7 +9,8 @@ from .upsconnectexistingownaccountparameters import (
     UPSConnectExistingOwnAccountParameters,
     UPSConnectExistingOwnAccountParametersTypedDict,
 )
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Any, Dict, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
@@ -36,13 +37,13 @@ CarrierAccountBaseParameters = TypeAliasType(
 
 class CarrierAccountBaseTypedDict(TypedDict):
     account_id: str
-    r"""Unique identifier of the account. Please check the <a href=\"https://docs.goshippo.com/docs/carriers/carrieraccounts/\">carrier accounts tutorial</a>
-    page for the `account_id` per carrier.<br>
+    r"""Unique identifier of the account. Please check the [carrier accounts tutorial](https://docs.goshippo.com/docs/carriers/carrieraccounts/)
+    page for the `account_id` per carrier.
     To protect account information, this field will be masked in any API response.
     """
     carrier: str
-    r"""Carrier token, see <a href=\"#tag/Carriers\">Carriers</a><br>
-    Please check the <a href=\"https://docs.goshippo.com/docs/carriers/carrieraccounts/\">carrier accounts tutorial</a> page for all supported carriers.
+    r"""Carrier token, see [Carriers](/shippoapi/public-api/carriers)
+    Please check the [carrier accounts tutorial](https://docs.goshippo.com/docs/carriers/carrieraccounts/) page for all supported carriers.
     """
     active: NotRequired[bool]
     r"""Determines whether the account is active. When creating a shipment, if no `carrier_accounts` are explicitly
@@ -53,14 +54,14 @@ class CarrierAccountBaseTypedDict(TypedDict):
 
 class CarrierAccountBase(BaseModel):
     account_id: str
-    r"""Unique identifier of the account. Please check the <a href=\"https://docs.goshippo.com/docs/carriers/carrieraccounts/\">carrier accounts tutorial</a>
-    page for the `account_id` per carrier.<br>
+    r"""Unique identifier of the account. Please check the [carrier accounts tutorial](https://docs.goshippo.com/docs/carriers/carrieraccounts/)
+    page for the `account_id` per carrier.
     To protect account information, this field will be masked in any API response.
     """
 
     carrier: str
-    r"""Carrier token, see <a href=\"#tag/Carriers\">Carriers</a><br>
-    Please check the <a href=\"https://docs.goshippo.com/docs/carriers/carrieraccounts/\">carrier accounts tutorial</a> page for all supported carriers.
+    r"""Carrier token, see [Carriers](/shippoapi/public-api/carriers)
+    Please check the [carrier accounts tutorial](https://docs.goshippo.com/docs/carriers/carrieraccounts/) page for all supported carriers.
     """
 
     active: Optional[bool] = None
@@ -69,3 +70,19 @@ class CarrierAccountBase(BaseModel):
     """
 
     parameters: Optional[CarrierAccountBaseParameters] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["active", "parameters"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

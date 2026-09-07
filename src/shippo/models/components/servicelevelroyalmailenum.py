@@ -20,7 +20,7 @@ class ServiceLevelRoyalMailEnum(str, Enum):
     | royal_mail_standard_first_class | Standard First Class
     | royal_mail_standard_second_class | Standard Second Class
     | royal_mail_tracked_24_no_signature | Royal Mail Tracked 24 No Signature
-    | royal_mail_tracked_48_no_signature | Royal Mail Ttacked 48 No Signature
+    | royal_mail_tracked_48_no_signature | Royal Mail Tracked 48 No Signature
     | royal_mail_intl_bus_mail_lrg_ltr_zone_sort_pri | International Business Mail Large Letter Zone Sort Priority
     | royal_mail_intl_bus_parcels_tracked_zone_sort | International Business Parcels Tracked Zone Sort
     | royal_mail_intl_bus_parcels_tracked_country_priced | International Business Parcels Tracked Country Priced

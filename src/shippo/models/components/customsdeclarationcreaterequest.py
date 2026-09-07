@@ -20,7 +20,8 @@ from .customsitemcreaterequest import (
     CustomsItemCreateRequestTypedDict,
 )
 from enum import Enum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -52,6 +53,22 @@ class CustomsDeclarationCreateRequestAddress(BaseModel):
     country: Optional[str] = None
     r"""Country ISO code of account number to be billed."""
 
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["name", "zip", "country"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
 
 class CustomsDeclarationCreateRequestDutiesPayorTypedDict(TypedDict):
     r"""Specifies who will pay the duties for the shipment. Only accepted for FedEx shipments."""
@@ -74,6 +91,22 @@ class CustomsDeclarationCreateRequestDutiesPayor(BaseModel):
 
     address: Optional[CustomsDeclarationCreateRequestAddress] = None
 
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["account", "type", "address"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
 
 class CustomsDeclarationCreateRequestTypedDict(TypedDict):
     certify: bool
@@ -86,25 +119,32 @@ class CustomsDeclarationCreateRequestTypedDict(TypedDict):
     items: List[CustomsItemCreateRequestTypedDict]
     non_delivery_option: CustomsDeclarationNonDeliveryOptionEnum
     aes_itn: NotRequired[str]
-    r"""**required if eel_pfc is `AES_ITN`**<br>
+    r"""**required if eel_pfc is `AES_ITN`**
+
     AES / ITN reference of the shipment.
     """
     b13a_filing_option: NotRequired[CustomsDeclarationB13AFilingOptionEnum]
     b13a_number: NotRequired[str]
-    r"""**must be provided if and only if b13a_filing_option is provided**<br>
-    Represents:<br> the Proof of Report (POR) Number when b13a_filing_option is `FILED_ELECTRONICALLY`;<br>
-    the Summary ID Number when b13a_filing_option is `SUMMARY_REPORTING`;<br>
-    or the Exemption Number when b13a_filing_option is `NOT_REQUIRED`.
+    r"""**must be provided if and only if b13a_filing_option is provided**
+
+    Represents the Proof of Report (POR) Number when b13a_filing_option is `FILED_ELECTRONICALLY`; the Summary ID Number when b13a_filing_option is `SUMMARY_REPORTING`; or the Exemption Number when b13a_filing_option is `NOT_REQUIRED`.
     """
     certificate: NotRequired[str]
     r"""Certificate reference of the shipment."""
     commercial_invoice: NotRequired[bool]
     contents_explanation: NotRequired[str]
-    r"""**required if contents_type is `OTHER`**<br>
+    r"""**required if contents_type is `OTHER`**
+
     Explanation of the type of goods of the shipment.
     """
     disclaimer: NotRequired[str]
-    r"""Disclaimer for the shipment and customs information that have been provided."""
+    r"""Disclaimer for the shipment and customs information that have been provided.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Max 554 characters |
+    """
     duties_payor: NotRequired[CustomsDeclarationCreateRequestDutiesPayorTypedDict]
     r"""Specifies who will pay the duties for the shipment. Only accepted for FedEx shipments."""
     exporter_identification: NotRequired[CustomsExporterIdentificationTypedDict]
@@ -148,17 +188,17 @@ class CustomsDeclarationCreateRequest(BaseModel):
     non_delivery_option: CustomsDeclarationNonDeliveryOptionEnum
 
     aes_itn: Optional[str] = None
-    r"""**required if eel_pfc is `AES_ITN`**<br>
+    r"""**required if eel_pfc is `AES_ITN`**
+
     AES / ITN reference of the shipment.
     """
 
     b13a_filing_option: Optional[CustomsDeclarationB13AFilingOptionEnum] = None
 
     b13a_number: Optional[str] = None
-    r"""**must be provided if and only if b13a_filing_option is provided**<br>
-    Represents:<br> the Proof of Report (POR) Number when b13a_filing_option is `FILED_ELECTRONICALLY`;<br>
-    the Summary ID Number when b13a_filing_option is `SUMMARY_REPORTING`;<br>
-    or the Exemption Number when b13a_filing_option is `NOT_REQUIRED`.
+    r"""**must be provided if and only if b13a_filing_option is provided**
+
+    Represents the Proof of Report (POR) Number when b13a_filing_option is `FILED_ELECTRONICALLY`; the Summary ID Number when b13a_filing_option is `SUMMARY_REPORTING`; or the Exemption Number when b13a_filing_option is `NOT_REQUIRED`.
     """
 
     certificate: Optional[str] = None
@@ -167,12 +207,19 @@ class CustomsDeclarationCreateRequest(BaseModel):
     commercial_invoice: Optional[bool] = None
 
     contents_explanation: Optional[str] = None
-    r"""**required if contents_type is `OTHER`**<br>
+    r"""**required if contents_type is `OTHER`**
+
     Explanation of the type of goods of the shipment.
     """
 
     disclaimer: Optional[str] = None
-    r"""Disclaimer for the shipment and customs information that have been provided."""
+    r"""Disclaimer for the shipment and customs information that have been provided.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Max 554 characters |
+    """
 
     duties_payor: Optional[CustomsDeclarationCreateRequestDutiesPayor] = None
     r"""Specifies who will pay the duties for the shipment. Only accepted for FedEx shipments."""
@@ -211,3 +258,42 @@ class CustomsDeclarationCreateRequest(BaseModel):
     incoterm: Optional[CustomsDeclarationIncotermEnum] = None
 
     test: Optional[bool] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "aes_itn",
+                "b13a_filing_option",
+                "b13a_number",
+                "certificate",
+                "commercial_invoice",
+                "contents_explanation",
+                "disclaimer",
+                "duties_payor",
+                "exporter_identification",
+                "exporter_reference",
+                "importer_reference",
+                "is_vat_collected",
+                "invoice",
+                "license",
+                "metadata",
+                "notes",
+                "address_importer",
+                "eel_pfc",
+                "incoterm",
+                "test",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

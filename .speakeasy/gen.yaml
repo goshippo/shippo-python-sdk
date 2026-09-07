@@ -4,6 +4,7 @@ generation:
   maintainOpenAPIOrder: true
   usageSnippets:
     optionalPropertyRendering: withExample
+    sdkInitStyle: constructor
   useClassNamesForArrayFields: true
   fixes:
     nameResolutionDec2023: true
@@ -11,11 +12,24 @@ generation:
     parameterOrderingFeb2024: true
     requestResponseComponentNamesFeb2024: true
     securityFeb2025: false
+    sharedErrorComponentsApr2025: false
+    sharedNestedComponentsJan2026: false
+    nameOverrideFeb2026: false
   auth:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: false
+    hoistGlobalSecurity: true
+  schemas:
+    allOfMergeStrategy: shallowMerge
+  requestBodyFieldName: ""
+  versioningStrategy: automatic
+  persistentEdits: {}
+  tests:
+    generateTests: true
+    generateNewTests: false
+    skipResponseBodyAssertions: false
 python:
-  version: 4.0.0
+  version: 5.0.0
   additionalDependencies:
     dev:
       httpretty: ==1.1.4
@@ -23,18 +37,36 @@ python:
       pytest: ==8.3.3
       pytest-asyncio: ==0.25.3
     main: {}
+  allowedRedefinedBuiltins:
+    - id
+    - object
+    - dir
+  asyncMode: both
   authors:
     - Shippo
+  baseErrorName: ShippoError
+  bodyVariantOverloads: false
   clientServerStatusCodesAsErrors: true
+  constFieldCasing: upper
   defaultErrorName: SDKError
   description: Shipping API Python library (USPS, FedEx, UPS and more)
+  durationFormat: false
   enableCustomCodeRegions: false
   enumFormat: enum
+  errorSchemaValidation: true
+  eventStreamClassNames:
+    async: EventStreamAsync
+    sync: EventStream
   fixFlags:
+    asyncPaginationSep2025: false
+    conflictResistantModelImportsFeb2026: false
     responseRequiredSep2024: false
   flattenGlobalSecurity: true
   flattenRequests: false
   flatteningOrder: parameters-first
+  forwardCompatibleEnumsByDefault: false
+  forwardCompatibleUnionsByDefault: "false"
+  httpClientLibrary: httpx
   imports:
     option: openapi
     paths:
@@ -43,13 +75,28 @@ python:
       operations: models/operations
       shared: models/components
       webhooks: models/webhooks
+  inferUnionDiscriminators: true
   inputModelSuffix: input
+  inputTypedDictSuffix: TypedDict
   license: MIT License
   maxMethodParams: 3
   methodArguments: require-security-and-request
+  methodTimeoutArgument: timeout-ms
+  methodTimeoutUnits: milliseconds
+  moduleName: ""
+  multipartArrayFormat: legacy
+  optionalDependencies: {}
   outputModelSuffix: output
+  packageManager: poetry
   packageName: shippo
+  preApplyUnionDiscriminators: false
   projectUrls: {}
+  pytestFilterWarnings: []
   pytestTimeout: 0
+  rawResponseHelpers: false
   responseFormat: flat
+  responseSchemaValidation: true
+  sseFlatResponse: false
   templateVersion: v2
+  useAsyncHooks: false
+  uuidFormat: false

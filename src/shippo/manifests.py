@@ -5,18 +5,13 @@ from shippo import utils
 from shippo._hooks import HookContext
 from shippo.models import components, errors, operations
 from shippo.types import BaseModel, OptionalNullable, UNSET
+from shippo.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Mapping, Optional, Union, cast
 
 
 class Manifests(BaseSDK):
     r"""A manifest is a single-page document with a barcode that carriers can scan to accept all packages into transit without the need to scan each item individually.
     They are close-outs of shipping labels of a certain day. Some carriers require manifests to  process the shipments.
-
-    <SchemaDefinition schemaRef=\"#/components/schemas/Manifest\"/>
-
-    # Manifest Errors
-    The following codes and messages are the possible errors that may occur when creating Manifests.
-    <SchemaDefinition schemaRef=\"#/components/schemas/ManifestErrors\"/>
     """
 
     def list(
@@ -28,7 +23,7 @@ class Manifests(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.ManifestPaginatedList]:
+    ) -> components.ManifestPaginatedList:
         r"""List all manifests
 
         Returns a list of all manifest objects.
@@ -71,6 +66,7 @@ class Manifests(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -84,39 +80,62 @@ class Manifests(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListManifests",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Manifests"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/manifests/ \\\n-H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.manifests.list()\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.manifests.list();\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->manifests->list(\n    page: 1,\n    results: 5,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->manifestPaginatedList !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Manifests.ListAsync(\n    page: 1,\n    results: 5,\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.ListManifestsResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        ListManifestsResponse res = sdk.manifests().list()\n                .page(1L)\n                .results(5L)\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.manifestPaginatedList().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.ManifestPaginatedList]
-            )
+            return unmarshal_json_response(components.ManifestPaginatedList, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def list_async(
         self,
@@ -127,7 +146,7 @@ class Manifests(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.ManifestPaginatedList]:
+    ) -> components.ManifestPaginatedList:
         r"""List all manifests
 
         Returns a list of all manifest objects.
@@ -170,6 +189,7 @@ class Manifests(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -183,39 +203,62 @@ class Manifests(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListManifests",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Manifests"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/manifests/ \\\n-H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.manifests.list()\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.manifests.list();\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->manifests->list(\n    page: 1,\n    results: 5,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->manifestPaginatedList !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Manifests.ListAsync(\n    page: 1,\n    results: 5,\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.ListManifestsResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        ListManifestsResponse res = sdk.manifests().list()\n                .page(1L)\n                .results(5L)\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.manifestPaginatedList().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.ManifestPaginatedList]
-            )
+            return unmarshal_json_response(components.ManifestPaginatedList, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def create(
         self,
@@ -227,7 +270,7 @@ class Manifests(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Manifest]:
+    ) -> components.Manifest:
         r"""Create a new manifest
 
         Creates a new manifest object.
@@ -271,6 +314,7 @@ class Manifests(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", components.ManifestCreateRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -284,37 +328,62 @@ class Manifests(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateManifest",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Manifests"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/manifests/ \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-d carrier_account="b741b99f95e841639b54272834bc478c", \\\n-d shipment_date="2014-05-16T23:59:59Z" \\\n-d address_from="d799c2679e644279b59fe661ac8fa488" \\\n-d transactions=["64bba01845ef40d29374032599f22588", "c169aa586a844cc49da00d0272b590e1"] \\\n-d async=false',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.manifests.create(request=components.ManifestCreateRequest(\n    carrier_account='adcfdddf8ec64b84ad22772bce3ea37a',\n    shipment_date='2014-05-16T23:59:59Z',\n    transactions=[\n        'adcfdddf8ec64b84ad22772bce3ea37a',\n    ],\n    address_from=components.AddressCreateRequest(\n        name='Shwan Ippotle',\n        company='Shippo',\n        street1='215 Clayton St.',\n        street3='',\n        street_no='',\n        city='San Francisco',\n        state='CA',\n        zip='94117',\n        country='US',\n        phone='+1 555 341 9393',\n        email='shippotle@shippo.com',\n        is_residential=True,\n        metadata='Customer ID 123456',\n        validate=True,\n    ),\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.manifests.create({\n    carrierAccount: "adcfdddf8ec64b84ad22772bce3ea37a",\n    shipmentDate: "2014-05-16T23:59:59Z",\n    transactions: [\n      "adcfdddf8ec64b84ad22772bce3ea37a",\n    ],\n    addressFrom: {\n      name: "Shwan Ippotle",\n      company: "Shippo",\n      street1: "215 Clayton St.",\n      street3: "",\n      streetNo: "",\n      city: "San Francisco",\n      state: "CA",\n      zip: "94117",\n      country: "US",\n      phone: "+1 555 341 9393",\n      email: "shippotle@shippo.com",\n      isResidential: true,\n      metadata: "Customer ID 123456",\n      validate: true,\n    },\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$manifestCreateRequest = new Components\\ManifestCreateRequest(\n    carrierAccount: 'adcfdddf8ec64b84ad22772bce3ea37a',\n    shipmentDate: '2014-05-16T23:59:59Z',\n    transactions: [\n        'adcfdddf8ec64b84ad22772bce3ea37a',\n    ],\n    addressFrom: new Components\\AddressCreateRequest(\n        name: 'Shwan Ippotle',\n        company: 'Shippo',\n        street1: '215 Clayton St.',\n        street3: '',\n        streetNo: '',\n        city: 'San Francisco',\n        state: 'CA',\n        zip: '94117',\n        country: 'US',\n        phone: '+1 555 341 9393',\n        email: 'shippotle@shippo.com',\n        isResidential: true,\n        metadata: 'Customer ID 123456',\n        validate: true,\n    ),\n);\n\n$response = $sdk->manifests->create(\n    manifestCreateRequest: $manifestCreateRequest,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->manifest !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing System.Collections.Generic;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Manifests.CreateAsync(\n    manifestCreateRequest: new ManifestCreateRequest() {\n        CarrierAccount = "adcfdddf8ec64b84ad22772bce3ea37a",\n        ShipmentDate = "2014-05-16T23:59:59Z",\n        Transactions = new List<string>() {\n            "adcfdddf8ec64b84ad22772bce3ea37a",\n        },\n        AddressFrom = ManifestCreateRequestAddressFrom.CreateAddressCreateRequest(\n            new AddressCreateRequest() {\n                Name = "Shwan Ippotle",\n                Company = "Shippo",\n                Street1 = "215 Clayton St.",\n                Street3 = "",\n                StreetNo = "",\n                City = "San Francisco",\n                State = "CA",\n                Zip = "94117",\n                Country = "US",\n                Phone = "+1 555 341 9393",\n                Email = "shippotle@shippo.com",\n                IsResidential = true,\n                Metadata = "Customer ID 123456",\n                Validate = true,\n            }\n        ),\n    },\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.AddressCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.ManifestCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.ManifestCreateRequestAddressFrom;\nimport com.goshippo.shippo_sdk.models.operations.CreateManifestResponse;\nimport java.lang.Exception;\nimport java.util.List;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreateManifestResponse res = sdk.manifests().create()\n                .shippoApiVersion("2018-02-08")\n                .manifestCreateRequest(ManifestCreateRequest.builder()\n                    .carrierAccount("adcfdddf8ec64b84ad22772bce3ea37a")\n                    .shipmentDate("2014-05-16T23:59:59Z")\n                    .addressFrom(ManifestCreateRequestAddressFrom.of(AddressCreateRequest.builder()\n                        .country("US")\n                        .name("Shwan Ippotle")\n                        .company("Shippo")\n                        .street1("215 Clayton St.")\n                        .street3("")\n                        .streetNo("")\n                        .city("San Francisco")\n                        .state("CA")\n                        .zip("94117")\n                        .phone("+1 555 341 9393")\n                        .email("shippotle@shippo.com")\n                        .isResidential(true)\n                        .metadata("Customer ID 123456")\n                        .validate(true)\n                        .build()))\n                    .transactions(List.of(\n                        "adcfdddf8ec64b84ad22772bce3ea37a"))\n                    .build())\n                .call();\n\n        if (res.manifest().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Manifest])
+            return unmarshal_json_response(components.Manifest, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def create_async(
         self,
@@ -326,7 +395,7 @@ class Manifests(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Manifest]:
+    ) -> components.Manifest:
         r"""Create a new manifest
 
         Creates a new manifest object.
@@ -370,6 +439,7 @@ class Manifests(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", components.ManifestCreateRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -383,37 +453,62 @@ class Manifests(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateManifest",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Manifests"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/manifests/ \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-d carrier_account="b741b99f95e841639b54272834bc478c", \\\n-d shipment_date="2014-05-16T23:59:59Z" \\\n-d address_from="d799c2679e644279b59fe661ac8fa488" \\\n-d transactions=["64bba01845ef40d29374032599f22588", "c169aa586a844cc49da00d0272b590e1"] \\\n-d async=false',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.manifests.create(request=components.ManifestCreateRequest(\n    carrier_account='adcfdddf8ec64b84ad22772bce3ea37a',\n    shipment_date='2014-05-16T23:59:59Z',\n    transactions=[\n        'adcfdddf8ec64b84ad22772bce3ea37a',\n    ],\n    address_from=components.AddressCreateRequest(\n        name='Shwan Ippotle',\n        company='Shippo',\n        street1='215 Clayton St.',\n        street3='',\n        street_no='',\n        city='San Francisco',\n        state='CA',\n        zip='94117',\n        country='US',\n        phone='+1 555 341 9393',\n        email='shippotle@shippo.com',\n        is_residential=True,\n        metadata='Customer ID 123456',\n        validate=True,\n    ),\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.manifests.create({\n    carrierAccount: "adcfdddf8ec64b84ad22772bce3ea37a",\n    shipmentDate: "2014-05-16T23:59:59Z",\n    transactions: [\n      "adcfdddf8ec64b84ad22772bce3ea37a",\n    ],\n    addressFrom: {\n      name: "Shwan Ippotle",\n      company: "Shippo",\n      street1: "215 Clayton St.",\n      street3: "",\n      streetNo: "",\n      city: "San Francisco",\n      state: "CA",\n      zip: "94117",\n      country: "US",\n      phone: "+1 555 341 9393",\n      email: "shippotle@shippo.com",\n      isResidential: true,\n      metadata: "Customer ID 123456",\n      validate: true,\n    },\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$manifestCreateRequest = new Components\\ManifestCreateRequest(\n    carrierAccount: 'adcfdddf8ec64b84ad22772bce3ea37a',\n    shipmentDate: '2014-05-16T23:59:59Z',\n    transactions: [\n        'adcfdddf8ec64b84ad22772bce3ea37a',\n    ],\n    addressFrom: new Components\\AddressCreateRequest(\n        name: 'Shwan Ippotle',\n        company: 'Shippo',\n        street1: '215 Clayton St.',\n        street3: '',\n        streetNo: '',\n        city: 'San Francisco',\n        state: 'CA',\n        zip: '94117',\n        country: 'US',\n        phone: '+1 555 341 9393',\n        email: 'shippotle@shippo.com',\n        isResidential: true,\n        metadata: 'Customer ID 123456',\n        validate: true,\n    ),\n);\n\n$response = $sdk->manifests->create(\n    manifestCreateRequest: $manifestCreateRequest,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->manifest !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing System.Collections.Generic;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Manifests.CreateAsync(\n    manifestCreateRequest: new ManifestCreateRequest() {\n        CarrierAccount = "adcfdddf8ec64b84ad22772bce3ea37a",\n        ShipmentDate = "2014-05-16T23:59:59Z",\n        Transactions = new List<string>() {\n            "adcfdddf8ec64b84ad22772bce3ea37a",\n        },\n        AddressFrom = ManifestCreateRequestAddressFrom.CreateAddressCreateRequest(\n            new AddressCreateRequest() {\n                Name = "Shwan Ippotle",\n                Company = "Shippo",\n                Street1 = "215 Clayton St.",\n                Street3 = "",\n                StreetNo = "",\n                City = "San Francisco",\n                State = "CA",\n                Zip = "94117",\n                Country = "US",\n                Phone = "+1 555 341 9393",\n                Email = "shippotle@shippo.com",\n                IsResidential = true,\n                Metadata = "Customer ID 123456",\n                Validate = true,\n            }\n        ),\n    },\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.AddressCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.ManifestCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.ManifestCreateRequestAddressFrom;\nimport com.goshippo.shippo_sdk.models.operations.CreateManifestResponse;\nimport java.lang.Exception;\nimport java.util.List;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreateManifestResponse res = sdk.manifests().create()\n                .shippoApiVersion("2018-02-08")\n                .manifestCreateRequest(ManifestCreateRequest.builder()\n                    .carrierAccount("adcfdddf8ec64b84ad22772bce3ea37a")\n                    .shipmentDate("2014-05-16T23:59:59Z")\n                    .addressFrom(ManifestCreateRequestAddressFrom.of(AddressCreateRequest.builder()\n                        .country("US")\n                        .name("Shwan Ippotle")\n                        .company("Shippo")\n                        .street1("215 Clayton St.")\n                        .street3("")\n                        .streetNo("")\n                        .city("San Francisco")\n                        .state("CA")\n                        .zip("94117")\n                        .phone("+1 555 341 9393")\n                        .email("shippotle@shippo.com")\n                        .isResidential(true)\n                        .metadata("Customer ID 123456")\n                        .validate(true)\n                        .build()))\n                    .transactions(List.of(\n                        "adcfdddf8ec64b84ad22772bce3ea37a"))\n                    .build())\n                .call();\n\n        if (res.manifest().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Manifest])
+            return unmarshal_json_response(components.Manifest, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def get(
         self,
@@ -423,7 +518,7 @@ class Manifests(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Manifest]:
+    ) -> components.Manifest:
         r"""Retrieve a manifest
 
         Returns an existing manifest using an object ID.
@@ -464,6 +559,7 @@ class Manifests(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -477,37 +573,62 @@ class Manifests(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetManifest",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Manifests"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/manifests/0fadebf6f60c4aca95fa01bcc59c79ae \\\n-H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.manifests.get(manifest_id='<id>')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.manifests.get("<id>");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->manifests->get(\n    manifestId: '<id>',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->manifest !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Manifests.GetAsync(\n    manifestId: "<id>",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.GetManifestResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetManifestResponse res = sdk.manifests().get()\n                .manifestId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.manifest().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Manifest])
+            return unmarshal_json_response(components.Manifest, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def get_async(
         self,
@@ -517,7 +638,7 @@ class Manifests(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Manifest]:
+    ) -> components.Manifest:
         r"""Retrieve a manifest
 
         Returns an existing manifest using an object ID.
@@ -558,6 +679,7 @@ class Manifests(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -571,34 +693,59 @@ class Manifests(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetManifest",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Manifests"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/manifests/0fadebf6f60c4aca95fa01bcc59c79ae \\\n-H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.manifests.get(manifest_id='<id>')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.manifests.get("<id>");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->manifests->get(\n    manifestId: '<id>',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->manifest !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Manifests.GetAsync(\n    manifestId: "<id>",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.GetManifestResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetManifestResponse res = sdk.manifests().get()\n                .manifestId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.manifest().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Manifest])
+            return unmarshal_json_response(components.Manifest, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)

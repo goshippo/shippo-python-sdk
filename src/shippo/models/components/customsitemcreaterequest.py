@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 from .weightunitenum import WeightUnitEnum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -16,14 +17,14 @@ class CustomsItemCreateRequestTypedDict(TypedDict):
     r"""Total weight of this item, i.e. quantity * weight per item."""
     origin_country: str
     r"""Country of origin of the item. Example: `US` or `DE`.
-    All accepted values can be found on the <a href=\"http://www.iso.org/\" target=\"_blank\">Official ISO Website</a>.
+    All accepted values can be found on the [Official ISO Website](http://www.iso.org/).
     """
     quantity: int
     r"""Quantity of this item in the shipment you send.  Must be greater than 0."""
     value_amount: str
     r"""Total value of this item, i.e. quantity * value per item."""
     value_currency: str
-    r"""Currency used for value_amount. The <a href=\"http://www.xe.com/iso4217.php\">official ISO 4217</a>
+    r"""Currency used for value_amount. The [official ISO 4217](http://www.xe.com/iso4217.php)
     currency codes are used, e.g.  `USD` or `EUR`.
     """
     eccn_ear99: NotRequired[str]
@@ -52,7 +53,7 @@ class CustomsItemCreateRequest(BaseModel):
 
     origin_country: str
     r"""Country of origin of the item. Example: `US` or `DE`.
-    All accepted values can be found on the <a href=\"http://www.iso.org/\" target=\"_blank\">Official ISO Website</a>.
+    All accepted values can be found on the [Official ISO Website](http://www.iso.org/).
     """
 
     quantity: int
@@ -62,7 +63,7 @@ class CustomsItemCreateRequest(BaseModel):
     r"""Total value of this item, i.e. quantity * value per item."""
 
     value_currency: str
-    r"""Currency used for value_amount. The <a href=\"http://www.xe.com/iso4217.php\">official ISO 4217</a>
+    r"""Currency used for value_amount. The [official ISO 4217](http://www.xe.com/iso4217.php)
     currency codes are used, e.g.  `USD` or `EUR`.
     """
 
@@ -82,3 +83,21 @@ class CustomsItemCreateRequest(BaseModel):
 
     tariff_number: Optional[str] = None
     r"""The tariff number of the item. If `tariff_number` is not provided, `hs_code` will be used. If both `hs_code` and `tariff_number` are provided, `tariff_number` will be used. 12 character limit."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            ["eccn_ear99", "metadata", "sku_code", "hs_code", "tariff_number"]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

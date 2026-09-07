@@ -7,6 +7,14 @@
 | parcelforce_expressam | Express AM|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelParcelforceEnum
+
+value = ServiceLevelParcelforceEnum.PARCELFORCE_EXPRESS48
+```
+
 
 ## Values
 

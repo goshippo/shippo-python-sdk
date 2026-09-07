@@ -63,12 +63,6 @@ value: components.ServiceLevelBetterTrucksEnum = /* values here */
 value: components.ServiceLevelCanadaPostEnum = /* values here */
 ```
 
-### `components.ServiceLevelCDLEnum`
-
-```python
-value: components.ServiceLevelCDLEnum = /* values here */
-```
-
 ### `components.ServiceLevelChronopostEnum`
 
 ```python
@@ -183,10 +177,10 @@ value: components.ServiceLevelePostGlobalEnum = /* values here */
 value: components.ServiceLevelRoyalMailEnum = /* values here */
 ```
 
-### `components.ServiceLevelSendleEnum`
+### `components.ServiceLevelRoyalMailSFEnum`
 
 ```python
-value: components.ServiceLevelSendleEnum = /* values here */
+value: components.ServiceLevelRoyalMailSFEnum = /* values here */
 ```
 
 ### `components.ServiceLevelOnTracEnum`

@@ -5,6 +5,7 @@ from shippo import utils
 from shippo._hooks import HookContext
 from shippo.models import components, errors, operations
 from shippo.types import BaseModel, OptionalNullable, UNSET
+from shippo.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Mapping, Optional, Union, cast
 
 
@@ -13,15 +14,6 @@ class Orders(BaseSDK):
     Use the orders object to load orders from your system to the Shippo dashboard.
     You can use the orders object to create, retrieve, list, and manage orders programmatically.
     You can also retrieve shipping rates, purchase labels, and track shipments for each order.
-    <SchemaDefinition schemaRef=\"#/components/schemas/Order\"/>
-
-    # Line Item
-    <p style=\"text-align: center; background-color: #F2F3F4;\">
-    </br>Line Items, and their corresponding abstract Products and Variants, might be exposed as a separate resource
-    in the future. Currently it's a nested object within the order resource.</br></br>
-    </p>
-    A line item is an individual object in an order. For example, if your order contains a t-shirt, shorts, and a jacket, each item is represented by a line item.
-    <SchemaDefinition schemaRef=\"#/components/schemas/LineItem\"/>
     """
 
     def list(
@@ -34,7 +26,7 @@ class Orders(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.OrderPaginatedList]:
+    ) -> components.OrderPaginatedList:
         r"""List all orders
 
         Returns a list of all order objects.
@@ -75,6 +67,7 @@ class Orders(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -88,39 +81,62 @@ class Orders(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListOrders",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Orders"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/orders/ \\\n-H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components, operations\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.orders.list(request=operations.ListOrdersRequest(\n    order_status=[\n        components.OrderStatusEnum.PAID,\n    ],\n    shop_app=components.OrderShopAppEnum.SHIPPO,\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.orders.list({\n    orderStatus: [\n      "PAID",\n    ],\n    shopApp: "Shippo",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing Shippo.Models.Requests;\nusing System.Collections.Generic;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nListOrdersRequest req = new ListOrdersRequest() {\n    OrderStatus = new List<OrderStatusEnum>() {\n        OrderStatusEnum.Paid,\n    },\n    ShopApp = OrderShopAppEnum.Shippo,\n};\n\nvar res = await sdk.Orders.ListAsync(req);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\nuse Shippo\\API\\Models\\Operations;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$request = new Operations\\ListOrdersRequest(\n    orderStatus: [\n        Components\\OrderStatusEnum::Paid,\n    ],\n    shopApp: Components\\OrderShopAppEnum::Shippo,\n);\n\n$response = $sdk->orders->list(\n    request: $request\n);\n\nif ($response->orderPaginatedList !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.OrderShopAppEnum;\nimport com.goshippo.shippo_sdk.models.components.OrderStatusEnum;\nimport com.goshippo.shippo_sdk.models.operations.ListOrdersRequest;\nimport com.goshippo.shippo_sdk.models.operations.ListOrdersResponse;\nimport java.lang.Exception;\nimport java.util.List;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        ListOrdersRequest req = ListOrdersRequest.builder()\n                .orderStatus(List.of(\n                    OrderStatusEnum.PAID))\n                .shopApp(OrderShopAppEnum.SHIPPO)\n                .build();\n\n        ListOrdersResponse res = sdk.orders().list()\n                .request(req)\n                .call();\n\n        if (res.orderPaginatedList().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.OrderPaginatedList]
-            )
+            return unmarshal_json_response(components.OrderPaginatedList, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def list_async(
         self,
@@ -132,7 +148,7 @@ class Orders(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.OrderPaginatedList]:
+    ) -> components.OrderPaginatedList:
         r"""List all orders
 
         Returns a list of all order objects.
@@ -173,6 +189,7 @@ class Orders(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -186,39 +203,62 @@ class Orders(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListOrders",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Orders"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/orders/ \\\n-H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components, operations\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.orders.list(request=operations.ListOrdersRequest(\n    order_status=[\n        components.OrderStatusEnum.PAID,\n    ],\n    shop_app=components.OrderShopAppEnum.SHIPPO,\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.orders.list({\n    orderStatus: [\n      "PAID",\n    ],\n    shopApp: "Shippo",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing Shippo.Models.Requests;\nusing System.Collections.Generic;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nListOrdersRequest req = new ListOrdersRequest() {\n    OrderStatus = new List<OrderStatusEnum>() {\n        OrderStatusEnum.Paid,\n    },\n    ShopApp = OrderShopAppEnum.Shippo,\n};\n\nvar res = await sdk.Orders.ListAsync(req);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\nuse Shippo\\API\\Models\\Operations;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$request = new Operations\\ListOrdersRequest(\n    orderStatus: [\n        Components\\OrderStatusEnum::Paid,\n    ],\n    shopApp: Components\\OrderShopAppEnum::Shippo,\n);\n\n$response = $sdk->orders->list(\n    request: $request\n);\n\nif ($response->orderPaginatedList !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.OrderShopAppEnum;\nimport com.goshippo.shippo_sdk.models.components.OrderStatusEnum;\nimport com.goshippo.shippo_sdk.models.operations.ListOrdersRequest;\nimport com.goshippo.shippo_sdk.models.operations.ListOrdersResponse;\nimport java.lang.Exception;\nimport java.util.List;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        ListOrdersRequest req = ListOrdersRequest.builder()\n                .orderStatus(List.of(\n                    OrderStatusEnum.PAID))\n                .shopApp(OrderShopAppEnum.SHIPPO)\n                .build();\n\n        ListOrdersResponse res = sdk.orders().list()\n                .request(req)\n                .call();\n\n        if (res.orderPaginatedList().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.OrderPaginatedList]
-            )
+            return unmarshal_json_response(components.OrderPaginatedList, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def create(
         self,
@@ -230,7 +270,7 @@ class Orders(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Order]:
+    ) -> components.Order:
         r"""Create a new order
 
         Creates a new order object.
@@ -274,6 +314,7 @@ class Orders(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", components.OrderCreateRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -287,37 +328,62 @@ class Orders(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateOrder",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Orders"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/orders/ \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-d \'{\n        "to_address": {\n            "city": "San Francisco",\n            "company": "Shippo",\n            "country": "US",\n            "email": "shippotle@shippo.com",\n            "name": "Mr Hippo",\n            "phone": "15553419393",\n            "state": "CA",\n            "street1": "215 Clayton St.",\n            "zip": "94117"\n        },\n        "line_items": [\n            {\n                "quantity": 1,\n                "sku": "HM-123",\n                "title": "Hippo Magazines",\n                "total_price": "12.10",\n                "currency": "USD",\n                "weight": "0.40",\n                "weight_unit": "lb"\n            }\n        ],\n        "placed_at": "2016-09-23T01:28:12Z",\n        "order_number": "#1068",\n        "order_status": "PAID",\n        "shipping_cost": "12.83",\n        "shipping_cost_currency": "USD",\n        "shipping_method": "USPS First Class Package",\n        "subtotal_price": "12.10",\n        "total_price": "24.93",\n        "total_tax": "0.00",\n        "currency": "USD",\n        "weight": "0.40",\n        "weight_unit": "lb"\n    }\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import dateutil.parser\nimport shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.orders.create(request=components.OrderCreateRequest(\n    currency='USD',\n    notes='This customer is a VIP',\n    order_number='#1068',\n    order_status=components.OrderStatusEnum.PAID,\n    placed_at='2016-09-23T01:28:12Z',\n    shipping_cost='12.83',\n    shipping_cost_currency='USD',\n    shipping_method='USPS First Class Package',\n    subtotal_price='12.1',\n    total_price='24.93',\n    total_tax='0.0',\n    weight='0.4',\n    weight_unit=components.WeightUnitEnum.LB,\n    from_address=components.AddressCreateRequest(\n        name='Shwan Ippotle',\n        company='Shippo',\n        street1='215 Clayton St.',\n        street3='',\n        street_no='',\n        city='San Francisco',\n        state='CA',\n        zip='94117',\n        country='US',\n        phone='+1 555 341 9393',\n        email='shippotle@shippo.com',\n        is_residential=True,\n        metadata='Customer ID 123456',\n        validate=True,\n    ),\n    to_address=components.AddressCreateRequest(\n        name='Shwan Ippotle',\n        company='Shippo',\n        street1='215 Clayton St.',\n        street3='',\n        street_no='',\n        city='San Francisco',\n        state='CA',\n        zip='94117',\n        country='US',\n        phone='+1 555 341 9393',\n        email='shippotle@shippo.com',\n        is_residential=True,\n        metadata='Customer ID 123456',\n        validate=True,\n    ),\n    line_items=[\n        components.LineItemBase(\n            currency='USD',\n            manufacture_country='US',\n            max_delivery_time=dateutil.parser.isoparse('2016-07-23T00:00:00Z'),\n            max_ship_time=dateutil.parser.isoparse('2016-07-23T00:00:00Z'),\n            quantity=20,\n            sku='HM-123',\n            title='Hippo Magazines',\n            total_price='12.1',\n            variant_title='June Edition',\n            weight='0.4',\n            weight_unit=components.WeightUnitEnum.LB,\n        ),\n    ],\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.orders.create({\n    currency: "USD",\n    notes: "This customer is a VIP",\n    orderNumber: "#1068",\n    orderStatus: "PAID",\n    placedAt: "2016-09-23T01:28:12Z",\n    shippingCost: "12.83",\n    shippingCostCurrency: "USD",\n    shippingMethod: "USPS First Class Package",\n    subtotalPrice: "12.1",\n    totalPrice: "24.93",\n    totalTax: "0.0",\n    weight: "0.4",\n    weightUnit: "lb",\n    fromAddress: {\n      name: "Shwan Ippotle",\n      company: "Shippo",\n      street1: "215 Clayton St.",\n      street3: "",\n      streetNo: "",\n      city: "San Francisco",\n      state: "CA",\n      zip: "94117",\n      country: "US",\n      phone: "+1 555 341 9393",\n      email: "shippotle@shippo.com",\n      isResidential: true,\n      metadata: "Customer ID 123456",\n      validate: true,\n    },\n    toAddress: {\n      name: "Shwan Ippotle",\n      company: "Shippo",\n      street1: "215 Clayton St.",\n      street3: "",\n      streetNo: "",\n      city: "San Francisco",\n      state: "CA",\n      zip: "94117",\n      country: "US",\n      phone: "+1 555 341 9393",\n      email: "shippotle@shippo.com",\n      isResidential: true,\n      metadata: "Customer ID 123456",\n      validate: true,\n    },\n    lineItems: [\n      {\n        currency: "USD",\n        manufactureCountry: "US",\n        maxDeliveryTime: new Date("2016-07-23T00:00:00Z"),\n        maxShipTime: new Date("2016-07-23T00:00:00Z"),\n        quantity: 20,\n        sku: "HM-123",\n        title: "Hippo Magazines",\n        totalPrice: "12.1",\n        variantTitle: "June Edition",\n        weight: "0.4",\n        weightUnit: "lb",\n      },\n    ],\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing System;\nusing System.Collections.Generic;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Orders.CreateAsync(\n    orderCreateRequest: new OrderCreateRequest() {\n        Currency = "USD",\n        Notes = "This customer is a VIP",\n        OrderNumber = "#1068",\n        OrderStatus = OrderStatusEnum.Paid,\n        PlacedAt = "2016-09-23T01:28:12Z",\n        ShippingCost = "12.83",\n        ShippingCostCurrency = "USD",\n        ShippingMethod = "USPS First Class Package",\n        SubtotalPrice = "12.1",\n        TotalPrice = "24.93",\n        TotalTax = "0.0",\n        Weight = "0.4",\n        WeightUnit = WeightUnitEnum.Lb,\n        FromAddress = new AddressCreateRequest() {\n            Name = "Shwan Ippotle",\n            Company = "Shippo",\n            Street1 = "215 Clayton St.",\n            Street3 = "",\n            StreetNo = "",\n            City = "San Francisco",\n            State = "CA",\n            Zip = "94117",\n            Country = "US",\n            Phone = "+1 555 341 9393",\n            Email = "shippotle@shippo.com",\n            IsResidential = true,\n            Metadata = "Customer ID 123456",\n            Validate = true,\n        },\n        ToAddress = new AddressCreateRequest() {\n            Name = "Shwan Ippotle",\n            Company = "Shippo",\n            Street1 = "215 Clayton St.",\n            Street3 = "",\n            StreetNo = "",\n            City = "San Francisco",\n            State = "CA",\n            Zip = "94117",\n            Country = "US",\n            Phone = "+1 555 341 9393",\n            Email = "shippotle@shippo.com",\n            IsResidential = true,\n            Metadata = "Customer ID 123456",\n            Validate = true,\n        },\n        LineItems = new List<LineItemBase>() {\n            new LineItemBase() {\n                Currency = "USD",\n                ManufactureCountry = "US",\n                MaxDeliveryTime = System.DateTime.Parse("2016-07-23T00:00:00Z"),\n                MaxShipTime = System.DateTime.Parse("2016-07-23T00:00:00Z"),\n                Quantity = 20,\n                Sku = "HM-123",\n                Title = "Hippo Magazines",\n                TotalPrice = "12.1",\n                VariantTitle = "June Edition",\n                Weight = "0.4",\n                WeightUnit = WeightUnitEnum.Lb,\n            },\n        },\n    },\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\nuse Shippo\\API\\Utils;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$orderCreateRequest = new Components\\OrderCreateRequest(\n    currency: 'USD',\n    notes: 'This customer is a VIP',\n    orderNumber: '#1068',\n    orderStatus: Components\\OrderStatusEnum::Paid,\n    placedAt: '2016-09-23T01:28:12Z',\n    shippingCost: '12.83',\n    shippingCostCurrency: 'USD',\n    shippingMethod: 'USPS First Class Package',\n    subtotalPrice: '12.1',\n    totalPrice: '24.93',\n    totalTax: '0.0',\n    weight: '0.4',\n    weightUnit: Components\\WeightUnitEnum::Lb,\n    fromAddress: new Components\\AddressCreateRequest(\n        name: 'Shwan Ippotle',\n        company: 'Shippo',\n        street1: '215 Clayton St.',\n        street3: '',\n        streetNo: '',\n        city: 'San Francisco',\n        state: 'CA',\n        zip: '94117',\n        country: 'US',\n        phone: '+1 555 341 9393',\n        email: 'shippotle@shippo.com',\n        isResidential: true,\n        metadata: 'Customer ID 123456',\n        validate: true,\n    ),\n    toAddress: new Components\\AddressCreateRequest(\n        name: 'Shwan Ippotle',\n        company: 'Shippo',\n        street1: '215 Clayton St.',\n        street3: '',\n        streetNo: '',\n        city: 'San Francisco',\n        state: 'CA',\n        zip: '94117',\n        country: 'US',\n        phone: '+1 555 341 9393',\n        email: 'shippotle@shippo.com',\n        isResidential: true,\n        metadata: 'Customer ID 123456',\n        validate: true,\n    ),\n    lineItems: [\n        new Components\\LineItemBase(\n            currency: 'USD',\n            manufactureCountry: 'US',\n            maxDeliveryTime: Utils\\Utils::parseDateTime('2016-07-23T00:00:00Z'),\n            maxShipTime: Utils\\Utils::parseDateTime('2016-07-23T00:00:00Z'),\n            quantity: 20,\n            sku: 'HM-123',\n            title: 'Hippo Magazines',\n            totalPrice: '12.1',\n            variantTitle: 'June Edition',\n            weight: '0.4',\n            weightUnit: Components\\WeightUnitEnum::Lb,\n        ),\n    ],\n);\n\n$response = $sdk->orders->create(\n    orderCreateRequest: $orderCreateRequest,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->order !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.AddressCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.LineItemBase;\nimport com.goshippo.shippo_sdk.models.components.OrderCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.OrderStatusEnum;\nimport com.goshippo.shippo_sdk.models.components.WeightUnitEnum;\nimport com.goshippo.shippo_sdk.models.operations.CreateOrderResponse;\nimport java.lang.Exception;\nimport java.time.OffsetDateTime;\nimport java.util.List;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreateOrderResponse res = sdk.orders().create()\n                .shippoApiVersion("2018-02-08")\n                .orderCreateRequest(OrderCreateRequest.builder()\n                    .placedAt("2016-09-23T01:28:12Z")\n                    .toAddress(AddressCreateRequest.builder()\n                        .country("US")\n                        .name("Shwan Ippotle")\n                        .company("Shippo")\n                        .street1("215 Clayton St.")\n                        .street3("")\n                        .streetNo("")\n                        .city("San Francisco")\n                        .state("CA")\n                        .zip("94117")\n                        .phone("+1 555 341 9393")\n                        .email("shippotle@shippo.com")\n                        .isResidential(true)\n                        .metadata("Customer ID 123456")\n                        .validate(true)\n                        .build())\n                    .currency("USD")\n                    .notes("This customer is a VIP")\n                    .orderNumber("#1068")\n                    .orderStatus(OrderStatusEnum.PAID)\n                    .shippingCost("12.83")\n                    .shippingCostCurrency("USD")\n                    .shippingMethod("USPS First Class Package")\n                    .subtotalPrice("12.1")\n                    .totalPrice("24.93")\n                    .totalTax("0.0")\n                    .weight("0.4")\n                    .weightUnit(WeightUnitEnum.LB)\n                    .fromAddress(AddressCreateRequest.builder()\n                        .country("US")\n                        .name("Shwan Ippotle")\n                        .company("Shippo")\n                        .street1("215 Clayton St.")\n                        .street3("")\n                        .streetNo("")\n                        .city("San Francisco")\n                        .state("CA")\n                        .zip("94117")\n                        .phone("+1 555 341 9393")\n                        .email("shippotle@shippo.com")\n                        .isResidential(true)\n                        .metadata("Customer ID 123456")\n                        .validate(true)\n                        .build())\n                    .lineItems(List.of(\n                        LineItemBase.builder()\n                            .currency("USD")\n                            .manufactureCountry("US")\n                            .maxDeliveryTime(OffsetDateTime.parse("2016-07-23T00:00:00Z"))\n                            .maxShipTime(OffsetDateTime.parse("2016-07-23T00:00:00Z"))\n                            .quantity(20L)\n                            .sku("HM-123")\n                            .title("Hippo Magazines")\n                            .totalPrice("12.1")\n                            .variantTitle("June Edition")\n                            .weight("0.4")\n                            .weightUnit(WeightUnitEnum.LB)\n                            .build()))\n                    .build())\n                .call();\n\n        if (res.order().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Order])
+            return unmarshal_json_response(components.Order, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def create_async(
         self,
@@ -329,7 +395,7 @@ class Orders(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Order]:
+    ) -> components.Order:
         r"""Create a new order
 
         Creates a new order object.
@@ -373,6 +439,7 @@ class Orders(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", components.OrderCreateRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -386,37 +453,62 @@ class Orders(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateOrder",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Orders"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/orders/ \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-d \'{\n        "to_address": {\n            "city": "San Francisco",\n            "company": "Shippo",\n            "country": "US",\n            "email": "shippotle@shippo.com",\n            "name": "Mr Hippo",\n            "phone": "15553419393",\n            "state": "CA",\n            "street1": "215 Clayton St.",\n            "zip": "94117"\n        },\n        "line_items": [\n            {\n                "quantity": 1,\n                "sku": "HM-123",\n                "title": "Hippo Magazines",\n                "total_price": "12.10",\n                "currency": "USD",\n                "weight": "0.40",\n                "weight_unit": "lb"\n            }\n        ],\n        "placed_at": "2016-09-23T01:28:12Z",\n        "order_number": "#1068",\n        "order_status": "PAID",\n        "shipping_cost": "12.83",\n        "shipping_cost_currency": "USD",\n        "shipping_method": "USPS First Class Package",\n        "subtotal_price": "12.10",\n        "total_price": "24.93",\n        "total_tax": "0.00",\n        "currency": "USD",\n        "weight": "0.40",\n        "weight_unit": "lb"\n    }\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import dateutil.parser\nimport shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.orders.create(request=components.OrderCreateRequest(\n    currency='USD',\n    notes='This customer is a VIP',\n    order_number='#1068',\n    order_status=components.OrderStatusEnum.PAID,\n    placed_at='2016-09-23T01:28:12Z',\n    shipping_cost='12.83',\n    shipping_cost_currency='USD',\n    shipping_method='USPS First Class Package',\n    subtotal_price='12.1',\n    total_price='24.93',\n    total_tax='0.0',\n    weight='0.4',\n    weight_unit=components.WeightUnitEnum.LB,\n    from_address=components.AddressCreateRequest(\n        name='Shwan Ippotle',\n        company='Shippo',\n        street1='215 Clayton St.',\n        street3='',\n        street_no='',\n        city='San Francisco',\n        state='CA',\n        zip='94117',\n        country='US',\n        phone='+1 555 341 9393',\n        email='shippotle@shippo.com',\n        is_residential=True,\n        metadata='Customer ID 123456',\n        validate=True,\n    ),\n    to_address=components.AddressCreateRequest(\n        name='Shwan Ippotle',\n        company='Shippo',\n        street1='215 Clayton St.',\n        street3='',\n        street_no='',\n        city='San Francisco',\n        state='CA',\n        zip='94117',\n        country='US',\n        phone='+1 555 341 9393',\n        email='shippotle@shippo.com',\n        is_residential=True,\n        metadata='Customer ID 123456',\n        validate=True,\n    ),\n    line_items=[\n        components.LineItemBase(\n            currency='USD',\n            manufacture_country='US',\n            max_delivery_time=dateutil.parser.isoparse('2016-07-23T00:00:00Z'),\n            max_ship_time=dateutil.parser.isoparse('2016-07-23T00:00:00Z'),\n            quantity=20,\n            sku='HM-123',\n            title='Hippo Magazines',\n            total_price='12.1',\n            variant_title='June Edition',\n            weight='0.4',\n            weight_unit=components.WeightUnitEnum.LB,\n        ),\n    ],\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.orders.create({\n    currency: "USD",\n    notes: "This customer is a VIP",\n    orderNumber: "#1068",\n    orderStatus: "PAID",\n    placedAt: "2016-09-23T01:28:12Z",\n    shippingCost: "12.83",\n    shippingCostCurrency: "USD",\n    shippingMethod: "USPS First Class Package",\n    subtotalPrice: "12.1",\n    totalPrice: "24.93",\n    totalTax: "0.0",\n    weight: "0.4",\n    weightUnit: "lb",\n    fromAddress: {\n      name: "Shwan Ippotle",\n      company: "Shippo",\n      street1: "215 Clayton St.",\n      street3: "",\n      streetNo: "",\n      city: "San Francisco",\n      state: "CA",\n      zip: "94117",\n      country: "US",\n      phone: "+1 555 341 9393",\n      email: "shippotle@shippo.com",\n      isResidential: true,\n      metadata: "Customer ID 123456",\n      validate: true,\n    },\n    toAddress: {\n      name: "Shwan Ippotle",\n      company: "Shippo",\n      street1: "215 Clayton St.",\n      street3: "",\n      streetNo: "",\n      city: "San Francisco",\n      state: "CA",\n      zip: "94117",\n      country: "US",\n      phone: "+1 555 341 9393",\n      email: "shippotle@shippo.com",\n      isResidential: true,\n      metadata: "Customer ID 123456",\n      validate: true,\n    },\n    lineItems: [\n      {\n        currency: "USD",\n        manufactureCountry: "US",\n        maxDeliveryTime: new Date("2016-07-23T00:00:00Z"),\n        maxShipTime: new Date("2016-07-23T00:00:00Z"),\n        quantity: 20,\n        sku: "HM-123",\n        title: "Hippo Magazines",\n        totalPrice: "12.1",\n        variantTitle: "June Edition",\n        weight: "0.4",\n        weightUnit: "lb",\n      },\n    ],\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing System;\nusing System.Collections.Generic;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Orders.CreateAsync(\n    orderCreateRequest: new OrderCreateRequest() {\n        Currency = "USD",\n        Notes = "This customer is a VIP",\n        OrderNumber = "#1068",\n        OrderStatus = OrderStatusEnum.Paid,\n        PlacedAt = "2016-09-23T01:28:12Z",\n        ShippingCost = "12.83",\n        ShippingCostCurrency = "USD",\n        ShippingMethod = "USPS First Class Package",\n        SubtotalPrice = "12.1",\n        TotalPrice = "24.93",\n        TotalTax = "0.0",\n        Weight = "0.4",\n        WeightUnit = WeightUnitEnum.Lb,\n        FromAddress = new AddressCreateRequest() {\n            Name = "Shwan Ippotle",\n            Company = "Shippo",\n            Street1 = "215 Clayton St.",\n            Street3 = "",\n            StreetNo = "",\n            City = "San Francisco",\n            State = "CA",\n            Zip = "94117",\n            Country = "US",\n            Phone = "+1 555 341 9393",\n            Email = "shippotle@shippo.com",\n            IsResidential = true,\n            Metadata = "Customer ID 123456",\n            Validate = true,\n        },\n        ToAddress = new AddressCreateRequest() {\n            Name = "Shwan Ippotle",\n            Company = "Shippo",\n            Street1 = "215 Clayton St.",\n            Street3 = "",\n            StreetNo = "",\n            City = "San Francisco",\n            State = "CA",\n            Zip = "94117",\n            Country = "US",\n            Phone = "+1 555 341 9393",\n            Email = "shippotle@shippo.com",\n            IsResidential = true,\n            Metadata = "Customer ID 123456",\n            Validate = true,\n        },\n        LineItems = new List<LineItemBase>() {\n            new LineItemBase() {\n                Currency = "USD",\n                ManufactureCountry = "US",\n                MaxDeliveryTime = System.DateTime.Parse("2016-07-23T00:00:00Z"),\n                MaxShipTime = System.DateTime.Parse("2016-07-23T00:00:00Z"),\n                Quantity = 20,\n                Sku = "HM-123",\n                Title = "Hippo Magazines",\n                TotalPrice = "12.1",\n                VariantTitle = "June Edition",\n                Weight = "0.4",\n                WeightUnit = WeightUnitEnum.Lb,\n            },\n        },\n    },\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\nuse Shippo\\API\\Utils;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$orderCreateRequest = new Components\\OrderCreateRequest(\n    currency: 'USD',\n    notes: 'This customer is a VIP',\n    orderNumber: '#1068',\n    orderStatus: Components\\OrderStatusEnum::Paid,\n    placedAt: '2016-09-23T01:28:12Z',\n    shippingCost: '12.83',\n    shippingCostCurrency: 'USD',\n    shippingMethod: 'USPS First Class Package',\n    subtotalPrice: '12.1',\n    totalPrice: '24.93',\n    totalTax: '0.0',\n    weight: '0.4',\n    weightUnit: Components\\WeightUnitEnum::Lb,\n    fromAddress: new Components\\AddressCreateRequest(\n        name: 'Shwan Ippotle',\n        company: 'Shippo',\n        street1: '215 Clayton St.',\n        street3: '',\n        streetNo: '',\n        city: 'San Francisco',\n        state: 'CA',\n        zip: '94117',\n        country: 'US',\n        phone: '+1 555 341 9393',\n        email: 'shippotle@shippo.com',\n        isResidential: true,\n        metadata: 'Customer ID 123456',\n        validate: true,\n    ),\n    toAddress: new Components\\AddressCreateRequest(\n        name: 'Shwan Ippotle',\n        company: 'Shippo',\n        street1: '215 Clayton St.',\n        street3: '',\n        streetNo: '',\n        city: 'San Francisco',\n        state: 'CA',\n        zip: '94117',\n        country: 'US',\n        phone: '+1 555 341 9393',\n        email: 'shippotle@shippo.com',\n        isResidential: true,\n        metadata: 'Customer ID 123456',\n        validate: true,\n    ),\n    lineItems: [\n        new Components\\LineItemBase(\n            currency: 'USD',\n            manufactureCountry: 'US',\n            maxDeliveryTime: Utils\\Utils::parseDateTime('2016-07-23T00:00:00Z'),\n            maxShipTime: Utils\\Utils::parseDateTime('2016-07-23T00:00:00Z'),\n            quantity: 20,\n            sku: 'HM-123',\n            title: 'Hippo Magazines',\n            totalPrice: '12.1',\n            variantTitle: 'June Edition',\n            weight: '0.4',\n            weightUnit: Components\\WeightUnitEnum::Lb,\n        ),\n    ],\n);\n\n$response = $sdk->orders->create(\n    orderCreateRequest: $orderCreateRequest,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->order !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.AddressCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.LineItemBase;\nimport com.goshippo.shippo_sdk.models.components.OrderCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.OrderStatusEnum;\nimport com.goshippo.shippo_sdk.models.components.WeightUnitEnum;\nimport com.goshippo.shippo_sdk.models.operations.CreateOrderResponse;\nimport java.lang.Exception;\nimport java.time.OffsetDateTime;\nimport java.util.List;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreateOrderResponse res = sdk.orders().create()\n                .shippoApiVersion("2018-02-08")\n                .orderCreateRequest(OrderCreateRequest.builder()\n                    .placedAt("2016-09-23T01:28:12Z")\n                    .toAddress(AddressCreateRequest.builder()\n                        .country("US")\n                        .name("Shwan Ippotle")\n                        .company("Shippo")\n                        .street1("215 Clayton St.")\n                        .street3("")\n                        .streetNo("")\n                        .city("San Francisco")\n                        .state("CA")\n                        .zip("94117")\n                        .phone("+1 555 341 9393")\n                        .email("shippotle@shippo.com")\n                        .isResidential(true)\n                        .metadata("Customer ID 123456")\n                        .validate(true)\n                        .build())\n                    .currency("USD")\n                    .notes("This customer is a VIP")\n                    .orderNumber("#1068")\n                    .orderStatus(OrderStatusEnum.PAID)\n                    .shippingCost("12.83")\n                    .shippingCostCurrency("USD")\n                    .shippingMethod("USPS First Class Package")\n                    .subtotalPrice("12.1")\n                    .totalPrice("24.93")\n                    .totalTax("0.0")\n                    .weight("0.4")\n                    .weightUnit(WeightUnitEnum.LB)\n                    .fromAddress(AddressCreateRequest.builder()\n                        .country("US")\n                        .name("Shwan Ippotle")\n                        .company("Shippo")\n                        .street1("215 Clayton St.")\n                        .street3("")\n                        .streetNo("")\n                        .city("San Francisco")\n                        .state("CA")\n                        .zip("94117")\n                        .phone("+1 555 341 9393")\n                        .email("shippotle@shippo.com")\n                        .isResidential(true)\n                        .metadata("Customer ID 123456")\n                        .validate(true)\n                        .build())\n                    .lineItems(List.of(\n                        LineItemBase.builder()\n                            .currency("USD")\n                            .manufactureCountry("US")\n                            .maxDeliveryTime(OffsetDateTime.parse("2016-07-23T00:00:00Z"))\n                            .maxShipTime(OffsetDateTime.parse("2016-07-23T00:00:00Z"))\n                            .quantity(20L)\n                            .sku("HM-123")\n                            .title("Hippo Magazines")\n                            .totalPrice("12.1")\n                            .variantTitle("June Edition")\n                            .weight("0.4")\n                            .weightUnit(WeightUnitEnum.LB)\n                            .build()))\n                    .build())\n                .call();\n\n        if (res.order().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Order])
+            return unmarshal_json_response(components.Order, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def get(
         self,
@@ -426,7 +518,7 @@ class Orders(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Order]:
+    ) -> components.Order:
         r"""Retrieve an order
 
         Retrieves an existing order using an object ID.
@@ -467,6 +559,7 @@ class Orders(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -480,37 +573,62 @@ class Orders(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetOrder",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Orders"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/orders/4f2bc588e4e5446cb3f9fdb7cd5e190b/ \\\n-H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.orders.get(order_id='<id>')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.orders.get("<id>");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Orders.GetAsync(\n    orderId: "<id>",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->orders->get(\n    orderId: '<id>',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->order !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.GetOrderResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetOrderResponse res = sdk.orders().get()\n                .orderId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.order().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Order])
+            return unmarshal_json_response(components.Order, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def get_async(
         self,
@@ -520,7 +638,7 @@ class Orders(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Order]:
+    ) -> components.Order:
         r"""Retrieve an order
 
         Retrieves an existing order using an object ID.
@@ -561,6 +679,7 @@ class Orders(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -574,34 +693,59 @@ class Orders(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetOrder",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Orders"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/orders/4f2bc588e4e5446cb3f9fdb7cd5e190b/ \\\n-H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.orders.get(order_id='<id>')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.orders.get("<id>");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Orders.GetAsync(\n    orderId: "<id>",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->orders->get(\n    orderId: '<id>',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->order !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.GetOrderResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetOrderResponse res = sdk.orders().get()\n                .orderId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.order().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Order])
+            return unmarshal_json_response(components.Order, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
