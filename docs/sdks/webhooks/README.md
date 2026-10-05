@@ -1,14 +1,8 @@
 # Webhooks
-(*webhooks*)
 
 ## Overview
 
 Webhooks are a way for Shippo to notify your application when a specific event occurs. For example, when a label is purchased or when a shipment tracking status has changed. You can use webhooks to trigger actions in your application, such as sending an email or updating a database.
-<SchemaDefinition schemaRef="#/components/schemas/Webhook"/>
-
-# Webhook Payload
-The payload is the body of the POST request Shippo sends to the URL specified at the time of webhook registration.
-<SchemaDefinition schemaRef="#/components/schemas/WebhookPayload"/>
 
 ### Available Operations
 
@@ -24,6 +18,7 @@ Creates a new webhook to send notifications to a URL when a specific event occur
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="createWebhook" method="post" path="/webhooks" -->
 ```python
 from shippo import Shippo
 from shippo.models import components
@@ -31,17 +26,14 @@ from shippo.models import components
 
 with Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version="2018-02-08",
 ) as s_client:
 
     res = s_client.webhooks.create_webhook(request={
-        "event": components.WebhookEventTypeEnum.BATCH_CREATED,
+        "event": components.WebhookEventTypeEnum.TRANSACTION_UPDATED,
         "url": "https://example.com/shippo-webhook",
         "active": True,
         "is_test": False,
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -71,18 +63,16 @@ Returns a list of all webhooks you have created.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="listWebhooks" method="get" path="/webhooks" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version="2018-02-08",
 ) as s_client:
 
     res = s_client.webhooks.list_webhooks()
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -111,18 +101,16 @@ Returns the details of a specific webhook using the webhook object ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="getWebhook" method="get" path="/webhooks/{webhookId}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version="2018-02-08",
 ) as s_client:
 
     res = s_client.webhooks.get_webhook(webhook_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -152,6 +140,7 @@ Updates an existing webhook using the webhook object ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="updateWebhook" method="put" path="/webhooks/{webhookId}" -->
 ```python
 from shippo import Shippo
 from shippo.models import components
@@ -159,17 +148,14 @@ from shippo.models import components
 
 with Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version="2018-02-08",
 ) as s_client:
 
     res = s_client.webhooks.update_webhook(webhook_id="<id>", webhook_update_request={
-        "event": components.WebhookEventTypeEnum.BATCH_CREATED,
+        "event": components.WebhookEventTypeEnum.ALL,
         "url": "https://example.com/shippo-webhook",
         "active": True,
         "is_test": False,
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -200,13 +186,13 @@ Deletes a specific webhook using the webhook object ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="deleteWebhook" method="delete" path="/webhooks/{webhookId}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
     api_key_header="<YOUR_API_KEY_HERE>",
-    shippo_api_version="2018-02-08",
 ) as s_client:
 
     s_client.webhooks.delete_webhook(webhook_id="<id>")

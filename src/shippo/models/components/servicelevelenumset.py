@@ -9,7 +9,6 @@ from .servicelevelasendiaenum import ServiceLevelAsendiaEnum
 from .servicelevelaustraliapostenum import ServiceLevelAustraliaPostEnum
 from .servicelevelbettertrucksenum import ServiceLevelBetterTrucksEnum
 from .servicelevelcanadapostenum import ServiceLevelCanadaPostEnum
-from .servicelevelcdlenum import ServiceLevelCDLEnum
 from .servicelevelchronopostenum import ServiceLevelChronopostEnum
 from .servicelevelcolissimoenum import ServiceLevelColissimoEnum
 from .servicelevelcorreosespanaenum import ServiceLevelCorreosEspanaEnum
@@ -33,7 +32,7 @@ from .servicelevelparcelforceenum import ServiceLevelParcelforceEnum
 from .servicelevelpostitalianeenum import ServiceLevelPostItalianeEnum
 from .servicelevelpurolatorenum import ServiceLevelPurolatorEnum
 from .servicelevelroyalmailenum import ServiceLevelRoyalMailEnum
-from .servicelevelsendleenum import ServiceLevelSendleEnum
+from .servicelevelroyalmailsfenum import ServiceLevelRoyalMailSFEnum
 from .servicelevelswyftenum import ServiceLevelSwyftEnum
 from .serviceleveludsenum import ServiceLevelUDSEnum
 from .servicelevelupsenum import ServiceLevelUPSEnum
@@ -56,7 +55,6 @@ ServiceLevelEnumSetTypedDict = TypeAliasType(
         ServiceLevelAPGEnum,
         ServiceLevelBetterTrucksEnum,
         ServiceLevelCanadaPostEnum,
-        ServiceLevelCDLEnum,
         ServiceLevelChronopostEnum,
         ServiceLevelCorreosEspanaEnum,
         ServiceLevelColissimoEnum,
@@ -76,7 +74,7 @@ ServiceLevelEnumSetTypedDict = TypeAliasType(
         ServiceLevelPostItalianeEnum,
         ServiceLevelePostGlobalEnum,
         ServiceLevelRoyalMailEnum,
-        ServiceLevelSendleEnum,
+        ServiceLevelRoyalMailSFEnum,
         ServiceLevelOnTracEnum,
         ServiceLevelJitsuEnum,
         ServiceLevelLasershipEnum,
@@ -101,7 +99,6 @@ ServiceLevelEnumSet = TypeAliasType(
         ServiceLevelAPGEnum,
         ServiceLevelBetterTrucksEnum,
         ServiceLevelCanadaPostEnum,
-        ServiceLevelCDLEnum,
         ServiceLevelChronopostEnum,
         ServiceLevelCorreosEspanaEnum,
         ServiceLevelColissimoEnum,
@@ -121,7 +118,7 @@ ServiceLevelEnumSet = TypeAliasType(
         ServiceLevelPostItalianeEnum,
         ServiceLevelePostGlobalEnum,
         ServiceLevelRoyalMailEnum,
-        ServiceLevelSendleEnum,
+        ServiceLevelRoyalMailSFEnum,
         ServiceLevelOnTracEnum,
         ServiceLevelJitsuEnum,
         ServiceLevelLasershipEnum,

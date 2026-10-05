@@ -1,11 +1,9 @@
 # Pickups
-(*pickups*)
 
 ## Overview
 
 A pickup is when you schedule a carrier to collect a package for delivery.
 Use Shippo’s pickups endpoint to schedule pickups with USPS and DHL Express for eligible shipments that you have already created.
-<SchemaDefinition schemaRef="#/components/schemas/Pickup"/>
 
 ### Available Operations
 
@@ -17,15 +15,16 @@ Creates a pickup object. This request is for a carrier to come to a specified lo
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreatePickup" method="post" path="/pickups" -->
 ```python
-import dateutil.parser
 from shippo import Shippo
 from shippo.models import components
+from shippo.utils import parse_datetime
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.pickups.create(request={
@@ -33,14 +32,14 @@ with Shippo(
         "location": {
             "address": {
                 "name": "Shwan Ippotle",
+                "company": "Shippo",
                 "street1": "215 Clayton St.",
+                "street3": "",
+                "street_no": "",
                 "city": "San Francisco",
                 "state": "CA",
                 "zip": "94117",
                 "country": "US",
-                "company": "Shippo",
-                "street3": "",
-                "street_no": "",
                 "phone": "+1 555 341 9393",
                 "email": "shippotle@shippo.com",
                 "is_residential": True,
@@ -51,14 +50,12 @@ with Shippo(
             "building_type": components.BuildingType.APARTMENT,
             "instructions": "Behind screen door",
         },
-        "requested_end_time": dateutil.parser.isoparse("2024-06-17T07:14:55.338Z"),
-        "requested_start_time": dateutil.parser.isoparse("2024-11-30T17:06:07.804Z"),
+        "requested_end_time": parse_datetime("2025-03-28T03:12:16.314Z"),
+        "requested_start_time": parse_datetime("2024-05-20T03:35:43.192Z"),
         "transactions": [
             "adcfdddf8ec64b84ad22772bce3ea37a",
         ],
     })
-
-    assert res is not None
 
     # Handle response
     print(res)

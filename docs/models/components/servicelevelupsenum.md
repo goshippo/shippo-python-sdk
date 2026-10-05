@@ -29,6 +29,14 @@
 | ups_access_point_economy | Access Point™ Economy|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelUPSEnum
+
+value = ServiceLevelUPSEnum.UPS_STANDARD
+```
+
 
 ## Values
 

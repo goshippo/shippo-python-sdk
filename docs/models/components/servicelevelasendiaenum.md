@@ -12,6 +12,14 @@
 | asendia_us_other | Asendia USA Other Services (custom)|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelAsendiaEnum
+
+value = ServiceLevelAsendiaEnum.ASENDIA_US_PRIORITY_TRACKED
+```
+
 
 ## Values
 

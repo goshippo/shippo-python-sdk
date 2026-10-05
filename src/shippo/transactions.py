@@ -5,13 +5,12 @@ from shippo import utils
 from shippo._hooks import HookContext
 from shippo.models import components, errors, operations
 from shippo.types import BaseModel, OptionalNullable, UNSET
+from shippo.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Mapping, Optional, Union, cast
 
 
 class Transactions(BaseSDK):
-    r"""A transaction is the purchase of a shipping label from a shipping provider for a specific service. You can print purchased labels and used them to ship a parcel with a carrier, such as USPS or FedEx.
-    <SchemaDefinition schemaRef=\"#/components/schemas/Transaction\"/>
-    """
+    r"""A transaction is the purchase of a shipping label from a shipping provider for a specific service. You can print purchased labels and used them to ship a parcel with a carrier, such as USPS or FedEx."""
 
     def list(
         self,
@@ -24,10 +23,23 @@ class Transactions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.TransactionPaginatedList]:
+    ) -> components.TransactionPaginatedList:
         r"""List all shipping labels
 
         Returns a list of all transaction objects.
+
+        To filter results by creation date, use the optional query parameters below. Provided dates should be ISO 8601 UTC dates (timezone offsets are currently not supported).
+
+        - `object_created_gt`: object(s) created after the provided date time
+        - `object_created_gte`: object(s) created at or after the provided date time
+        - `object_created_lt`: object(s) created before the provided date time
+        - `object_created_lte`: object(s) created at or before the provided date time
+
+        Provide at most one lower bound (`object_created_gt` or `object_created_gte`) and at most one upper bound (`object_created_lt` or `object_created_lte`) per request. Lower bounds must not be in the future.
+
+        Date format examples: `2017-01-01`, `2017-01-01T03:30:30` (or `2017-01-01T03:30:30.5`), `2017-01-01T03:30:30Z`
+
+        Example URL: `https://api.goshippo.com/transactions/?object_created_gte=2017-01-01T00:00:30&object_created_lt=2017-04-01T00:00:30`
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -65,6 +77,7 @@ class Transactions(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -78,39 +91,64 @@ class Transactions(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListTransactions",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Transactions"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/transactions/ \\\n  -H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components, operations\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.transactions.list(request=operations.ListTransactionsRequest(\n    object_status=components.TransactionStatusEnum.SUCCESS,\n    tracking_status=components.TrackingStatusEnum.DELIVERED,\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.transactions.list({\n    objectStatus: "SUCCESS",\n    trackingStatus: "DELIVERED",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\nuse Shippo\\API\\Models\\Operations;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$request = new Operations\\ListTransactionsRequest(\n    objectStatus: Components\\TransactionStatusEnum::Success,\n    trackingStatus: Components\\TrackingStatusEnum::Delivered,\n);\n\n$response = $sdk->transactions->list(\n    request: $request\n);\n\nif ($response->transactionPaginatedList !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing Shippo.Models.Requests;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nListTransactionsRequest req = new ListTransactionsRequest() {\n    ObjectStatus = TransactionStatusEnum.Success,\n    TrackingStatus = TrackingStatusEnum.Delivered,\n};\n\nvar res = await sdk.Transactions.ListAsync(req);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.TrackingStatusEnum;\nimport com.goshippo.shippo_sdk.models.components.TransactionStatusEnum;\nimport com.goshippo.shippo_sdk.models.operations.ListTransactionsRequest;\nimport com.goshippo.shippo_sdk.models.operations.ListTransactionsResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        ListTransactionsRequest req = ListTransactionsRequest.builder()\n                .objectStatus(TransactionStatusEnum.SUCCESS)\n                .trackingStatus(TrackingStatusEnum.DELIVERED)\n                .build();\n\n        ListTransactionsResponse res = sdk.transactions().list()\n                .request(req)\n                .call();\n\n        if (res.transactionPaginatedList().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.TransactionPaginatedList]
+            return unmarshal_json_response(
+                components.TransactionPaginatedList, http_res
             )
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def list_async(
         self,
@@ -123,10 +161,23 @@ class Transactions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.TransactionPaginatedList]:
+    ) -> components.TransactionPaginatedList:
         r"""List all shipping labels
 
         Returns a list of all transaction objects.
+
+        To filter results by creation date, use the optional query parameters below. Provided dates should be ISO 8601 UTC dates (timezone offsets are currently not supported).
+
+        - `object_created_gt`: object(s) created after the provided date time
+        - `object_created_gte`: object(s) created at or after the provided date time
+        - `object_created_lt`: object(s) created before the provided date time
+        - `object_created_lte`: object(s) created at or before the provided date time
+
+        Provide at most one lower bound (`object_created_gt` or `object_created_gte`) and at most one upper bound (`object_created_lt` or `object_created_lte`) per request. Lower bounds must not be in the future.
+
+        Date format examples: `2017-01-01`, `2017-01-01T03:30:30` (or `2017-01-01T03:30:30.5`), `2017-01-01T03:30:30Z`
+
+        Example URL: `https://api.goshippo.com/transactions/?object_created_gte=2017-01-01T00:00:30&object_created_lt=2017-04-01T00:00:30`
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -164,6 +215,7 @@ class Transactions(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -177,39 +229,64 @@ class Transactions(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListTransactions",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Transactions"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/transactions/ \\\n  -H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components, operations\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.transactions.list(request=operations.ListTransactionsRequest(\n    object_status=components.TransactionStatusEnum.SUCCESS,\n    tracking_status=components.TrackingStatusEnum.DELIVERED,\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.transactions.list({\n    objectStatus: "SUCCESS",\n    trackingStatus: "DELIVERED",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\nuse Shippo\\API\\Models\\Operations;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$request = new Operations\\ListTransactionsRequest(\n    objectStatus: Components\\TransactionStatusEnum::Success,\n    trackingStatus: Components\\TrackingStatusEnum::Delivered,\n);\n\n$response = $sdk->transactions->list(\n    request: $request\n);\n\nif ($response->transactionPaginatedList !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing Shippo.Models.Requests;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nListTransactionsRequest req = new ListTransactionsRequest() {\n    ObjectStatus = TransactionStatusEnum.Success,\n    TrackingStatus = TrackingStatusEnum.Delivered,\n};\n\nvar res = await sdk.Transactions.ListAsync(req);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.TrackingStatusEnum;\nimport com.goshippo.shippo_sdk.models.components.TransactionStatusEnum;\nimport com.goshippo.shippo_sdk.models.operations.ListTransactionsRequest;\nimport com.goshippo.shippo_sdk.models.operations.ListTransactionsResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        ListTransactionsRequest req = ListTransactionsRequest.builder()\n                .objectStatus(TransactionStatusEnum.SUCCESS)\n                .trackingStatus(TrackingStatusEnum.DELIVERED)\n                .build();\n\n        ListTransactionsResponse res = sdk.transactions().list()\n                .request(req)\n                .call();\n\n        if (res.transactionPaginatedList().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.TransactionPaginatedList]
+            return unmarshal_json_response(
+                components.TransactionPaginatedList, http_res
             )
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def create(
         self,
@@ -222,10 +299,12 @@ class Transactions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Transaction]:
+    ) -> components.Transaction:
         r"""Create a shipping label
 
-        Creates a new transaction object and purchases the shipping label using a rate object that has previously been created. <br> OR <br> Creates a new transaction object and purchases the shipping label instantly using shipment details, an existing carrier account, and an existing service level token.
+        Creates a new transaction object and purchases the shipping label using a rate object that has previously been created.
+
+        Alternatively, creates a new transaction object and purchases the shipping label instantly using shipment details, an existing carrier account, and an existing service level token.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -266,6 +345,7 @@ class Transactions(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", operations.CreateTransactionRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -279,37 +359,62 @@ class Transactions(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateTransaction",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Transactions"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": "curl --location --request POST 'https://api.goshippo.com/transactions' \\\n--header 'Authorization: ShippoToken {{token}}' \\\n--header 'Content-Type: application/json' \\\n--header 'SHIPPO-API-VERSION: 2018-02-08' \\\n--data-raw '{\n  \"rate\": \"a5c9d1bec93149f5bedc3a9374b50970\",\n  \"async\": false,\n  \"label_file_type\": \"PDF\"\n}'",
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.transactions.create(request=components.TransactionCreateRequest(\n    async_=False,\n    label_file_type=components.LabelFileTypeEnum.PDF_4X6,\n    metadata='Order ID #12345',\n    rate='ec9f0d3adc9441449c85d315f0997fd5',\n    order='adcfdddf8ec64b84ad22772bce3ea37a',\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.transactions.create({\n    async: false,\n    labelFileType: "PDF_4x6",\n    metadata: "Order ID #12345",\n    rate: "ec9f0d3adc9441449c85d315f0997fd5",\n    order: "adcfdddf8ec64b84ad22772bce3ea37a",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->transactions->create(\n    requestBody: new Components\\TransactionCreateRequest(\n        async: false,\n        labelFileType: Components\\LabelFileTypeEnum::PDF4x6,\n        metadata: 'Order ID #12345',\n        rate: 'ec9f0d3adc9441449c85d315f0997fd5',\n        order: 'adcfdddf8ec64b84ad22772bce3ea37a',\n    ),\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->transaction !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Transactions.CreateAsync(\n    requestBody: CreateTransactionRequestBody.CreateTransactionCreateRequest(\n        new TransactionCreateRequest() {\n            Async = false,\n            LabelFileType = LabelFileTypeEnum.Pdf4x6,\n            Metadata = "Order ID #12345",\n            Rate = "ec9f0d3adc9441449c85d315f0997fd5",\n            Order = "adcfdddf8ec64b84ad22772bce3ea37a",\n        }\n    ),\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.LabelFileTypeEnum;\nimport com.goshippo.shippo_sdk.models.components.TransactionCreateRequest;\nimport com.goshippo.shippo_sdk.models.operations.CreateTransactionRequestBody;\nimport com.goshippo.shippo_sdk.models.operations.CreateTransactionResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreateTransactionResponse res = sdk.transactions().create()\n                .shippoApiVersion("2018-02-08")\n                .requestBody(CreateTransactionRequestBody.of(TransactionCreateRequest.builder()\n                    .rate("ec9f0d3adc9441449c85d315f0997fd5")\n                    .async(false)\n                    .labelFileType(LabelFileTypeEnum.PDF4X6)\n                    .metadata("Order ID #12345")\n                    .order("adcfdddf8ec64b84ad22772bce3ea37a")\n                    .build()))\n                .call();\n\n        if (res.transaction().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Transaction])
+            return unmarshal_json_response(components.Transaction, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def create_async(
         self,
@@ -322,10 +427,12 @@ class Transactions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Transaction]:
+    ) -> components.Transaction:
         r"""Create a shipping label
 
-        Creates a new transaction object and purchases the shipping label using a rate object that has previously been created. <br> OR <br> Creates a new transaction object and purchases the shipping label instantly using shipment details, an existing carrier account, and an existing service level token.
+        Creates a new transaction object and purchases the shipping label using a rate object that has previously been created.
+
+        Alternatively, creates a new transaction object and purchases the shipping label instantly using shipment details, an existing carrier account, and an existing service level token.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -366,6 +473,7 @@ class Transactions(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", operations.CreateTransactionRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -379,37 +487,62 @@ class Transactions(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateTransaction",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Transactions"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": "curl --location --request POST 'https://api.goshippo.com/transactions' \\\n--header 'Authorization: ShippoToken {{token}}' \\\n--header 'Content-Type: application/json' \\\n--header 'SHIPPO-API-VERSION: 2018-02-08' \\\n--data-raw '{\n  \"rate\": \"a5c9d1bec93149f5bedc3a9374b50970\",\n  \"async\": false,\n  \"label_file_type\": \"PDF\"\n}'",
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.transactions.create(request=components.TransactionCreateRequest(\n    async_=False,\n    label_file_type=components.LabelFileTypeEnum.PDF_4X6,\n    metadata='Order ID #12345',\n    rate='ec9f0d3adc9441449c85d315f0997fd5',\n    order='adcfdddf8ec64b84ad22772bce3ea37a',\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.transactions.create({\n    async: false,\n    labelFileType: "PDF_4x6",\n    metadata: "Order ID #12345",\n    rate: "ec9f0d3adc9441449c85d315f0997fd5",\n    order: "adcfdddf8ec64b84ad22772bce3ea37a",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->transactions->create(\n    requestBody: new Components\\TransactionCreateRequest(\n        async: false,\n        labelFileType: Components\\LabelFileTypeEnum::PDF4x6,\n        metadata: 'Order ID #12345',\n        rate: 'ec9f0d3adc9441449c85d315f0997fd5',\n        order: 'adcfdddf8ec64b84ad22772bce3ea37a',\n    ),\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->transaction !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Transactions.CreateAsync(\n    requestBody: CreateTransactionRequestBody.CreateTransactionCreateRequest(\n        new TransactionCreateRequest() {\n            Async = false,\n            LabelFileType = LabelFileTypeEnum.Pdf4x6,\n            Metadata = "Order ID #12345",\n            Rate = "ec9f0d3adc9441449c85d315f0997fd5",\n            Order = "adcfdddf8ec64b84ad22772bce3ea37a",\n        }\n    ),\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.LabelFileTypeEnum;\nimport com.goshippo.shippo_sdk.models.components.TransactionCreateRequest;\nimport com.goshippo.shippo_sdk.models.operations.CreateTransactionRequestBody;\nimport com.goshippo.shippo_sdk.models.operations.CreateTransactionResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreateTransactionResponse res = sdk.transactions().create()\n                .shippoApiVersion("2018-02-08")\n                .requestBody(CreateTransactionRequestBody.of(TransactionCreateRequest.builder()\n                    .rate("ec9f0d3adc9441449c85d315f0997fd5")\n                    .async(false)\n                    .labelFileType(LabelFileTypeEnum.PDF4X6)\n                    .metadata("Order ID #12345")\n                    .order("adcfdddf8ec64b84ad22772bce3ea37a")\n                    .build()))\n                .call();\n\n        if (res.transaction().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Transaction])
+            return unmarshal_json_response(components.Transaction, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def get(
         self,
@@ -419,7 +552,7 @@ class Transactions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Transaction]:
+    ) -> components.Transaction:
         r"""Retrieve a shipping label
 
         Returns an existing transaction using an object ID.
@@ -460,6 +593,7 @@ class Transactions(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -473,37 +607,62 @@ class Transactions(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetTransaction",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Transactions"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/transactions/70ae8117ee1749e393f249d5b77c45e0 \\\n -H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.transactions.get(transaction_id='<id>')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.transactions.get("<id>");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->transactions->get(\n    transactionId: '<id>',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->transaction !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Transactions.GetAsync(\n    transactionId: "<id>",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.GetTransactionResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetTransactionResponse res = sdk.transactions().get()\n                .transactionId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.transaction().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Transaction])
+            return unmarshal_json_response(components.Transaction, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def get_async(
         self,
@@ -513,7 +672,7 @@ class Transactions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Transaction]:
+    ) -> components.Transaction:
         r"""Retrieve a shipping label
 
         Returns an existing transaction using an object ID.
@@ -554,6 +713,7 @@ class Transactions(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -567,34 +727,59 @@ class Transactions(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetTransaction",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Transactions"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/transactions/70ae8117ee1749e393f249d5b77c45e0 \\\n -H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.transactions.get(transaction_id='<id>')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.transactions.get("<id>");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->transactions->get(\n    transactionId: '<id>',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->transaction !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Transactions.GetAsync(\n    transactionId: "<id>",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.GetTransactionResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetTransactionResponse res = sdk.transactions().get()\n                .transactionId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.transaction().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Transaction])
+            return unmarshal_json_response(components.Transaction, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)

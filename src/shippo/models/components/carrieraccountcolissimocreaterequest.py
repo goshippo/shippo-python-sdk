@@ -29,3 +29,9 @@ class CarrierAccountColissimoCreateRequest(BaseModel):
         Annotated[Literal["colissimo"], AfterValidator(validate_const("colissimo"))],
         pydantic.Field(alias="carrier"),
     ] = "colissimo"
+
+
+try:
+    CarrierAccountColissimoCreateRequest.model_rebuild()
+except NameError:
+    pass

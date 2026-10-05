@@ -16,6 +16,14 @@
 | globegistics_ecom_international_surface_airlift | Globegistics eCom International Surface Air Lift|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelGlobegisticsEnum
+
+value = ServiceLevelGlobegisticsEnum.GLOBEGISTICS_PRIORITY_MAIL_EXPRESS_INTERNATIONAL
+```
+
 
 ## Values
 

@@ -29,3 +29,9 @@ class CarrierAccountCorreosCreateRequest(BaseModel):
         Annotated[Literal["correos"], AfterValidator(validate_const("correos"))],
         pydantic.Field(alias="carrier"),
     ] = "correos"
+
+
+try:
+    CarrierAccountCorreosCreateRequest.model_rebuild()
+except NameError:
+    pass

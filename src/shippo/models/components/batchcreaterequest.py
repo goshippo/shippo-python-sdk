@@ -6,7 +6,8 @@ from .batchshipmentcreaterequest import (
     BatchShipmentCreateRequestTypedDict,
 )
 from .labelfiletypeenum import LabelFileTypeEnum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -20,13 +21,13 @@ class BatchCreateRequestTypedDict(TypedDict):
     default_servicelevel_token: str
     r"""Token of the service level to use as the default for all shipments in this Batch.
     The servicelevel can be changed on a per-shipment basis by changing the servicelevel_token in the
-    corresponding BatchShipment object. <a href=\"#tag/Service-Levels\">Servicelevel tokens can be found here.</a>
+    corresponding BatchShipment object. [Servicelevel tokens can be found here.](/shippoapi/public-api/service-levels)
     """
     batch_shipments: List[BatchShipmentCreateRequestTypedDict]
     r"""Array of BatchShipment objects. The response keeps the same order as in the request array."""
     label_filetype: NotRequired[LabelFileTypeEnum]
-    r"""Print format of the <a href=\"https://docs.goshippo.com/docs/shipments/shippinglabelsizes/\">label</a>. If empty, will use the default format set from
-    <a href=\"https://apps.goshippo.com/settings/labels\">the Shippo dashboard.</a>
+    r"""Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from
+    [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)
     """
     metadata: NotRequired[str]
     r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
@@ -42,16 +43,32 @@ class BatchCreateRequest(BaseModel):
     default_servicelevel_token: str
     r"""Token of the service level to use as the default for all shipments in this Batch.
     The servicelevel can be changed on a per-shipment basis by changing the servicelevel_token in the
-    corresponding BatchShipment object. <a href=\"#tag/Service-Levels\">Servicelevel tokens can be found here.</a>
+    corresponding BatchShipment object. [Servicelevel tokens can be found here.](/shippoapi/public-api/service-levels)
     """
 
     batch_shipments: List[BatchShipmentCreateRequest]
     r"""Array of BatchShipment objects. The response keeps the same order as in the request array."""
 
     label_filetype: Optional[LabelFileTypeEnum] = None
-    r"""Print format of the <a href=\"https://docs.goshippo.com/docs/shipments/shippinglabelsizes/\">label</a>. If empty, will use the default format set from
-    <a href=\"https://apps.goshippo.com/settings/labels\">the Shippo dashboard.</a>
+    r"""Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from
+    [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)
     """
 
     metadata: Optional[str] = None
     r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["label_filetype", "metadata"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

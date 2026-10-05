@@ -9,7 +9,8 @@ from .responsemessage import ResponseMessage, ResponseMessageTypedDict
 from .shipmentextra import ShipmentExtra, ShipmentExtraTypedDict
 from datetime import datetime
 from enum import Enum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -33,9 +34,9 @@ class ShipmentTypedDict(TypedDict):
     metadata: str
     r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
     address_from: AddressTypedDict
-    r"""<a href=\"#tag/Addresses\">Address</a> object of the sender / seller. Will be returned expanded by default."""
+    r"""[Address](/shippoapi/public-api/addresses) object of the sender / seller. Will be returned expanded by default."""
     address_to: AddressTypedDict
-    r"""<a href=\"#tag/Addresses\">Address</a> object of the recipient / buyer. Will be returned expanded by default."""
+    r"""[Address](/shippoapi/public-api/addresses) object of the recipient / buyer. Will be returned expanded by default."""
     carrier_accounts: List[str]
     r"""An array of object_ids of the carrier account objects to be used for getting shipping rates for this shipment.
     If no carrier account object_ids are set in this field, Shippo will attempt to generate rates using all the
@@ -53,7 +54,7 @@ class ShipmentTypedDict(TypedDict):
     parcels: List[ParcelTypedDict]
     r"""List of Parcel objects to be shipped."""
     rates: List[RateTypedDict]
-    r"""An array with all available rates. If <code>async</code> has been set to <code>false</code> in the request,
+    r"""An array with all available rates. If `async` has been set to `false` in the request,
     this will be populated with all available rates in the response. Otherwise rates will be created
     asynchronously and this array will initially be empty.
     """
@@ -71,8 +72,8 @@ class ShipmentTypedDict(TypedDict):
     be in the future, on a working day, or similar.
     """
     address_return: NotRequired[AddressTypedDict]
-    r"""ID of the Address object where the shipment will be sent back to if it is not delivered
-    (Only available for UPS, USPS, and Fedex shipments). <br/>
+    r"""ID of the Address object where the shipment will be sent back to if it is not delivered (Only available for UPS, USPS, and Fedex shipments).
+
     If this field is not set, your shipments will be returned to the address_from.
     """
     customs_declaration: NotRequired[CustomsDeclarationTypedDict]
@@ -87,10 +88,10 @@ class Shipment(BaseModel):
     r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
 
     address_from: Address
-    r"""<a href=\"#tag/Addresses\">Address</a> object of the sender / seller. Will be returned expanded by default."""
+    r"""[Address](/shippoapi/public-api/addresses) object of the sender / seller. Will be returned expanded by default."""
 
     address_to: Address
-    r"""<a href=\"#tag/Addresses\">Address</a> object of the recipient / buyer. Will be returned expanded by default."""
+    r"""[Address](/shippoapi/public-api/addresses) object of the recipient / buyer. Will be returned expanded by default."""
 
     carrier_accounts: List[str]
     r"""An array of object_ids of the carrier account objects to be used for getting shipping rates for this shipment.
@@ -116,7 +117,7 @@ class Shipment(BaseModel):
     r"""List of Parcel objects to be shipped."""
 
     rates: List[Rate]
-    r"""An array with all available rates. If <code>async</code> has been set to <code>false</code> in the request,
+    r"""An array with all available rates. If `async` has been set to `false` in the request,
     this will be populated with all available rates in the response. Otherwise rates will be created
     asynchronously and this array will initially be empty.
     """
@@ -138,8 +139,8 @@ class Shipment(BaseModel):
     """
 
     address_return: Optional[Address] = None
-    r"""ID of the Address object where the shipment will be sent back to if it is not delivered
-    (Only available for UPS, USPS, and Fedex shipments). <br/>
+    r"""ID of the Address object where the shipment will be sent back to if it is not delivered (Only available for UPS, USPS, and Fedex shipments).
+
     If this field is not set, your shipments will be returned to the address_from.
     """
 
@@ -147,3 +148,21 @@ class Shipment(BaseModel):
 
     test: Optional[bool] = None
     r"""Indicates whether the object has been created in test mode."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            ["extra", "shipment_date", "address_return", "customs_declaration", "test"]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

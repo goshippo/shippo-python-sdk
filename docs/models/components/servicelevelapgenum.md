@@ -8,6 +8,14 @@
 | apg_eparcel_expedited | eParcel Expedited|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelAPGEnum
+
+value = ServiceLevelAPGEnum.EPACKET
+```
+
 
 ## Values
 

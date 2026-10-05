@@ -5,8 +5,8 @@ from enum import Enum
 
 
 class LabelFileTypeEnum(str, Enum):
-    r"""Print format of the <a href=\"https://docs.goshippo.com/docs/shipments/shippinglabelsizes/\">label</a>. If empty, will use the default format set from
-    <a href=\"https://apps.goshippo.com/settings/labels\">the Shippo dashboard.</a>
+    r"""Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from
+    [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)
     """
 
     PNG = "PNG"

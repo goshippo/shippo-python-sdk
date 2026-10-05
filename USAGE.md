@@ -5,13 +5,11 @@ from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.addresses.list()
-
-    assert res is not None
+    res = s_client.addresses.list(page=1, results=5)
 
     # Handle response
     print(res)
@@ -19,7 +17,8 @@ with Shippo(
 
 </br>
 
-The same SDK client can also be used to make asychronous requests by importing asyncio.
+The same SDK client can also be used to make asynchronous requests by importing asyncio.
+
 ```python
 # Asynchronous Example
 import asyncio
@@ -28,13 +27,11 @@ from shippo import Shippo
 async def main():
 
     async with Shippo(
-        api_key_header="<YOUR_API_KEY_HERE>",
         shippo_api_version="2018-02-08",
+        api_key_header="<YOUR_API_KEY_HERE>",
     ) as s_client:
 
-        res = await s_client.addresses.list_async()
-
-        assert res is not None
+        res = await s_client.addresses.list_async(page=1, results=5)
 
         # Handle response
         print(res)

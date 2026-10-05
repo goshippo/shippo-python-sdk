@@ -17,6 +17,14 @@
 | rr_donnelley_emi | Express Mail International|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelePostGlobalEnum
+
+value = ServiceLevelePostGlobalEnum.RR_DONNELLEY_DOMESTIC_ECONOMY_PARCEL
+```
+
 
 ## Values
 

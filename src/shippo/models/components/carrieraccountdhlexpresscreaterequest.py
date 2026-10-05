@@ -27,3 +27,9 @@ class CarrierAccountDHLExpressCreateRequest(BaseModel):
         ],
         pydantic.Field(alias="carrier"),
     ] = "dhl_express"
+
+
+try:
+    CarrierAccountDHLExpressCreateRequest.model_rebuild()
+except NameError:
+    pass

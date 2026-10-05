@@ -1,5 +1,13 @@
 # ShipmentExtraLasershipAttributesEnum
 
+## Example Usage
+
+```python
+from shippo.models.components import ShipmentExtraLasershipAttributesEnum
+
+value = ShipmentExtraLasershipAttributesEnum.TWO_PERSON_DELIVERY
+```
+
 
 ## Values
 

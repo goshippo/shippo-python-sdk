@@ -9,6 +9,14 @@
 | hermes_uk_postable_nextday | Postable Next Day|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelEvriUKEnum
+
+value = ServiceLevelEvriUKEnum.HERMES_UK_COURIER_SERVICE
+```
+
 
 ## Values
 

@@ -4,7 +4,8 @@ from __future__ import annotations
 from .parcelextra import ParcelExtra, ParcelExtraTypedDict
 from .parceltemplateenumset import ParcelTemplateEnumSet, ParcelTemplateEnumSetTypedDict
 from .weightunitenum import WeightUnitEnum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -18,7 +19,7 @@ class ParcelCreateFromTemplateRequestTypedDict(TypedDict):
     r"""If template is passed, `length`, `width`, `height`, and `distance_unit` are not required"""
     extra: NotRequired[ParcelExtraTypedDict]
     r"""An object holding optional extra services to be requested for each parcel in a multi-piece shipment.
-    See the <a href=\"#section/Parcel-Extras\">Parcel Extra table below</a> for all available services.
+    The following values are supported for the `extra` field of the parcel object.
     """
     metadata: NotRequired[str]
 
@@ -35,7 +36,23 @@ class ParcelCreateFromTemplateRequest(BaseModel):
 
     extra: Optional[ParcelExtra] = None
     r"""An object holding optional extra services to be requested for each parcel in a multi-piece shipment.
-    See the <a href=\"#section/Parcel-Extras\">Parcel Extra table below</a> for all available services.
+    The following values are supported for the `extra` field of the parcel object.
     """
 
     metadata: Optional[str] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["extra", "metadata"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

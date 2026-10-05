@@ -1,14 +1,8 @@
 # Parcels
-(*parcels*)
 
 ## Overview
 
-A parcel is an item you are shipping. The parcel object includes details about its physical make-up of the parcel. It includes dimensions and weight that Shippo uses to calculate rates. 
-<SchemaDefinition schemaRef="#/components/schemas/Parcel"/>
-
-# Parcel Extras
-The following values are supported for the `extra` field of the parcel object.
-<SchemaDefinition schemaRef="#/components/schemas/ParcelExtra"/>
+A parcel is an item you are shipping. The parcel object includes details about its physical make-up of the parcel. It includes dimensions and weight that Shippo uses to calculate rates.
 
 ### Available Operations
 
@@ -22,18 +16,17 @@ Returns a list of all parcel objects.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListParcels" method="get" path="/parcels" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.parcels.list()
-
-    assert res is not None
+    res = s_client.parcels.list(page=1, results=25)
 
     # Handle response
     print(res)
@@ -64,23 +57,18 @@ Creates a new parcel object.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateParcel" method="post" path="/parcels" -->
 ```python
 from shippo import Shippo
 from shippo.models import components
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.parcels.create(request={
-        "mass_unit": components.WeightUnitEnum.LB,
-        "weight": "1",
-        "distance_unit": components.DistanceUnitEnum.IN,
-        "height": "1",
-        "length": "1",
-        "width": "1",
         "extra": {
             "cod": {
                 "amount": "5.5",
@@ -95,9 +83,13 @@ with Shippo(
             },
         },
         "metadata": "Customer ID 123456",
+        "mass_unit": components.WeightUnitEnum.LB,
+        "weight": "1",
+        "distance_unit": components.DistanceUnitEnum.IN,
+        "height": "1",
+        "length": "1",
+        "width": "1",
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -127,18 +119,17 @@ Returns parcel details using an existing parcel object ID (this will not return 
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetParcel" method="get" path="/parcels/{ParcelId}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.parcels.get(parcel_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)

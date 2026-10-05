@@ -1,6 +1,6 @@
 # BatchShipmentPaginatedList
 
-Array of <a href="#section/Batch-Shipment">BatchShipment</a> objects. 
+Array of [BatchShipment](/shippoapi/public-api/batches/batchshipment) objects. 
 The response keeps the same order as in the request array.
 
 

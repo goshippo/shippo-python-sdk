@@ -7,6 +7,14 @@
 | ontrac_sunrise | Sunrise|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelOnTracEnum
+
+value = ServiceLevelOnTracEnum.ONTRAC_GROUND
+```
+
 
 ## Values
 

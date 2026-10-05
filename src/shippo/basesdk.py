@@ -3,18 +3,38 @@
 from .sdkconfiguration import SDKConfiguration
 import httpx
 from shippo import utils
-from shippo._hooks import AfterErrorContext, AfterSuccessContext, BeforeRequestContext
+from shippo._hooks import (
+    AfterErrorContext,
+    AfterSuccessContext,
+    BeforeRequestContext,
+    HookContext,
+)
 from shippo.models import errors
-from shippo.utils import RetryConfig, SerializedRequestBody, get_body_content
+from shippo.utils import (
+    RetryConfig,
+    SerializedRequestBody,
+    get_body_content,
+    run_sync_in_thread,
+)
 from typing import Callable, List, Mapping, Optional, Tuple
 from urllib.parse import parse_qs, urlparse
 
 
 class BaseSDK:
     sdk_configuration: SDKConfiguration
+    parent_ref: Optional[object] = None
+    """
+    Reference to the root SDK instance, if any. This will prevent it from
+    being garbage collected while there are active streams.
+    """
 
-    def __init__(self, sdk_config: SDKConfiguration) -> None:
+    def __init__(
+        self,
+        sdk_config: SDKConfiguration,
+        parent_ref: Optional[object] = None,
+    ) -> None:
         self.sdk_configuration = sdk_config
+        self.parent_ref = parent_ref
 
     def _get_url(self, base_url, url_variables):
         sdk_url, sdk_variables = self.sdk_configuration.get_server_details()
@@ -47,6 +67,8 @@ class BaseSDK:
         ] = None,
         url_override: Optional[str] = None,
         http_headers: Optional[Mapping[str, str]] = None,
+        allow_empty_value: Optional[List[str]] = None,
+        allowed_fields: Optional[List[str]] = None,
     ) -> httpx.Request:
         client = self.sdk_configuration.async_client
         return self._build_request_with_client(
@@ -67,6 +89,8 @@ class BaseSDK:
             get_serialized_body,
             url_override,
             http_headers,
+            allow_empty_value,
+            allowed_fields,
         )
 
     def _build_request(
@@ -89,6 +113,8 @@ class BaseSDK:
         ] = None,
         url_override: Optional[str] = None,
         http_headers: Optional[Mapping[str, str]] = None,
+        allow_empty_value: Optional[List[str]] = None,
+        allowed_fields: Optional[List[str]] = None,
     ) -> httpx.Request:
         client = self.sdk_configuration.client
         return self._build_request_with_client(
@@ -109,6 +135,8 @@ class BaseSDK:
             get_serialized_body,
             url_override,
             http_headers,
+            allow_empty_value,
+            allowed_fields,
         )
 
     def _build_request_with_client(
@@ -132,6 +160,8 @@ class BaseSDK:
         ] = None,
         url_override: Optional[str] = None,
         http_headers: Optional[Mapping[str, str]] = None,
+        allow_empty_value: Optional[List[str]] = None,
+        allowed_fields: Optional[List[str]] = None,
     ) -> httpx.Request:
         query_params = {}
 
@@ -147,6 +177,7 @@ class BaseSDK:
             query_params = utils.get_query_params(
                 request if request_has_query_params else None,
                 _globals if request_has_query_params else None,
+                allow_empty_value,
             )
         else:
             # Pick up the query parameter from the override so they can be
@@ -164,7 +195,9 @@ class BaseSDK:
                 security = security()
 
         if security is not None:
-            security_headers, security_query_params = utils.get_security(security)
+            security_headers, security_query_params = utils.get_security(
+                security, allowed_fields
+            )
             headers = {**headers, **security_headers}
             query_params = {**query_params, **security_query_params}
 
@@ -201,26 +234,28 @@ class BaseSDK:
             data=serialized_request_body.data,
             files=serialized_request_body.files,
             headers=headers,
-            timeout=timeout,
+            timeout=timeout if timeout is not None else httpx.USE_CLIENT_DEFAULT,
         )
 
     def do_request(
         self,
-        hook_ctx,
-        request,
-        error_status_codes,
-        stream=False,
+        hook_ctx: HookContext,
+        request: httpx.Request,
+        is_error_status_code: Callable[[int], bool],
+        stream: bool = False,
         retry_config: Optional[Tuple[RetryConfig, List[str]]] = None,
     ) -> httpx.Response:
         client = self.sdk_configuration.client
         logger = self.sdk_configuration.debug_logger
 
+        hooks = self.sdk_configuration.__dict__["_hooks"]
+
         def do():
             http_res = None
             try:
-                req = self.sdk_configuration.get_hooks().before_request(
-                    BeforeRequestContext(hook_ctx), request
-                )
+                req = hooks.before_request(BeforeRequestContext(hook_ctx), request)
+                if "timeout" in request.extensions and "timeout" not in req.extensions:
+                    req.extensions["timeout"] = request.extensions["timeout"]
                 logger.debug(
                     "Request:\nMethod: %s\nURL: %s\nHeaders: %s\nBody: %s",
                     req.method,
@@ -234,16 +269,14 @@ class BaseSDK:
 
                 http_res = client.send(req, stream=stream)
             except Exception as e:
-                _, e = self.sdk_configuration.get_hooks().after_error(
-                    AfterErrorContext(hook_ctx), None, e
-                )
+                _, e = hooks.after_error(AfterErrorContext(hook_ctx), None, e)
                 if e is not None:
                     logger.debug("Request Exception", exc_info=True)
                     raise e
 
             if http_res is None:
                 logger.debug("Raising no response SDK error")
-                raise errors.SDKError("No response received")
+                raise errors.NoResponseError("No response received")
 
             logger.debug(
                 "Response:\nStatus Code: %s\nURL: %s\nHeaders: %s\nBody: %s",
@@ -253,19 +286,6 @@ class BaseSDK:
                 "<streaming response>" if stream else http_res.text,
             )
 
-            if utils.match_status_codes(error_status_codes, http_res.status_code):
-                result, err = self.sdk_configuration.get_hooks().after_error(
-                    AfterErrorContext(hook_ctx), http_res, None
-                )
-                if err is not None:
-                    logger.debug("Request Exception", exc_info=True)
-                    raise err
-                if result is not None:
-                    http_res = result
-                else:
-                    logger.debug("Raising unexpected SDK error")
-                    raise errors.SDKError("Unexpected error occurred")
-
             return http_res
 
         if retry_config is not None:
@@ -273,30 +293,43 @@ class BaseSDK:
         else:
             http_res = do()
 
-        if not utils.match_status_codes(error_status_codes, http_res.status_code):
-            http_res = self.sdk_configuration.get_hooks().after_success(
-                AfterSuccessContext(hook_ctx), http_res
-            )
+        if is_error_status_code(http_res.status_code):
+            result, err = hooks.after_error(AfterErrorContext(hook_ctx), http_res, None)
+            if err is not None:
+                logger.debug("Request Exception", exc_info=True)
+                raise err
+            if result is not None:
+                http_res = result
+            else:
+                logger.debug("Raising unexpected SDK error")
+                raise errors.SDKError("Unexpected error occurred", http_res)
+        else:
+            http_res = hooks.after_success(AfterSuccessContext(hook_ctx), http_res)
 
         return http_res
 
     async def do_request_async(
         self,
-        hook_ctx,
-        request,
-        error_status_codes,
-        stream=False,
+        hook_ctx: HookContext,
+        request: httpx.Request,
+        is_error_status_code: Callable[[int], bool],
+        stream: bool = False,
         retry_config: Optional[Tuple[RetryConfig, List[str]]] = None,
     ) -> httpx.Response:
         client = self.sdk_configuration.async_client
         logger = self.sdk_configuration.debug_logger
 
+        hooks = self.sdk_configuration.__dict__["_hooks"]
+
         async def do():
             http_res = None
             try:
-                req = self.sdk_configuration.get_hooks().before_request(
-                    BeforeRequestContext(hook_ctx), request
+                req = await run_sync_in_thread(
+                    hooks.before_request, BeforeRequestContext(hook_ctx), request
                 )
+
+                if "timeout" in request.extensions and "timeout" not in req.extensions:
+                    req.extensions["timeout"] = request.extensions["timeout"]
                 logger.debug(
                     "Request:\nMethod: %s\nURL: %s\nHeaders: %s\nBody: %s",
                     req.method,
@@ -310,16 +343,17 @@ class BaseSDK:
 
                 http_res = await client.send(req, stream=stream)
             except Exception as e:
-                _, e = self.sdk_configuration.get_hooks().after_error(
-                    AfterErrorContext(hook_ctx), None, e
+                _, e = await run_sync_in_thread(
+                    hooks.after_error, AfterErrorContext(hook_ctx), None, e
                 )
+
                 if e is not None:
                     logger.debug("Request Exception", exc_info=True)
                     raise e
 
             if http_res is None:
                 logger.debug("Raising no response SDK error")
-                raise errors.SDKError("No response received")
+                raise errors.NoResponseError("No response received")
 
             logger.debug(
                 "Response:\nStatus Code: %s\nURL: %s\nHeaders: %s\nBody: %s",
@@ -328,19 +362,6 @@ class BaseSDK:
                 http_res.headers,
                 "<streaming response>" if stream else http_res.text,
             )
-
-            if utils.match_status_codes(error_status_codes, http_res.status_code):
-                result, err = self.sdk_configuration.get_hooks().after_error(
-                    AfterErrorContext(hook_ctx), http_res, None
-                )
-                if err is not None:
-                    logger.debug("Request Exception", exc_info=True)
-                    raise err
-                if result is not None:
-                    http_res = result
-                else:
-                    logger.debug("Raising unexpected SDK error")
-                    raise errors.SDKError("Unexpected error occurred")
 
             return http_res
 
@@ -351,9 +372,22 @@ class BaseSDK:
         else:
             http_res = await do()
 
-        if not utils.match_status_codes(error_status_codes, http_res.status_code):
-            http_res = self.sdk_configuration.get_hooks().after_success(
-                AfterSuccessContext(hook_ctx), http_res
+        if is_error_status_code(http_res.status_code):
+            result, err = await run_sync_in_thread(
+                hooks.after_error, AfterErrorContext(hook_ctx), http_res, None
+            )
+
+            if err is not None:
+                logger.debug("Request Exception", exc_info=True)
+                raise err
+            if result is not None:
+                http_res = result
+            else:
+                logger.debug("Raising unexpected SDK error")
+                raise errors.SDKError("Unexpected error occurred", http_res)
+        else:
+            http_res = await run_sync_in_thread(
+                hooks.after_success, AfterSuccessContext(hook_ctx), http_res
             )
 
         return http_res
