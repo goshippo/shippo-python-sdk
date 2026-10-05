@@ -3,3 +3,4 @@
 from .sdkhooks import *
 from .types import *
 from .registration import *
+from .oauth2scopes import *

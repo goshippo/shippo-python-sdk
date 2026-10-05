@@ -11,17 +11,20 @@ from .trackingstatuslocationbase import (
     TrackingStatusLocationBaseTypedDict,
 )
 from datetime import datetime
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
 class TrackTypedDict(TypedDict):
+    r"""Tracking status"""
+
     carrier: str
-    r"""Name of the carrier of the shipment to track. See <a href=\"#tag/Carriers\">Carriers</a>."""
+    r"""Name of the carrier of the shipment to track. See [Carriers](/shippoapi/public-api/carriers)."""
     messages: List[str]
     tracking_history: List[TrackingStatusTypedDict]
-    r"""A list of tracking events, following the same structure as <code>tracking_status</code>.
+    r"""A list of tracking events, following the same structure as `tracking_status`.
     It contains a full history of all tracking statuses, starting with the earlier tracking event first.
     """
     tracking_number: str
@@ -40,19 +43,21 @@ class TrackTypedDict(TypedDict):
     tracking_status: NotRequired[TrackingStatusTypedDict]
     r"""The latest tracking information of this shipment."""
     transaction: NotRequired[str]
-    r"""The <code>object_id</code> of the transaction associated with this tracking object.
+    r"""The `object_id` of the transaction associated with this tracking object.
     This field is visible only to the object owner of the transaction.
     """
 
 
 class Track(BaseModel):
+    r"""Tracking status"""
+
     carrier: str
-    r"""Name of the carrier of the shipment to track. See <a href=\"#tag/Carriers\">Carriers</a>."""
+    r"""Name of the carrier of the shipment to track. See [Carriers](/shippoapi/public-api/carriers)."""
 
     messages: List[str]
 
     tracking_history: List[TrackingStatus]
-    r"""A list of tracking events, following the same structure as <code>tracking_status</code>.
+    r"""A list of tracking events, following the same structure as `tracking_status`.
     It contains a full history of all tracking statuses, starting with the earlier tracking event first.
     """
 
@@ -80,6 +85,33 @@ class Track(BaseModel):
     r"""The latest tracking information of this shipment."""
 
     transaction: Optional[str] = None
-    r"""The <code>object_id</code> of the transaction associated with this tracking object.
+    r"""The `object_id` of the transaction associated with this tracking object.
     This field is visible only to the object owner of the transaction.
     """
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "address_from",
+                "address_to",
+                "eta",
+                "metadata",
+                "original_eta",
+                "servicelevel",
+                "tracking_status",
+                "transaction",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

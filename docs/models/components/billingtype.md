@@ -2,6 +2,14 @@
 
 Party to be billed. (Leave blank for DHL Germany.)
 
+## Example Usage
+
+```python
+from shippo.models.components import BillingType
+
+value = BillingType.SENDER
+```
+
 
 ## Values
 

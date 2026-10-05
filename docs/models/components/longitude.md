@@ -1,5 +1,7 @@
 # Longitude
 
+Longitude of address
+
 
 ## Supported Types
 

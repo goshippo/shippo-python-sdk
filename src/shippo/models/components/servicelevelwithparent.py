@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 from .servicelevel import ServiceLevel, ServiceLevelTypedDict
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -16,10 +17,14 @@ class ServiceLevelWithParentTypedDict(TypedDict):
     These names vary depending on the provider.
     """
     terms: NotRequired[str]
-    r"""Further clarification of the service."""
+    r"""Further clarification of the service. For FedEx, a value of `ONERATE` indicates this
+    rate is a FedEx One Rate variant of the same service level — it shares the same
+    `token` as the standard-rate object but is a separate rate with its own `amount`.
+    Standard (non-One Rate) rates have an empty string here.
+    """
     token: NotRequired[str]
     r"""Token of the Rate's servicelevel, e.g. `usps_priority` or `fedex_ground`.
-    See <a href=\"#tag/Service-Levels\">servicelevels</a>.
+    See [servicelevels](/shippoapi/public-api/service-levels).
     """
     extended_token: NotRequired[str]
     r"""Unique, extended version of the Service Level \"token\".
@@ -38,11 +43,15 @@ class ServiceLevelWithParent(BaseModel):
     """
 
     terms: Optional[str] = None
-    r"""Further clarification of the service."""
+    r"""Further clarification of the service. For FedEx, a value of `ONERATE` indicates this
+    rate is a FedEx One Rate variant of the same service level — it shares the same
+    `token` as the standard-rate object but is a separate rate with its own `amount`.
+    Standard (non-One Rate) rates have an empty string here.
+    """
 
     token: Optional[str] = None
     r"""Token of the Rate's servicelevel, e.g. `usps_priority` or `fedex_ground`.
-    See <a href=\"#tag/Service-Levels\">servicelevels</a>.
+    See [servicelevels](/shippoapi/public-api/service-levels).
     """
 
     extended_token: Optional[str] = None
@@ -51,3 +60,21 @@ class ServiceLevelWithParent(BaseModel):
     """
 
     parent_servicelevel: Optional[ServiceLevel] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            ["name", "terms", "token", "extended_token", "parent_servicelevel"]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

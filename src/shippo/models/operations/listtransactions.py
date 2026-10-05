@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 import pydantic
+from pydantic import model_serializer
 from shippo.models.components import (
     trackingstatusenum as components_trackingstatusenum,
     transactionstatusenum as components_transactionstatusenum,
 )
-from shippo.types import BaseModel
+from shippo.types import BaseModel, UNSET_SENTINEL
 from shippo.utils import FieldMetadata, HeaderMetadata, QueryParamMetadata
 from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
@@ -14,7 +15,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class ListTransactionsGlobalsTypedDict(TypedDict):
     shippo_api_version: NotRequired[str]
-    r"""Optional string used to pick a non-default API version to use. See our <a href=\"https://docs.goshippo.com/docs/api_concepts/apiversioning/\">API version</a> guide."""
+    r"""Optional string used to pick a non-default API version to use. See our [API version](https://docs.goshippo.com/docs/api_concepts/apiversioning/) guide."""
 
 
 class ListTransactionsGlobals(BaseModel):
@@ -22,8 +23,24 @@ class ListTransactionsGlobals(BaseModel):
         Optional[str],
         pydantic.Field(alias="SHIPPO-API-VERSION"),
         FieldMetadata(header=HeaderMetadata(style="simple", explode=False)),
-    ] = None
-    r"""Optional string used to pick a non-default API version to use. See our <a href=\"https://docs.goshippo.com/docs/api_concepts/apiversioning/\">API version</a> guide."""
+    ] = "2018-02-08"
+    r"""Optional string used to pick a non-default API version to use. See our [API version](https://docs.goshippo.com/docs/api_concepts/apiversioning/) guide."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["SHIPPO-API-VERSION"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
 
 
 class ListTransactionsRequestTypedDict(TypedDict):
@@ -37,6 +54,14 @@ class ListTransactionsRequestTypedDict(TypedDict):
     r"""The page number you want to select"""
     results: NotRequired[int]
     r"""The number of results to return per page (max 100)"""
+    object_created_gt: NotRequired[str]
+    r"""Object(s) created greater than a provided date and time."""
+    object_created_gte: NotRequired[str]
+    r"""Object(s) created greater than or equal to a provided date and time."""
+    object_created_lt: NotRequired[str]
+    r"""Object(s) created lesser than a provided date and time."""
+    object_created_lte: NotRequired[str]
+    r"""Object(s) created lesser than or equal to a provided date and time."""
 
 
 class ListTransactionsRequest(BaseModel):
@@ -69,3 +94,55 @@ class ListTransactionsRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = 25
     r"""The number of results to return per page (max 100)"""
+
+    object_created_gt: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Object(s) created greater than a provided date and time."""
+
+    object_created_gte: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Object(s) created greater than or equal to a provided date and time."""
+
+    object_created_lt: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Object(s) created lesser than a provided date and time."""
+
+    object_created_lte: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Object(s) created lesser than or equal to a provided date and time."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "rate",
+                "object_status",
+                "tracking_status",
+                "page",
+                "results",
+                "object_created_gt",
+                "object_created_gte",
+                "object_created_lt",
+                "object_created_lte",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

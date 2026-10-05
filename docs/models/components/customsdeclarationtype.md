@@ -2,6 +2,14 @@
 
 Party to be billed for duties.
 
+## Example Usage
+
+```python
+from shippo.models.components import CustomsDeclarationType
+
+value = CustomsDeclarationType.SENDER
+```
+
 
 ## Values
 

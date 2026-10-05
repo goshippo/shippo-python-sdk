@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 import pydantic
-from pydantic import Discriminator, Tag
+from pydantic import Field, model_serializer
 from shippo.models.components import (
     carrieraccountcanadapostcreaterequest as components_carrieraccountcanadapostcreaterequest,
     carrieraccountchronopostcreaterequest as components_carrieraccountchronopostcreaterequest,
@@ -16,19 +16,20 @@ from shippo.models.components import (
     carrieraccounthermesukcreaterequest as components_carrieraccounthermesukcreaterequest,
     carrieraccountmondialrelaycreaterequest as components_carrieraccountmondialrelaycreaterequest,
     carrieraccountposteitalianecreaterequest as components_carrieraccountposteitalianecreaterequest,
-    carrieraccountsendlecreaterequest as components_carrieraccountsendlecreaterequest,
+    carrieraccountroyalmailcreaterequest as components_carrieraccountroyalmailcreaterequest,
+    carrieraccountroyalmailsfcreaterequest as components_carrieraccountroyalmailsfcreaterequest,
     carrieraccountupscreaterequest as components_carrieraccountupscreaterequest,
     carrieraccountuspscreaterequest as components_carrieraccountuspscreaterequest,
 )
-from shippo.types import BaseModel
-from shippo.utils import FieldMetadata, HeaderMetadata, get_discriminator
+from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.utils import FieldMetadata, HeaderMetadata
 from typing import Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 class RegisterCarrierAccountGlobalsTypedDict(TypedDict):
     shippo_api_version: NotRequired[str]
-    r"""Optional string used to pick a non-default API version to use. See our <a href=\"https://docs.goshippo.com/docs/api_concepts/apiversioning/\">API version</a> guide."""
+    r"""Optional string used to pick a non-default API version to use. See our [API version](https://docs.goshippo.com/docs/api_concepts/apiversioning/) guide."""
 
 
 class RegisterCarrierAccountGlobals(BaseModel):
@@ -36,8 +37,24 @@ class RegisterCarrierAccountGlobals(BaseModel):
         Optional[str],
         pydantic.Field(alias="SHIPPO-API-VERSION"),
         FieldMetadata(header=HeaderMetadata(style="simple", explode=False)),
-    ] = None
-    r"""Optional string used to pick a non-default API version to use. See our <a href=\"https://docs.goshippo.com/docs/api_concepts/apiversioning/\">API version</a> guide."""
+    ] = "2018-02-08"
+    r"""Optional string used to pick a non-default API version to use. See our [API version](https://docs.goshippo.com/docs/api_concepts/apiversioning/) guide."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["SHIPPO-API-VERSION"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
 
 
 RegisterCarrierAccountRequestTypedDict = TypeAliasType(
@@ -57,7 +74,8 @@ RegisterCarrierAccountRequestTypedDict = TypeAliasType(
         components_carrieraccountposteitalianecreaterequest.CarrierAccountPosteItalianeCreateRequestTypedDict,
         components_carrieraccountupscreaterequest.CarrierAccountUPSCreateRequestTypedDict,
         components_carrieraccountuspscreaterequest.CarrierAccountUSPSCreateRequestTypedDict,
-        components_carrieraccountsendlecreaterequest.CarrierAccountSendleCreateRequestTypedDict,
+        components_carrieraccountroyalmailcreaterequest.CarrierAccountRoyalMailCreateRequestTypedDict,
+        components_carrieraccountroyalmailsfcreaterequest.CarrierAccountRoyalMailSfCreateRequestTypedDict,
     ],
 )
 r"""The body of the request."""
@@ -65,67 +83,23 @@ r"""The body of the request."""
 
 RegisterCarrierAccountRequest = Annotated[
     Union[
-        Annotated[
-            components_carrieraccountcanadapostcreaterequest.CarrierAccountCanadaPostCreateRequest,
-            Tag("canada_post"),
-        ],
-        Annotated[
-            components_carrieraccountchronopostcreaterequest.CarrierAccountChronopostCreateRequest,
-            Tag("chronopost"),
-        ],
-        Annotated[
-            components_carrieraccountcolissimocreaterequest.CarrierAccountColissimoCreateRequest,
-            Tag("colissimo"),
-        ],
-        Annotated[
-            components_carrieraccountcorreoscreaterequest.CarrierAccountCorreosCreateRequest,
-            Tag("correos"),
-        ],
-        Annotated[
-            components_carrieraccountdeutschepostcreaterequest.CarrierAccountDeutschePostCreateRequest,
-            Tag("deutsche_post"),
-        ],
-        Annotated[
-            components_carrieraccountdhlexpresscreaterequest.CarrierAccountDHLExpressCreateRequest,
-            Tag("dhl_express"),
-        ],
-        Annotated[
-            components_carrieraccountdpddecreaterequest.CarrierAccountDpdDeCreateRequest,
-            Tag("dpd_de"),
-        ],
-        Annotated[
-            components_carrieraccountdpdukcreaterequest.CarrierAccountDPDUKCreateRequest,
-            Tag("dpd_uk"),
-        ],
-        Annotated[
-            components_carrieraccountfedexcreaterequest.CarrierAccountFedExCreateRequest,
-            Tag("fedex"),
-        ],
-        Annotated[
-            components_carrieraccounthermesukcreaterequest.CarrierAccountHermesUKCreateRequest,
-            Tag("hermes_uk"),
-        ],
-        Annotated[
-            components_carrieraccountmondialrelaycreaterequest.CarrierAccountMondialRelayCreateRequest,
-            Tag("mondial_relay"),
-        ],
-        Annotated[
-            components_carrieraccountposteitalianecreaterequest.CarrierAccountPosteItalianeCreateRequest,
-            Tag("poste_italiane"),
-        ],
-        Annotated[
-            components_carrieraccountupscreaterequest.CarrierAccountUPSCreateRequest,
-            Tag("ups"),
-        ],
-        Annotated[
-            components_carrieraccountuspscreaterequest.CarrierAccountUSPSCreateRequest,
-            Tag("usps"),
-        ],
-        Annotated[
-            components_carrieraccountsendlecreaterequest.CarrierAccountSendleCreateRequest,
-            Tag("sendle"),
-        ],
+        components_carrieraccountcanadapostcreaterequest.CarrierAccountCanadaPostCreateRequest,
+        components_carrieraccountchronopostcreaterequest.CarrierAccountChronopostCreateRequest,
+        components_carrieraccountcolissimocreaterequest.CarrierAccountColissimoCreateRequest,
+        components_carrieraccountcorreoscreaterequest.CarrierAccountCorreosCreateRequest,
+        components_carrieraccountdeutschepostcreaterequest.CarrierAccountDeutschePostCreateRequest,
+        components_carrieraccountdhlexpresscreaterequest.CarrierAccountDHLExpressCreateRequest,
+        components_carrieraccountdpddecreaterequest.CarrierAccountDpdDeCreateRequest,
+        components_carrieraccountdpdukcreaterequest.CarrierAccountDPDUKCreateRequest,
+        components_carrieraccountfedexcreaterequest.CarrierAccountFedExCreateRequest,
+        components_carrieraccounthermesukcreaterequest.CarrierAccountHermesUKCreateRequest,
+        components_carrieraccountmondialrelaycreaterequest.CarrierAccountMondialRelayCreateRequest,
+        components_carrieraccountposteitalianecreaterequest.CarrierAccountPosteItalianeCreateRequest,
+        components_carrieraccountupscreaterequest.CarrierAccountUPSCreateRequest,
+        components_carrieraccountuspscreaterequest.CarrierAccountUSPSCreateRequest,
+        components_carrieraccountroyalmailcreaterequest.CarrierAccountRoyalMailCreateRequest,
+        components_carrieraccountroyalmailsfcreaterequest.CarrierAccountRoyalMailSfCreateRequest,
     ],
-    Discriminator(lambda m: get_discriminator(m, "carrier", "carrier")),
+    Field(discriminator="CARRIER"),
 ]
 r"""The body of the request."""

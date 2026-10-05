@@ -6,6 +6,14 @@
 | better_trucks_next_day | Next Day|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelBetterTrucksEnum
+
+value = ServiceLevelBetterTrucksEnum.BETTER_TRUCKS_SAME_DAY
+```
+
 
 ## Values
 

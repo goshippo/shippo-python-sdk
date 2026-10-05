@@ -22,6 +22,14 @@
 | purolator_express_international1200 | Express International 12pm|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelPurolatorEnum
+
+value = ServiceLevelPurolatorEnum.PUROLATOR_GROUND
+```
+
 
 ## Values
 

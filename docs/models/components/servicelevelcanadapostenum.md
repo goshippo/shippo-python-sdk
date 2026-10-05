@@ -18,6 +18,14 @@
 | canada_post_international_parcel_air  | International Parcel Air
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelCanadaPostEnum
+
+value = ServiceLevelCanadaPostEnum.CANADA_POST_REGULAR_PARCEL
+```
+
 
 ## Values
 

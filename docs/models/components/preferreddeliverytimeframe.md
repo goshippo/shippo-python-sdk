@@ -2,6 +2,14 @@
 
 Required for DHL Germany Paket Sameday. Designates a desired timeframe for delivery. Format is `HHMMHHMM`
 
+## Example Usage
+
+```python
+from shippo.models.components import PreferredDeliveryTimeframe
+
+value = PreferredDeliveryTimeframe.TEN_MILLION_ONE_THOUSAND_TWO_HUNDRED
+```
+
 
 ## Values
 

@@ -3,7 +3,8 @@
 from __future__ import annotations
 from .labelfiletypeenum import LabelFileTypeEnum
 import pydantic
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
@@ -12,8 +13,8 @@ class TransactionCreateRequestTypedDict(TypedDict):
     rate: str
     async_: NotRequired[bool]
     label_file_type: NotRequired[LabelFileTypeEnum]
-    r"""Print format of the <a href=\"https://docs.goshippo.com/docs/shipments/shippinglabelsizes/\">label</a>. If empty, will use the default format set from
-    <a href=\"https://apps.goshippo.com/settings/labels\">the Shippo dashboard.</a>
+    r"""Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from
+    [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)
     """
     metadata: NotRequired[str]
     order: NotRequired[str]
@@ -25,10 +26,32 @@ class TransactionCreateRequest(BaseModel):
     async_: Annotated[Optional[bool], pydantic.Field(alias="async")] = True
 
     label_file_type: Optional[LabelFileTypeEnum] = None
-    r"""Print format of the <a href=\"https://docs.goshippo.com/docs/shipments/shippinglabelsizes/\">label</a>. If empty, will use the default format set from
-    <a href=\"https://apps.goshippo.com/settings/labels\">the Shippo dashboard.</a>
+    r"""Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from
+    [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)
     """
 
     metadata: Optional[str] = None
 
     order: Optional[str] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["async", "label_file_type", "metadata", "order"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
+try:
+    TransactionCreateRequest.model_rebuild()
+except NameError:
+    pass

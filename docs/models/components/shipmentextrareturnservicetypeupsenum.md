@@ -1,5 +1,13 @@
 # ShipmentExtraReturnServiceTypeUPSEnum
 
+## Example Usage
+
+```python
+from shippo.models.components import ShipmentExtraReturnServiceTypeUPSEnum
+
+value = ShipmentExtraReturnServiceTypeUPSEnum.PRINT_AND_MAIL
+```
+
 
 ## Values
 

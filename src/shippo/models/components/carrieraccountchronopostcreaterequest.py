@@ -29,3 +29,9 @@ class CarrierAccountChronopostCreateRequest(BaseModel):
         Annotated[Literal["chronopost"], AfterValidator(validate_const("chronopost"))],
         pydantic.Field(alias="carrier"),
     ] = "chronopost"
+
+
+try:
+    CarrierAccountChronopostCreateRequest.model_rebuild()
+except NameError:
+    pass

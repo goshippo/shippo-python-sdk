@@ -1,19 +1,20 @@
-speakeasyVersion: 1.521.1
+speakeasyVersion: 1.800.1
 sources:
     openapi:
         sourceNamespace: openapi
-        sourceRevisionDigest: sha256:e8ab98342833888dbc4dd20f683ee5fb7791107d8574b8dfabce743bc3675cd0
-        sourceBlobDigest: sha256:8c66d55b10c00886e8fd1f2b6ea6b233bccf17f622fed046dcf302d5da3f91f5
+        sourceRevisionDigest: sha256:e6866991375e30494c45383b27eebdf37a2f573583b2d563a60df350d99f3a5e
+        sourceBlobDigest: sha256:3bf002e8b298df5bdb6edb8f65bdfa17c7d1459f1e3c291d3312ca11ba0e16c0
         tags:
             - latest
-            - speakeasy-sdk-regen-1732493299
             - "2018-02-08"
 targets:
     first-target:
         source: openapi
         sourceNamespace: openapi
-        sourceRevisionDigest: sha256:e8ab98342833888dbc4dd20f683ee5fb7791107d8574b8dfabce743bc3675cd0
-        sourceBlobDigest: sha256:8c66d55b10c00886e8fd1f2b6ea6b233bccf17f622fed046dcf302d5da3f91f5
+        sourceRevisionDigest: sha256:e6866991375e30494c45383b27eebdf37a2f573583b2d563a60df350d99f3a5e
+        sourceBlobDigest: sha256:3bf002e8b298df5bdb6edb8f65bdfa17c7d1459f1e3c291d3312ca11ba0e16c0
+        codeSamplesNamespace: openapi-python-code-samples
+        codeSamplesRevisionDigest: sha256:663a8b92a3acc31eef7a8160bafea0ef33b6db8620db7f621453d94c62b07066
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
@@ -32,5 +33,5 @@ workflow:
                     token: $pypi_token
             codeSamples:
                 registry:
-                    location: registry.speakeasyapi.dev/shippo/shippo/openapi-code-samples
+                    location: registry.speakeasyapi.dev/shippo/shippo/openapi-python-code-samples
                 blocking: false

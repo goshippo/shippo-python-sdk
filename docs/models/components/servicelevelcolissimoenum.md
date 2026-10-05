@@ -7,6 +7,14 @@
 | colissimo_return_mainland_france | Retour France|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelColissimoEnum
+
+value = ServiceLevelColissimoEnum.COLISSIMO_HOME
+```
+
 
 ## Values
 

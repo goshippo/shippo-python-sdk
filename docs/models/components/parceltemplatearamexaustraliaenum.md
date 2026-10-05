@@ -8,6 +8,14 @@
 | Fastway_Australia_Satchel_A5 | Satchel A5 | 210.00 x 148.00 x 64.00 mm|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ParcelTemplateAramexAustraliaEnum
+
+value = ParcelTemplateAramexAustraliaEnum.FASTWAY_AUSTRALIA_SATCHEL_A2
+```
+
 
 ## Values
 

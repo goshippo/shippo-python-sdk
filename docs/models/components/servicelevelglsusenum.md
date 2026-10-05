@@ -10,6 +10,14 @@
 | gls_us_sds | Saturday Delivery|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelGLSUSEnum
+
+value = ServiceLevelGLSUSEnum.GLS_US_CPS
+```
+
 
 ## Values
 

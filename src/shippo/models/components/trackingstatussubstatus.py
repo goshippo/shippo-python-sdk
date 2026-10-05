@@ -9,9 +9,9 @@ class TrackingStatusSubstatusTypedDict(TypedDict):
     r"""A finer-grained classification of the tracking event."""
 
     code: str
-    r"""A code that represents the substatus of the shipment. See the <a href=\"https://docs.goshippo.com/docs/tracking/tracking/#event-definitions\">Event Definitions</a> for more information."""
+    r"""A code that represents the substatus of the shipment. See the [Event Definitions](https://docs.goshippo.com/docs/tracking/tracking/#event-definitions) for more information."""
     text: str
-    r"""A human-readable description of the substatus. See the <a href=\"https://docs.goshippo.com/docs/tracking/tracking/#event-definitions\">Event Definitions</a> for more information."""
+    r"""A human-readable description of the substatus. See the [Event Definitions](https://docs.goshippo.com/docs/tracking/tracking/#event-definitions) for more information."""
     action_required: bool
     r"""Indicates whether the substatus requires action from the shipper or recipient to complete delivery."""
 
@@ -20,10 +20,10 @@ class TrackingStatusSubstatus(BaseModel):
     r"""A finer-grained classification of the tracking event."""
 
     code: str
-    r"""A code that represents the substatus of the shipment. See the <a href=\"https://docs.goshippo.com/docs/tracking/tracking/#event-definitions\">Event Definitions</a> for more information."""
+    r"""A code that represents the substatus of the shipment. See the [Event Definitions](https://docs.goshippo.com/docs/tracking/tracking/#event-definitions) for more information."""
 
     text: str
-    r"""A human-readable description of the substatus. See the <a href=\"https://docs.goshippo.com/docs/tracking/tracking/#event-definitions\">Event Definitions</a> for more information."""
+    r"""A human-readable description of the substatus. See the [Event Definitions](https://docs.goshippo.com/docs/tracking/tracking/#event-definitions) for more information."""
 
     action_required: bool
     r"""Indicates whether the substatus requires action from the shipper or recipient to complete delivery."""

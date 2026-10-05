@@ -29,3 +29,9 @@ class CarrierAccountUSPSCreateRequest(BaseModel):
         Annotated[Literal["usps"], AfterValidator(validate_const("usps"))],
         pydantic.Field(alias="carrier"),
     ] = "usps"
+
+
+try:
+    CarrierAccountUSPSCreateRequest.model_rebuild()
+except NameError:
+    pass

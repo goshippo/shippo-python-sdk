@@ -1,7 +1,15 @@
 # CustomsDeclarationContentsTypeEnum
 
 Type of goods of the shipment.  
-Allowed values available <a href="#tag/Customs-Declaration-Contents-Type">here</a>
+Allowed values available [here](/shippoapi/public-api/customs-declaration-contents-type)
+
+## Example Usage
+
+```python
+from shippo.models.components import CustomsDeclarationContentsTypeEnum
+
+value = CustomsDeclarationContentsTypeEnum.DOCUMENTS
+```
 
 
 ## Values
