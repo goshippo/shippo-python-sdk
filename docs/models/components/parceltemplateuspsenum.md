@@ -24,6 +24,14 @@
 | USPS_SoftPack | Soft Pack Padded Envelope |  Length and width defined in the Parcel|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ParcelTemplateUSPSEnum
+
+value = ParcelTemplateUSPSEnum.USPS_FLAT_RATE_CARDBOARD_ENVELOPE
+```
+
 
 ## Values
 

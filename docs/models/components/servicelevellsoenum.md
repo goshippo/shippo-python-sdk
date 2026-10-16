@@ -10,6 +10,14 @@
 | lso_early_overnight | Early Overnight|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelLSOEnum
+
+value = ServiceLevelLSOEnum.LSO_GROUND
+```
+
 
 ## Values
 

@@ -1,6 +1,6 @@
 # ParcelInsurance
 
-To add insurace to your parcel, specify `amount`, `content` and `currency`. <br><br>If you do not want to add insurance to you parcel, do not set these parameters.
+To add insurance to your parcel, specify `amount`, `content` and `currency`. If you do not want to add insurance to your parcel, do not set these parameters.
 
 
 ## Fields

@@ -32,6 +32,14 @@
 | dhl_ecommerce_globalmail_packet_standard | GlobalMail Business Standard|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelDHLeCommerceEnum
+
+value = ServiceLevelDHLeCommerceEnum.DHL_ECOMMERCE_MARKETING_PARCEL_EXPEDITED
+```
+
 
 ## Values
 

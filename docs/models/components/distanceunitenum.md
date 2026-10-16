@@ -2,6 +2,14 @@
 
 The measure unit used for length, width and height.
 
+## Example Usage
+
+```python
+from shippo.models.components import DistanceUnitEnum
+
+value = DistanceUnitEnum.CM
+```
+
 
 ## Values
 

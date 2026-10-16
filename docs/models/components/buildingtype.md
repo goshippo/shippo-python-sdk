@@ -2,6 +2,14 @@
 
 The type of building where the pickup is located.
 
+## Example Usage
+
+```python
+from shippo.models.components import BuildingType
+
+value = BuildingType.APARTMENT
+```
+
 
 ## Values
 

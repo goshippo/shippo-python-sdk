@@ -10,6 +10,14 @@
 | dhl_germany_paket_sameday | DHL Germany Paket Sameday|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelDHLGermanyEnum
+
+value = ServiceLevelDHLGermanyEnum.DHL_GERMANY_EUROPAKET
+```
+
 
 ## Values
 

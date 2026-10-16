@@ -6,6 +6,14 @@
 | next_day | Next Day|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelSwyftEnum
+
+value = ServiceLevelSwyftEnum.SAME_DAY
+```
+
 
 ## Values
 

@@ -3,6 +3,14 @@
 Where your parcels will be available for pickup. "Security Deck" and "Shipping Dock" are only 
 supported for DHL Express.
 
+## Example Usage
+
+```python
+from shippo.models.components import BuildingLocationType
+
+value = BuildingLocationType.BACK_DOOR
+```
+
 
 ## Values
 
