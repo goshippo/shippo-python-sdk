@@ -14,8 +14,11 @@ Version 4.0.0 was never published. Upgrades go directly from 3.x to 5.0.
 - **Try the beta first.** Pre-releases are only installed when you ask for one explicitly:
 
   ```bash
-  pip install --pre shippo        # or: pip install "shippo==5.0.0b1"
+  pip install "shippo==5.0.0b1"
   ```
+
+  Pin the exact version rather than using `pip install --pre shippo`. `--pre` also allows
+  pre-release versions of every dependency, not just `shippo`.
 
 ## 1. Method arguments are keyword-only
 
