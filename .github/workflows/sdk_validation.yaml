@@ -14,13 +14,15 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [ '3.9', '3.11' ]
+        # 5.x requires Python >=3.10. 3.14 waits until the lockfile's pydantic-core ships 3.14 wheels.
+        python-version: [ '3.10', '3.11', '3.13' ]
     name: Python ${{ matrix.python-version }}
     timeout-minutes: 10
     env:
       SHIPPO_TOKEN: ${{ secrets.SHIPPO_TOKEN }}
     concurrency:
-      group: python-sdk-check
+      group: python-sdk-check-${{ github.event.pull_request.number }}-${{ matrix.python-version }}
+      cancel-in-progress: true
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -37,7 +39,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ./.venv
-          key: python-${{ steps.setup_python.outputs.python-version }}-${{ hashFiles('setup.py') }}
+          key: python-${{ steps.setup_python.outputs.python-version }}-${{ hashFiles('poetry.lock') }}
       - name: Install dependencies
         run: |
           make install
