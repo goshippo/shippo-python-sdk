@@ -5,14 +5,12 @@ from shippo import utils
 from shippo._hooks import HookContext
 from shippo.models import components, errors, operations
 from shippo.types import BaseModel, OptionalNullable, UNSET
+from shippo.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Any, Mapping, Optional, Union, cast
 
 
 class CarrierAccounts(BaseSDK):
-    r"""Carriers are the companies who deliver your package. Shippo uses Carrier account objects as credentials to retrieve shipping rates and purchase labels from shipping Carriers.
-
-    <SchemaDefinition schemaRef=\"#/components/schemas/CarrierAccount\"/>
-    """
+    r"""Carriers are the companies who deliver your package. Shippo uses Carrier account objects as credentials to retrieve shipping rates and purchase labels from shipping Carriers."""
 
     def list(
         self,
@@ -25,13 +23,13 @@ class CarrierAccounts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CarrierAccountPaginatedList]:
+    ) -> components.CarrierAccountPaginatedList:
         r"""List all carrier accounts
 
         Returns a list of all carrier accounts connected to your Shippo account. These carrier accounts include both Shippo carrier accounts and your own carrier accounts that you have connected to your Shippo account.
 
-        Additionally, you can get information about the service levels associated with each carrier account by passing in the `?service_levels=true` query parameter. <br>
-        Using it appends the property `service_levels` to each carrier account. <br>
+        Additionally, you can get information about the service levels associated with each carrier account by passing in the `?service_levels=true` query parameter.
+        Using it appends the property `service_levels` to each carrier account.
         By default, if the query parameter is omitted, the `service_levels` property will not be included in the response.
 
         :param request: The request object to send.
@@ -70,6 +68,7 @@ class CarrierAccounts(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -83,39 +82,64 @@ class CarrierAccounts(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListCarrierAccounts",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Carrier Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/carrier_accounts?service_levels=true \\\n -H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import operations\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.carrier_accounts.list(request=operations.ListCarrierAccountsRequest())\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.carrierAccounts.list({});\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Operations;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$request = new Operations\\ListCarrierAccountsRequest();\n\n$response = $sdk->carrierAccounts->list(\n    request: $request\n);\n\nif ($response->carrierAccountPaginatedList !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing Shippo.Models.Requests;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nListCarrierAccountsRequest req = new ListCarrierAccountsRequest() {};\n\nvar res = await sdk.CarrierAccounts.ListAsync(req);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.ListCarrierAccountsRequest;\nimport com.goshippo.shippo_sdk.models.operations.ListCarrierAccountsResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        ListCarrierAccountsRequest req = ListCarrierAccountsRequest.builder()\n                .build();\n\n        ListCarrierAccountsResponse res = sdk.carrierAccounts().list()\n                .request(req)\n                .call();\n\n        if (res.carrierAccountPaginatedList().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CarrierAccountPaginatedList]
+            return unmarshal_json_response(
+                components.CarrierAccountPaginatedList, http_res
             )
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def list_async(
         self,
@@ -128,13 +152,13 @@ class CarrierAccounts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CarrierAccountPaginatedList]:
+    ) -> components.CarrierAccountPaginatedList:
         r"""List all carrier accounts
 
         Returns a list of all carrier accounts connected to your Shippo account. These carrier accounts include both Shippo carrier accounts and your own carrier accounts that you have connected to your Shippo account.
 
-        Additionally, you can get information about the service levels associated with each carrier account by passing in the `?service_levels=true` query parameter. <br>
-        Using it appends the property `service_levels` to each carrier account. <br>
+        Additionally, you can get information about the service levels associated with each carrier account by passing in the `?service_levels=true` query parameter.
+        Using it appends the property `service_levels` to each carrier account.
         By default, if the query parameter is omitted, the `service_levels` property will not be included in the response.
 
         :param request: The request object to send.
@@ -173,6 +197,7 @@ class CarrierAccounts(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -186,39 +211,64 @@ class CarrierAccounts(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListCarrierAccounts",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Carrier Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/carrier_accounts?service_levels=true \\\n -H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import operations\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.carrier_accounts.list(request=operations.ListCarrierAccountsRequest())\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.carrierAccounts.list({});\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Operations;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$request = new Operations\\ListCarrierAccountsRequest();\n\n$response = $sdk->carrierAccounts->list(\n    request: $request\n);\n\nif ($response->carrierAccountPaginatedList !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing Shippo.Models.Requests;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nListCarrierAccountsRequest req = new ListCarrierAccountsRequest() {};\n\nvar res = await sdk.CarrierAccounts.ListAsync(req);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.ListCarrierAccountsRequest;\nimport com.goshippo.shippo_sdk.models.operations.ListCarrierAccountsResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        ListCarrierAccountsRequest req = ListCarrierAccountsRequest.builder()\n                .build();\n\n        ListCarrierAccountsResponse res = sdk.carrierAccounts().list()\n                .request(req)\n                .call();\n\n        if (res.carrierAccountPaginatedList().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CarrierAccountPaginatedList]
+            return unmarshal_json_response(
+                components.CarrierAccountPaginatedList, http_res
             )
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def create(
         self,
@@ -231,7 +281,7 @@ class CarrierAccounts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CarrierAccount]:
+    ) -> components.CarrierAccount:
         r"""Create a new carrier account
 
         Creates a new carrier account or connects an existing carrier account to the Shippo account.
@@ -281,6 +331,7 @@ class CarrierAccounts(BaseSDK):
                 "json",
                 components.ConnectExistingOwnAccountRequest,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -294,39 +345,62 @@ class CarrierAccounts(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateCarrierAccount",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Carrier Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl --location --request POST \'https://api.goshippo.com/carrier_accounts/\' \\\n--header \'Authorization: ShippoToken {{token}}\' \\\n--header \'Content-Type: application/json\' \\\n--data-raw \'{\n  "account_id": "string",\n  "active": true,\n  "carrier": "ups",\n  "metadata": "UPS Account",\n  "parameters": {\n    "billing_address_city": "San Francisco",\n    "billing_address_country_iso2": "US",\n    "billing_address_state": "CA",\n    "billing_address_street1": "731 Market St",\n    "billing_address_street2": "STE 200",\n    "billing_address_zip": "94103",\n    "company": "Shippo",\n    "email": "hippo@shippo.com",\n    "full_name": "Thorn Hall",\n    "phone": "1112223333",\n    "pickup_address_city": "San Francisco",\n    "pickup_address_country_iso2": "US",\n    "pickup_address_same_as_billing_address": false,\n    "pickup_address_state": "CA",\n    "pickup_address_street1": "731 Market St",\n    "pickup_address_street2": "STE 200",\n    "pickup_address_zip": "94103",\n    "ups_agreements": true\n  },\n  "test": false\n}\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.carrier_accounts.create(request=components.ConnectExistingOwnAccountRequest(\n    account_id='321123',\n    carrier='fedex',\n    metadata='FEDEX Account',\n    parameters=components.FedExConnectExistingOwnAccountParameters(\n        first_name='Loyal',\n        last_name='Collier',\n        phone_number='(890) 307-8579',\n        from_address_st='<value>',\n        from_address_city='<value>',\n        from_address_state='<value>',\n        from_address_zip='<value>',\n        from_address_country_iso2='<value>',\n        use_multi_factor_registration=True,\n        verification_option='SMS',\n    ),\n    test=False,\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.carrierAccounts.create({\n    accountId: "321123",\n    carrier: "fedex",\n    metadata: "FEDEX Account",\n    parameters: {\n      firstName: "Loyal",\n      lastName: "Collier",\n      phoneNumber: "(890) 307-8579",\n      fromAddressSt: "<value>",\n      fromAddressCity: "<value>",\n      fromAddressState: "<value>",\n      fromAddressZip: "<value>",\n      fromAddressCountryIso2: "<value>",\n      useMultiFactorRegistration: true,\n      verificationOption: "SMS",\n    },\n    test: false,\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$connectExistingOwnAccountRequest = new Components\\ConnectExistingOwnAccountRequest(\n    accountId: '321123',\n    carrier: 'fedex',\n    metadata: 'FEDEX Account',\n    parameters: new Components\\FedExConnectExistingOwnAccountParameters(\n        firstName: 'Loyal',\n        lastName: 'Collier',\n        phoneNumber: '(890) 307-8579',\n        fromAddressSt: '<value>',\n        fromAddressCity: '<value>',\n        fromAddressState: '<value>',\n        fromAddressZip: '<value>',\n        fromAddressCountryIso2: '<value>',\n        useMultiFactorRegistration: true,\n        verificationOption: 'SMS',\n    ),\n    test: false,\n);\n\n$response = $sdk->carrierAccounts->create(\n    connectExistingOwnAccountRequest: $connectExistingOwnAccountRequest,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->carrierAccount !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.CarrierAccounts.CreateAsync(\n    connectExistingOwnAccountRequest: new ConnectExistingOwnAccountRequest() {\n        AccountId = "321123",\n        Carrier = "fedex",\n        Metadata = "FEDEX Account",\n        Parameters = ConnectExistingOwnAccountRequestParameters.CreateFedExConnectExistingOwnAccountParameters(\n            new FedExConnectExistingOwnAccountParameters() {\n                FirstName = "Loyal",\n                LastName = "Collier",\n                PhoneNumber = "(890) 307-8579",\n                FromAddressSt = "<value>",\n                FromAddressCity = "<value>",\n                FromAddressState = "<value>",\n                FromAddressZip = "<value>",\n                FromAddressCountryIso2 = "<value>",\n                UseMultiFactorRegistration = true,\n                VerificationOption = "SMS",\n            }\n        ),\n        Test = false,\n    },\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.ConnectExistingOwnAccountRequest;\nimport com.goshippo.shippo_sdk.models.components.ConnectExistingOwnAccountRequestParameters;\nimport com.goshippo.shippo_sdk.models.components.FedExConnectExistingOwnAccountParameters;\nimport com.goshippo.shippo_sdk.models.operations.CreateCarrierAccountResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreateCarrierAccountResponse res = sdk.carrierAccounts().create()\n                .shippoApiVersion("2018-02-08")\n                .connectExistingOwnAccountRequest(ConnectExistingOwnAccountRequest.builder()\n                    .accountId("321123")\n                    .carrier("fedex")\n                    .parameters(ConnectExistingOwnAccountRequestParameters.of(FedExConnectExistingOwnAccountParameters.builder()\n                        .firstName("Loyal")\n                        .lastName("Collier")\n                        .phoneNumber("(890) 307-8579")\n                        .fromAddressSt("<value>")\n                        .fromAddressCity("<value>")\n                        .fromAddressState("<value>")\n                        .fromAddressZip("<value>")\n                        .fromAddressCountryIso2("<value>")\n                        .useMultiFactorRegistration(true)\n                        .verificationOption("SMS")\n                        .build()))\n                    .metadata("FEDEX Account")\n                    .test(false)\n                    .build())\n                .call();\n\n        if (res.carrierAccount().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CarrierAccount]
-            )
+            return unmarshal_json_response(components.CarrierAccount, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def create_async(
         self,
@@ -339,7 +413,7 @@ class CarrierAccounts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CarrierAccount]:
+    ) -> components.CarrierAccount:
         r"""Create a new carrier account
 
         Creates a new carrier account or connects an existing carrier account to the Shippo account.
@@ -389,6 +463,7 @@ class CarrierAccounts(BaseSDK):
                 "json",
                 components.ConnectExistingOwnAccountRequest,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -402,39 +477,62 @@ class CarrierAccounts(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateCarrierAccount",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Carrier Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl --location --request POST \'https://api.goshippo.com/carrier_accounts/\' \\\n--header \'Authorization: ShippoToken {{token}}\' \\\n--header \'Content-Type: application/json\' \\\n--data-raw \'{\n  "account_id": "string",\n  "active": true,\n  "carrier": "ups",\n  "metadata": "UPS Account",\n  "parameters": {\n    "billing_address_city": "San Francisco",\n    "billing_address_country_iso2": "US",\n    "billing_address_state": "CA",\n    "billing_address_street1": "731 Market St",\n    "billing_address_street2": "STE 200",\n    "billing_address_zip": "94103",\n    "company": "Shippo",\n    "email": "hippo@shippo.com",\n    "full_name": "Thorn Hall",\n    "phone": "1112223333",\n    "pickup_address_city": "San Francisco",\n    "pickup_address_country_iso2": "US",\n    "pickup_address_same_as_billing_address": false,\n    "pickup_address_state": "CA",\n    "pickup_address_street1": "731 Market St",\n    "pickup_address_street2": "STE 200",\n    "pickup_address_zip": "94103",\n    "ups_agreements": true\n  },\n  "test": false\n}\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.carrier_accounts.create(request=components.ConnectExistingOwnAccountRequest(\n    account_id='321123',\n    carrier='fedex',\n    metadata='FEDEX Account',\n    parameters=components.FedExConnectExistingOwnAccountParameters(\n        first_name='Loyal',\n        last_name='Collier',\n        phone_number='(890) 307-8579',\n        from_address_st='<value>',\n        from_address_city='<value>',\n        from_address_state='<value>',\n        from_address_zip='<value>',\n        from_address_country_iso2='<value>',\n        use_multi_factor_registration=True,\n        verification_option='SMS',\n    ),\n    test=False,\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.carrierAccounts.create({\n    accountId: "321123",\n    carrier: "fedex",\n    metadata: "FEDEX Account",\n    parameters: {\n      firstName: "Loyal",\n      lastName: "Collier",\n      phoneNumber: "(890) 307-8579",\n      fromAddressSt: "<value>",\n      fromAddressCity: "<value>",\n      fromAddressState: "<value>",\n      fromAddressZip: "<value>",\n      fromAddressCountryIso2: "<value>",\n      useMultiFactorRegistration: true,\n      verificationOption: "SMS",\n    },\n    test: false,\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$connectExistingOwnAccountRequest = new Components\\ConnectExistingOwnAccountRequest(\n    accountId: '321123',\n    carrier: 'fedex',\n    metadata: 'FEDEX Account',\n    parameters: new Components\\FedExConnectExistingOwnAccountParameters(\n        firstName: 'Loyal',\n        lastName: 'Collier',\n        phoneNumber: '(890) 307-8579',\n        fromAddressSt: '<value>',\n        fromAddressCity: '<value>',\n        fromAddressState: '<value>',\n        fromAddressZip: '<value>',\n        fromAddressCountryIso2: '<value>',\n        useMultiFactorRegistration: true,\n        verificationOption: 'SMS',\n    ),\n    test: false,\n);\n\n$response = $sdk->carrierAccounts->create(\n    connectExistingOwnAccountRequest: $connectExistingOwnAccountRequest,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->carrierAccount !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.CarrierAccounts.CreateAsync(\n    connectExistingOwnAccountRequest: new ConnectExistingOwnAccountRequest() {\n        AccountId = "321123",\n        Carrier = "fedex",\n        Metadata = "FEDEX Account",\n        Parameters = ConnectExistingOwnAccountRequestParameters.CreateFedExConnectExistingOwnAccountParameters(\n            new FedExConnectExistingOwnAccountParameters() {\n                FirstName = "Loyal",\n                LastName = "Collier",\n                PhoneNumber = "(890) 307-8579",\n                FromAddressSt = "<value>",\n                FromAddressCity = "<value>",\n                FromAddressState = "<value>",\n                FromAddressZip = "<value>",\n                FromAddressCountryIso2 = "<value>",\n                UseMultiFactorRegistration = true,\n                VerificationOption = "SMS",\n            }\n        ),\n        Test = false,\n    },\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.ConnectExistingOwnAccountRequest;\nimport com.goshippo.shippo_sdk.models.components.ConnectExistingOwnAccountRequestParameters;\nimport com.goshippo.shippo_sdk.models.components.FedExConnectExistingOwnAccountParameters;\nimport com.goshippo.shippo_sdk.models.operations.CreateCarrierAccountResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreateCarrierAccountResponse res = sdk.carrierAccounts().create()\n                .shippoApiVersion("2018-02-08")\n                .connectExistingOwnAccountRequest(ConnectExistingOwnAccountRequest.builder()\n                    .accountId("321123")\n                    .carrier("fedex")\n                    .parameters(ConnectExistingOwnAccountRequestParameters.of(FedExConnectExistingOwnAccountParameters.builder()\n                        .firstName("Loyal")\n                        .lastName("Collier")\n                        .phoneNumber("(890) 307-8579")\n                        .fromAddressSt("<value>")\n                        .fromAddressCity("<value>")\n                        .fromAddressState("<value>")\n                        .fromAddressZip("<value>")\n                        .fromAddressCountryIso2("<value>")\n                        .useMultiFactorRegistration(true)\n                        .verificationOption("SMS")\n                        .build()))\n                    .metadata("FEDEX Account")\n                    .test(false)\n                    .build())\n                .call();\n\n        if (res.carrierAccount().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CarrierAccount]
-            )
+            return unmarshal_json_response(components.CarrierAccount, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def get(
         self,
@@ -444,7 +542,7 @@ class CarrierAccounts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CarrierAccount]:
+    ) -> components.CarrierAccount:
         r"""Retrieve a carrier account
 
         Returns an existing carrier account using an object ID.
@@ -485,6 +583,7 @@ class CarrierAccounts(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -498,39 +597,62 @@ class CarrierAccounts(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetCarrierAccount",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Carrier Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/carrier_accounts/b741b99f95e841639b54272834bc478c \\\n-H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.carrier_accounts.get(carrier_account_id='<id>')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.carrierAccounts.get("<id>");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->carrierAccounts->get(\n    carrierAccountId: '<id>',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->carrierAccount !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.CarrierAccounts.GetAsync(\n    carrierAccountId: "<id>",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.GetCarrierAccountResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetCarrierAccountResponse res = sdk.carrierAccounts().get()\n                .carrierAccountId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.carrierAccount().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CarrierAccount]
-            )
+            return unmarshal_json_response(components.CarrierAccount, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def get_async(
         self,
@@ -540,7 +662,7 @@ class CarrierAccounts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CarrierAccount]:
+    ) -> components.CarrierAccount:
         r"""Retrieve a carrier account
 
         Returns an existing carrier account using an object ID.
@@ -581,6 +703,7 @@ class CarrierAccounts(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -594,39 +717,62 @@ class CarrierAccounts(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetCarrierAccount",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Carrier Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/carrier_accounts/b741b99f95e841639b54272834bc478c \\\n-H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.carrier_accounts.get(carrier_account_id='<id>')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.carrierAccounts.get("<id>");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->carrierAccounts->get(\n    carrierAccountId: '<id>',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->carrierAccount !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.CarrierAccounts.GetAsync(\n    carrierAccountId: "<id>",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.GetCarrierAccountResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetCarrierAccountResponse res = sdk.carrierAccounts().get()\n                .carrierAccountId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.carrierAccount().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CarrierAccount]
-            )
+            return unmarshal_json_response(components.CarrierAccount, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def update(
         self,
@@ -639,7 +785,7 @@ class CarrierAccounts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CarrierAccount]:
+    ) -> components.CarrierAccount:
         r"""Update a carrier account
 
         Updates an existing carrier account object. The account_id and carrier can't be updated. This is because they form the unique identifier together.
@@ -685,12 +831,13 @@ class CarrierAccounts(BaseSDK):
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.carrier_account_base,
+                request.carrier_account_base if request is not None else None,
                 False,
                 True,
                 "json",
                 Optional[components.CarrierAccountBase],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -704,39 +851,62 @@ class CarrierAccounts(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateCarrierAccount",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Carrier Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/carrier_accounts/b741b99f95e841639b54272834bc478c/ \\\n-X PUT  \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-d parameters=\'{\n    "meter": "123987"\n}\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.carrier_accounts.update(carrier_account_id='<id>', carrier_account_base=components.CarrierAccountBase(\n    account_id='****',\n    carrier='usps',\n    parameters=components.UPSConnectExistingOwnAccountParameters(\n        account_number='94567e',\n        aia_country_iso2='US',\n        billing_address_city='San Francisco',\n        billing_address_country_iso2='US',\n        billing_address_state='CA',\n        billing_address_street1='731 Market St',\n        billing_address_street2='STE 200',\n        billing_address_zip='94103',\n        collec_country_iso2='US',\n        collec_zip='94103',\n        company='Shippo',\n        currency_code='USD',\n        email='hippo@shippo.com',\n        full_name='Shippo Meister',\n        has_invoice=False,\n        invoice_controlid='1234',\n        invoice_date='20210529',\n        invoice_number='1112234',\n        invoice_value='11.23',\n        phone='1112223333',\n        title='Manager',\n        ups_agreements=True,\n    ),\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.carrierAccounts.update("<id>", {\n    accountId: "****",\n    carrier: "usps",\n    parameters: {\n      accountNumber: "94567e",\n      aiaCountryIso2: "US",\n      billingAddressCity: "San Francisco",\n      billingAddressCountryIso2: "US",\n      billingAddressState: "CA",\n      billingAddressStreet1: "731 Market St",\n      billingAddressStreet2: "STE 200",\n      billingAddressZip: "94103",\n      collecCountryIso2: "US",\n      collecZip: "94103",\n      company: "Shippo",\n      currencyCode: "USD",\n      email: "hippo@shippo.com",\n      fullName: "Shippo Meister",\n      hasInvoice: false,\n      invoiceControlid: "1234",\n      invoiceDate: "20210529",\n      invoiceNumber: "1112234",\n      invoiceValue: "11.23",\n      phone: "1112223333",\n      title: "Manager",\n      upsAgreements: true,\n    },\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$carrierAccountBase = new Components\\CarrierAccountBase(\n    accountId: '****',\n    carrier: 'usps',\n    parameters: new Components\\UPSConnectExistingOwnAccountParameters(\n        accountNumber: '94567e',\n        aiaCountryIso2: 'US',\n        billingAddressCity: 'San Francisco',\n        billingAddressCountryIso2: 'US',\n        billingAddressState: 'CA',\n        billingAddressStreet1: '731 Market St',\n        billingAddressStreet2: 'STE 200',\n        billingAddressZip: '94103',\n        collecCountryIso2: 'US',\n        collecZip: '94103',\n        company: 'Shippo',\n        currencyCode: 'USD',\n        email: 'hippo@shippo.com',\n        fullName: 'Shippo Meister',\n        hasInvoice: false,\n        invoiceControlid: '1234',\n        invoiceDate: '20210529',\n        invoiceNumber: '1112234',\n        invoiceValue: '11.23',\n        phone: '1112223333',\n        title: 'Manager',\n        upsAgreements: false,\n    ),\n);\n\n$response = $sdk->carrierAccounts->update(\n    carrierAccountId: '<id>',\n    shippoApiVersion: '2018-02-08',\n    carrierAccountBase: $carrierAccountBase\n\n);\n\nif ($response->carrierAccount !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.CarrierAccounts.UpdateAsync(\n    carrierAccountId: "<id>",\n    shippoApiVersion: "2018-02-08",\n    carrierAccountBase: new CarrierAccountBase() {\n        AccountId = "****",\n        Carrier = "usps",\n        Parameters = CarrierAccountBaseParameters.CreateUPSConnectExistingOwnAccountParameters(\n            new UPSConnectExistingOwnAccountParameters() {\n                AccountNumber = "94567e",\n                AiaCountryIso2 = "US",\n                BillingAddressCity = "San Francisco",\n                BillingAddressCountryIso2 = "US",\n                BillingAddressState = "CA",\n                BillingAddressStreet1 = "731 Market St",\n                BillingAddressStreet2 = "STE 200",\n                BillingAddressZip = "94103",\n                CollecCountryIso2 = "US",\n                CollecZip = "94103",\n                Company = "Shippo",\n                CurrencyCode = "USD",\n                Email = "hippo@shippo.com",\n                FullName = "Shippo Meister",\n                HasInvoice = false,\n                InvoiceControlid = "1234",\n                InvoiceDate = "20210529",\n                InvoiceNumber = "1112234",\n                InvoiceValue = "11.23",\n                Phone = "1112223333",\n                Title = "Manager",\n                UpsAgreements = false,\n            }\n        ),\n    }\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.CarrierAccountBase;\nimport com.goshippo.shippo_sdk.models.components.CarrierAccountBaseParameters;\nimport com.goshippo.shippo_sdk.models.components.UPSConnectExistingOwnAccountParameters;\nimport com.goshippo.shippo_sdk.models.operations.UpdateCarrierAccountResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        UpdateCarrierAccountResponse res = sdk.carrierAccounts().update()\n                .carrierAccountId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .carrierAccountBase(CarrierAccountBase.builder()\n                    .accountId("****")\n                    .carrier("usps")\n                    .parameters(CarrierAccountBaseParameters.of(UPSConnectExistingOwnAccountParameters.builder()\n                        .accountNumber("94567e")\n                        .billingAddressCity("San Francisco")\n                        .billingAddressCountryIso2("US")\n                        .billingAddressState("CA")\n                        .billingAddressStreet1("731 Market St")\n                        .billingAddressZip("94103")\n                        .collecCountryIso2("US")\n                        .collecZip("94103")\n                        .company("Shippo")\n                        .email("hippo@shippo.com")\n                        .fullName("Shippo Meister")\n                        .hasInvoice(false)\n                        .phone("1112223333")\n                        .title("Manager")\n                        .upsAgreements(true)\n                        .aiaCountryIso2("US")\n                        .billingAddressStreet2("STE 200")\n                        .currencyCode("USD")\n                        .invoiceControlid("1234")\n                        .invoiceDate("20210529")\n                        .invoiceNumber("1112234")\n                        .invoiceValue("11.23")\n                        .build()))\n                    .build())\n                .call();\n\n        if (res.carrierAccount().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CarrierAccount]
-            )
+            return unmarshal_json_response(components.CarrierAccount, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def update_async(
         self,
@@ -749,7 +919,7 @@ class CarrierAccounts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CarrierAccount]:
+    ) -> components.CarrierAccount:
         r"""Update a carrier account
 
         Updates an existing carrier account object. The account_id and carrier can't be updated. This is because they form the unique identifier together.
@@ -795,12 +965,13 @@ class CarrierAccounts(BaseSDK):
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.carrier_account_base,
+                request.carrier_account_base if request is not None else None,
                 False,
                 True,
                 "json",
                 Optional[components.CarrierAccountBase],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -814,39 +985,62 @@ class CarrierAccounts(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateCarrierAccount",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Carrier Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/carrier_accounts/b741b99f95e841639b54272834bc478c/ \\\n-X PUT  \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-d parameters=\'{\n    "meter": "123987"\n}\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.carrier_accounts.update(carrier_account_id='<id>', carrier_account_base=components.CarrierAccountBase(\n    account_id='****',\n    carrier='usps',\n    parameters=components.UPSConnectExistingOwnAccountParameters(\n        account_number='94567e',\n        aia_country_iso2='US',\n        billing_address_city='San Francisco',\n        billing_address_country_iso2='US',\n        billing_address_state='CA',\n        billing_address_street1='731 Market St',\n        billing_address_street2='STE 200',\n        billing_address_zip='94103',\n        collec_country_iso2='US',\n        collec_zip='94103',\n        company='Shippo',\n        currency_code='USD',\n        email='hippo@shippo.com',\n        full_name='Shippo Meister',\n        has_invoice=False,\n        invoice_controlid='1234',\n        invoice_date='20210529',\n        invoice_number='1112234',\n        invoice_value='11.23',\n        phone='1112223333',\n        title='Manager',\n        ups_agreements=True,\n    ),\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.carrierAccounts.update("<id>", {\n    accountId: "****",\n    carrier: "usps",\n    parameters: {\n      accountNumber: "94567e",\n      aiaCountryIso2: "US",\n      billingAddressCity: "San Francisco",\n      billingAddressCountryIso2: "US",\n      billingAddressState: "CA",\n      billingAddressStreet1: "731 Market St",\n      billingAddressStreet2: "STE 200",\n      billingAddressZip: "94103",\n      collecCountryIso2: "US",\n      collecZip: "94103",\n      company: "Shippo",\n      currencyCode: "USD",\n      email: "hippo@shippo.com",\n      fullName: "Shippo Meister",\n      hasInvoice: false,\n      invoiceControlid: "1234",\n      invoiceDate: "20210529",\n      invoiceNumber: "1112234",\n      invoiceValue: "11.23",\n      phone: "1112223333",\n      title: "Manager",\n      upsAgreements: true,\n    },\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$carrierAccountBase = new Components\\CarrierAccountBase(\n    accountId: '****',\n    carrier: 'usps',\n    parameters: new Components\\UPSConnectExistingOwnAccountParameters(\n        accountNumber: '94567e',\n        aiaCountryIso2: 'US',\n        billingAddressCity: 'San Francisco',\n        billingAddressCountryIso2: 'US',\n        billingAddressState: 'CA',\n        billingAddressStreet1: '731 Market St',\n        billingAddressStreet2: 'STE 200',\n        billingAddressZip: '94103',\n        collecCountryIso2: 'US',\n        collecZip: '94103',\n        company: 'Shippo',\n        currencyCode: 'USD',\n        email: 'hippo@shippo.com',\n        fullName: 'Shippo Meister',\n        hasInvoice: false,\n        invoiceControlid: '1234',\n        invoiceDate: '20210529',\n        invoiceNumber: '1112234',\n        invoiceValue: '11.23',\n        phone: '1112223333',\n        title: 'Manager',\n        upsAgreements: false,\n    ),\n);\n\n$response = $sdk->carrierAccounts->update(\n    carrierAccountId: '<id>',\n    shippoApiVersion: '2018-02-08',\n    carrierAccountBase: $carrierAccountBase\n\n);\n\nif ($response->carrierAccount !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.CarrierAccounts.UpdateAsync(\n    carrierAccountId: "<id>",\n    shippoApiVersion: "2018-02-08",\n    carrierAccountBase: new CarrierAccountBase() {\n        AccountId = "****",\n        Carrier = "usps",\n        Parameters = CarrierAccountBaseParameters.CreateUPSConnectExistingOwnAccountParameters(\n            new UPSConnectExistingOwnAccountParameters() {\n                AccountNumber = "94567e",\n                AiaCountryIso2 = "US",\n                BillingAddressCity = "San Francisco",\n                BillingAddressCountryIso2 = "US",\n                BillingAddressState = "CA",\n                BillingAddressStreet1 = "731 Market St",\n                BillingAddressStreet2 = "STE 200",\n                BillingAddressZip = "94103",\n                CollecCountryIso2 = "US",\n                CollecZip = "94103",\n                Company = "Shippo",\n                CurrencyCode = "USD",\n                Email = "hippo@shippo.com",\n                FullName = "Shippo Meister",\n                HasInvoice = false,\n                InvoiceControlid = "1234",\n                InvoiceDate = "20210529",\n                InvoiceNumber = "1112234",\n                InvoiceValue = "11.23",\n                Phone = "1112223333",\n                Title = "Manager",\n                UpsAgreements = false,\n            }\n        ),\n    }\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.CarrierAccountBase;\nimport com.goshippo.shippo_sdk.models.components.CarrierAccountBaseParameters;\nimport com.goshippo.shippo_sdk.models.components.UPSConnectExistingOwnAccountParameters;\nimport com.goshippo.shippo_sdk.models.operations.UpdateCarrierAccountResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        UpdateCarrierAccountResponse res = sdk.carrierAccounts().update()\n                .carrierAccountId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .carrierAccountBase(CarrierAccountBase.builder()\n                    .accountId("****")\n                    .carrier("usps")\n                    .parameters(CarrierAccountBaseParameters.of(UPSConnectExistingOwnAccountParameters.builder()\n                        .accountNumber("94567e")\n                        .billingAddressCity("San Francisco")\n                        .billingAddressCountryIso2("US")\n                        .billingAddressState("CA")\n                        .billingAddressStreet1("731 Market St")\n                        .billingAddressZip("94103")\n                        .collecCountryIso2("US")\n                        .collecZip("94103")\n                        .company("Shippo")\n                        .email("hippo@shippo.com")\n                        .fullName("Shippo Meister")\n                        .hasInvoice(false)\n                        .phone("1112223333")\n                        .title("Manager")\n                        .upsAgreements(true)\n                        .aiaCountryIso2("US")\n                        .billingAddressStreet2("STE 200")\n                        .currencyCode("USD")\n                        .invoiceControlid("1234")\n                        .invoiceDate("20210529")\n                        .invoiceNumber("1112234")\n                        .invoiceValue("11.23")\n                        .build()))\n                    .build())\n                .call();\n\n        if (res.carrierAccount().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CarrierAccount]
-            )
+            return unmarshal_json_response(components.CarrierAccount, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def initiate_oauth2_signin(
         self,
@@ -903,6 +1097,7 @@ class CarrierAccounts(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -916,13 +1111,49 @@ class CarrierAccounts(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="InitiateOauth2Signin",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Carrier Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl "https://api.goshippo.com/carrier_accounts/2ccf5af209bb484cb20190d9cadbb61c/signin/initiate?redirect_uri=https://client.example.com/cb&state=SplxlOBeZQQYbYS6WxSbIA" \\\n-H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.carrier_accounts.initiate_oauth2_signin(carrier_account_object_id='<id>', redirect_uri='https://enlightened-mortise.com/')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.carrierAccounts.initiateOauth2Signin("<id>", "https://enlightened-mortise.com/");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing Shippo.Models.Requests;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nInitiateOauth2SigninRequest req = new InitiateOauth2SigninRequest() {\n    CarrierAccountObjectId = "<id>",\n    RedirectUri = "https://enlightened-mortise.com/",\n};\n\nvar res = await sdk.CarrierAccounts.InitiateOauth2SigninAsync(req);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Operations;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$request = new Operations\\InitiateOauth2SigninRequest(\n    carrierAccountObjectId: '<id>',\n    redirectUri: 'https://enlightened-mortise.com/',\n);\n\n$response = $sdk->carrierAccounts->initiateOauth2Signin(\n    request: $request\n);\n\nif ($response->statusCode === 200) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.errors.InitiateOauth2SigninCarrierAccountsResponseBody;\nimport com.goshippo.shippo_sdk.models.errors.InitiateOauth2SigninCarrierAccountsResponseResponseBody;\nimport com.goshippo.shippo_sdk.models.errors.InitiateOauth2SigninResponseBody;\nimport com.goshippo.shippo_sdk.models.operations.InitiateOauth2SigninResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws InitiateOauth2SigninResponseBody, InitiateOauth2SigninCarrierAccountsResponseResponseBody, InitiateOauth2SigninCarrierAccountsResponseBody, Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        InitiateOauth2SigninResponse res = sdk.carrierAccounts().initiateOauth2Signin()\n                .carrierAccountObjectId("<id>")\n                .redirectUri("https://enlightened-mortise.com/")\n                .state("Florida")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        // handle response\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "401", "404", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -932,39 +1163,26 @@ class CarrierAccounts(BaseSDK):
                 headers=utils.get_response_headers(http_res.headers)
             )
         if utils.match_response(http_res, "400", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, errors.BadRequestErrorData
+            response_data = unmarshal_json_response(
+                errors.BadRequestErrorData, http_res
             )
-            raise errors.BadRequestError(data=response_data)
+            raise errors.BadRequestError(response_data, http_res)
         if utils.match_response(http_res, "401", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, errors.UnauthorizedErrorData
+            response_data = unmarshal_json_response(
+                errors.UnauthorizedErrorData, http_res
             )
-            raise errors.UnauthorizedError(data=response_data)
+            raise errors.UnauthorizedError(response_data, http_res)
         if utils.match_response(http_res, "404", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, errors.NotFoundErrorData
-            )
-            raise errors.NotFoundError(data=response_data)
+            response_data = unmarshal_json_response(errors.NotFoundErrorData, http_res)
+            raise errors.NotFoundError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def initiate_oauth2_signin_async(
         self,
@@ -1021,6 +1239,7 @@ class CarrierAccounts(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1034,13 +1253,49 @@ class CarrierAccounts(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="InitiateOauth2Signin",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Carrier Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl "https://api.goshippo.com/carrier_accounts/2ccf5af209bb484cb20190d9cadbb61c/signin/initiate?redirect_uri=https://client.example.com/cb&state=SplxlOBeZQQYbYS6WxSbIA" \\\n-H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.carrier_accounts.initiate_oauth2_signin(carrier_account_object_id='<id>', redirect_uri='https://enlightened-mortise.com/')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.carrierAccounts.initiateOauth2Signin("<id>", "https://enlightened-mortise.com/");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing Shippo.Models.Requests;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nInitiateOauth2SigninRequest req = new InitiateOauth2SigninRequest() {\n    CarrierAccountObjectId = "<id>",\n    RedirectUri = "https://enlightened-mortise.com/",\n};\n\nvar res = await sdk.CarrierAccounts.InitiateOauth2SigninAsync(req);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Operations;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$request = new Operations\\InitiateOauth2SigninRequest(\n    carrierAccountObjectId: '<id>',\n    redirectUri: 'https://enlightened-mortise.com/',\n);\n\n$response = $sdk->carrierAccounts->initiateOauth2Signin(\n    request: $request\n);\n\nif ($response->statusCode === 200) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.errors.InitiateOauth2SigninCarrierAccountsResponseBody;\nimport com.goshippo.shippo_sdk.models.errors.InitiateOauth2SigninCarrierAccountsResponseResponseBody;\nimport com.goshippo.shippo_sdk.models.errors.InitiateOauth2SigninResponseBody;\nimport com.goshippo.shippo_sdk.models.operations.InitiateOauth2SigninResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws InitiateOauth2SigninResponseBody, InitiateOauth2SigninCarrierAccountsResponseResponseBody, InitiateOauth2SigninCarrierAccountsResponseBody, Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        InitiateOauth2SigninResponse res = sdk.carrierAccounts().initiateOauth2Signin()\n                .carrierAccountObjectId("<id>")\n                .redirectUri("https://enlightened-mortise.com/")\n                .state("Florida")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        // handle response\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "401", "404", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -1050,39 +1305,26 @@ class CarrierAccounts(BaseSDK):
                 headers=utils.get_response_headers(http_res.headers)
             )
         if utils.match_response(http_res, "400", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, errors.BadRequestErrorData
+            response_data = unmarshal_json_response(
+                errors.BadRequestErrorData, http_res
             )
-            raise errors.BadRequestError(data=response_data)
+            raise errors.BadRequestError(response_data, http_res)
         if utils.match_response(http_res, "401", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, errors.UnauthorizedErrorData
+            response_data = unmarshal_json_response(
+                errors.UnauthorizedErrorData, http_res
             )
-            raise errors.UnauthorizedError(data=response_data)
+            raise errors.UnauthorizedError(response_data, http_res)
         if utils.match_response(http_res, "404", "application/json"):
-            response_data = utils.unmarshal_json(
-                http_res.text, errors.NotFoundErrorData
-            )
-            raise errors.NotFoundError(data=response_data)
+            response_data = unmarshal_json_response(errors.NotFoundErrorData, http_res)
+            raise errors.NotFoundError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def register(
         self,
@@ -1095,7 +1337,7 @@ class CarrierAccounts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CarrierAccount]:
+    ) -> components.CarrierAccount:
         r"""Add a Shippo carrier account
 
         Adds a Shippo carrier account
@@ -1139,6 +1381,7 @@ class CarrierAccounts(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", operations.RegisterCarrierAccountRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1152,39 +1395,62 @@ class CarrierAccounts(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="RegisterCarrierAccount",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Carrier Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "CLI",
+                            "lang": "cURL",
+                            "source": 'curl --location --request POST \'/carrier_accounts/register/new\' \\\n--header \'Authorization: ShippoToken {{token}}\' \\\n--header \'Content-Type: application/json\' \\\n--data-raw \'{\n    "carrier": "canada_post",\n    "parameters": {\n        "company": "Shippo",\n        "full_name": "Shippo Meister",\n        "email": "hippo@shippo.com",\n        "phone": "1112221122",\n        "canada_post_terms": true\n    }\n}\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.carrier_accounts.register(request=components.CarrierAccountCorreosCreateRequest(\n    parameters=components.CarrierAccountCorreosCreateRequestParameters(),\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.carrierAccounts.register({\n    parameters: {},\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.CarrierAccounts.RegisterAsync(\n    requestBody: RegisterCarrierAccountRequestBody.CreateCarrierAccountCorreosCreateRequest(\n        new CarrierAccountCorreosCreateRequest() {\n            Parameters = new CarrierAccountCorreosCreateRequestParameters() {},\n        }\n    ),\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->carrierAccounts->register(\n    requestBody: new Components\\CarrierAccountCorreosCreateRequest(\n        parameters: new Components\\CarrierAccountCorreosCreateRequestParameters(),\n    ),\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->carrierAccount !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.CarrierAccountCorreosCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.CarrierAccountCorreosCreateRequestParameters;\nimport com.goshippo.shippo_sdk.models.operations.RegisterCarrierAccountRequestBody;\nimport com.goshippo.shippo_sdk.models.operations.RegisterCarrierAccountResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        RegisterCarrierAccountResponse res = sdk.carrierAccounts().register()\n                .shippoApiVersion("2018-02-08")\n                .requestBody(RegisterCarrierAccountRequestBody.of(CarrierAccountCorreosCreateRequest.builder()\n                    .parameters(CarrierAccountCorreosCreateRequestParameters.builder()\n                        .build())\n                    .build()))\n                .call();\n\n        if (res.carrierAccount().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CarrierAccount]
-            )
+            return unmarshal_json_response(components.CarrierAccount, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def register_async(
         self,
@@ -1197,7 +1463,7 @@ class CarrierAccounts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CarrierAccount]:
+    ) -> components.CarrierAccount:
         r"""Add a Shippo carrier account
 
         Adds a Shippo carrier account
@@ -1241,6 +1507,7 @@ class CarrierAccounts(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", operations.RegisterCarrierAccountRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1254,39 +1521,62 @@ class CarrierAccounts(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="RegisterCarrierAccount",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Carrier Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "CLI",
+                            "lang": "cURL",
+                            "source": 'curl --location --request POST \'/carrier_accounts/register/new\' \\\n--header \'Authorization: ShippoToken {{token}}\' \\\n--header \'Content-Type: application/json\' \\\n--data-raw \'{\n    "carrier": "canada_post",\n    "parameters": {\n        "company": "Shippo",\n        "full_name": "Shippo Meister",\n        "email": "hippo@shippo.com",\n        "phone": "1112221122",\n        "canada_post_terms": true\n    }\n}\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.carrier_accounts.register(request=components.CarrierAccountCorreosCreateRequest(\n    parameters=components.CarrierAccountCorreosCreateRequestParameters(),\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.carrierAccounts.register({\n    parameters: {},\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.CarrierAccounts.RegisterAsync(\n    requestBody: RegisterCarrierAccountRequestBody.CreateCarrierAccountCorreosCreateRequest(\n        new CarrierAccountCorreosCreateRequest() {\n            Parameters = new CarrierAccountCorreosCreateRequestParameters() {},\n        }\n    ),\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->carrierAccounts->register(\n    requestBody: new Components\\CarrierAccountCorreosCreateRequest(\n        parameters: new Components\\CarrierAccountCorreosCreateRequestParameters(),\n    ),\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->carrierAccount !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.CarrierAccountCorreosCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.CarrierAccountCorreosCreateRequestParameters;\nimport com.goshippo.shippo_sdk.models.operations.RegisterCarrierAccountRequestBody;\nimport com.goshippo.shippo_sdk.models.operations.RegisterCarrierAccountResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        RegisterCarrierAccountResponse res = sdk.carrierAccounts().register()\n                .shippoApiVersion("2018-02-08")\n                .requestBody(RegisterCarrierAccountRequestBody.of(CarrierAccountCorreosCreateRequest.builder()\n                    .parameters(CarrierAccountCorreosCreateRequestParameters.builder()\n                        .build())\n                    .build()))\n                .call();\n\n        if (res.carrierAccount().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CarrierAccount]
-            )
+            return unmarshal_json_response(components.CarrierAccount, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def get_registration_status(
         self,
@@ -1296,7 +1586,7 @@ class CarrierAccounts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CarrierAccountRegistrationStatus]:
+    ) -> components.CarrierAccountRegistrationStatus:
         r"""Get Carrier Registration status
 
         Returns the registration status for the given account for the given carrier
@@ -1337,6 +1627,7 @@ class CarrierAccounts(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1350,39 +1641,59 @@ class CarrierAccounts(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetCarrierRegistrationStatus",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Carrier Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import operations\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.carrier_accounts.get_registration_status(carrier=operations.Carrier.USPS)\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.carrierAccounts.getRegistrationStatus("usps");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing Shippo.Models.Requests;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.CarrierAccounts.GetRegistrationStatusAsync(\n    carrier: Carrier.Usps,\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Operations;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->carrierAccounts->getRegistrationStatus(\n    carrier: Operations\\Carrier::Usps,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->carrierAccountRegistrationStatus !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.Carrier;\nimport com.goshippo.shippo_sdk.models.operations.GetCarrierRegistrationStatusResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetCarrierRegistrationStatusResponse res = sdk.carrierAccounts().getRegistrationStatus()\n                .carrier(Carrier.USPS)\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.carrierAccountRegistrationStatus().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CarrierAccountRegistrationStatus]
+            return unmarshal_json_response(
+                components.CarrierAccountRegistrationStatus, http_res
             )
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def get_registration_status_async(
         self,
@@ -1392,7 +1703,7 @@ class CarrierAccounts(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.CarrierAccountRegistrationStatus]:
+    ) -> components.CarrierAccountRegistrationStatus:
         r"""Get Carrier Registration status
 
         Returns the registration status for the given account for the given carrier
@@ -1433,6 +1744,7 @@ class CarrierAccounts(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1446,36 +1758,56 @@ class CarrierAccounts(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetCarrierRegistrationStatus",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Carrier Accounts"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import operations\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.carrier_accounts.get_registration_status(carrier=operations.Carrier.USPS)\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.carrierAccounts.getRegistrationStatus("usps");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing Shippo.Models.Requests;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.CarrierAccounts.GetRegistrationStatusAsync(\n    carrier: Carrier.Usps,\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Operations;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->carrierAccounts->getRegistrationStatus(\n    carrier: Operations\\Carrier::Usps,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->carrierAccountRegistrationStatus !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.Carrier;\nimport com.goshippo.shippo_sdk.models.operations.GetCarrierRegistrationStatusResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetCarrierRegistrationStatusResponse res = sdk.carrierAccounts().getRegistrationStatus()\n                .carrier(Carrier.USPS)\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.carrierAccountRegistrationStatus().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.CarrierAccountRegistrationStatus]
+            return unmarshal_json_response(
+                components.CarrierAccountRegistrationStatus, http_res
             )
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)

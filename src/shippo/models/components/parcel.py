@@ -7,7 +7,8 @@ from .parceltemplateenumset import ParcelTemplateEnumSet, ParcelTemplateEnumSetT
 from .weightunitenum import WeightUnitEnum
 from datetime import datetime
 from enum import Enum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -33,7 +34,7 @@ class ParcelTypedDict(TypedDict):
     r"""Width of the Parcel. Up to six digits in front and four digits after the decimal separator are accepted."""
     extra: NotRequired[ParcelExtraTypedDict]
     r"""An object holding optional extra services to be requested for each parcel in a multi-piece shipment.
-    See the <a href=\"#section/Parcel-Extras\">Parcel Extra table below</a> for all available services.
+    The following values are supported for the `extra` field of the parcel object.
     """
     metadata: NotRequired[str]
     object_created: NotRequired[datetime]
@@ -73,7 +74,7 @@ class Parcel(BaseModel):
 
     extra: Optional[ParcelExtra] = None
     r"""An object holding optional extra services to be requested for each parcel in a multi-piece shipment.
-    See the <a href=\"#section/Parcel-Extras\">Parcel Extra table below</a> for all available services.
+    The following values are supported for the `extra` field of the parcel object.
     """
 
     metadata: Optional[str] = None
@@ -98,3 +99,31 @@ class Parcel(BaseModel):
 
     test: Optional[bool] = None
     r"""Indicates whether the object has been created in test mode."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "extra",
+                "metadata",
+                "object_created",
+                "object_id",
+                "object_owner",
+                "object_state",
+                "object_updated",
+                "template",
+                "test",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

@@ -2,6 +2,14 @@
 
 Type of event that triggered the webhook.
 
+## Example Usage
+
+```python
+from shippo.models.components import WebhookEventTypeEnum
+
+value = WebhookEventTypeEnum.TRANSACTION_CREATED
+```
+
 
 ## Values
 

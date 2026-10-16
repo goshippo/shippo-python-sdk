@@ -2,14 +2,35 @@
 
 from __future__ import annotations
 from .carrierparceltemplate import CarrierParcelTemplate, CarrierParcelTemplateTypedDict
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
 class CarrierParcelTemplateListTypedDict(TypedDict):
+    r"""List of carrier parcel templates"""
+
     results: NotRequired[List[CarrierParcelTemplateTypedDict]]
 
 
 class CarrierParcelTemplateList(BaseModel):
+    r"""List of carrier parcel templates"""
+
     results: Optional[List[CarrierParcelTemplate]] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["results"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

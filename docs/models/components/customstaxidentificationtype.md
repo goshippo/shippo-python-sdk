@@ -6,6 +6,14 @@ Type of tax identification.
 * `IOSS` - Import One-Stop Shop
 * `ARN` - Australian Taxation Office Reference Number
 
+## Example Usage
+
+```python
+from shippo.models.components import CustomsTaxIdentificationType
+
+value = CustomsTaxIdentificationType.EIN
+```
+
 
 ## Values
 

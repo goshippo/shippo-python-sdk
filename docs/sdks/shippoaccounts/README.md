@@ -1,12 +1,10 @@
 # ShippoAccounts
-(*shippo_accounts*)
 
 ## Overview
 
 Shippo Accounts are used by Shippo Platform Accounts to create and manage Managed Shippo Accounts. 
 Managed Shippo Accounts are headless accounts that represent your customers. They are opaque to your end customers, meaning customers do not need to create their own Shippo login or have a billing relationship with Shippo. 
-They can be used by marketplaces, e-commerce platforms, and third-party logistics providers who want to offer, seamless, built-in shipping functionality to their customers. See our <a href="https://docs.goshippo.com/docs/platformaccounts/platform_accounts/">guide</a> for more details.
-<SchemaDefinition schemaRef="#/components/schemas/ShippoAccount"/>
+They can be used by marketplaces, e-commerce platforms, and third-party logistics providers who want to offer, seamless, built-in shipping functionality to their customers. See our [guide](https://docs.goshippo.com/docs/platformaccounts/platform_accounts/) for more details.
 
 ### Available Operations
 
@@ -21,18 +19,17 @@ Returns a list of Shippo Managed Accounts objects.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListShippoAccounts" method="get" path="/shippo-accounts" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.shippo_accounts.list()
-
-    assert res is not None
+    res = s_client.shippo_accounts.list(page=1, results=25)
 
     # Handle response
     print(res)
@@ -59,17 +56,18 @@ with Shippo(
 
 ## create
 
-Creates a new <a href="https://docs.goshippo.com/docs/platformaccounts/platform_using_accounts/">Shippo Managed Account</a>.
+Creates a new [Shippo Managed Account](https://docs.goshippo.com/docs/platformaccounts/platform_using_accounts/).
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateShippoAccount" method="post" path="/shippo-accounts" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.shippo_accounts.create(request={
@@ -78,8 +76,6 @@ with Shippo(
         "last_name": "Meister",
         "company_name": "Acme",
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -109,18 +105,17 @@ Returns a Shippo Managed Account using an object ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetShippoAccount" method="get" path="/shippo-accounts/{ShippoAccountId}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.shippo_accounts.get(shippo_account_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -150,13 +145,14 @@ Updates a Shippo Managed Account using an object ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateShippoAccount" method="put" path="/shippo-accounts/{ShippoAccountId}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.shippo_accounts.update(shippo_account_id="<id>", shippo_account_update_request={
@@ -165,8 +161,6 @@ with Shippo(
         "last_name": "Meister",
         "company_name": "Acme",
     })
-
-    assert res is not None
 
     # Handle response
     print(res)

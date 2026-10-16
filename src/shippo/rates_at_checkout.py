@@ -5,19 +5,19 @@ from shippo import utils
 from shippo._hooks import HookContext
 from shippo.models import components, errors, operations
 from shippo.types import BaseModel, OptionalNullable, UNSET
+from shippo.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Mapping, Optional, Union, cast
 
 
 class RatesAtCheckout(BaseSDK):
     r"""Rates at checkout is a tool for merchants to display up-to-date shipping estimates based on what's in their customers cart and where they’re shipping to.
     Merchants set up curated shipping options for customers in the checkout flow based on data in the shopping cart. The request must include the **to** address and item information. Optional fields are the **from** address and package information. If the optional fields are not included, the service will use the default address and/or package configured for rates at checkout. The response is a list of shipping options based on the Service Group configuration.
-    (see <a href=\"#tag/Service-Groups\">Service Group configuration</a> for details).
-    <SchemaDefinition schemaRef=\"#/components/schemas/LiveRate\"/>
+    (see [Service Group configuration](/shippoapi/public-api/service-groups) for details).
+
 
 
     # Default Parcel Template
     Assign one of your user parcel templates to be the default used when generating Live Rates. This template will be used by default when generating Live Rates, unless you explicitly provide a parcel in the Live Rates request.
-    <SchemaDefinition schemaRef=\"#/components/schemas/UserParcelTemplate\"/>
     """
 
     def create(
@@ -30,7 +30,7 @@ class RatesAtCheckout(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.LiveRatePaginatedList]:
+    ) -> components.LiveRatePaginatedList:
         r"""Generate a live rates request
 
         Initiates a live rates request. Include either the object ID for
@@ -77,6 +77,7 @@ class RatesAtCheckout(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", components.LiveRateCreateRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -90,39 +91,62 @@ class RatesAtCheckout(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateLiveRate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Rates at Checkout"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/live-rates \\\n  -H "Authorization: ShippoToken <API_TOKEN>" \\\n  -H "Content-Type: application/json"\n--data-raw \'{\n    "address_from": {\n       "name": "S. Hippo",\n       "company": "Shippo",\n       "street1": "731 Market St #200",\n       "street_no": "",\n       "street2": "",\n       "street3": "",\n       "city": "San Francisco",\n       "state": "CA",\n       "zip": "94103",\n       "country": "US"\n    },\n    "address_to": {\n       "name": "Bob Bloat",\n       "company": "SF Zoo",\n       "street1": "Sloat Blvd. & Upper Great Hwy.",\n       "street_no": "",\n       "street2": "",\n       "street3": "",\n       "city": "San Francisco",\n       "state": "CA",\n       "zip": "94132",\n       "country": "US"\n    },\n    "line_items": [\n       {\n          "quantity": 1,\n          "total_price": "12.00",\n          "currency": "USD",\n          "weight": "1.0",\n          "weight_unit": "lb",\n          "title": "Hippo Snax",\n          "manufacture_country": "US",\n          "sku": "HM-123"\n       }\n   ],\n   "parcel": {\n      "length": "10",\n      "width": "15",\n      "height": "10",\n      "distance_unit": "in",\n      "weight": "1",\n      "mass_unit": "lb"\n   }\n}\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import dateutil.parser\nimport shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.rates_at_checkout.create(request=components.LiveRateCreateRequest(\n    address_from='<value>',\n    address_to=components.AddressCompleteCreateRequest(\n        name='Shwan Ippotle',\n        company='Shippo',\n        street1='215 Clayton St.',\n        street3='',\n        street_no='',\n        city='San Francisco',\n        state='CA',\n        zip='94117',\n        country='US',\n        phone='+1 555 341 9393',\n        email='shippotle@shippo.com',\n        is_residential=True,\n        metadata='Customer ID 123456',\n        validate=True,\n    ),\n    line_items=[\n        components.LineItem(\n            currency='USD',\n            manufacture_country='US',\n            max_delivery_time=dateutil.parser.isoparse('2016-07-23T00:00:00Z'),\n            max_ship_time=dateutil.parser.isoparse('2016-07-23T00:00:00Z'),\n            quantity=20,\n            sku='HM-123',\n            title='Hippo Magazines',\n            total_price='12.1',\n            variant_title='June Edition',\n            weight='0.4',\n            weight_unit=components.WeightUnitEnum.LB,\n            object_id='abf7d5675d744b6ea9fdb6f796b28f28',\n        ),\n    ],\n    parcel='5df144dca289442cv7a06',\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.ratesAtCheckout.create({\n    addressFrom: "<value>",\n    addressTo: {\n      name: "Shwan Ippotle",\n      company: "Shippo",\n      street1: "215 Clayton St.",\n      street3: "",\n      streetNo: "",\n      city: "San Francisco",\n      state: "CA",\n      zip: "94117",\n      country: "US",\n      phone: "+1 555 341 9393",\n      email: "shippotle@shippo.com",\n      isResidential: true,\n      metadata: "Customer ID 123456",\n      validate: true,\n    },\n    lineItems: [\n      {\n        currency: "USD",\n        manufactureCountry: "US",\n        maxDeliveryTime: new Date("2016-07-23T00:00:00Z"),\n        maxShipTime: new Date("2016-07-23T00:00:00Z"),\n        quantity: 20,\n        sku: "HM-123",\n        title: "Hippo Magazines",\n        totalPrice: "12.1",\n        variantTitle: "June Edition",\n        weight: "0.4",\n        weightUnit: "lb",\n        objectId: "abf7d5675d744b6ea9fdb6f796b28f28",\n      },\n    ],\n    parcel: "5df144dca289442cv7a06",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing System;\nusing System.Collections.Generic;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.RatesAtCheckout.CreateAsync(\n    liveRateCreateRequest: new LiveRateCreateRequest() {\n        AddressFrom = LiveRateCreateRequestAddressFrom.CreateStr(\n            "<value>"\n        ),\n        AddressTo = LiveRateCreateRequestAddressTo.CreateAddressCompleteCreateRequest(\n            new AddressCompleteCreateRequest() {\n                Name = "Shwan Ippotle",\n                Company = "Shippo",\n                Street1 = "215 Clayton St.",\n                Street3 = "",\n                StreetNo = "",\n                City = "San Francisco",\n                State = "CA",\n                Zip = "94117",\n                Country = "US",\n                Phone = "+1 555 341 9393",\n                Email = "shippotle@shippo.com",\n                IsResidential = true,\n                Metadata = "Customer ID 123456",\n                Validate = true,\n            }\n        ),\n        LineItems = new List<LineItem>() {\n            new LineItem() {\n                Currency = "USD",\n                ManufactureCountry = "US",\n                MaxDeliveryTime = System.DateTime.Parse("2016-07-23T00:00:00Z"),\n                MaxShipTime = System.DateTime.Parse("2016-07-23T00:00:00Z"),\n                Quantity = 20,\n                Sku = "HM-123",\n                Title = "Hippo Magazines",\n                TotalPrice = "12.1",\n                VariantTitle = "June Edition",\n                Weight = "0.4",\n                WeightUnit = WeightUnitEnum.Lb,\n                ObjectId = "abf7d5675d744b6ea9fdb6f796b28f28",\n            },\n        },\n        Parcel = LiveRateCreateRequestParcel.CreateStr(\n            "5df144dca289442cv7a06"\n        ),\n    },\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\nuse Shippo\\API\\Utils;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$liveRateCreateRequest = new Components\\LiveRateCreateRequest(\n    addressFrom: '<value>',\n    addressTo: new Components\\AddressCompleteCreateRequest(\n        name: 'Shwan Ippotle',\n        company: 'Shippo',\n        street1: '215 Clayton St.',\n        street3: '',\n        streetNo: '',\n        city: 'San Francisco',\n        state: 'CA',\n        zip: '94117',\n        country: 'US',\n        phone: '+1 555 341 9393',\n        email: 'shippotle@shippo.com',\n        isResidential: true,\n        metadata: 'Customer ID 123456',\n        validate: true,\n    ),\n    lineItems: [\n        new Components\\LineItem(\n            currency: 'USD',\n            manufactureCountry: 'US',\n            maxDeliveryTime: Utils\\Utils::parseDateTime('2016-07-23T00:00:00Z'),\n            maxShipTime: Utils\\Utils::parseDateTime('2016-07-23T00:00:00Z'),\n            quantity: 20,\n            sku: 'HM-123',\n            title: 'Hippo Magazines',\n            totalPrice: '12.1',\n            variantTitle: 'June Edition',\n            weight: '0.4',\n            weightUnit: Components\\WeightUnitEnum::Lb,\n            objectId: 'abf7d5675d744b6ea9fdb6f796b28f28',\n        ),\n    ],\n    parcel: '5df144dca289442cv7a06',\n);\n\n$response = $sdk->ratesAtCheckout->create(\n    liveRateCreateRequest: $liveRateCreateRequest,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->liveRatePaginatedList !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.AddressCompleteCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.LineItem;\nimport com.goshippo.shippo_sdk.models.components.LiveRateCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.LiveRateCreateRequestAddressFrom;\nimport com.goshippo.shippo_sdk.models.components.LiveRateCreateRequestAddressTo;\nimport com.goshippo.shippo_sdk.models.components.LiveRateCreateRequestParcel;\nimport com.goshippo.shippo_sdk.models.components.WeightUnitEnum;\nimport com.goshippo.shippo_sdk.models.operations.CreateLiveRateResponse;\nimport java.lang.Exception;\nimport java.time.OffsetDateTime;\nimport java.util.List;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreateLiveRateResponse res = sdk.ratesAtCheckout().create()\n                .shippoApiVersion("2018-02-08")\n                .liveRateCreateRequest(LiveRateCreateRequest.builder()\n                    .addressTo(LiveRateCreateRequestAddressTo.of(AddressCompleteCreateRequest.builder()\n                        .name("Shwan Ippotle")\n                        .street1("215 Clayton St.")\n                        .city("San Francisco")\n                        .state("CA")\n                        .zip("94117")\n                        .country("US")\n                        .company("Shippo")\n                        .street3("")\n                        .streetNo("")\n                        .phone("+1 555 341 9393")\n                        .email("shippotle@shippo.com")\n                        .isResidential(true)\n                        .metadata("Customer ID 123456")\n                        .validate(true)\n                        .build()))\n                    .lineItems(List.of(\n                        LineItem.builder()\n                            .currency("USD")\n                            .manufactureCountry("US")\n                            .maxDeliveryTime(OffsetDateTime.parse("2016-07-23T00:00:00Z"))\n                            .maxShipTime(OffsetDateTime.parse("2016-07-23T00:00:00Z"))\n                            .quantity(20L)\n                            .sku("HM-123")\n                            .title("Hippo Magazines")\n                            .totalPrice("12.1")\n                            .variantTitle("June Edition")\n                            .weight("0.4")\n                            .weightUnit(WeightUnitEnum.LB)\n                            .objectId("abf7d5675d744b6ea9fdb6f796b28f28")\n                            .build()))\n                    .addressFrom(LiveRateCreateRequestAddressFrom.of("<value>"))\n                    .parcel(LiveRateCreateRequestParcel.of("5df144dca289442cv7a06"))\n                    .build())\n                .call();\n\n        if (res.liveRatePaginatedList().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.LiveRatePaginatedList]
-            )
+            return unmarshal_json_response(components.LiveRatePaginatedList, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def create_async(
         self,
@@ -134,7 +158,7 @@ class RatesAtCheckout(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.LiveRatePaginatedList]:
+    ) -> components.LiveRatePaginatedList:
         r"""Generate a live rates request
 
         Initiates a live rates request. Include either the object ID for
@@ -181,6 +205,7 @@ class RatesAtCheckout(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", components.LiveRateCreateRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -194,39 +219,62 @@ class RatesAtCheckout(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateLiveRate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Rates at Checkout"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/live-rates \\\n  -H "Authorization: ShippoToken <API_TOKEN>" \\\n  -H "Content-Type: application/json"\n--data-raw \'{\n    "address_from": {\n       "name": "S. Hippo",\n       "company": "Shippo",\n       "street1": "731 Market St #200",\n       "street_no": "",\n       "street2": "",\n       "street3": "",\n       "city": "San Francisco",\n       "state": "CA",\n       "zip": "94103",\n       "country": "US"\n    },\n    "address_to": {\n       "name": "Bob Bloat",\n       "company": "SF Zoo",\n       "street1": "Sloat Blvd. & Upper Great Hwy.",\n       "street_no": "",\n       "street2": "",\n       "street3": "",\n       "city": "San Francisco",\n       "state": "CA",\n       "zip": "94132",\n       "country": "US"\n    },\n    "line_items": [\n       {\n          "quantity": 1,\n          "total_price": "12.00",\n          "currency": "USD",\n          "weight": "1.0",\n          "weight_unit": "lb",\n          "title": "Hippo Snax",\n          "manufacture_country": "US",\n          "sku": "HM-123"\n       }\n   ],\n   "parcel": {\n      "length": "10",\n      "width": "15",\n      "height": "10",\n      "distance_unit": "in",\n      "weight": "1",\n      "mass_unit": "lb"\n   }\n}\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import dateutil.parser\nimport shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.rates_at_checkout.create(request=components.LiveRateCreateRequest(\n    address_from='<value>',\n    address_to=components.AddressCompleteCreateRequest(\n        name='Shwan Ippotle',\n        company='Shippo',\n        street1='215 Clayton St.',\n        street3='',\n        street_no='',\n        city='San Francisco',\n        state='CA',\n        zip='94117',\n        country='US',\n        phone='+1 555 341 9393',\n        email='shippotle@shippo.com',\n        is_residential=True,\n        metadata='Customer ID 123456',\n        validate=True,\n    ),\n    line_items=[\n        components.LineItem(\n            currency='USD',\n            manufacture_country='US',\n            max_delivery_time=dateutil.parser.isoparse('2016-07-23T00:00:00Z'),\n            max_ship_time=dateutil.parser.isoparse('2016-07-23T00:00:00Z'),\n            quantity=20,\n            sku='HM-123',\n            title='Hippo Magazines',\n            total_price='12.1',\n            variant_title='June Edition',\n            weight='0.4',\n            weight_unit=components.WeightUnitEnum.LB,\n            object_id='abf7d5675d744b6ea9fdb6f796b28f28',\n        ),\n    ],\n    parcel='5df144dca289442cv7a06',\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.ratesAtCheckout.create({\n    addressFrom: "<value>",\n    addressTo: {\n      name: "Shwan Ippotle",\n      company: "Shippo",\n      street1: "215 Clayton St.",\n      street3: "",\n      streetNo: "",\n      city: "San Francisco",\n      state: "CA",\n      zip: "94117",\n      country: "US",\n      phone: "+1 555 341 9393",\n      email: "shippotle@shippo.com",\n      isResidential: true,\n      metadata: "Customer ID 123456",\n      validate: true,\n    },\n    lineItems: [\n      {\n        currency: "USD",\n        manufactureCountry: "US",\n        maxDeliveryTime: new Date("2016-07-23T00:00:00Z"),\n        maxShipTime: new Date("2016-07-23T00:00:00Z"),\n        quantity: 20,\n        sku: "HM-123",\n        title: "Hippo Magazines",\n        totalPrice: "12.1",\n        variantTitle: "June Edition",\n        weight: "0.4",\n        weightUnit: "lb",\n        objectId: "abf7d5675d744b6ea9fdb6f796b28f28",\n      },\n    ],\n    parcel: "5df144dca289442cv7a06",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\nusing System;\nusing System.Collections.Generic;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.RatesAtCheckout.CreateAsync(\n    liveRateCreateRequest: new LiveRateCreateRequest() {\n        AddressFrom = LiveRateCreateRequestAddressFrom.CreateStr(\n            "<value>"\n        ),\n        AddressTo = LiveRateCreateRequestAddressTo.CreateAddressCompleteCreateRequest(\n            new AddressCompleteCreateRequest() {\n                Name = "Shwan Ippotle",\n                Company = "Shippo",\n                Street1 = "215 Clayton St.",\n                Street3 = "",\n                StreetNo = "",\n                City = "San Francisco",\n                State = "CA",\n                Zip = "94117",\n                Country = "US",\n                Phone = "+1 555 341 9393",\n                Email = "shippotle@shippo.com",\n                IsResidential = true,\n                Metadata = "Customer ID 123456",\n                Validate = true,\n            }\n        ),\n        LineItems = new List<LineItem>() {\n            new LineItem() {\n                Currency = "USD",\n                ManufactureCountry = "US",\n                MaxDeliveryTime = System.DateTime.Parse("2016-07-23T00:00:00Z"),\n                MaxShipTime = System.DateTime.Parse("2016-07-23T00:00:00Z"),\n                Quantity = 20,\n                Sku = "HM-123",\n                Title = "Hippo Magazines",\n                TotalPrice = "12.1",\n                VariantTitle = "June Edition",\n                Weight = "0.4",\n                WeightUnit = WeightUnitEnum.Lb,\n                ObjectId = "abf7d5675d744b6ea9fdb6f796b28f28",\n            },\n        },\n        Parcel = LiveRateCreateRequestParcel.CreateStr(\n            "5df144dca289442cv7a06"\n        ),\n    },\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\nuse Shippo\\API\\Utils;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$liveRateCreateRequest = new Components\\LiveRateCreateRequest(\n    addressFrom: '<value>',\n    addressTo: new Components\\AddressCompleteCreateRequest(\n        name: 'Shwan Ippotle',\n        company: 'Shippo',\n        street1: '215 Clayton St.',\n        street3: '',\n        streetNo: '',\n        city: 'San Francisco',\n        state: 'CA',\n        zip: '94117',\n        country: 'US',\n        phone: '+1 555 341 9393',\n        email: 'shippotle@shippo.com',\n        isResidential: true,\n        metadata: 'Customer ID 123456',\n        validate: true,\n    ),\n    lineItems: [\n        new Components\\LineItem(\n            currency: 'USD',\n            manufactureCountry: 'US',\n            maxDeliveryTime: Utils\\Utils::parseDateTime('2016-07-23T00:00:00Z'),\n            maxShipTime: Utils\\Utils::parseDateTime('2016-07-23T00:00:00Z'),\n            quantity: 20,\n            sku: 'HM-123',\n            title: 'Hippo Magazines',\n            totalPrice: '12.1',\n            variantTitle: 'June Edition',\n            weight: '0.4',\n            weightUnit: Components\\WeightUnitEnum::Lb,\n            objectId: 'abf7d5675d744b6ea9fdb6f796b28f28',\n        ),\n    ],\n    parcel: '5df144dca289442cv7a06',\n);\n\n$response = $sdk->ratesAtCheckout->create(\n    liveRateCreateRequest: $liveRateCreateRequest,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->liveRatePaginatedList !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.AddressCompleteCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.LineItem;\nimport com.goshippo.shippo_sdk.models.components.LiveRateCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.LiveRateCreateRequestAddressFrom;\nimport com.goshippo.shippo_sdk.models.components.LiveRateCreateRequestAddressTo;\nimport com.goshippo.shippo_sdk.models.components.LiveRateCreateRequestParcel;\nimport com.goshippo.shippo_sdk.models.components.WeightUnitEnum;\nimport com.goshippo.shippo_sdk.models.operations.CreateLiveRateResponse;\nimport java.lang.Exception;\nimport java.time.OffsetDateTime;\nimport java.util.List;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreateLiveRateResponse res = sdk.ratesAtCheckout().create()\n                .shippoApiVersion("2018-02-08")\n                .liveRateCreateRequest(LiveRateCreateRequest.builder()\n                    .addressTo(LiveRateCreateRequestAddressTo.of(AddressCompleteCreateRequest.builder()\n                        .name("Shwan Ippotle")\n                        .street1("215 Clayton St.")\n                        .city("San Francisco")\n                        .state("CA")\n                        .zip("94117")\n                        .country("US")\n                        .company("Shippo")\n                        .street3("")\n                        .streetNo("")\n                        .phone("+1 555 341 9393")\n                        .email("shippotle@shippo.com")\n                        .isResidential(true)\n                        .metadata("Customer ID 123456")\n                        .validate(true)\n                        .build()))\n                    .lineItems(List.of(\n                        LineItem.builder()\n                            .currency("USD")\n                            .manufactureCountry("US")\n                            .maxDeliveryTime(OffsetDateTime.parse("2016-07-23T00:00:00Z"))\n                            .maxShipTime(OffsetDateTime.parse("2016-07-23T00:00:00Z"))\n                            .quantity(20L)\n                            .sku("HM-123")\n                            .title("Hippo Magazines")\n                            .totalPrice("12.1")\n                            .variantTitle("June Edition")\n                            .weight("0.4")\n                            .weightUnit(WeightUnitEnum.LB)\n                            .objectId("abf7d5675d744b6ea9fdb6f796b28f28")\n                            .build()))\n                    .addressFrom(LiveRateCreateRequestAddressFrom.of("<value>"))\n                    .parcel(LiveRateCreateRequestParcel.of("5df144dca289442cv7a06"))\n                    .build())\n                .call();\n\n        if (res.liveRatePaginatedList().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.LiveRatePaginatedList]
-            )
+            return unmarshal_json_response(components.LiveRatePaginatedList, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def get_default_parcel_template(
         self,
@@ -239,7 +287,7 @@ class RatesAtCheckout(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.DefaultParcelTemplate]:
+    ) -> components.DefaultParcelTemplate:
         r"""Show current default parcel template
 
         Retrieve and display the currently configured default parcel template for live rates.
@@ -282,6 +330,7 @@ class RatesAtCheckout(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -295,39 +344,62 @@ class RatesAtCheckout(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetDefaultParcelTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Rates at Checkout"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/live-rates/settings/parcel-template \\\n  -H "Authorization: ShippoToken <API_TOKEN>" \\\n  -H "Content-Type: application/json"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import operations\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.rates_at_checkout.get_default_parcel_template(request=operations.GetDefaultParcelTemplateRequest())\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.ratesAtCheckout.getDefaultParcelTemplate({});\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.RatesAtCheckout.GetDefaultParcelTemplateAsync(shippoApiVersion: "2018-02-08");\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->ratesAtCheckout->getDefaultParcelTemplate(\n    shippoApiVersion: '2018-02-08'\n);\n\nif ($response->defaultParcelTemplate !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.GetDefaultParcelTemplateResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetDefaultParcelTemplateResponse res = sdk.ratesAtCheckout().getDefaultParcelTemplate()\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.defaultParcelTemplate().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.DefaultParcelTemplate]
-            )
+            return unmarshal_json_response(components.DefaultParcelTemplate, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def get_default_parcel_template_async(
         self,
@@ -340,7 +412,7 @@ class RatesAtCheckout(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.DefaultParcelTemplate]:
+    ) -> components.DefaultParcelTemplate:
         r"""Show current default parcel template
 
         Retrieve and display the currently configured default parcel template for live rates.
@@ -383,6 +455,7 @@ class RatesAtCheckout(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -396,39 +469,62 @@ class RatesAtCheckout(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetDefaultParcelTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Rates at Checkout"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/live-rates/settings/parcel-template \\\n  -H "Authorization: ShippoToken <API_TOKEN>" \\\n  -H "Content-Type: application/json"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import operations\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.rates_at_checkout.get_default_parcel_template(request=operations.GetDefaultParcelTemplateRequest())\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.ratesAtCheckout.getDefaultParcelTemplate({});\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.RatesAtCheckout.GetDefaultParcelTemplateAsync(shippoApiVersion: "2018-02-08");\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->ratesAtCheckout->getDefaultParcelTemplate(\n    shippoApiVersion: '2018-02-08'\n);\n\nif ($response->defaultParcelTemplate !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.GetDefaultParcelTemplateResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetDefaultParcelTemplateResponse res = sdk.ratesAtCheckout().getDefaultParcelTemplate()\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.defaultParcelTemplate().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.DefaultParcelTemplate]
-            )
+            return unmarshal_json_response(components.DefaultParcelTemplate, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def update_default_parcel_template(
         self,
@@ -443,7 +539,7 @@ class RatesAtCheckout(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.DefaultParcelTemplate]:
+    ) -> components.DefaultParcelTemplate:
         r"""Update default parcel template
 
         Update the currently configured default parcel template for live rates. The object_id in the request payload should identify the user parcel template to be the new default.
@@ -493,6 +589,7 @@ class RatesAtCheckout(BaseSDK):
                 "json",
                 Optional[components.DefaultParcelTemplateUpdateRequest],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -506,39 +603,62 @@ class RatesAtCheckout(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateDefaultParcelTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Rates at Checkout"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl -X PUT https://api.goshippo.com/live-rates/settings/parcel-template \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-d \'\n  {\n    "object_id": "b958d3690bb04bb8b2986724872750f5"\n  }\n\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.rates_at_checkout.update_default_parcel_template(request=components.DefaultParcelTemplateUpdateRequest(\n    object_id='b958d3690bb04bb8b2986724872750f5',\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.ratesAtCheckout.updateDefaultParcelTemplate({\n    objectId: "b958d3690bb04bb8b2986724872750f5",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.RatesAtCheckout.UpdateDefaultParcelTemplateAsync(\n    shippoApiVersion: "2018-02-08",\n    defaultParcelTemplateUpdateRequest: new DefaultParcelTemplateUpdateRequest() {\n        ObjectId = "b958d3690bb04bb8b2986724872750f5",\n    }\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$defaultParcelTemplateUpdateRequest = new Components\\DefaultParcelTemplateUpdateRequest(\n    objectId: 'b958d3690bb04bb8b2986724872750f5',\n);\n\n$response = $sdk->ratesAtCheckout->updateDefaultParcelTemplate(\n    shippoApiVersion: '2018-02-08',\n    defaultParcelTemplateUpdateRequest: $defaultParcelTemplateUpdateRequest\n\n);\n\nif ($response->defaultParcelTemplate !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.DefaultParcelTemplateUpdateRequest;\nimport com.goshippo.shippo_sdk.models.operations.UpdateDefaultParcelTemplateResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        UpdateDefaultParcelTemplateResponse res = sdk.ratesAtCheckout().updateDefaultParcelTemplate()\n                .shippoApiVersion("2018-02-08")\n                .defaultParcelTemplateUpdateRequest(DefaultParcelTemplateUpdateRequest.builder()\n                    .objectId("b958d3690bb04bb8b2986724872750f5")\n                    .build())\n                .call();\n\n        if (res.defaultParcelTemplate().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.DefaultParcelTemplate]
-            )
+            return unmarshal_json_response(components.DefaultParcelTemplate, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def update_default_parcel_template_async(
         self,
@@ -553,7 +673,7 @@ class RatesAtCheckout(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.DefaultParcelTemplate]:
+    ) -> components.DefaultParcelTemplate:
         r"""Update default parcel template
 
         Update the currently configured default parcel template for live rates. The object_id in the request payload should identify the user parcel template to be the new default.
@@ -603,6 +723,7 @@ class RatesAtCheckout(BaseSDK):
                 "json",
                 Optional[components.DefaultParcelTemplateUpdateRequest],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -616,39 +737,62 @@ class RatesAtCheckout(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateDefaultParcelTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Rates at Checkout"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl -X PUT https://api.goshippo.com/live-rates/settings/parcel-template \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\\n-d \'\n  {\n    "object_id": "b958d3690bb04bb8b2986724872750f5"\n  }\n\'',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.rates_at_checkout.update_default_parcel_template(request=components.DefaultParcelTemplateUpdateRequest(\n    object_id='b958d3690bb04bb8b2986724872750f5',\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.ratesAtCheckout.updateDefaultParcelTemplate({\n    objectId: "b958d3690bb04bb8b2986724872750f5",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.RatesAtCheckout.UpdateDefaultParcelTemplateAsync(\n    shippoApiVersion: "2018-02-08",\n    defaultParcelTemplateUpdateRequest: new DefaultParcelTemplateUpdateRequest() {\n        ObjectId = "b958d3690bb04bb8b2986724872750f5",\n    }\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n$defaultParcelTemplateUpdateRequest = new Components\\DefaultParcelTemplateUpdateRequest(\n    objectId: 'b958d3690bb04bb8b2986724872750f5',\n);\n\n$response = $sdk->ratesAtCheckout->updateDefaultParcelTemplate(\n    shippoApiVersion: '2018-02-08',\n    defaultParcelTemplateUpdateRequest: $defaultParcelTemplateUpdateRequest\n\n);\n\nif ($response->defaultParcelTemplate !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.DefaultParcelTemplateUpdateRequest;\nimport com.goshippo.shippo_sdk.models.operations.UpdateDefaultParcelTemplateResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        UpdateDefaultParcelTemplateResponse res = sdk.ratesAtCheckout().updateDefaultParcelTemplate()\n                .shippoApiVersion("2018-02-08")\n                .defaultParcelTemplateUpdateRequest(DefaultParcelTemplateUpdateRequest.builder()\n                    .objectId("b958d3690bb04bb8b2986724872750f5")\n                    .build())\n                .call();\n\n        if (res.defaultParcelTemplate().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.DefaultParcelTemplate]
-            )
+            return unmarshal_json_response(components.DefaultParcelTemplate, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def delete_default_parcel_template(
         self,
@@ -704,6 +848,7 @@ class RatesAtCheckout(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -717,13 +862,49 @@ class RatesAtCheckout(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteDefaultParcelTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Rates at Checkout"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl -X DELETE https://api.goshippo.com/live-rates/settings/parcel-template \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import operations\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\ns.rates_at_checkout.delete_default_parcel_template(request=operations.DeleteDefaultParcelTemplateRequest())\n\n# Use the SDK ...",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  await shippo.ratesAtCheckout.deleteDefaultParcelTemplate({});\n\n\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nawait sdk.RatesAtCheckout.DeleteDefaultParcelTemplateAsync(shippoApiVersion: "2018-02-08");\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->ratesAtCheckout->deleteDefaultParcelTemplate(\n    shippoApiVersion: '2018-02-08'\n);\n\nif ($response->statusCode === 200) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.DeleteDefaultParcelTemplateResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        DeleteDefaultParcelTemplateResponse res = sdk.ratesAtCheckout().deleteDefaultParcelTemplate()\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        // handle response\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -731,23 +912,12 @@ class RatesAtCheckout(BaseSDK):
             return
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def delete_default_parcel_template_async(
         self,
@@ -803,6 +973,7 @@ class RatesAtCheckout(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -816,13 +987,49 @@ class RatesAtCheckout(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteDefaultParcelTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Rates at Checkout"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl -X DELETE https://api.goshippo.com/live-rates/settings/parcel-template \\\n-H "Authorization: ShippoToken <API_TOKEN>" \\',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import operations\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\ns.rates_at_checkout.delete_default_parcel_template(request=operations.DeleteDefaultParcelTemplateRequest())\n\n# Use the SDK ...",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  await shippo.ratesAtCheckout.deleteDefaultParcelTemplate({});\n\n\n}\n\nrun();',
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nawait sdk.RatesAtCheckout.DeleteDefaultParcelTemplateAsync(shippoApiVersion: "2018-02-08");\n\n// handle response',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->ratesAtCheckout->deleteDefaultParcelTemplate(\n    shippoApiVersion: '2018-02-08'\n);\n\nif ($response->statusCode === 200) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.DeleteDefaultParcelTemplateResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        DeleteDefaultParcelTemplateResponse res = sdk.ratesAtCheckout().deleteDefaultParcelTemplate()\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        // handle response\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -830,20 +1037,9 @@ class RatesAtCheckout(BaseSDK):
             return
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)

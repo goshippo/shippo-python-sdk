@@ -5,17 +5,12 @@ from shippo import utils
 from shippo._hooks import HookContext
 from shippo.models import components, errors, operations
 from shippo.types import BaseModel, OptionalNullable, UNSET
+from shippo.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Mapping, Optional, Union, cast
 
 
 class Parcels(BaseSDK):
-    r"""A parcel is an item you are shipping. The parcel object includes details about its physical make-up of the parcel. It includes dimensions and weight that Shippo uses to calculate rates.
-    <SchemaDefinition schemaRef=\"#/components/schemas/Parcel\"/>
-
-    # Parcel Extras
-    The following values are supported for the `extra` field of the parcel object.
-    <SchemaDefinition schemaRef=\"#/components/schemas/ParcelExtra\"/>
-    """
+    r"""A parcel is an item you are shipping. The parcel object includes details about its physical make-up of the parcel. It includes dimensions and weight that Shippo uses to calculate rates."""
 
     def list(
         self,
@@ -26,7 +21,7 @@ class Parcels(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.ParcelPaginatedList]:
+    ) -> components.ParcelPaginatedList:
         r"""List all parcels
 
         Returns a list of all parcel objects.
@@ -69,6 +64,7 @@ class Parcels(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -82,39 +78,62 @@ class Parcels(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListParcels",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Parcels"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/parcels/ \\\n  -H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.parcels.list()\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.parcels.list();\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->parcels->list(\n    page: 1,\n    results: 25,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->parcelPaginatedList !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Parcels.ListAsync(\n    page: 1,\n    results: 25,\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.ListParcelsResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        ListParcelsResponse res = sdk.parcels().list()\n                .page(1L)\n                .results(25L)\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.parcelPaginatedList().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.ParcelPaginatedList]
-            )
+            return unmarshal_json_response(components.ParcelPaginatedList, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def list_async(
         self,
@@ -125,7 +144,7 @@ class Parcels(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.ParcelPaginatedList]:
+    ) -> components.ParcelPaginatedList:
         r"""List all parcels
 
         Returns a list of all parcel objects.
@@ -168,6 +187,7 @@ class Parcels(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -181,39 +201,62 @@ class Parcels(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListParcels",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Parcels"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/parcels/ \\\n  -H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.parcels.list()\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.parcels.list();\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->parcels->list(\n    page: 1,\n    results: 25,\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->parcelPaginatedList !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Parcels.ListAsync(\n    page: 1,\n    results: 25,\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.ListParcelsResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        ListParcelsResponse res = sdk.parcels().list()\n                .page(1L)\n                .results(25L)\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.parcelPaginatedList().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[components.ParcelPaginatedList]
-            )
+            return unmarshal_json_response(components.ParcelPaginatedList, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def create(
         self,
@@ -225,7 +268,7 @@ class Parcels(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Parcel]:
+    ) -> components.Parcel:
         r"""Create a new parcel
 
         Creates a new parcel object.
@@ -269,6 +312,7 @@ class Parcels(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", operations.CreateParcelRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -282,37 +326,62 @@ class Parcels(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateParcel",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Parcels"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/parcels/ \\\n  -H "Authorization: ShippoToken <API_TOKEN>" \\\n  -d length=5 \\\n  -d width=5 \\\n  -d height=5 \\\n  -d distance_unit="cm" \\\n  -d weight=2 \\\n  -d mass_unit="lb" \\\n  -d template="" \\\n  -d metadata="Customer ID 123456"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.parcels.create(request=components.ParcelCreateRequest(\n    extra=components.ParcelExtra(\n        cod=components.Cod(\n            amount='5.5',\n            currency='USD',\n            payment_method=components.PaymentMethod.CASH,\n        ),\n        insurance=components.ParcelInsurance(\n            amount='5.5',\n            content='Laptop',\n            currency='USD',\n            provider=components.ParcelInsuranceProvider.UPS,\n        ),\n    ),\n    metadata='Customer ID 123456',\n    mass_unit=components.WeightUnitEnum.LB,\n    weight='1',\n    distance_unit=components.DistanceUnitEnum.IN,\n    height='1',\n    length='1',\n    width='1',\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.parcels.create({\n    extra: {\n      cod: {\n        amount: "5.5",\n        currency: "USD",\n        paymentMethod: "CASH",\n      },\n      insurance: {\n        amount: "5.5",\n        content: "Laptop",\n        currency: "USD",\n        provider: "UPS",\n      },\n    },\n    metadata: "Customer ID 123456",\n    massUnit: "lb",\n    weight: "1",\n    distanceUnit: "in",\n    height: "1",\n    length: "1",\n    width: "1",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->parcels->create(\n    requestBody: new Components\\ParcelCreateRequest(\n        extra: new Components\\ParcelExtra(\n            cod: new Components\\Cod(\n                amount: '5.5',\n                currency: 'USD',\n                paymentMethod: Components\\PaymentMethod::Cash,\n            ),\n            insurance: new Components\\ParcelInsurance(\n                amount: '5.5',\n                content: 'Laptop',\n                currency: 'USD',\n                provider: Components\\ParcelInsuranceProvider::Ups,\n            ),\n        ),\n        metadata: 'Customer ID 123456',\n        massUnit: Components\\WeightUnitEnum::Lb,\n        weight: '1',\n        distanceUnit: Components\\DistanceUnitEnum::In,\n        height: '1',\n        length: '1',\n        width: '1',\n    ),\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->parcel !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Parcels.CreateAsync(\n    requestBody: CreateParcelRequestBody.CreateParcelCreateRequest(\n        new ParcelCreateRequest() {\n            Extra = new ParcelExtra() {\n                Cod = new Cod() {\n                    Amount = "5.5",\n                    Currency = "USD",\n                    PaymentMethod = PaymentMethod.Cash,\n                },\n                Insurance = new ParcelInsurance() {\n                    Amount = "5.5",\n                    Content = "Laptop",\n                    Currency = "USD",\n                    Provider = ParcelInsuranceProvider.Ups,\n                },\n            },\n            Metadata = "Customer ID 123456",\n            MassUnit = WeightUnitEnum.Lb,\n            Weight = "1",\n            DistanceUnit = DistanceUnitEnum.In,\n            Height = "1",\n            Length = "1",\n            Width = "1",\n        }\n    ),\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.Cod;\nimport com.goshippo.shippo_sdk.models.components.DistanceUnitEnum;\nimport com.goshippo.shippo_sdk.models.components.ParcelCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.ParcelExtra;\nimport com.goshippo.shippo_sdk.models.components.ParcelInsurance;\nimport com.goshippo.shippo_sdk.models.components.ParcelInsuranceProvider;\nimport com.goshippo.shippo_sdk.models.components.PaymentMethod;\nimport com.goshippo.shippo_sdk.models.components.WeightUnitEnum;\nimport com.goshippo.shippo_sdk.models.operations.CreateParcelRequestBody;\nimport com.goshippo.shippo_sdk.models.operations.CreateParcelResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreateParcelResponse res = sdk.parcels().create()\n                .shippoApiVersion("2018-02-08")\n                .requestBody(CreateParcelRequestBody.of(ParcelCreateRequest.builder()\n                    .massUnit(WeightUnitEnum.LB)\n                    .weight("1")\n                    .distanceUnit(DistanceUnitEnum.IN)\n                    .height("1")\n                    .length("1")\n                    .width("1")\n                    .extra(ParcelExtra.builder()\n                        .cod(Cod.builder()\n                            .amount("5.5")\n                            .currency("USD")\n                            .paymentMethod(PaymentMethod.CASH)\n                            .build())\n                        .insurance(ParcelInsurance.builder()\n                            .amount("5.5")\n                            .content("Laptop")\n                            .currency("USD")\n                            .provider(ParcelInsuranceProvider.UPS)\n                            .build())\n                        .build())\n                    .metadata("Customer ID 123456")\n                    .build()))\n                .call();\n\n        if (res.parcel().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Parcel])
+            return unmarshal_json_response(components.Parcel, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def create_async(
         self,
@@ -324,7 +393,7 @@ class Parcels(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Parcel]:
+    ) -> components.Parcel:
         r"""Create a new parcel
 
         Creates a new parcel object.
@@ -368,6 +437,7 @@ class Parcels(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", operations.CreateParcelRequest
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -381,37 +451,62 @@ class Parcels(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateParcel",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Parcels"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/parcels/ \\\n  -H "Authorization: ShippoToken <API_TOKEN>" \\\n  -d length=5 \\\n  -d width=5 \\\n  -d height=5 \\\n  -d distance_unit="cm" \\\n  -d weight=2 \\\n  -d mass_unit="lb" \\\n  -d template="" \\\n  -d metadata="Customer ID 123456"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\nfrom shippo.models import components\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.parcels.create(request=components.ParcelCreateRequest(\n    extra=components.ParcelExtra(\n        cod=components.Cod(\n            amount='5.5',\n            currency='USD',\n            payment_method=components.PaymentMethod.CASH,\n        ),\n        insurance=components.ParcelInsurance(\n            amount='5.5',\n            content='Laptop',\n            currency='USD',\n            provider=components.ParcelInsuranceProvider.UPS,\n        ),\n    ),\n    metadata='Customer ID 123456',\n    mass_unit=components.WeightUnitEnum.LB,\n    weight='1',\n    distance_unit=components.DistanceUnitEnum.IN,\n    height='1',\n    length='1',\n    width='1',\n))\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.parcels.create({\n    extra: {\n      cod: {\n        amount: "5.5",\n        currency: "USD",\n        paymentMethod: "CASH",\n      },\n      insurance: {\n        amount: "5.5",\n        content: "Laptop",\n        currency: "USD",\n        provider: "UPS",\n      },\n    },\n    metadata: "Customer ID 123456",\n    massUnit: "lb",\n    weight: "1",\n    distanceUnit: "in",\n    height: "1",\n    length: "1",\n    width: "1",\n  });\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\nuse Shippo\\API\\Models\\Components;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->parcels->create(\n    requestBody: new Components\\ParcelCreateRequest(\n        extra: new Components\\ParcelExtra(\n            cod: new Components\\Cod(\n                amount: '5.5',\n                currency: 'USD',\n                paymentMethod: Components\\PaymentMethod::Cash,\n            ),\n            insurance: new Components\\ParcelInsurance(\n                amount: '5.5',\n                content: 'Laptop',\n                currency: 'USD',\n                provider: Components\\ParcelInsuranceProvider::Ups,\n            ),\n        ),\n        metadata: 'Customer ID 123456',\n        massUnit: Components\\WeightUnitEnum::Lb,\n        weight: '1',\n        distanceUnit: Components\\DistanceUnitEnum::In,\n        height: '1',\n        length: '1',\n        width: '1',\n    ),\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->parcel !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Parcels.CreateAsync(\n    requestBody: CreateParcelRequestBody.CreateParcelCreateRequest(\n        new ParcelCreateRequest() {\n            Extra = new ParcelExtra() {\n                Cod = new Cod() {\n                    Amount = "5.5",\n                    Currency = "USD",\n                    PaymentMethod = PaymentMethod.Cash,\n                },\n                Insurance = new ParcelInsurance() {\n                    Amount = "5.5",\n                    Content = "Laptop",\n                    Currency = "USD",\n                    Provider = ParcelInsuranceProvider.Ups,\n                },\n            },\n            Metadata = "Customer ID 123456",\n            MassUnit = WeightUnitEnum.Lb,\n            Weight = "1",\n            DistanceUnit = DistanceUnitEnum.In,\n            Height = "1",\n            Length = "1",\n            Width = "1",\n        }\n    ),\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.components.Cod;\nimport com.goshippo.shippo_sdk.models.components.DistanceUnitEnum;\nimport com.goshippo.shippo_sdk.models.components.ParcelCreateRequest;\nimport com.goshippo.shippo_sdk.models.components.ParcelExtra;\nimport com.goshippo.shippo_sdk.models.components.ParcelInsurance;\nimport com.goshippo.shippo_sdk.models.components.ParcelInsuranceProvider;\nimport com.goshippo.shippo_sdk.models.components.PaymentMethod;\nimport com.goshippo.shippo_sdk.models.components.WeightUnitEnum;\nimport com.goshippo.shippo_sdk.models.operations.CreateParcelRequestBody;\nimport com.goshippo.shippo_sdk.models.operations.CreateParcelResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        CreateParcelResponse res = sdk.parcels().create()\n                .shippoApiVersion("2018-02-08")\n                .requestBody(CreateParcelRequestBody.of(ParcelCreateRequest.builder()\n                    .massUnit(WeightUnitEnum.LB)\n                    .weight("1")\n                    .distanceUnit(DistanceUnitEnum.IN)\n                    .height("1")\n                    .length("1")\n                    .width("1")\n                    .extra(ParcelExtra.builder()\n                        .cod(Cod.builder()\n                            .amount("5.5")\n                            .currency("USD")\n                            .paymentMethod(PaymentMethod.CASH)\n                            .build())\n                        .insurance(ParcelInsurance.builder()\n                            .amount("5.5")\n                            .content("Laptop")\n                            .currency("USD")\n                            .provider(ParcelInsuranceProvider.UPS)\n                            .build())\n                        .build())\n                    .metadata("Customer ID 123456")\n                    .build()))\n                .call();\n\n        if (res.parcel().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "201", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Parcel])
+            return unmarshal_json_response(components.Parcel, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     def get(
         self,
@@ -421,7 +516,7 @@ class Parcels(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Parcel]:
+    ) -> components.Parcel:
         r"""Retrieve an existing parcel
 
         Returns parcel details using an existing parcel object ID (this will not return parcel details associated with un-purchased shipment/rate parcel object IDs).
@@ -462,6 +557,7 @@ class Parcels(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -475,37 +571,62 @@ class Parcels(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetParcel",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Parcels"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/parcels/7df2ecf8b4224763ab7c71fae7ec8274/ \\\n  -H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.parcels.get(parcel_id='<id>')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.parcels.get("<id>");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->parcels->get(\n    parcelId: '<id>',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->parcel !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Parcels.GetAsync(\n    parcelId: "<id>",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.GetParcelResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetParcelResponse res = sdk.parcels().get()\n                .parcelId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.parcel().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Parcel])
+            return unmarshal_json_response(components.Parcel, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)
 
     async def get_async(
         self,
@@ -515,7 +636,7 @@ class Parcels(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[components.Parcel]:
+    ) -> components.Parcel:
         r"""Retrieve an existing parcel
 
         Returns parcel details using an existing parcel object ID (this will not return parcel details associated with un-purchased shipment/rate parcel object IDs).
@@ -556,6 +677,7 @@ class Parcels(BaseSDK):
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
             ),
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -569,34 +691,59 @@ class Parcels(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetParcel",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Parcels"],
+                extensions={
+                    "x-codeSamples": [
+                        {
+                            "label": "cURL",
+                            "lang": "cURL",
+                            "source": 'curl https://api.goshippo.com/parcels/7df2ecf8b4224763ab7c71fae7ec8274/ \\\n  -H "Authorization: ShippoToken <API_TOKEN>"',
+                        },
+                        {
+                            "label": "Python",
+                            "lang": "python",
+                            "source": "import shippo\n\ns = shippo.Shippo(\n    api_key_header='ShippoToken <API_TOKEN>',\n    shippo_api_version='2018-02-08',\n)\n\n\nres = s.parcels.get(parcel_id='<id>')\n\nif res is not None:\n    # handle response\n    pass",
+                        },
+                        {
+                            "label": "Typescript",
+                            "lang": "typescript",
+                            "source": 'import { Shippo } from "shippo";\n\nconst shippo = new Shippo({\n  apiKeyHeader: "ShippoToken <API_TOKEN>",\n  shippoApiVersion: "2018-02-08",\n});\n\nasync function run() {\n  const result = await shippo.parcels.get("<id>");\n\n  // Handle the result\n  console.log(result);\n}\n\nrun();',
+                        },
+                        {
+                            "label": "PHP",
+                            "lang": "php",
+                            "source": "declare(strict_types=1);\n\nrequire 'vendor/autoload.php';\n\nuse Shippo\\API;\n\n$sdk = API\\Shippo::builder()\n    ->setSecurity(\n        'ShippoToken <API_TOKEN>'\n    )\n    ->setShippoApiVersion('2018-02-08')\n    ->build();\n\n\n\n$response = $sdk->parcels->get(\n    parcelId: '<id>',\n    shippoApiVersion: '2018-02-08'\n\n);\n\nif ($response->parcel !== null) {\n    // handle response\n}",
+                        },
+                        {
+                            "label": "C#",
+                            "lang": "csharp",
+                            "source": 'using Shippo;\nusing Shippo.Models.Components;\n\nvar sdk = new ShippoSDK(\n    apiKeyHeader: "ShippoToken <API_TOKEN>",\n    shippoApiVersion: "2018-02-08"\n);\n\nvar res = await sdk.Parcels.GetAsync(\n    parcelId: "<id>",\n    shippoApiVersion: "2018-02-08"\n);\n\n// handle response',
+                        },
+                        {
+                            "label": "Java",
+                            "lang": "java",
+                            "source": 'package hello.world;\n\nimport com.goshippo.shippo_sdk.Shippo;\nimport com.goshippo.shippo_sdk.models.operations.GetParcelResponse;\nimport java.lang.Exception;\n\npublic class Application {\n\n    public static void main(String[] args) throws Exception {\n\n        Shippo sdk = Shippo.builder()\n                .apiKeyHeader("ShippoToken <API_TOKEN>")\n                .shippoApiVersion("2018-02-08")\n            .build();\n\n        GetParcelResponse res = sdk.parcels().get()\n                .parcelId("<id>")\n                .shippoApiVersion("2018-02-08")\n                .call();\n\n        if (res.parcel().isPresent()) {\n            // handle response\n        }\n    }\n}',
+                        },
+                    ]
+                },
             ),
             request=req,
-            error_status_codes=["400", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[components.Parcel])
+            return unmarshal_json_response(components.Parcel, http_res)
         if utils.match_response(http_res, ["400", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
 
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise errors.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
+        raise errors.SDKError("Unexpected response received", http_res)

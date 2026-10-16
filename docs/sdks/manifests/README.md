@@ -1,16 +1,9 @@
 # Manifests
-(*manifests*)
 
 ## Overview
 
-A manifest is a single-page document with a barcode that carriers can scan to accept all packages into transit without the need to scan each item individually. 
+A manifest is a single-page document with a barcode that carriers can scan to accept all packages into transit without the need to scan each item individually.
 They are close-outs of shipping labels of a certain day. Some carriers require manifests to  process the shipments.
-
-<SchemaDefinition schemaRef="#/components/schemas/Manifest"/>
-
-# Manifest Errors
-The following codes and messages are the possible errors that may occur when creating Manifests.
-<SchemaDefinition schemaRef="#/components/schemas/ManifestErrors"/>
 
 ### Available Operations
 
@@ -24,18 +17,17 @@ Returns a list of all manifest objects.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListManifests" method="get" path="/manifests" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.manifests.list()
-
-    assert res is not None
+    res = s_client.manifests.list(page=1, results=5)
 
     # Handle response
     print(res)
@@ -66,40 +58,24 @@ Creates a new manifest object.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateManifest" method="post" path="/manifests" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.manifests.create(request={
         "carrier_account": "adcfdddf8ec64b84ad22772bce3ea37a",
         "shipment_date": "2014-05-16T23:59:59Z",
-        "address_from": {
-            "country": "US",
-            "name": "Shwan Ippotle",
-            "company": "Shippo",
-            "street1": "215 Clayton St.",
-            "street3": "",
-            "street_no": "",
-            "city": "San Francisco",
-            "state": "CA",
-            "zip": "94117",
-            "phone": "+1 555 341 9393",
-            "email": "shippotle@shippo.com",
-            "is_residential": True,
-            "metadata": "Customer ID 123456",
-            "validate_": True,
-        },
         "transactions": [
             "adcfdddf8ec64b84ad22772bce3ea37a",
         ],
+        "address_from": "<value>",
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -129,18 +105,17 @@ Returns an existing manifest using an object ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetManifest" method="get" path="/manifests/{ManifestId}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.manifests.get(manifest_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)

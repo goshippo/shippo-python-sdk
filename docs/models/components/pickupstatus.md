@@ -2,6 +2,14 @@
 
 Indicates the status of the pickup.
 
+## Example Usage
+
+```python
+from shippo.models.components import PickupStatus
+
+value = PickupStatus.PENDING
+```
+
 
 ## Values
 

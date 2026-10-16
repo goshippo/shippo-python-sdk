@@ -1,5 +1,7 @@
 # UserParcelTemplateList
 
+List of user parcel templates
+
 
 ## Fields
 

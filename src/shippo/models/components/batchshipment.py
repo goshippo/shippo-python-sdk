@@ -2,16 +2,17 @@
 
 from __future__ import annotations
 from enum import Enum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Any, List, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
 class BatchShipmentStatus(str, Enum):
-    r"""`INVALID` batch shipments cannot be purchased and will have to be removed, fixed, and added to the batch again.<br>
-    `VALID` batch shipments can be purchased. <br>
-    Batch shipments with the status `TRANSACTION_FAILED` were not able to be purchased and the error will be displayed on the message field<br>
-    `INCOMPLETE` batch shipments have an issue with the Address and will need to be removed, fixed, and added to the batch again.
+    r"""- `INVALID`: the batch shipment cannot be purchased and will have to be removed, fixed, and added to the batch again
+    - `VALID`: the batch shipment can be purchased
+    - `TRANSACTION_FAILED`: the batch shipment was not able to be purchased and the error will be displayed on the message field
+    - `INCOMPLETE`: the batch shipment has an issue with the Address and will need to be removed, fixed, and added to the batch again
     """
 
     INVALID = "INVALID"
@@ -21,15 +22,22 @@ class BatchShipmentStatus(str, Enum):
 
 
 class BatchShipmentTypedDict(TypedDict):
+    r"""The batch shipment object is a wrapper around a shipment object, which include shipment-specific information
+    for batch processing.
+
+    Note: batch shipments can only be created on the batch endpoint, either when creating a batch object or by through
+    the `/batches/{BATCH_OBJECT_ID}/add_shipments` endpoint
+    """
+
     object_id: str
     r"""Object ID of this batch shipment. Can be used in the remove_shipments endpoint."""
     shipment: str
     r"""Object ID of the shipment object created for this batch shipment."""
     status: BatchShipmentStatus
-    r"""`INVALID` batch shipments cannot be purchased and will have to be removed, fixed, and added to the batch again.<br>
-    `VALID` batch shipments can be purchased. <br>
-    Batch shipments with the status `TRANSACTION_FAILED` were not able to be purchased and the error will be displayed on the message field<br>
-    `INCOMPLETE` batch shipments have an issue with the Address and will need to be removed, fixed, and added to the batch again.
+    r"""- `INVALID`: the batch shipment cannot be purchased and will have to be removed, fixed, and added to the batch again
+    - `VALID`: the batch shipment can be purchased
+    - `TRANSACTION_FAILED`: the batch shipment was not able to be purchased and the error will be displayed on the message field
+    - `INCOMPLETE`: the batch shipment has an issue with the Address and will need to be removed, fixed, and added to the batch again
     """
     carrier_account: NotRequired[str]
     r"""Object ID of the carrier account to be used for this shipment (will override batch default)"""
@@ -39,8 +47,8 @@ class BatchShipmentTypedDict(TypedDict):
     """
     servicelevel_token: NotRequired[str]
     r"""A token that sets the shipping method for the batch, overriding the batch default.
-    Servicelevel tokens can be found <a href=\"#tag/Service-Levels\">in this list</a>
-    or <a href=\"#operation/ListCarrierAccounts\">at this endpoint</a>.
+    Servicelevel tokens can be found [in this list](/shippoapi/public-api/service-levels)
+    or [at this endpoint](/shippoapi/public-api/carrier-accounts/listcarrieraccounts).
     """
     messages: NotRequired[List[Any]]
     r"""List of Shipment and Transaction error messages."""
@@ -49,6 +57,13 @@ class BatchShipmentTypedDict(TypedDict):
 
 
 class BatchShipment(BaseModel):
+    r"""The batch shipment object is a wrapper around a shipment object, which include shipment-specific information
+    for batch processing.
+
+    Note: batch shipments can only be created on the batch endpoint, either when creating a batch object or by through
+    the `/batches/{BATCH_OBJECT_ID}/add_shipments` endpoint
+    """
+
     object_id: str
     r"""Object ID of this batch shipment. Can be used in the remove_shipments endpoint."""
 
@@ -56,10 +71,10 @@ class BatchShipment(BaseModel):
     r"""Object ID of the shipment object created for this batch shipment."""
 
     status: BatchShipmentStatus
-    r"""`INVALID` batch shipments cannot be purchased and will have to be removed, fixed, and added to the batch again.<br>
-    `VALID` batch shipments can be purchased. <br>
-    Batch shipments with the status `TRANSACTION_FAILED` were not able to be purchased and the error will be displayed on the message field<br>
-    `INCOMPLETE` batch shipments have an issue with the Address and will need to be removed, fixed, and added to the batch again.
+    r"""- `INVALID`: the batch shipment cannot be purchased and will have to be removed, fixed, and added to the batch again
+    - `VALID`: the batch shipment can be purchased
+    - `TRANSACTION_FAILED`: the batch shipment was not able to be purchased and the error will be displayed on the message field
+    - `INCOMPLETE`: the batch shipment has an issue with the Address and will need to be removed, fixed, and added to the batch again
     """
 
     carrier_account: Optional[str] = None
@@ -72,8 +87,8 @@ class BatchShipment(BaseModel):
 
     servicelevel_token: Optional[str] = None
     r"""A token that sets the shipping method for the batch, overriding the batch default.
-    Servicelevel tokens can be found <a href=\"#tag/Service-Levels\">in this list</a>
-    or <a href=\"#operation/ListCarrierAccounts\">at this endpoint</a>.
+    Servicelevel tokens can be found [in this list](/shippoapi/public-api/service-levels)
+    or [at this endpoint](/shippoapi/public-api/carrier-accounts/listcarrieraccounts).
     """
 
     messages: Optional[List[Any]] = None
@@ -81,3 +96,27 @@ class BatchShipment(BaseModel):
 
     transaction: Optional[str] = None
     r"""Object ID of the transaction object created for this batch shipment."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "carrier_account",
+                "metadata",
+                "servicelevel_token",
+                "messages",
+                "transaction",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
