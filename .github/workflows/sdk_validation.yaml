@@ -13,14 +13,20 @@ jobs:
   check:
     runs-on: ubuntu-latest
     strategy:
+      # All versions share one test account, and tests like test_rates_at_checkout
+      # delete account-wide state, so run them one at a time.
+      max-parallel: 1
       matrix:
-        python-version: [ '3.9', '3.11' ]
+        # 5.x requires Python >=3.10. 3.14 needs a pydantic-core bump: the pinned
+        # versions have no 3.14 wheels (2.35.0 is the first that does).
+        python-version: [ '3.10', '3.11', '3.13' ]
     name: Python ${{ matrix.python-version }}
     timeout-minutes: 10
     env:
       SHIPPO_TOKEN: ${{ secrets.SHIPPO_TOKEN }}
     concurrency:
-      group: python-sdk-check
+      group: python-sdk-check-${{ github.event.pull_request.number }}-${{ matrix.python-version }}
+      cancel-in-progress: true
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -37,7 +43,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ./.venv
-          key: python-${{ steps.setup_python.outputs.python-version }}-${{ hashFiles('setup.py') }}
+          key: python-${{ steps.setup_python.outputs.python-version }}-${{ hashFiles('poetry.lock') }}
       - name: Install dependencies
         run: |
           make install
