@@ -6,7 +6,7 @@ from enum import Enum
 
 class CustomsDeclarationContentsTypeEnum(str, Enum):
     r"""Type of goods of the shipment.
-    Allowed values available <a href=\"#tag/Customs-Declaration-Contents-Type\">here</a>
+    Allowed values available [here](/shippoapi/public-api/customs-declaration-contents-type)
     """
 
     DOCUMENTS = "DOCUMENTS"

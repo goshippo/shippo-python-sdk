@@ -15,5 +15,5 @@ targets:
                 token: $pypi_token
         codeSamples:
             registry:
-                location: registry.speakeasyapi.dev/shippo/shippo/openapi-code-samples
+                location: registry.speakeasyapi.dev/shippo/shippo/openapi-python-code-samples
             blocking: false

@@ -29,3 +29,9 @@ class CarrierAccountDpdDeCreateRequest(BaseModel):
         Annotated[Literal["dpd_de"], AfterValidator(validate_const("dpd_de"))],
         pydantic.Field(alias="carrier"),
     ] = "dpd_de"
+
+
+try:
+    CarrierAccountDpdDeCreateRequest.model_rebuild()
+except NameError:
+    pass

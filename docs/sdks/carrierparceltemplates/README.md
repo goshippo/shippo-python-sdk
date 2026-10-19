@@ -1,11 +1,8 @@
 # CarrierParcelTemplates
-(*carrier_parcel_templates*)
 
 ## Overview
 
 A carrier parcel template represents a package used for shipping that has preset dimensions defined by a carrier. Some examples of a carrier parcel template include USPS Flat Rate Box and Fedex Small Pak. When using a carrier parcel template, the rates returned may be limited to the carrier that provides the box. You can create user parcel templates using a carrier parcel template. Shippo takes the dimensions of the carrier parcel template but you must configure the weight.
-
-<SchemaDefinition schemaRef="#/components/schemas/CarrierParcelTemplate"/>
 
 ### Available Operations
 
@@ -14,28 +11,28 @@ A carrier parcel template represents a package used for shipping that has preset
 
 ## list
 
-List all carrier parcel template objects. <br> Use the following query string params to filter the results as needed. <br>
-<ul>
-<li>`include=all` (the default). Includes templates from all carriers </li>
-<li>`include=user`. Includes templates only from carriers which the user has added (whether or not they're currently enabled) </li>
-<li>`include=enabled`. includes templates only for carriers which the user has added and enabled </li>
-<li>`carrier=*token*`. filter by specific carrier, e.g. fedex, usps </li>
-</ul>
+List all carrier parcel template objects.
+
+Use the following query string params to filter the results as needed:
+
+- `include=all` (the default): includes templates from all carriers
+- `include=user`: includes templates only from carriers which the user has added (whether or not they're currently enabled)
+- `include=enabled`: includes templates only for carriers which the user has added and enabled
+- `carrier=<token>`: filter by specific carrier, e.g. `fedex`, `usps`
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListCarrierParcelTemplates" method="get" path="/parcel-templates" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.carrier_parcel_templates.list(carrier="fedex")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -66,18 +63,17 @@ Fetches the parcel template information for a specific carrier parcel template, 
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetCarrierParcelTemplate" method="get" path="/parcel-templates/{CarrierParcelTemplateToken}" -->
 ```python
 from shippo import Shippo
 
 
 with Shippo(
-    api_key_header="<YOUR_API_KEY_HERE>",
     shippo_api_version="2018-02-08",
+    api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
     res = s_client.carrier_parcel_templates.get(carrier_parcel_template_token="<value>")
-
-    assert res is not None
 
     # Handle response
     print(res)

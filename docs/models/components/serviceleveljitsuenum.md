@@ -6,6 +6,14 @@
 | axlehire_next_day | Next Day|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelJitsuEnum
+
+value = ServiceLevelJitsuEnum.AXLEHIRE_SAME_DAY
+```
+
 
 ## Values
 

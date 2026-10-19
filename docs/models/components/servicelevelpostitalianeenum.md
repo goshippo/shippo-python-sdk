@@ -5,6 +5,14 @@
 | poste_italiane_delivery_business_express | Poste Delivery Business Express|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelPostItalianeEnum
+
+value = ServiceLevelPostItalianeEnum.POSTE_ITALIANE_DELIVERY_BUSINESS_EXPRESS
+```
+
 
 ## Values
 

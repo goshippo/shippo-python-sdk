@@ -31,3 +31,9 @@ class CarrierAccountPosteItalianeCreateRequest(BaseModel):
         ],
         pydantic.Field(alias="carrier"),
     ] = "poste_italiane"
+
+
+try:
+    CarrierAccountPosteItalianeCreateRequest.model_rebuild()
+except NameError:
+    pass

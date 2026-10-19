@@ -21,6 +21,7 @@ WebhookPayloadTypedDict = TypeAliasType(
         WebhookPayloadTransactionTypedDict,
     ],
 )
+r"""The payload is the body of the POST request Shippo sends to the URL specified at the time of webhook registration."""
 
 
 WebhookPayload = Annotated[
@@ -33,3 +34,4 @@ WebhookPayload = Annotated[
     ],
     Discriminator(lambda m: get_discriminator(m, "event", "event")),
 ]
+r"""The payload is the body of the POST request Shippo sends to the URL specified at the time of webhook registration."""
