@@ -10,6 +10,14 @@
 | chronopost_express | Chrono Express International|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelChronopostEnum
+
+value = ServiceLevelChronopostEnum.CHRONOPOST_13
+```
+
 
 ## Values
 

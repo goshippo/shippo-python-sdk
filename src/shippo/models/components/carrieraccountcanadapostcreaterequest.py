@@ -27,3 +27,9 @@ class CarrierAccountCanadaPostCreateRequest(BaseModel):
         ],
         pydantic.Field(alias="carrier"),
     ] = "canada_post"
+
+
+try:
+    CarrierAccountCanadaPostCreateRequest.model_rebuild()
+except NameError:
+    pass

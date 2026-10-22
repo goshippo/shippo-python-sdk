@@ -5,7 +5,8 @@ from .customstaxidentification import (
     CustomsTaxIdentification,
     CustomsTaxIdentificationTypedDict,
 )
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -16,7 +17,7 @@ class CustomsExporterIdentificationTypedDict(TypedDict):
     eori_number: NotRequired[str]
     r"""Economic Operators' Registration and Identification (EORI) number. Must start with a 2 character
     country code followed by a 6-17 character alphanumeric identifier (e.g. PL1234567890ABCDE).
-    <a href=\"https://ec.europa.eu/taxation_customs/business/customs-procedures/general-overview/economic-operators-registration-identification-number-eori_en\">More information on EORI.</a>
+    [More information on EORI.](https://ec.europa.eu/taxation_customs/business/customs-procedures/general-overview/economic-operators-registration-identification-number-eori_en)
     """
     tax_id: NotRequired[CustomsTaxIdentificationTypedDict]
     r"""Tax identification that may be required to ship in certain countries. Typically used to assess duties on
@@ -30,10 +31,26 @@ class CustomsExporterIdentification(BaseModel):
     eori_number: Optional[str] = None
     r"""Economic Operators' Registration and Identification (EORI) number. Must start with a 2 character
     country code followed by a 6-17 character alphanumeric identifier (e.g. PL1234567890ABCDE).
-    <a href=\"https://ec.europa.eu/taxation_customs/business/customs-procedures/general-overview/economic-operators-registration-identification-number-eori_en\">More information on EORI.</a>
+    [More information on EORI.](https://ec.europa.eu/taxation_customs/business/customs-procedures/general-overview/economic-operators-registration-identification-number-eori_en)
     """
 
     tax_id: Optional[CustomsTaxIdentification] = None
     r"""Tax identification that may be required to ship in certain countries. Typically used to assess duties on
     goods that are crossing a border.
     """
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["eori_number", "tax_id"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

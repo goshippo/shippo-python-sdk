@@ -9,6 +9,14 @@
 | fastway_australia_box_large | Box Large|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelAramexAustraliaEnum
+
+value = ServiceLevelAramexAustraliaEnum.FASTWAY_AUSTRALIA_PARCEL
+```
+
 
 ## Values
 

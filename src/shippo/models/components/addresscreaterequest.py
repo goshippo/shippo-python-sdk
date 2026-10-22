@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 import pydantic
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
@@ -11,54 +12,114 @@ class AddressCreateRequestTypedDict(TypedDict):
     r"""Address represents the address as retrieved from the database"""
 
     country: str
-    r"""ISO 3166-1 alpha-2 country codes and country names can be used. For most consistent results, we reccomend using country codes like `US` or `DE`.
+    r"""ISO 3166-1 alpha-2 country codes and country names can be used. For most consistent results, we recommend using country codes like `US` or `DE`.
     If using country names, please ensure they are spelled correctly and in English. Country names are converted to country codes.
-    Refer to this <a href=\"https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements\" target=\"_blank\">guide</a> for a list of country codes.
+    Refer to this [guide](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements) for a list of country codes.
     Sending a country is always required.
     """
     name: NotRequired[str]
-    r"""**required for purchase**<br>
+    r"""**required for purchase**
+
     First and Last Name of the addressee
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Either company or name required; No length validation (first 35 chars printed on label) |
     """
     company: NotRequired[str]
-    r"""Company Name"""
+    r"""Company Name
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Max 35 characters; Either company or name required |
+    """
     street1: NotRequired[str]
-    r"""**required for purchase**<br>
-    First street line, 35 character limit. Usually street number and street name (except for DHL Germany, see street_no).
+    r"""**required for purchase**
+
+    First street line. Usually street number and street name (except for DHL Germany, see street_no).
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | At least one street line required; Max 35 characters per line |
     """
     street2: NotRequired[str]
-    r"""Second street line, 35 character limit."""
+    r"""Second street line.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | At least one street line required; Max 35 characters per line |
+    """
     street3: NotRequired[str]
-    r"""Third street line, 35 character limit.
+    r"""Third street line.
     Only accepted for USPS international shipments, UPS domestic and UPS international shipments.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | At least one street line required; Max 35 characters per line |
     """
     street_no: NotRequired[str]
     r"""Street number of the addressed building.
     This field can be included in street1 for all carriers except for DHL Germany.
     """
     city: NotRequired[str]
-    r"""**required for purchase**<br>
+    r"""**required for purchase**
+
     Name of a city. When creating a Quote Address, sending a city is optional but will yield more accurate Rates.
     Please bear in mind that city names may be ambiguous (there are 34 Springfields in the US). Pass in a state
     or a ZIP code (see below), if known, it will yield more accurate results.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Required; Max 35 characters |
     """
     state: NotRequired[str]
-    r"""**required for purchase for some countries**<br>
+    r"""**required for purchase for some countries**
+
     State/Province values are required for shipments from/to the US, AU, and CA. UPS requires province for some
     countries (i.e Ireland). To receive more accurate quotes, passing this field is recommended. Most carriers
     only accept two or three character state abbreviations.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Required if country requires state; Max 2 characters for US, CA, PR |
     """
     zip: NotRequired[str]
-    r"""**required for purchase**<br>
+    r"""**required for purchase**
+
     Postal code of an Address. When creating a Quote Addresses, sending a ZIP is optional but will yield more
     accurate Rates.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Max 10 characters |
     """
     phone: NotRequired[str]
     r"""Addresses containing a phone number allow carriers to call the recipient when delivering the Parcel. This
     increases the probability of delivery and helps to avoid accessorial charges after a Parcel has been shipped.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Required; Min 1, max 15 characters |
+    | USPS | Sender phone required for shipments during label purchase; Min 8, max 15 digits |
     """
     email: NotRequired[str]
-    r"""E-mail address of the contact person, RFC3696/5321-compliant."""
+    r"""E-mail address of the contact person, RFC3696/5321-compliant.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Max 80 characters |
+    | USPS | Sender email required for shipments during label purchase |
+    """
     is_residential: NotRequired[bool]
     metadata: NotRequired[str]
     r"""A string of up to 100 characters that can be filled with any additional information you want
@@ -72,31 +133,60 @@ class AddressCreateRequest(BaseModel):
     r"""Address represents the address as retrieved from the database"""
 
     country: str
-    r"""ISO 3166-1 alpha-2 country codes and country names can be used. For most consistent results, we reccomend using country codes like `US` or `DE`.
+    r"""ISO 3166-1 alpha-2 country codes and country names can be used. For most consistent results, we recommend using country codes like `US` or `DE`.
     If using country names, please ensure they are spelled correctly and in English. Country names are converted to country codes.
-    Refer to this <a href=\"https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements\" target=\"_blank\">guide</a> for a list of country codes.
+    Refer to this [guide](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements) for a list of country codes.
     Sending a country is always required.
     """
 
     name: Optional[str] = None
-    r"""**required for purchase**<br>
+    r"""**required for purchase**
+
     First and Last Name of the addressee
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Either company or name required; No length validation (first 35 chars printed on label) |
     """
 
     company: Optional[str] = None
-    r"""Company Name"""
+    r"""Company Name
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Max 35 characters; Either company or name required |
+    """
 
     street1: Optional[str] = None
-    r"""**required for purchase**<br>
-    First street line, 35 character limit. Usually street number and street name (except for DHL Germany, see street_no).
+    r"""**required for purchase**
+
+    First street line. Usually street number and street name (except for DHL Germany, see street_no).
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | At least one street line required; Max 35 characters per line |
     """
 
     street2: Optional[str] = None
-    r"""Second street line, 35 character limit."""
+    r"""Second street line.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | At least one street line required; Max 35 characters per line |
+    """
 
     street3: Optional[str] = None
-    r"""Third street line, 35 character limit.
+    r"""Third street line.
     Only accepted for USPS international shipments, UPS domestic and UPS international shipments.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | At least one street line required; Max 35 characters per line |
     """
 
     street_no: Optional[str] = None
@@ -105,32 +195,63 @@ class AddressCreateRequest(BaseModel):
     """
 
     city: Optional[str] = None
-    r"""**required for purchase**<br>
+    r"""**required for purchase**
+
     Name of a city. When creating a Quote Address, sending a city is optional but will yield more accurate Rates.
     Please bear in mind that city names may be ambiguous (there are 34 Springfields in the US). Pass in a state
     or a ZIP code (see below), if known, it will yield more accurate results.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Required; Max 35 characters |
     """
 
     state: Optional[str] = None
-    r"""**required for purchase for some countries**<br>
+    r"""**required for purchase for some countries**
+
     State/Province values are required for shipments from/to the US, AU, and CA. UPS requires province for some
     countries (i.e Ireland). To receive more accurate quotes, passing this field is recommended. Most carriers
     only accept two or three character state abbreviations.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Required if country requires state; Max 2 characters for US, CA, PR |
     """
 
     zip: Optional[str] = None
-    r"""**required for purchase**<br>
+    r"""**required for purchase**
+
     Postal code of an Address. When creating a Quote Addresses, sending a ZIP is optional but will yield more
     accurate Rates.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Max 10 characters |
     """
 
     phone: Optional[str] = None
     r"""Addresses containing a phone number allow carriers to call the recipient when delivering the Parcel. This
     increases the probability of delivery and helps to avoid accessorial charges after a Parcel has been shipped.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Required; Min 1, max 15 characters |
+    | USPS | Sender phone required for shipments during label purchase; Min 8, max 15 digits |
     """
 
     email: Optional[str] = None
-    r"""E-mail address of the contact person, RFC3696/5321-compliant."""
+    r"""E-mail address of the contact person, RFC3696/5321-compliant.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | FedEx | Max 80 characters |
+    | USPS | Sender email required for shipments during label purchase |
+    """
 
     is_residential: Optional[bool] = None
 
@@ -141,3 +262,42 @@ class AddressCreateRequest(BaseModel):
 
     validate_: Annotated[Optional[bool], pydantic.Field(alias="validate")] = None
     r"""Set to true to validate Address object."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "name",
+                "company",
+                "street1",
+                "street2",
+                "street3",
+                "street_no",
+                "city",
+                "state",
+                "zip",
+                "phone",
+                "email",
+                "is_residential",
+                "metadata",
+                "validate",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
+try:
+    AddressCreateRequest.model_rebuild()
+except NameError:
+    pass

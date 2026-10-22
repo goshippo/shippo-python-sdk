@@ -3,14 +3,21 @@
 from __future__ import annotations
 from .weightunitenum import WeightUnitEnum
 from datetime import datetime
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
 
 class LineItemTypedDict(TypedDict):
+    r"""Line Items, and their corresponding abstract Products and Variants, might be exposed as a separate resource
+    in the future. Currently it's a nested object within the order resource.
+
+    A line item is an individual object in an order. For example, if your order contains a t-shirt, shorts, and a jacket, each item is represented by a line item.
+    """
+
     currency: NotRequired[str]
-    r"""Currency of the <code>total_price</code> amount."""
+    r"""Currency of the `total_price` amount."""
     manufacture_country: NotRequired[str]
     r"""Country the item was manufactured in. In the Shippo dashboard, this value will be used ot pre-fill the customs declaration when creating a label for this order."""
     max_delivery_time: NotRequired[datetime]
@@ -38,7 +45,7 @@ class LineItemTypedDict(TypedDict):
     """
     weight: NotRequired[str]
     r"""Total weight of this/these item(s). Instead of specifying the weight of all items,
-    you can also set the <code>total_weight</code> value of the order object.
+    you can also set the `total_weight` value of the order object.
     """
     weight_unit: NotRequired[WeightUnitEnum]
     r"""The unit used for weight."""
@@ -47,8 +54,14 @@ class LineItemTypedDict(TypedDict):
 
 
 class LineItem(BaseModel):
+    r"""Line Items, and their corresponding abstract Products and Variants, might be exposed as a separate resource
+    in the future. Currently it's a nested object within the order resource.
+
+    A line item is an individual object in an order. For example, if your order contains a t-shirt, shorts, and a jacket, each item is represented by a line item.
+    """
+
     currency: Optional[str] = None
-    r"""Currency of the <code>total_price</code> amount."""
+    r"""Currency of the `total_price` amount."""
 
     manufacture_country: Optional[str] = None
     r"""Country the item was manufactured in. In the Shippo dashboard, this value will be used ot pre-fill the customs declaration when creating a label for this order."""
@@ -85,7 +98,7 @@ class LineItem(BaseModel):
 
     weight: Optional[str] = None
     r"""Total weight of this/these item(s). Instead of specifying the weight of all items,
-    you can also set the <code>total_weight</code> value of the order object.
+    you can also set the `total_weight` value of the order object.
     """
 
     weight_unit: Optional[WeightUnitEnum] = None
@@ -93,3 +106,34 @@ class LineItem(BaseModel):
 
     object_id: Optional[str] = None
     r"""Unique identifier of the line item object."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "currency",
+                "manufacture_country",
+                "max_delivery_time",
+                "max_ship_time",
+                "quantity",
+                "sku",
+                "title",
+                "total_price",
+                "variant_title",
+                "weight",
+                "weight_unit",
+                "object_id",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

@@ -7,13 +7,14 @@ from .batchshipmentpaginatedlist import (
 )
 from .labelfiletypeenum import LabelFileTypeEnum
 from enum import Enum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
 class ObjectResultsTypedDict(TypedDict):
-    r"""An object containing the following counts:<br>`creation_succeeded`<br>`creation_failed`<br>`purchase_succeeded`<br>`purchase_failed`"""
+    r"""An object containing the following counts: `creation_succeeded`, `creation_failed`, `purchase_succeeded`, `purchase_failed`"""
 
     creation_failed: int
     creation_succeeded: int
@@ -22,7 +23,7 @@ class ObjectResultsTypedDict(TypedDict):
 
 
 class ObjectResults(BaseModel):
-    r"""An object containing the following counts:<br>`creation_succeeded`<br>`creation_failed`<br>`purchase_succeeded`<br>`purchase_failed`"""
+    r"""An object containing the following counts: `creation_succeeded`, `creation_failed`, `purchase_succeeded`, `purchase_failed`"""
 
     creation_failed: int
 
@@ -34,11 +35,11 @@ class ObjectResults(BaseModel):
 
 
 class BatchStatus(str, Enum):
-    r"""Batches that are `VALIDATING` are being created and validated<br>
-    `VALID` batches can be purchased<br>
-    `INVALID` batches cannot be purchased, `INVALID` BatchShipments must be removed<br>
-    Batches that are in the `PURCHASING` state are being purchased<br>
-    `PURCHASED` batches are finished purchasing.
+    r"""- `VALIDATING`: the batch is being created and validated
+    - `VALID`: the batch can be purchased
+    - `INVALID`: the batch cannot be purchased; `INVALID` BatchShipments must be removed
+    - `PURCHASING`: the batch is being purchased
+    - `PURCHASED`: the batch is finished purchasing
     """
 
     VALIDATING = "VALIDATING"
@@ -57,7 +58,7 @@ class BatchTypedDict(TypedDict):
     default_servicelevel_token: str
     r"""Token of the service level to use as the default for all shipments in this Batch.
     The servicelevel can be changed on a per-shipment basis by changing the servicelevel_token in the
-    corresponding BatchShipment object. <a href=\"#tag/Service-Levels\">Servicelevel tokens can be found here.</a>
+    corresponding BatchShipment object. [Servicelevel tokens can be found here.](/shippoapi/public-api/service-levels)
     """
     batch_shipments: BatchShipmentPaginatedListTypedDict
     label_url: List[str]
@@ -67,21 +68,21 @@ class BatchTypedDict(TypedDict):
     object_id: str
     r"""Unique identifier of the given Batch object"""
     object_owner: str
-    r"""Username of the user who created the Address object."""
+    r"""Username of the user who created the Batch object."""
     object_results: ObjectResultsTypedDict
-    r"""An object containing the following counts:<br>`creation_succeeded`<br>`creation_failed`<br>`purchase_succeeded`<br>`purchase_failed`"""
+    r"""An object containing the following counts: `creation_succeeded`, `creation_failed`, `purchase_succeeded`, `purchase_failed`"""
     object_updated: str
     r"""Date and time of last update to the Batch"""
     status: BatchStatus
-    r"""Batches that are `VALIDATING` are being created and validated<br>
-    `VALID` batches can be purchased<br>
-    `INVALID` batches cannot be purchased, `INVALID` BatchShipments must be removed<br>
-    Batches that are in the `PURCHASING` state are being purchased<br>
-    `PURCHASED` batches are finished purchasing.
+    r"""- `VALIDATING`: the batch is being created and validated
+    - `VALID`: the batch can be purchased
+    - `INVALID`: the batch cannot be purchased; `INVALID` BatchShipments must be removed
+    - `PURCHASING`: the batch is being purchased
+    - `PURCHASED`: the batch is finished purchasing
     """
     label_filetype: NotRequired[LabelFileTypeEnum]
-    r"""Print format of the <a href=\"https://docs.goshippo.com/docs/shipments/shippinglabelsizes/\">label</a>. If empty, will use the default format set from
-    <a href=\"https://apps.goshippo.com/settings/labels\">the Shippo dashboard.</a>
+    r"""Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from
+    [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)
     """
     metadata: NotRequired[str]
     r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
@@ -98,7 +99,7 @@ class Batch(BaseModel):
     default_servicelevel_token: str
     r"""Token of the service level to use as the default for all shipments in this Batch.
     The servicelevel can be changed on a per-shipment basis by changing the servicelevel_token in the
-    corresponding BatchShipment object. <a href=\"#tag/Service-Levels\">Servicelevel tokens can be found here.</a>
+    corresponding BatchShipment object. [Servicelevel tokens can be found here.](/shippoapi/public-api/service-levels)
     """
 
     batch_shipments: BatchShipmentPaginatedList
@@ -113,28 +114,44 @@ class Batch(BaseModel):
     r"""Unique identifier of the given Batch object"""
 
     object_owner: str
-    r"""Username of the user who created the Address object."""
+    r"""Username of the user who created the Batch object."""
 
     object_results: ObjectResults
-    r"""An object containing the following counts:<br>`creation_succeeded`<br>`creation_failed`<br>`purchase_succeeded`<br>`purchase_failed`"""
+    r"""An object containing the following counts: `creation_succeeded`, `creation_failed`, `purchase_succeeded`, `purchase_failed`"""
 
     object_updated: str
     r"""Date and time of last update to the Batch"""
 
     status: BatchStatus
-    r"""Batches that are `VALIDATING` are being created and validated<br>
-    `VALID` batches can be purchased<br>
-    `INVALID` batches cannot be purchased, `INVALID` BatchShipments must be removed<br>
-    Batches that are in the `PURCHASING` state are being purchased<br>
-    `PURCHASED` batches are finished purchasing.
+    r"""- `VALIDATING`: the batch is being created and validated
+    - `VALID`: the batch can be purchased
+    - `INVALID`: the batch cannot be purchased; `INVALID` BatchShipments must be removed
+    - `PURCHASING`: the batch is being purchased
+    - `PURCHASED`: the batch is finished purchasing
     """
 
     label_filetype: Optional[LabelFileTypeEnum] = None
-    r"""Print format of the <a href=\"https://docs.goshippo.com/docs/shipments/shippinglabelsizes/\">label</a>. If empty, will use the default format set from
-    <a href=\"https://apps.goshippo.com/settings/labels\">the Shippo dashboard.</a>
+    r"""Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from
+    [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)
     """
 
     metadata: Optional[str] = None
     r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
 
     test: Optional[bool] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["label_filetype", "metadata", "test"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

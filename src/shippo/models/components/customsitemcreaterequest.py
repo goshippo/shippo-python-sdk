@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 from .weightunitenum import WeightUnitEnum
-from shippo.types import BaseModel
+from pydantic import model_serializer
+from shippo.types import BaseModel, UNSET_SENTINEL
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -16,24 +17,43 @@ class CustomsItemCreateRequestTypedDict(TypedDict):
     r"""Total weight of this item, i.e. quantity * weight per item."""
     origin_country: str
     r"""Country of origin of the item. Example: `US` or `DE`.
-    All accepted values can be found on the <a href=\"http://www.iso.org/\" target=\"_blank\">Official ISO Website</a>.
+    All accepted values can be found on the [Official ISO Website](http://www.iso.org/).
     """
     quantity: int
     r"""Quantity of this item in the shipment you send.  Must be greater than 0."""
     value_amount: str
     r"""Total value of this item, i.e. quantity * value per item."""
     value_currency: str
-    r"""Currency used for value_amount. The <a href=\"http://www.xe.com/iso4217.php\">official ISO 4217</a>
+    r"""Currency used for value_amount. The [official ISO 4217](http://www.xe.com/iso4217.php)
     currency codes are used, e.g.  `USD` or `EUR`.
     """
     eccn_ear99: NotRequired[str]
     r"""Export Control Classification Number, required on some exports from the United States."""
+    eu_exempt_category: NotRequired[bool]
+    r"""Marks the item as belonging to an EU-exempt product category. Exempt items do not need
+    product identifiers on shipments that meet the EU product identifier conditions
+    (EU destination, non-EU origin, MERCHANDISE contents, recipient not a business).
+    """
+    manufacturer_code: NotRequired[str]
+    r"""Product identifier assigned by the manufacturer. Up to 100 characters; some carriers
+    accept fewer and reject longer values at label purchase. Required together with
+    `sku_code` on every non-exempt item when the shipment meets the EU product
+    identifier conditions.
+    """
+    manufacturer_standard_code: NotRequired[str]
+    r"""Standardized product identifier such as a GTIN. Up to 100 characters. Never required,
+    but recommended for EU-bound shipments when one exists.
+    """
     metadata: NotRequired[str]
     r"""A string of up to 100 characters that can be filled with any additional information you
     want to attach to the object.
     """
     sku_code: NotRequired[str]
-    r"""SKU code of the item, which is required by some carriers."""
+    r"""SKU or merchant-assigned product code of the item. Up to 100 characters; some carriers
+    accept fewer and reject longer values at label purchase. Required together with
+    `manufacturer_code` on every non-exempt item when the shipment meets the EU product
+    identifier conditions; some carriers also use it outside the EU.
+    """
     hs_code: NotRequired[str]
     r"""HS code of the item, which is required by some carriers. If `tariff_number` is not provided, `hs_code` will be used.  If both `hs_code` and `tariff_number` are provided, `tariff_number` will be used. 50 character limit."""
     tariff_number: NotRequired[str]
@@ -52,7 +72,7 @@ class CustomsItemCreateRequest(BaseModel):
 
     origin_country: str
     r"""Country of origin of the item. Example: `US` or `DE`.
-    All accepted values can be found on the <a href=\"http://www.iso.org/\" target=\"_blank\">Official ISO Website</a>.
+    All accepted values can be found on the [Official ISO Website](http://www.iso.org/).
     """
 
     quantity: int
@@ -62,12 +82,30 @@ class CustomsItemCreateRequest(BaseModel):
     r"""Total value of this item, i.e. quantity * value per item."""
 
     value_currency: str
-    r"""Currency used for value_amount. The <a href=\"http://www.xe.com/iso4217.php\">official ISO 4217</a>
+    r"""Currency used for value_amount. The [official ISO 4217](http://www.xe.com/iso4217.php)
     currency codes are used, e.g.  `USD` or `EUR`.
     """
 
     eccn_ear99: Optional[str] = None
     r"""Export Control Classification Number, required on some exports from the United States."""
+
+    eu_exempt_category: Optional[bool] = False
+    r"""Marks the item as belonging to an EU-exempt product category. Exempt items do not need
+    product identifiers on shipments that meet the EU product identifier conditions
+    (EU destination, non-EU origin, MERCHANDISE contents, recipient not a business).
+    """
+
+    manufacturer_code: Optional[str] = None
+    r"""Product identifier assigned by the manufacturer. Up to 100 characters; some carriers
+    accept fewer and reject longer values at label purchase. Required together with
+    `sku_code` on every non-exempt item when the shipment meets the EU product
+    identifier conditions.
+    """
+
+    manufacturer_standard_code: Optional[str] = None
+    r"""Standardized product identifier such as a GTIN. Up to 100 characters. Never required,
+    but recommended for EU-bound shipments when one exists.
+    """
 
     metadata: Optional[str] = None
     r"""A string of up to 100 characters that can be filled with any additional information you
@@ -75,10 +113,41 @@ class CustomsItemCreateRequest(BaseModel):
     """
 
     sku_code: Optional[str] = None
-    r"""SKU code of the item, which is required by some carriers."""
+    r"""SKU or merchant-assigned product code of the item. Up to 100 characters; some carriers
+    accept fewer and reject longer values at label purchase. Required together with
+    `manufacturer_code` on every non-exempt item when the shipment meets the EU product
+    identifier conditions; some carriers also use it outside the EU.
+    """
 
     hs_code: Optional[str] = None
     r"""HS code of the item, which is required by some carriers. If `tariff_number` is not provided, `hs_code` will be used.  If both `hs_code` and `tariff_number` are provided, `tariff_number` will be used. 50 character limit."""
 
     tariff_number: Optional[str] = None
     r"""The tariff number of the item. If `tariff_number` is not provided, `hs_code` will be used. If both `hs_code` and `tariff_number` are provided, `tariff_number` will be used. 12 character limit."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "eccn_ear99",
+                "eu_exempt_category",
+                "manufacturer_code",
+                "manufacturer_standard_code",
+                "metadata",
+                "sku_code",
+                "hs_code",
+                "tariff_number",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

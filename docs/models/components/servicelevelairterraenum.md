@@ -6,6 +6,14 @@
 | airterra_postal | FastPost|
 
 
+## Example Usage
+
+```python
+from shippo.models.components import ServiceLevelAirterraEnum
+
+value = ServiceLevelAirterraEnum.AIRTERRA_GROUND
+```
+
 
 ## Values
 

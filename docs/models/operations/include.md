@@ -2,6 +2,14 @@
 
 filter by user or enabled
 
+## Example Usage
+
+```python
+from shippo.models.operations import Include
+
+value = Include.ALL
+```
+
 
 ## Values
 

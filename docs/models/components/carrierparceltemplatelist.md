@@ -1,5 +1,7 @@
 # CarrierParcelTemplateList
 
+List of carrier parcel templates
+
 
 ## Fields
 
