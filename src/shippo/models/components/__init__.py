@@ -315,6 +315,7 @@ if TYPE_CHECKING:
         FedExConnectExistingOwnAccountParametersTypedDict,
         VerificationOption,
     )
+    from .healthcarehandling import HealthcareHandling, HealthcareHandlingTypedDict
     from .instanttransactioncreaterequest import (
         InstantTransactionCreateRequest,
         InstantTransactionCreateRequestTypedDict,
@@ -781,6 +782,8 @@ __all__ = [
     "EmbeddedAuthorizationTypedDict",
     "FedExConnectExistingOwnAccountParameters",
     "FedExConnectExistingOwnAccountParametersTypedDict",
+    "HealthcareHandling",
+    "HealthcareHandlingTypedDict",
     "InstantTransactionCreateRequest",
     "InstantTransactionCreateRequestTypedDict",
     "Insurance",
@@ -1226,6 +1229,8 @@ _dynamic_imports: dict[str, str] = {
     "FedExConnectExistingOwnAccountParameters": ".fedexconnectexistingownaccountparameters",
     "FedExConnectExistingOwnAccountParametersTypedDict": ".fedexconnectexistingownaccountparameters",
     "VerificationOption": ".fedexconnectexistingownaccountparameters",
+    "HealthcareHandling": ".healthcarehandling",
+    "HealthcareHandlingTypedDict": ".healthcarehandling",
     "InstantTransactionCreateRequest": ".instanttransactioncreaterequest",
     "InstantTransactionCreateRequestTypedDict": ".instanttransactioncreaterequest",
     "LabelFileType": ".instanttransactioncreaterequest",

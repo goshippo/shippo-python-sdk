@@ -8,6 +8,7 @@ from .customerreference import CustomerReference, CustomerReferenceTypedDict
 from .dangerousgoodsobject import DangerousGoodsObject, DangerousGoodsObjectTypedDict
 from .departmentnumber import DepartmentNumber, DepartmentNumberTypedDict
 from .dryice import DryIce, DryIceTypedDict
+from .healthcarehandling import HealthcareHandling, HealthcareHandlingTypedDict
 from .insurance import Insurance, InsuranceTypedDict
 from .invoicenumber import InvoiceNumber, InvoiceNumberTypedDict
 from .ponumber import PoNumber, PoNumberTypedDict
@@ -137,7 +138,7 @@ class ShipmentExtraTypedDict(TypedDict):
     r"""Dangerous Goods Code (DHL eCommerce only). See [Category Codes](https://api-legacy.dhlecs.com/docs/v2/appendix.html#dangerous-goods)"""
     dealer_order_number: NotRequired[UPSReferenceFieldsTypedDict]
     delivery_instructions: NotRequired[str]
-    r"""Specify delivery instructions. Up to 500 characters. (FedEx and OnTrac only)."""
+    r"""Specify delivery instructions. Up to 500 characters (Purolator accepts up to 30 characters). (FedEx, OnTrac and Purolator only)."""
     dept_number: NotRequired[DepartmentNumberTypedDict]
     r"""Specify the department number field on the label (FedEx and UPS only)."""
     dry_ice: NotRequired[DryIceTypedDict]
@@ -145,6 +146,15 @@ class ShipmentExtraTypedDict(TypedDict):
     fda_product_code: NotRequired[UPSReferenceFieldsTypedDict]
     fulfillment_center: NotRequired[str]
     r"""The fulfilment center where the package originates from."""
+    healthcare_handling: NotRequired[HealthcareHandlingTypedDict]
+    r"""Requests the carrier's healthcare handling program, where the carrier offers one. The rate returned keeps the carrier's
+    regular service level token.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | Purolator | Maps to Health Care+. Domestic Express services only (Express, Express 9AM, Express 10:30AM, Express Evening). Available to Purolator-approved accounts only. |
+    """
     insurance: NotRequired[InsuranceTypedDict]
     r"""To add 3rd party insurance powered by [XCover](https://docs.goshippo.com/docs/shipments/shippinginsurance/),
     specify `amount`, `content`, and `currency`. Alternatively, you can choose carrier provided insurance
@@ -181,6 +191,7 @@ class ShipmentExtraTypedDict(TypedDict):
     | Carrier | Constraints |
     |:---|:---|
     | FedEx | Max 40 characters (Express services); Max 30 characters (Ground services) |
+    | Purolator | Max 25 characters |
     """
     reference_2: NotRequired[str]
     r"""Optional text to be printed on the shipping label if supported by carrier. Up to 50 characters. For DHL eCommerce, this field can be used for billing reference.
@@ -189,6 +200,23 @@ class ShipmentExtraTypedDict(TypedDict):
     | Carrier | Constraints |
     |:---|:---|
     | FedEx | Max 30 characters |
+    | Purolator | Max 25 characters |
+    """
+    reference_3: NotRequired[str]
+    r"""Optional text to be printed on the shipping label if supported by carrier. Up to 50 characters.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | Purolator | Max 25 characters |
+    """
+    reference_4: NotRequired[str]
+    r"""Optional text to be printed on the shipping label if supported by carrier. Up to 50 characters.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | Purolator | Max 25 characters |
     """
     request_retail_rates: NotRequired[bool]
     r"""Returns retail rates instead of account-based rates (UPS and FedEx only)."""
@@ -286,7 +314,7 @@ class ShipmentExtra(BaseModel):
     dealer_order_number: Optional[UPSReferenceFields] = None
 
     delivery_instructions: Optional[str] = None
-    r"""Specify delivery instructions. Up to 500 characters. (FedEx and OnTrac only)."""
+    r"""Specify delivery instructions. Up to 500 characters (Purolator accepts up to 30 characters). (FedEx, OnTrac and Purolator only)."""
 
     dept_number: Optional[DepartmentNumber] = None
     r"""Specify the department number field on the label (FedEx and UPS only)."""
@@ -298,6 +326,16 @@ class ShipmentExtra(BaseModel):
 
     fulfillment_center: Optional[str] = None
     r"""The fulfilment center where the package originates from."""
+
+    healthcare_handling: Optional[HealthcareHandling] = None
+    r"""Requests the carrier's healthcare handling program, where the carrier offers one. The rate returned keeps the carrier's
+    regular service level token.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | Purolator | Maps to Health Care+. Domestic Express services only (Express, Express 9AM, Express 10:30AM, Express Evening). Available to Purolator-approved accounts only. |
+    """
 
     insurance: Optional[Insurance] = None
     r"""To add 3rd party insurance powered by [XCover](https://docs.goshippo.com/docs/shipments/shippinginsurance/),
@@ -349,6 +387,7 @@ class ShipmentExtra(BaseModel):
     | Carrier | Constraints |
     |:---|:---|
     | FedEx | Max 40 characters (Express services); Max 30 characters (Ground services) |
+    | Purolator | Max 25 characters |
     """
 
     reference_2: Optional[str] = None
@@ -358,6 +397,25 @@ class ShipmentExtra(BaseModel):
     | Carrier | Constraints |
     |:---|:---|
     | FedEx | Max 30 characters |
+    | Purolator | Max 25 characters |
+    """
+
+    reference_3: Optional[str] = None
+    r"""Optional text to be printed on the shipping label if supported by carrier. Up to 50 characters.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | Purolator | Max 25 characters |
+    """
+
+    reference_4: Optional[str] = None
+    r"""Optional text to be printed on the shipping label if supported by carrier. Up to 50 characters.
+
+    **Carrier-Specific Constraints:**
+    | Carrier | Constraints |
+    |:---|:---|
+    | Purolator | Max 25 characters |
     """
 
     request_retail_rates: Optional[bool] = None
@@ -426,6 +484,7 @@ class ShipmentExtra(BaseModel):
                 "dry_ice",
                 "fda_product_code",
                 "fulfillment_center",
+                "healthcare_handling",
                 "insurance",
                 "invoice_number",
                 "is_return",
@@ -442,6 +501,8 @@ class ShipmentExtra(BaseModel):
                 "qr_code_requested",
                 "reference_1",
                 "reference_2",
+                "reference_3",
+                "reference_4",
                 "request_retail_rates",
                 "return_service_type",
                 "rma_number",
