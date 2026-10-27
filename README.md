@@ -1,4 +1,4 @@
-# <img src="https://docs.goshippo.com/images/Logo.png" width="30" alt="Shippo logo"> Shippo Python SDK 
+# <img src="https://raw.githubusercontent.com/goshippo/shippo-python-sdk/main/.github/assets/shippo-logo.png" width="30" alt="Shippo logo"> Shippo Python SDK 
 
 Shippo is a shipping API that connects you with [multiple shipping carriers](https://goshippo.com/carriers) (such as USPS, UPS, DHL, Canada Post, Australia Post, and many others) through one interface.
 
@@ -21,7 +21,7 @@ Shippo external API.: Use this API to integrate with the Shippo service
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
 <!-- $toc-max-depth=2 -->
-* [<img src="https://docs.goshippo.com/images/Logo.png" width="30" alt="Shippo logo"> Shippo Python SDK](#img-srchttpsdocsgoshippocomimageslogopng-width30-altshippo-logo-shippo-python-sdk)
+* [<img src="https://raw.githubusercontent.com/goshippo/shippo-python-sdk/main/.github/assets/shippo-logo.png" width="30" alt="Shippo logo"> Shippo Python SDK](#img-srchttpsrawgithubusercontentcomgoshipposhippo-python-sdkmaingithubassetsshippo-logopng-width30-altshippo-logo-shippo-python-sdk)
   * [SDK Installation](#sdk-installation)
   * [SDK Reinstallation to a specific version](#sdk-reinstallation-to-a-specific-version)
   * [SDK Example Usage](#sdk-example-usage)
