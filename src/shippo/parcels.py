@@ -62,6 +62,7 @@ class Parcels(BaseSDK):
             http_headers=http_headers,
             _globals=operations.ListParcelsGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -185,6 +186,7 @@ class Parcels(BaseSDK):
             http_headers=http_headers,
             _globals=operations.ListParcelsGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -307,6 +309,7 @@ class Parcels(BaseSDK):
             http_headers=http_headers,
             _globals=operations.CreateParcelGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -432,6 +435,7 @@ class Parcels(BaseSDK):
             http_headers=http_headers,
             _globals=operations.CreateParcelGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -555,6 +559,7 @@ class Parcels(BaseSDK):
             http_headers=http_headers,
             _globals=operations.GetParcelGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -675,6 +680,7 @@ class Parcels(BaseSDK):
             http_headers=http_headers,
             _globals=operations.GetParcelGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,

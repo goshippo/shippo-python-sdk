@@ -21,3 +21,9 @@ value: components.FedExConnectExistingOwnAccountParameters = /* values here */
 value: components.UPSConnectExistingOwnAccountParameters = /* values here */
 ```
 
+### `components.UPSConnectExistingOwnAccountStreamlinedParameters`
+
+```python
+value: components.UPSConnectExistingOwnAccountStreamlinedParameters = /* values here */
+```
+

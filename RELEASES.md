@@ -419,3 +419,13 @@ Based on:
 - [python v5.0.0-beta.2] .
 ### Releases
 - [PyPI v5.0.0-beta.2] https://pypi.org/project/shippo/5.0.0-beta.2 - .
+
+## 2026-11-02 00:08:49
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.805.0 (2.954.8) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v5.0.0-beta.3] .
+### Releases
+- [PyPI v5.0.0-beta.3] https://pypi.org/project/shippo/5.0.0-beta.3 - .

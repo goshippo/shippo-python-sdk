@@ -6,7 +6,12 @@ from pydantic import model_serializer
 from shippo.models.components import (
     embeddedauthorizationrequest as components_embeddedauthorizationrequest,
 )
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
 from shippo.utils import (
     FieldMetadata,
     HeaderMetadata,
@@ -31,13 +36,19 @@ class CreateEmbeddedAuthorizationGlobals(BaseModel):
     r"""Optional string used to pick a non-default API version to use. See our [API version](https://docs.goshippo.com/docs/api_concepts/apiversioning/) guide."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["SHIPPO-API-VERSION"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
@@ -75,13 +86,19 @@ class CreateEmbeddedAuthorizationSecurity(BaseModel):
     ] = None
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["APIKeyHeader", "shippoOAuth"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
@@ -97,9 +114,7 @@ class CreateEmbeddedAuthorizationRequestTypedDict(TypedDict):
     )
     r"""The scope to request for the token."""
     shippo_account_id: NotRequired[str]
-    r"""Optional. The object ID of a Managed Shippo Account. Platform accounts set this to
-    mint a JWT scoped to one of their managed accounts.
-    """
+    r"""Optional. The object ID of a Managed Shippo Account. Platform accounts set this to mint a JWT scoped to one of their managed accounts. `Shippo-Account-Id` and `SHIPPO-ACCOUNT-ID` are the same header."""
 
 
 class CreateEmbeddedAuthorizationRequest(BaseModel):
@@ -111,21 +126,25 @@ class CreateEmbeddedAuthorizationRequest(BaseModel):
 
     shippo_account_id: Annotated[
         Optional[str],
-        pydantic.Field(alias="SHIPPO-ACCOUNT-ID"),
+        pydantic.Field(alias="Shippo-Account-Id"),
         FieldMetadata(header=HeaderMetadata(style="simple", explode=False)),
     ] = None
-    r"""Optional. The object ID of a Managed Shippo Account. Platform accounts set this to
-    mint a JWT scoped to one of their managed accounts.
-    """
+    r"""Optional. The object ID of a Managed Shippo Account. Platform accounts set this to mint a JWT scoped to one of their managed accounts. `Shippo-Account-Id` and `SHIPPO-ACCOUNT-ID` are the same header."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
-        optional_fields = set(["SHIPPO-ACCOUNT-ID"])
+        optional_fields = set(["Shippo-Account-Id"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

@@ -3,7 +3,12 @@
 from __future__ import annotations
 import pydantic
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
 from shippo.utils import (
     FieldMetadata,
     HeaderMetadata,
@@ -17,6 +22,8 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class GetBatchGlobalsTypedDict(TypedDict):
     shippo_api_version: NotRequired[str]
     r"""Optional string used to pick a non-default API version to use. See our [API version](https://docs.goshippo.com/docs/api_concepts/apiversioning/) guide."""
+    shippo_account_id: NotRequired[str]
+    r"""Optional. The object ID of a Managed Shippo Account. Platform accounts set this to make the request on behalf of one of their managed accounts. See the [Platform accounts guide](https://docs.goshippo.com/platform-accounts/platform-using-accounts)."""
 
 
 class GetBatchGlobals(BaseModel):
@@ -27,14 +34,27 @@ class GetBatchGlobals(BaseModel):
     ] = "2018-02-08"
     r"""Optional string used to pick a non-default API version to use. See our [API version](https://docs.goshippo.com/docs/api_concepts/apiversioning/) guide."""
 
+    shippo_account_id: Annotated[
+        Optional[str],
+        pydantic.Field(alias="SHIPPO-ACCOUNT-ID"),
+        FieldMetadata(header=HeaderMetadata(style="simple", explode=False)),
+    ] = None
+    r"""Optional. The object ID of a Managed Shippo Account. Platform accounts set this to make the request on behalf of one of their managed accounts. See the [Platform accounts guide](https://docs.goshippo.com/platform-accounts/platform-using-accounts)."""
+
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
-        optional_fields = set(["SHIPPO-API-VERSION"])
+        optional_fields = set(["SHIPPO-API-VERSION", "SHIPPO-ACCOUNT-ID"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
@@ -74,13 +94,19 @@ class GetBatchRequest(BaseModel):
     r"""The number of results to return per page (max 100, default 5)"""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["page", "results"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

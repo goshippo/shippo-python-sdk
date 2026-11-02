@@ -5,9 +5,7 @@ from enum import Enum
 
 
 class OrderStatusEnum(str, Enum):
-    r"""Current state of the order. See the [orders tutorial](https://docs.goshippo.com/docs/orders/orders/)
-    for the logic of how the status is handled.
-    """
+    r"""Current state of the order. See the [orders tutorial](https://docs.goshippo.com/docs/orders/orders/) for the logic of how the status is handled."""
 
     UNKNOWN = "UNKNOWN"
     AWAITPAY = "AWAITPAY"

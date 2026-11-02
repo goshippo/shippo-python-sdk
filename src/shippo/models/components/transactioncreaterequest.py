@@ -4,7 +4,12 @@ from __future__ import annotations
 from .labelfiletypeenum import LabelFileTypeEnum
 import pydantic
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
 from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
@@ -13,9 +18,7 @@ class TransactionCreateRequestTypedDict(TypedDict):
     rate: str
     async_: NotRequired[bool]
     label_file_type: NotRequired[LabelFileTypeEnum]
-    r"""Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from
-    [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)
-    """
+    r"""Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)"""
     metadata: NotRequired[str]
     order: NotRequired[str]
 
@@ -26,22 +29,26 @@ class TransactionCreateRequest(BaseModel):
     async_: Annotated[Optional[bool], pydantic.Field(alias="async")] = True
 
     label_file_type: Optional[LabelFileTypeEnum] = None
-    r"""Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from
-    [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)
-    """
+    r"""Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)"""
 
     metadata: Optional[str] = None
 
     order: Optional[str] = None
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["async", "label_file_type", "metadata", "order"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

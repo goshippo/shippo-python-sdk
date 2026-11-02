@@ -10,9 +10,7 @@ from typing import Mapping, Optional, Union
 
 
 class EmbeddedAuthorization(BaseSDK):
-    r"""Mint short-lived JSON Web Tokens (JWTs) for client-side applications, so you never ship a
-    long-lived API token to the browser. Authenticate the request with a Shippo API token or an
-    OAuth bearer token, then pass the returned token as `Authorization: JWT <JWT_TOKEN>`.
+    r"""Mint short-lived JSON Web Tokens (JWTs) for client-side applications, so you never ship a long-lived API token to the browser. Authenticate the request with a Shippo API token or an OAuth bearer token, then pass the returned token as `Authorization: JWT <JWT_TOKEN>`.
     See our [Authentication using JWT guide](https://docs.goshippo.com/docs/guides_general/authentication_using_jwt/) for details.
     """
 
@@ -35,21 +33,15 @@ class EmbeddedAuthorization(BaseSDK):
     ) -> components.EmbeddedAuthorization:
         r"""Create a JWT
 
-        Creates a short-lived JSON Web Token (JWT) that client-side applications can use
-        to authenticate against the Shippo API without exposing a long-lived API token.
+        Creates a short-lived JSON Web Token (JWT) that client-side applications can use to authenticate against the Shippo API without exposing a long-lived API token.
 
-        Authenticate this request with either a Shippo API token
-        (`Authorization: ShippoToken <API_TOKEN>`) or an OAuth bearer token
-        (`Authorization: Bearer <OAUTH_BEARER_TOKEN>`). Platform accounts can mint a token
-        on behalf of a Managed Shippo Account by setting the `SHIPPO-ACCOUNT-ID` header.
+        Authenticate this request with either a Shippo API token (`Authorization: ShippoToken <API_TOKEN>`) or an OAuth bearer token (`Authorization: Bearer <OAUTH_BEARER_TOKEN>`). Platform accounts can mint a token on behalf of a Managed Shippo Account by setting the `SHIPPO-ACCOUNT-ID` header.
 
-        The returned token is valid for 12 hours. Send it on subsequent requests as
-        `Authorization: JWT <JWT_TOKEN>`.
+        The returned token is valid for 12 hours. Send it on subsequent requests as `Authorization: JWT <JWT_TOKEN>`.
 
         :param security:
         :param embedded_authorization_request: The scope to request for the token.
-        :param shippo_account_id: Optional. The object ID of a Managed Shippo Account. Platform accounts set this to
-            mint a JWT scoped to one of their managed accounts.
+        :param shippo_account_id: Optional. The object ID of a Managed Shippo Account. Platform accounts set this to mint a JWT scoped to one of their managed accounts. `Shippo-Account-Id` and `SHIPPO-ACCOUNT-ID` are the same header.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -162,21 +154,15 @@ class EmbeddedAuthorization(BaseSDK):
     ) -> components.EmbeddedAuthorization:
         r"""Create a JWT
 
-        Creates a short-lived JSON Web Token (JWT) that client-side applications can use
-        to authenticate against the Shippo API without exposing a long-lived API token.
+        Creates a short-lived JSON Web Token (JWT) that client-side applications can use to authenticate against the Shippo API without exposing a long-lived API token.
 
-        Authenticate this request with either a Shippo API token
-        (`Authorization: ShippoToken <API_TOKEN>`) or an OAuth bearer token
-        (`Authorization: Bearer <OAUTH_BEARER_TOKEN>`). Platform accounts can mint a token
-        on behalf of a Managed Shippo Account by setting the `SHIPPO-ACCOUNT-ID` header.
+        Authenticate this request with either a Shippo API token (`Authorization: ShippoToken <API_TOKEN>`) or an OAuth bearer token (`Authorization: Bearer <OAUTH_BEARER_TOKEN>`). Platform accounts can mint a token on behalf of a Managed Shippo Account by setting the `SHIPPO-ACCOUNT-ID` header.
 
-        The returned token is valid for 12 hours. Send it on subsequent requests as
-        `Authorization: JWT <JWT_TOKEN>`.
+        The returned token is valid for 12 hours. Send it on subsequent requests as `Authorization: JWT <JWT_TOKEN>`.
 
         :param security:
         :param embedded_authorization_request: The scope to request for the token.
-        :param shippo_account_id: Optional. The object ID of a Managed Shippo Account. Platform accounts set this to
-            mint a JWT scoped to one of their managed accounts.
+        :param shippo_account_id: Optional. The object ID of a Managed Shippo Account. Platform accounts set this to mint a JWT scoped to one of their managed accounts. `Shippo-Account-Id` and `SHIPPO-ACCOUNT-ID` are the same header.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds

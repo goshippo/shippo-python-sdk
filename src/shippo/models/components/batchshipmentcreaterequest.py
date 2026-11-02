@@ -3,7 +3,12 @@
 from __future__ import annotations
 from .shipmentcreaterequest import ShipmentCreateRequest, ShipmentCreateRequestTypedDict
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -13,13 +18,10 @@ class BatchShipmentCreateRequestTypedDict(TypedDict):
     carrier_account: NotRequired[str]
     r"""Object ID of the carrier account to be used for this shipment (will override batch default)"""
     metadata: NotRequired[str]
-    r"""A string of up to 100 characters that can be filled with any additional information you want
-    to attach to the object.
-    """
+    r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
     servicelevel_token: NotRequired[str]
     r"""A token that sets the shipping method for the batch, overriding the batch default.
-    Servicelevel tokens can be found [in this list](/shippoapi/public-api/service-levels)
-    or [at this endpoint](/shippoapi/public-api/carrier-accounts/listcarrieraccounts).
+    Servicelevel tokens can be found [in this list](/shippoapi/public-api/service-levels) or [at this endpoint](/shippoapi/public-api/carrier-accounts/listcarrieraccounts).
     """
 
 
@@ -30,24 +32,27 @@ class BatchShipmentCreateRequest(BaseModel):
     r"""Object ID of the carrier account to be used for this shipment (will override batch default)"""
 
     metadata: Optional[str] = None
-    r"""A string of up to 100 characters that can be filled with any additional information you want
-    to attach to the object.
-    """
+    r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
 
     servicelevel_token: Optional[str] = None
     r"""A token that sets the shipping method for the batch, overriding the batch default.
-    Servicelevel tokens can be found [in this list](/shippoapi/public-api/service-levels)
-    or [at this endpoint](/shippoapi/public-api/carrier-accounts/listcarrieraccounts).
+    Servicelevel tokens can be found [in this list](/shippoapi/public-api/service-levels) or [at this endpoint](/shippoapi/public-api/carrier-accounts/listcarrieraccounts).
     """
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["carrier_account", "metadata", "servicelevel_token"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

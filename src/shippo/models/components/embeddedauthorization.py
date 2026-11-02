@@ -3,41 +3,44 @@
 from __future__ import annotations
 import pydantic
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
 from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class EmbeddedAuthorizationTypedDict(TypedDict):
     token: NotRequired[str]
-    r"""The encoded JSON Web Token. Pass it on subsequent API requests as
-    `Authorization: JWT <JWT_TOKEN>`.
-    """
+    r"""The encoded JSON Web Token. Pass it on subsequent API requests as `Authorization: JWT <JWT_TOKEN>`."""
     expires_in: NotRequired[int]
-    r"""Unix timestamp (seconds) of when the token expires. This matches the `exp` claim
-    inside the token itself. Tokens are valid for 12 hours from issue.
-    """
+    r"""Unix timestamp (seconds) of when the token expires. This matches the `exp` claim inside the token itself. Tokens are valid for 12 hours from issue."""
 
 
 class EmbeddedAuthorization(BaseModel):
     token: Optional[str] = None
-    r"""The encoded JSON Web Token. Pass it on subsequent API requests as
-    `Authorization: JWT <JWT_TOKEN>`.
-    """
+    r"""The encoded JSON Web Token. Pass it on subsequent API requests as `Authorization: JWT <JWT_TOKEN>`."""
 
     expires_in: Annotated[Optional[int], pydantic.Field(alias="expiresIn")] = None
-    r"""Unix timestamp (seconds) of when the token expires. This matches the `exp` claim
-    inside the token itself. Tokens are valid for 12 hours from issue.
-    """
+    r"""Unix timestamp (seconds) of when the token expires. This matches the `exp` claim inside the token itself. Tokens are valid for 12 hours from issue."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["token", "expiresIn"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

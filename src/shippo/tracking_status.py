@@ -69,6 +69,7 @@ class TrackingStatus(BaseSDK):
             http_headers=http_headers,
             _globals=operations.CreateTrackGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -192,6 +193,7 @@ class TrackingStatus(BaseSDK):
             http_headers=http_headers,
             _globals=operations.CreateTrackGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -318,6 +320,7 @@ class TrackingStatus(BaseSDK):
             http_headers=http_headers,
             _globals=operations.GetTrackGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -441,6 +444,7 @@ class TrackingStatus(BaseSDK):
             http_headers=http_headers,
             _globals=operations.GetTrackGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,

@@ -21,7 +21,12 @@ from .customsitemcreaterequest import (
 )
 from enum import Enum
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -54,13 +59,19 @@ class CustomsDeclarationCreateRequestAddress(BaseModel):
     r"""Country ISO code of account number to be billed."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["name", "zip", "country"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
@@ -92,13 +103,19 @@ class CustomsDeclarationCreateRequestDutiesPayor(BaseModel):
     address: Optional[CustomsDeclarationCreateRequestAddress] = None
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["account", "type", "address"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
@@ -112,9 +129,7 @@ class CustomsDeclarationCreateRequestTypedDict(TypedDict):
     certify: bool
     r"""Expresses that the certify_signer has provided all information of this customs declaration truthfully."""
     certify_signer: str
-    r"""Name of the person who created the customs declaration and is responsible for the validity of all
-    information provided.
-    """
+    r"""Name of the person who created the customs declaration and is responsible for the validity of all information provided."""
     contents_type: CustomsDeclarationContentsTypeEnum
     items: List[CustomsItemCreateRequestTypedDict]
     non_delivery_option: CustomsDeclarationNonDeliveryOptionEnum
@@ -160,17 +175,11 @@ class CustomsDeclarationCreateRequestTypedDict(TypedDict):
     license: NotRequired[str]
     r"""License reference of the shipment."""
     metadata: NotRequired[str]
-    r"""A string of up to 100 characters that can be filled with any additional information you
-    want to attach to the object.
-    """
+    r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
     notes: NotRequired[str]
     r"""Additional notes to be included in the customs declaration."""
     recipient_is_business: NotRequired[bool]
-    r"""Indicates the shipment goes to a business (B2B) rather than a consumer. Newly created
-    declarations default to false when the field is not provided; declarations created before
-    the field existed return null, which is treated as false. When true, EU product
-    identifiers are not required on the customs items.
-    """
+    r"""Indicates the shipment goes to a business (B2B) rather than a consumer. Newly created declarations default to false when the field is not provided; declarations created before the field existed return null, which is treated as false. When true, EU product identifiers are not required on the customs items."""
     address_importer: NotRequired[AddressImporterTypedDict]
     r"""Object that represents the address of the importer"""
     eel_pfc: NotRequired[CustomsDeclarationEelPfcEnum]
@@ -183,9 +192,7 @@ class CustomsDeclarationCreateRequest(BaseModel):
     r"""Expresses that the certify_signer has provided all information of this customs declaration truthfully."""
 
     certify_signer: str
-    r"""Name of the person who created the customs declaration and is responsible for the validity of all
-    information provided.
-    """
+    r"""Name of the person who created the customs declaration and is responsible for the validity of all information provided."""
 
     contents_type: CustomsDeclarationContentsTypeEnum
 
@@ -249,19 +256,13 @@ class CustomsDeclarationCreateRequest(BaseModel):
     r"""License reference of the shipment."""
 
     metadata: Optional[str] = None
-    r"""A string of up to 100 characters that can be filled with any additional information you
-    want to attach to the object.
-    """
+    r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
 
     notes: Optional[str] = None
     r"""Additional notes to be included in the customs declaration."""
 
     recipient_is_business: Optional[bool] = False
-    r"""Indicates the shipment goes to a business (B2B) rather than a consumer. Newly created
-    declarations default to false when the field is not provided; declarations created before
-    the field existed return null, which is treated as false. When true, EU product
-    identifiers are not required on the customs items.
-    """
+    r"""Indicates the shipment goes to a business (B2B) rather than a consumer. Newly created declarations default to false when the field is not provided; declarations created before the field existed return null, which is treated as false. When true, EU product identifiers are not required on the customs items."""
 
     address_importer: Optional[AddressImporter] = None
     r"""Object that represents the address of the importer"""
@@ -273,6 +274,9 @@ class CustomsDeclarationCreateRequest(BaseModel):
     test: Optional[bool] = None
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -299,11 +303,14 @@ class CustomsDeclarationCreateRequest(BaseModel):
                 "test",
             ]
         )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

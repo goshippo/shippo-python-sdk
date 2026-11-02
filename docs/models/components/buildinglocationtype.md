@@ -1,7 +1,6 @@
 # BuildingLocationType
 
-Where your parcels will be available for pickup. "Security Deck" and "Shipping Dock" are only 
-supported for DHL Express.
+Where your parcels will be available for pickup. "Security Deck" and "Shipping Dock" are only supported for DHL Express.
 
 ## Example Usage
 

@@ -20,10 +20,7 @@ Assign one of your user parcel templates to be the default used when generating 
 
 ## create
 
-Initiates a live rates request. Include either the object ID for
-an existing address record or a fully formed address object when entering
-an address value. You can also enter the object ID of an existing user parcel
-template or a fully formed user parcel template object as the parcel value.
+Initiates a live rates request. Include either the object ID for an existing address record or a fully formed address object when entering an address value. You can also enter the object ID of an existing user parcel template or a fully formed user parcel template object as the parcel value.
 
 ### Example Usage
 
@@ -35,6 +32,7 @@ from shippo.models import components
 
 with Shippo(
     shippo_api_version="2018-02-08",
+    shippo_account_id="<id>",
     api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
@@ -80,6 +78,7 @@ from shippo import Shippo
 
 with Shippo(
     shippo_api_version="2018-02-08",
+    shippo_account_id="<id>",
     api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
@@ -120,6 +119,7 @@ from shippo import Shippo
 
 with Shippo(
     shippo_api_version="2018-02-08",
+    shippo_account_id="<id>",
     api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
@@ -162,6 +162,7 @@ from shippo import Shippo
 
 with Shippo(
     shippo_api_version="2018-02-08",
+    shippo_account_id="<id>",
     api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 

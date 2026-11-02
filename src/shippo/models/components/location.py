@@ -7,15 +7,18 @@ from .addresscompletecreaterequest import (
 )
 from enum import Enum
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
 
 class BuildingLocationType(str, Enum):
-    r"""Where your parcels will be available for pickup. \"Security Deck\" and \"Shipping Dock\" are only
-    supported for DHL Express.
-    """
+    r"""Where your parcels will be available for pickup. \"Security Deck\" and \"Shipping Dock\" are only supported for DHL Express."""
 
     BACK_DOOR = "Back Door"
     RING_BELL = "Ring Bell"
@@ -46,14 +49,9 @@ class LocationTypedDict(TypedDict):
     r"""Location where the parcel(s) will be picked up."""
 
     address: AddressCompleteCreateRequestTypedDict
-    r"""The pickup address, which includes your name, company name, street address, city, state, zip code,
-    country, phone number, and email address (strings). Special characters should not be included in
-    any address element, especially name, company, and email.
-    """
+    r"""The pickup address, which includes your name, company name, street address, city, state, zip code, country, phone number, and email address (strings). Special characters should not be included in any address element, especially name, company, and email."""
     building_location_type: BuildingLocationType
-    r"""Where your parcels will be available for pickup. \"Security Deck\" and \"Shipping Dock\" are only
-    supported for DHL Express.
-    """
+    r"""Where your parcels will be available for pickup. \"Security Deck\" and \"Shipping Dock\" are only supported for DHL Express."""
     building_type: NotRequired[BuildingType]
     r"""The type of building where the pickup is located."""
     instructions: NotRequired[str]
@@ -64,15 +62,10 @@ class Location(BaseModel):
     r"""Location where the parcel(s) will be picked up."""
 
     address: AddressCompleteCreateRequest
-    r"""The pickup address, which includes your name, company name, street address, city, state, zip code,
-    country, phone number, and email address (strings). Special characters should not be included in
-    any address element, especially name, company, and email.
-    """
+    r"""The pickup address, which includes your name, company name, street address, city, state, zip code, country, phone number, and email address (strings). Special characters should not be included in any address element, especially name, company, and email."""
 
     building_location_type: BuildingLocationType
-    r"""Where your parcels will be available for pickup. \"Security Deck\" and \"Shipping Dock\" are only
-    supported for DHL Express.
-    """
+    r"""Where your parcels will be available for pickup. \"Security Deck\" and \"Shipping Dock\" are only supported for DHL Express."""
 
     building_type: Optional[BuildingType] = None
     r"""The type of building where the pickup is located."""
@@ -81,13 +74,19 @@ class Location(BaseModel):
     r"""Pickup instructions for the courier. This is a mandatory field if the building_location_type is \"Other\"."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["building_type", "instructions"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
