@@ -81,7 +81,7 @@ python:
   inputTypedDictSuffix: TypedDict
   license: MIT License
   maxMethodParams: 3
-  methodArguments: require-security-and-request
+  methodArguments: infer-optional-args
   methodTimeoutArgument: timeout-ms
   methodTimeoutUnits: milliseconds
   moduleName: ""

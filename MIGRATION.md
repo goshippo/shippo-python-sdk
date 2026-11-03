@@ -57,15 +57,16 @@ These methods used to take individual arguments. They now take a single `request
 | `tracking_status.create(carrier, tracking_number, metadata=None)` | `tracking_status.create(request={"carrier": ..., "tracking_number": ...})` |
 | `rates_at_checkout.update_default_parcel_template(object_id=...)` | `rates_at_checkout.update_default_parcel_template(request={"object_id": ...})` |
 
-**Known issue in 5.0.0b1:** the following methods take no parameters but still require an empty
-`request=` argument. We plan to remove this requirement before 5.0.0 is final.
+**Methods with no required parameters.** In 5.0.0b1 and 5.0.0b2, these methods required an empty
+`request={}` argument. From 5.0.0b3 the argument is optional, so you can call them with no arguments
+(passing `request={}` still works):
 
 ```python
-shippo_sdk.service_groups.list(request={})
-shippo_sdk.refunds.list(request={})
-shippo_sdk.user_parcel_templates.list(request={})
-shippo_sdk.rates_at_checkout.get_default_parcel_template(request={})
-shippo_sdk.rates_at_checkout.delete_default_parcel_template(request={})
+shippo_sdk.service_groups.list()
+shippo_sdk.refunds.list()
+shippo_sdk.user_parcel_templates.list()
+shippo_sdk.rates_at_checkout.get_default_parcel_template()
+shippo_sdk.rates_at_checkout.delete_default_parcel_template()
 ```
 
 ## 4. Models are pydantic, not dataclasses
