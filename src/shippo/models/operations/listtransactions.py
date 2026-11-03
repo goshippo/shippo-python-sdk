@@ -7,7 +7,12 @@ from shippo.models.components import (
     trackingstatusenum as components_trackingstatusenum,
     transactionstatusenum as components_transactionstatusenum,
 )
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
 from shippo.utils import FieldMetadata, HeaderMetadata, QueryParamMetadata
 from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
@@ -16,6 +21,8 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class ListTransactionsGlobalsTypedDict(TypedDict):
     shippo_api_version: NotRequired[str]
     r"""Optional string used to pick a non-default API version to use. See our [API version](https://docs.goshippo.com/docs/api_concepts/apiversioning/) guide."""
+    shippo_account_id: NotRequired[str]
+    r"""Optional. The object ID of a Managed Shippo Account. Platform accounts set this to make the request on behalf of one of their managed accounts. See the [Platform accounts guide](https://docs.goshippo.com/platform-accounts/platform-using-accounts)."""
 
 
 class ListTransactionsGlobals(BaseModel):
@@ -26,14 +33,27 @@ class ListTransactionsGlobals(BaseModel):
     ] = "2018-02-08"
     r"""Optional string used to pick a non-default API version to use. See our [API version](https://docs.goshippo.com/docs/api_concepts/apiversioning/) guide."""
 
+    shippo_account_id: Annotated[
+        Optional[str],
+        pydantic.Field(alias="SHIPPO-ACCOUNT-ID"),
+        FieldMetadata(header=HeaderMetadata(style="simple", explode=False)),
+    ] = None
+    r"""Optional. The object ID of a Managed Shippo Account. Platform accounts set this to make the request on behalf of one of their managed accounts. See the [Platform accounts guide](https://docs.goshippo.com/platform-accounts/platform-using-accounts)."""
+
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
-        optional_fields = set(["SHIPPO-API-VERSION"])
+        optional_fields = set(["SHIPPO-API-VERSION", "SHIPPO-ACCOUNT-ID"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
@@ -120,6 +140,9 @@ class ListTransactionsRequest(BaseModel):
     r"""Object(s) created lesser than or equal to a provided date and time."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -134,11 +157,14 @@ class ListTransactionsRequest(BaseModel):
                 "object_created_lte",
             ]
         )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

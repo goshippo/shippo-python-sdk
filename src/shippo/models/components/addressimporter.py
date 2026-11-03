@@ -2,7 +2,12 @@
 
 from __future__ import annotations
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -31,21 +36,16 @@ class AddressImporterTypedDict(TypedDict):
     state: NotRequired[str]
     r"""**required for purchase for some countries**
 
-    State/Province values are required for shipments from/to the US, AU, and CA. UPS requires province for some
-    countries (i.e Ireland). To receive more accurate quotes, passing this field is recommended. Most carriers
-    only accept two or three character state abbreviations.
+    State/Province values are required for shipments from/to the US, AU, and CA. UPS requires province for some countries (i.e Ireland). To receive more accurate quotes, passing this field is recommended. Most carriers only accept two or three character state abbreviations.
     """
     zip: NotRequired[str]
     r"""Postal code of an Address."""
     country: NotRequired[str]
-    r"""Example: `US` or `DE`. All accepted values can be found on the
-    [Official ISO Website](http://www.iso.org/).
+    r"""Example: `US` or `DE`. All accepted values can be found on the [Official ISO Website](http://www.iso.org/).
     Sending a country is always required.
     """
     phone: NotRequired[str]
-    r"""Addresses containing a phone number allow carriers to call the recipient when delivering the Parcel. This
-    increases the probability of delivery and helps to avoid accessorial charges after a Parcel has been shipped.
-    """
+    r"""Addresses containing a phone number allow carriers to call the recipient when delivering the Parcel. This increases the probability of delivery and helps to avoid accessorial charges after a Parcel has been shipped."""
     email: NotRequired[str]
     r"""E-mail address of the contact person, RFC3696/5321-compliant."""
     is_residential: NotRequired[bool]
@@ -83,24 +83,19 @@ class AddressImporter(BaseModel):
     state: Optional[str] = None
     r"""**required for purchase for some countries**
 
-    State/Province values are required for shipments from/to the US, AU, and CA. UPS requires province for some
-    countries (i.e Ireland). To receive more accurate quotes, passing this field is recommended. Most carriers
-    only accept two or three character state abbreviations.
+    State/Province values are required for shipments from/to the US, AU, and CA. UPS requires province for some countries (i.e Ireland). To receive more accurate quotes, passing this field is recommended. Most carriers only accept two or three character state abbreviations.
     """
 
     zip: Optional[str] = None
     r"""Postal code of an Address."""
 
     country: Optional[str] = None
-    r"""Example: `US` or `DE`. All accepted values can be found on the
-    [Official ISO Website](http://www.iso.org/).
+    r"""Example: `US` or `DE`. All accepted values can be found on the [Official ISO Website](http://www.iso.org/).
     Sending a country is always required.
     """
 
     phone: Optional[str] = None
-    r"""Addresses containing a phone number allow carriers to call the recipient when delivering the Parcel. This
-    increases the probability of delivery and helps to avoid accessorial charges after a Parcel has been shipped.
-    """
+    r"""Addresses containing a phone number allow carriers to call the recipient when delivering the Parcel. This increases the probability of delivery and helps to avoid accessorial charges after a Parcel has been shipped."""
 
     email: Optional[str] = None
     r"""E-mail address of the contact person, RFC3696/5321-compliant."""
@@ -109,6 +104,9 @@ class AddressImporter(BaseModel):
     r"""Indicates whether the address provided is a residential address or not."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -127,11 +125,14 @@ class AddressImporter(BaseModel):
                 "is_residential",
             ]
         )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

@@ -1,7 +1,6 @@
 # LabelFileTypeEnum
 
-Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from 
-[the Shippo dashboard.](https://apps.goshippo.com/settings/labels)
+Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)
 
 ## Example Usage
 

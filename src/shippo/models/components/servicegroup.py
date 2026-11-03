@@ -7,7 +7,12 @@ from .servicegroupaccountandservicelevel import (
 )
 from .servicegrouptypeenum import ServiceGroupTypeEnum
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -28,21 +33,13 @@ class ServiceGroupTypedDict(TypedDict):
     r"""The unique identifier of the given Service Group object."""
     service_levels: List[ServiceGroupAccountAndServiceLevelTypedDict]
     flat_rate: NotRequired[str]
-    r"""String representation of an amount to be returned as the flat rate
-    if 1. The service group is of type `LIVE_RATE` and no matching rates
-    were found; or 2. The service group is of type `FLAT_RATE`. Either
-    integers or decimals are accepted. Required unless type is
-    `FREE_SHIPPING`
-    """
+    r"""String representation of an amount to be returned as the flat rate if 1. The service group is of type `LIVE_RATE` and no matching rates were found; or 2. The service group is of type `FLAT_RATE`. Either integers or decimals are accepted. Required unless type is `FREE_SHIPPING`"""
     flat_rate_currency: NotRequired[str]
     r"""required unless type is `FREE_SHIPPING`. (ISO 4217 currency)"""
     free_shipping_threshold_currency: NotRequired[str]
     r"""optional unless type is `FREE_SHIPPING`. (ISO 4217 currency)"""
     free_shipping_threshold_min: NotRequired[str]
-    r"""For service groups of type `FREE_SHIPPING`, this field must be required to configure the minimum
-    cart total (total cost of items in the cart) for this service group to be returned for rates at
-    checkout. Optional unless type is `FREE_SHIPPING`
-    """
+    r"""For service groups of type `FREE_SHIPPING`, this field must be required to configure the minimum cart total (total cost of items in the cart) for this service group to be returned for rates at checkout. Optional unless type is `FREE_SHIPPING`"""
     rate_adjustment: NotRequired[int]
     r"""The amount in percent (%) that the service group's returned rate should be adjusted. For example, if this field is set to 5 and the matched rate price is $5.00, the returned value of the service group will be $5.25. Negative integers are also accepted and will discount the rate price by the defined percentage amount."""
     is_active: NotRequired[bool]
@@ -70,12 +67,7 @@ class ServiceGroup(BaseModel):
     service_levels: List[ServiceGroupAccountAndServiceLevel]
 
     flat_rate: Optional[str] = None
-    r"""String representation of an amount to be returned as the flat rate
-    if 1. The service group is of type `LIVE_RATE` and no matching rates
-    were found; or 2. The service group is of type `FLAT_RATE`. Either
-    integers or decimals are accepted. Required unless type is
-    `FREE_SHIPPING`
-    """
+    r"""String representation of an amount to be returned as the flat rate if 1. The service group is of type `LIVE_RATE` and no matching rates were found; or 2. The service group is of type `FLAT_RATE`. Either integers or decimals are accepted. Required unless type is `FREE_SHIPPING`"""
 
     flat_rate_currency: Optional[str] = None
     r"""required unless type is `FREE_SHIPPING`. (ISO 4217 currency)"""
@@ -84,10 +76,7 @@ class ServiceGroup(BaseModel):
     r"""optional unless type is `FREE_SHIPPING`. (ISO 4217 currency)"""
 
     free_shipping_threshold_min: Optional[str] = None
-    r"""For service groups of type `FREE_SHIPPING`, this field must be required to configure the minimum
-    cart total (total cost of items in the cart) for this service group to be returned for rates at
-    checkout. Optional unless type is `FREE_SHIPPING`
-    """
+    r"""For service groups of type `FREE_SHIPPING`, this field must be required to configure the minimum cart total (total cost of items in the cart) for this service group to be returned for rates at checkout. Optional unless type is `FREE_SHIPPING`"""
 
     rate_adjustment: Optional[int] = None
     r"""The amount in percent (%) that the service group's returned rate should be adjusted. For example, if this field is set to 5 and the matched rate price is $5.00, the returned value of the service group will be $5.25. Negative integers are also accepted and will discount the rate price by the defined percentage amount."""
@@ -96,6 +85,9 @@ class ServiceGroup(BaseModel):
     r"""True if the service group is enabled, false otherwise."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -107,11 +99,14 @@ class ServiceGroup(BaseModel):
                 "is_active",
             ]
         )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

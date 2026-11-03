@@ -7,7 +7,12 @@ from .addressvalidationresults import (
 )
 from datetime import datetime
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
 from typing import Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
@@ -142,9 +147,7 @@ class AddressTypedDict(TypedDict):
     """
     is_residential: NotRequired[bool]
     metadata: NotRequired[str]
-    r"""A string of up to 100 characters that can be filled with any additional information you want
-    to attach to the object.
-    """
+    r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
     is_complete: NotRequired[bool]
     r"""Complete addresses contain all required values.
 
@@ -163,14 +166,9 @@ class AddressTypedDict(TypedDict):
     object_owner: NotRequired[str]
     r"""Username of the user who created the Address object."""
     object_updated: NotRequired[datetime]
-    r"""Date and time of last Address update. Since you cannot update Addresses after they were created, this time
-    stamp reflects the time when the Address was changed by Shippo's systems for the last time, e.g., during the
-    approximation of one or more values.
-    """
+    r"""Date and time of last Address update. Since you cannot update Addresses after they were created, this time stamp reflects the time when the Address was changed by Shippo's systems for the last time, e.g., during the approximation of one or more values."""
     validation_results: NotRequired[AddressValidationResultsTypedDict]
-    r"""Object that contains information regarding if an address had been validated or not. Also contains any messages
-    generated during validation. Children keys are `is_valid`(boolean) and `messages`(array).
-    """
+    r"""Object that contains information regarding if an address had been validated or not. Also contains any messages generated during validation. Children keys are `is_valid`(boolean) and `messages`(array)."""
     test: NotRequired[bool]
     r"""Indicates whether the object has been created in test mode."""
 
@@ -302,9 +300,7 @@ class Address(BaseModel):
     is_residential: Optional[bool] = None
 
     metadata: Optional[str] = None
-    r"""A string of up to 100 characters that can be filled with any additional information you want
-    to attach to the object.
-    """
+    r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
 
     is_complete: Optional[bool] = None
     r"""Complete addresses contain all required values.
@@ -330,20 +326,18 @@ class Address(BaseModel):
     r"""Username of the user who created the Address object."""
 
     object_updated: Optional[datetime] = None
-    r"""Date and time of last Address update. Since you cannot update Addresses after they were created, this time
-    stamp reflects the time when the Address was changed by Shippo's systems for the last time, e.g., during the
-    approximation of one or more values.
-    """
+    r"""Date and time of last Address update. Since you cannot update Addresses after they were created, this time stamp reflects the time when the Address was changed by Shippo's systems for the last time, e.g., during the approximation of one or more values."""
 
     validation_results: Optional[AddressValidationResults] = None
-    r"""Object that contains information regarding if an address had been validated or not. Also contains any messages
-    generated during validation. Children keys are `is_valid`(boolean) and `messages`(array).
-    """
+    r"""Object that contains information regarding if an address had been validated or not. Also contains any messages generated during validation. Children keys are `is_valid`(boolean) and `messages`(array)."""
 
     test: Optional[bool] = None
     r"""Indicates whether the object has been created in test mode."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -371,11 +365,14 @@ class Address(BaseModel):
                 "test",
             ]
         )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

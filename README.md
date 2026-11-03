@@ -149,6 +149,7 @@ from shippo.utils import BackoffStrategy, RetryConfig
 
 with Shippo(
     shippo_api_version="2018-02-08",
+    shippo_account_id="<id>",
     api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
@@ -169,6 +170,7 @@ from shippo.utils import BackoffStrategy, RetryConfig
 with Shippo(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
     shippo_api_version="2018-02-08",
+    shippo_account_id="<id>",
     api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
@@ -313,9 +315,11 @@ def main():
 
     with Shippo(
         shippo_api_version="2018-02-08",
+        shippo_account_id="<id>",
         api_key_header="<YOUR_API_KEY_HERE>",
     ) as s_client:
         # Rest of application here...
+        pass
 
 
 # Or when using async:
@@ -323,9 +327,11 @@ async def amain():
 
     async with Shippo(
         shippo_api_version="2018-02-08",
+        shippo_account_id="<id>",
         api_key_header="<YOUR_API_KEY_HERE>",
     ) as s_client:
         # Rest of application here...
+        pass
 ```
 <!-- End Resource Management [resource-management] -->
 

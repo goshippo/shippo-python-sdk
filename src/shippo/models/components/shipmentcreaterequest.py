@@ -14,7 +14,12 @@ from .parcelcreaterequest import ParcelCreateRequest, ParcelCreateRequestTypedDi
 from .shipmentextra import ShipmentExtra, ShipmentExtraTypedDict
 import pydantic
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
 from typing import List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -88,16 +93,13 @@ class ShipmentCreateRequestTypedDict(TypedDict):
     r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
     shipment_date: NotRequired[str]
     r"""Date the shipment will be tendered to the carrier. Must be in the format `2014-01-18T00:35:03.463Z`.
-    Defaults to current date and time if no value is provided. Please note that some carriers require this value to
-    be in the future, on a working day, or similar.
+    Defaults to current date and time if no value is provided. Please note that some carriers require this value to be in the future, on a working day, or similar.
     """
     address_return: NotRequired[AddressReturnTypedDict]
     customs_declaration: NotRequired[CustomsDeclarationUnionTypedDict]
     async_: NotRequired[bool]
     carrier_accounts: NotRequired[List[str]]
-    r"""List of [Carrier Accounts](/shippoapi/public-api/carrier-accounts) `object_id`s used to filter
-    the returned rates.  If set, only rates from these carriers will be returned.
-    """
+    r"""List of [Carrier Accounts](/shippoapi/public-api/carrier-accounts) `object_id`s used to filter the returned rates.  If set, only rates from these carriers will be returned."""
 
 
 class ShipmentCreateRequest(BaseModel):
@@ -122,8 +124,7 @@ class ShipmentCreateRequest(BaseModel):
 
     shipment_date: Optional[str] = None
     r"""Date the shipment will be tendered to the carrier. Must be in the format `2014-01-18T00:35:03.463Z`.
-    Defaults to current date and time if no value is provided. Please note that some carriers require this value to
-    be in the future, on a working day, or similar.
+    Defaults to current date and time if no value is provided. Please note that some carriers require this value to be in the future, on a working day, or similar.
     """
 
     address_return: Optional[AddressReturn] = None
@@ -133,11 +134,12 @@ class ShipmentCreateRequest(BaseModel):
     async_: Annotated[Optional[bool], pydantic.Field(alias="async")] = None
 
     carrier_accounts: Optional[List[str]] = None
-    r"""List of [Carrier Accounts](/shippoapi/public-api/carrier-accounts) `object_id`s used to filter
-    the returned rates.  If set, only rates from these carriers will be returned.
-    """
+    r"""List of [Carrier Accounts](/shippoapi/public-api/carrier-accounts) `object_id`s used to filter the returned rates.  If set, only rates from these carriers will be returned."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -150,11 +152,14 @@ class ShipmentCreateRequest(BaseModel):
                 "carrier_accounts",
             ]
         )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

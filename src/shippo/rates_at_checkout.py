@@ -33,10 +33,7 @@ class RatesAtCheckout(BaseSDK):
     ) -> components.LiveRatePaginatedList:
         r"""Generate a live rates request
 
-        Initiates a live rates request. Include either the object ID for
-        an existing address record or a fully formed address object when entering
-        an address value. You can also enter the object ID of an existing user parcel
-        template or a fully formed user parcel template object as the parcel value.
+        Initiates a live rates request. Include either the object ID for an existing address record or a fully formed address object when entering an address value. You can also enter the object ID of an existing user parcel template or a fully formed user parcel template object as the parcel value.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -72,6 +69,7 @@ class RatesAtCheckout(BaseSDK):
             http_headers=http_headers,
             _globals=operations.CreateLiveRateGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -161,10 +159,7 @@ class RatesAtCheckout(BaseSDK):
     ) -> components.LiveRatePaginatedList:
         r"""Generate a live rates request
 
-        Initiates a live rates request. Include either the object ID for
-        an existing address record or a fully formed address object when entering
-        an address value. You can also enter the object ID of an existing user parcel
-        template or a fully formed user parcel template object as the parcel value.
+        Initiates a live rates request. Include either the object ID for an existing address record or a fully formed address object when entering an address value. You can also enter the object ID of an existing user parcel template or a fully formed user parcel template object as the parcel value.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -200,6 +195,7 @@ class RatesAtCheckout(BaseSDK):
             http_headers=http_headers,
             _globals=operations.CreateLiveRateGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -328,6 +324,7 @@ class RatesAtCheckout(BaseSDK):
             http_headers=http_headers,
             _globals=operations.GetDefaultParcelTemplateGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -453,6 +450,7 @@ class RatesAtCheckout(BaseSDK):
             http_headers=http_headers,
             _globals=operations.GetDefaultParcelTemplateGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -580,6 +578,7 @@ class RatesAtCheckout(BaseSDK):
             http_headers=http_headers,
             _globals=operations.UpdateDefaultParcelTemplateGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -714,6 +713,7 @@ class RatesAtCheckout(BaseSDK):
             http_headers=http_headers,
             _globals=operations.UpdateDefaultParcelTemplateGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -846,6 +846,7 @@ class RatesAtCheckout(BaseSDK):
             http_headers=http_headers,
             _globals=operations.DeleteDefaultParcelTemplateGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -971,6 +972,7 @@ class RatesAtCheckout(BaseSDK):
             http_headers=http_headers,
             _globals=operations.DeleteDefaultParcelTemplateGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,

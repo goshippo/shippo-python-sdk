@@ -10,16 +10,18 @@ from .dangerousgoodslithiumbatteries import (
     DangerousGoodsLithiumBatteriesTypedDict,
 )
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
 
 class DangerousGoodsObjectTypedDict(TypedDict):
-    r"""Container for specifying the presence of dangerous materials. This is specific to USPS, and if any contents
-    are provided, only certain USPS service levels will be eligible. For more information, see our
-    [guide on hazardous or dangerous materials shipping](https://docs.goshippo.com/docs/shipments/hazmat/).
-    """
+    r"""Container for specifying the presence of dangerous materials. This is specific to USPS, and if any contents are provided, only certain USPS service levels will be eligible. For more information, see our [guide on hazardous or dangerous materials shipping](https://docs.goshippo.com/docs/shipments/hazmat/)."""
 
     contains: NotRequired[bool]
     r"""Indicates if the shipment contains dangerous goods."""
@@ -30,10 +32,7 @@ class DangerousGoodsObjectTypedDict(TypedDict):
 
 
 class DangerousGoodsObject(BaseModel):
-    r"""Container for specifying the presence of dangerous materials. This is specific to USPS, and if any contents
-    are provided, only certain USPS service levels will be eligible. For more information, see our
-    [guide on hazardous or dangerous materials shipping](https://docs.goshippo.com/docs/shipments/hazmat/).
-    """
+    r"""Container for specifying the presence of dangerous materials. This is specific to USPS, and if any contents are provided, only certain USPS service levels will be eligible. For more information, see our [guide on hazardous or dangerous materials shipping](https://docs.goshippo.com/docs/shipments/hazmat/)."""
 
     contains: Optional[bool] = None
     r"""Indicates if the shipment contains dangerous goods."""
@@ -45,13 +44,19 @@ class DangerousGoodsObject(BaseModel):
     r"""Container for specifying the presence of lithium batteries."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["contains", "biological_material", "lithium_batteries"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

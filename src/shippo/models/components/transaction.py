@@ -9,16 +9,22 @@ from .trackingstatusenum import TrackingStatusEnum
 from .transactionstatusenum import TransactionStatusEnum
 from datetime import datetime
 from pydantic import model_serializer
-from shippo.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
 from typing import List, Optional, Union
 from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
 class CreatedByTypedDict(TypedDict):
     r"""An object with details about the user who created the Transaction (purchased the label).
-    A value will be returned only for Transactions that can be associated with a specific user, e.g. when a logged-in
-    user purchases a label via the Shippo Web application; but not for Transactions purchased e.g. via the API using a ShippoToken,
-    which is associated with the account but not any specific user.
+    A value will be returned only for Transactions that can be associated with a specific user, e.g. when a logged-in user purchases a label via the Shippo Web application; but not for Transactions purchased e.g. via the API using a ShippoToken, which is associated with the account but not any specific user.
     """
 
     first_name: NotRequired[str]
@@ -28,9 +34,7 @@ class CreatedByTypedDict(TypedDict):
 
 class CreatedBy(BaseModel):
     r"""An object with details about the user who created the Transaction (purchased the label).
-    A value will be returned only for Transactions that can be associated with a specific user, e.g. when a logged-in
-    user purchases a label via the Shippo Web application; but not for Transactions purchased e.g. via the API using a ShippoToken,
-    which is associated with the account but not any specific user.
+    A value will be returned only for Transactions that can be associated with a specific user, e.g. when a logged-in user purchases a label via the Shippo Web application; but not for Transactions purchased e.g. via the API using a ShippoToken, which is associated with the account but not any specific user.
     """
 
     first_name: Optional[str] = None
@@ -40,13 +44,19 @@ class CreatedBy(BaseModel):
     username: Optional[str] = None
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["first_name", "last_name", "username"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
@@ -58,16 +68,14 @@ class CreatedBy(BaseModel):
 
 RateUnionTypedDict = TypeAliasType("RateUnionTypedDict", Union[CoreRateTypedDict, str])
 r"""ID of the Rate object for which a Label has to be obtained.
-If you purchase a label by calling the transaction endpoint without a rate (instalabel),
-this field will be a simplified Rate object in the Transaction model returned from the POST request.
+If you purchase a label by calling the transaction endpoint without a rate (instalabel), this field will be a simplified Rate object in the Transaction model returned from the POST request.
 Note, only rates less than 7 days old can be purchased to ensure up-to-date pricing.
 """
 
 
 RateUnion = TypeAliasType("RateUnion", Union[CoreRate, str])
 r"""ID of the Rate object for which a Label has to be obtained.
-If you purchase a label by calling the transaction endpoint without a rate (instalabel),
-this field will be a simplified Rate object in the Transaction model returned from the POST request.
+If you purchase a label by calling the transaction endpoint without a rate (instalabel), this field will be a simplified Rate object in the Transaction model returned from the POST request.
 Note, only rates less than 7 days old can be purchased to ensure up-to-date pricing.
 """
 
@@ -81,18 +89,14 @@ class TransactionTypedDict(TypedDict):
     eta: NotRequired[str]
     r"""The estimated time of arrival according to the carrier."""
     label_file_type: NotRequired[LabelFileTypeEnum]
-    r"""Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from
-    [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)
-    """
+    r"""Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)"""
     label_url: NotRequired[str]
     r"""A URL pointing directly to the label in the format you've set in your settings.
     A value will only be returned if the Transactions has been processed successfully.
     """
     messages: NotRequired[List[ResponseMessageTypedDict]]
     metadata: NotRequired[str]
-    r"""A string of up to 100 characters that can be filled with any additional information you want to
-    attach to the object.
-    """
+    r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
     object_created: NotRequired[datetime]
     r"""Date and time of Transaction creation."""
     object_id: NotRequired[str]
@@ -111,8 +115,7 @@ class TransactionTypedDict(TypedDict):
     """
     rate: NotRequired[RateUnionTypedDict]
     r"""ID of the Rate object for which a Label has to be obtained.
-    If you purchase a label by calling the transaction endpoint without a rate (instalabel),
-    this field will be a simplified Rate object in the Transaction model returned from the POST request.
+    If you purchase a label by calling the transaction endpoint without a rate (instalabel), this field will be a simplified Rate object in the Transaction model returned from the POST request.
     Note, only rates less than 7 days old can be purchased to ensure up-to-date pricing.
     """
     status: NotRequired[TransactionStatusEnum]
@@ -143,9 +146,7 @@ class Transaction(BaseModel):
     r"""The estimated time of arrival according to the carrier."""
 
     label_file_type: Optional[LabelFileTypeEnum] = None
-    r"""Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from
-    [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)
-    """
+    r"""Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)"""
 
     label_url: Optional[str] = None
     r"""A URL pointing directly to the label in the format you've set in your settings.
@@ -155,9 +156,7 @@ class Transaction(BaseModel):
     messages: Optional[List[ResponseMessage]] = None
 
     metadata: Optional[str] = None
-    r"""A string of up to 100 characters that can be filled with any additional information you want to
-    attach to the object.
-    """
+    r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
 
     object_created: Optional[datetime] = None
     r"""Date and time of Transaction creation."""
@@ -184,8 +183,7 @@ class Transaction(BaseModel):
 
     rate: Optional[RateUnion] = None
     r"""ID of the Rate object for which a Label has to be obtained.
-    If you purchase a label by calling the transaction endpoint without a rate (instalabel),
-    this field will be a simplified Rate object in the Transaction model returned from the POST request.
+    If you purchase a label by calling the transaction endpoint without a rate (instalabel), this field will be a simplified Rate object in the Transaction model returned from the POST request.
     Note, only rates less than 7 days old can be purchased to ensure up-to-date pricing.
     """
 
@@ -209,6 +207,9 @@ class Transaction(BaseModel):
     """
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -235,11 +236,14 @@ class Transaction(BaseModel):
             ]
         )
         nullable_fields = set(["created_by"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
