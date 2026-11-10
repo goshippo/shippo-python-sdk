@@ -2,17 +2,19 @@
 
 from __future__ import annotations
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
+from shippo.types.basemodel import current_filtered_dump
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
 
 class ServiceLevelTypedDict(TypedDict):
-    r"""Used for some Service Levels to link to the more \"generic\" version of this Service Level - for example,
-    if this Service Level is a variation specific to shipments to Europe(\"ups_saver_eu\"), the \"parent\" is
-    the fully generic version (\"ups_saver\"). Helpful when displaying Service Levels to users. Has the same
-    structure of the servicelevel - \"name\", \"token\", \"terms\", and \"extended_token\", or it is otherwise null.
-    """
+    r"""Used for some Service Levels to link to the more \"generic\" version of this Service Level - for example, if this Service Level is a variation specific to shipments to Europe (\"ups_saver_eu\"), the \"parent\" is the fully generic version (\"ups_saver\"). Helpful when displaying Service Levels to users. Has the same structure as the servicelevel - \"name\", \"token\", \"terms\", and \"extended_token\", or it is otherwise null."""
 
     name: NotRequired[str]
     r"""Name of the Rate's servicelevel, e.g. `International Priority` or `Standard Post`.
@@ -20,9 +22,7 @@ class ServiceLevelTypedDict(TypedDict):
     These names vary depending on the provider.
     """
     terms: NotRequired[str]
-    r"""Further clarification of the service. For FedEx, a value of `ONERATE` indicates this
-    rate is a FedEx One Rate variant of the same service level — it shares the same
-    `token` as the standard-rate object but is a separate rate with its own `amount`.
+    r"""Further clarification of the service. For FedEx, a value of `ONERATE` indicates this rate is a FedEx One Rate variant of the same service level — it shares the same `token` as the standard-rate object but is a separate rate with its own `amount`.
     Standard (non-One Rate) rates have an empty string here.
     """
     token: NotRequired[str]
@@ -36,11 +36,7 @@ class ServiceLevelTypedDict(TypedDict):
 
 
 class ServiceLevel(BaseModel):
-    r"""Used for some Service Levels to link to the more \"generic\" version of this Service Level - for example,
-    if this Service Level is a variation specific to shipments to Europe(\"ups_saver_eu\"), the \"parent\" is
-    the fully generic version (\"ups_saver\"). Helpful when displaying Service Levels to users. Has the same
-    structure of the servicelevel - \"name\", \"token\", \"terms\", and \"extended_token\", or it is otherwise null.
-    """
+    r"""Used for some Service Levels to link to the more \"generic\" version of this Service Level - for example, if this Service Level is a variation specific to shipments to Europe (\"ups_saver_eu\"), the \"parent\" is the fully generic version (\"ups_saver\"). Helpful when displaying Service Levels to users. Has the same structure as the servicelevel - \"name\", \"token\", \"terms\", and \"extended_token\", or it is otherwise null."""
 
     name: Optional[str] = None
     r"""Name of the Rate's servicelevel, e.g. `International Priority` or `Standard Post`.
@@ -49,9 +45,7 @@ class ServiceLevel(BaseModel):
     """
 
     terms: Optional[str] = None
-    r"""Further clarification of the service. For FedEx, a value of `ONERATE` indicates this
-    rate is a FedEx One Rate variant of the same service level — it shares the same
-    `token` as the standard-rate object but is a separate rate with its own `amount`.
+    r"""Further clarification of the service. For FedEx, a value of `ONERATE` indicates this rate is a FedEx One Rate variant of the same service level — it shares the same `token` as the standard-rate object but is a separate rate with its own `amount`.
     Standard (non-One Rate) rates have an empty string here.
     """
 
@@ -66,13 +60,20 @@ class ServiceLevel(BaseModel):
     """
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["name", "terms", "token", "extended_token"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

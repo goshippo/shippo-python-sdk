@@ -3,7 +3,13 @@
 from __future__ import annotations
 from .servicelevel import ServiceLevel, ServiceLevelTypedDict
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
+from shippo.types.basemodel import current_filtered_dump
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -17,9 +23,7 @@ class ServiceLevelWithParentTypedDict(TypedDict):
     These names vary depending on the provider.
     """
     terms: NotRequired[str]
-    r"""Further clarification of the service. For FedEx, a value of `ONERATE` indicates this
-    rate is a FedEx One Rate variant of the same service level — it shares the same
-    `token` as the standard-rate object but is a separate rate with its own `amount`.
+    r"""Further clarification of the service. For FedEx, a value of `ONERATE` indicates this rate is a FedEx One Rate variant of the same service level — it shares the same `token` as the standard-rate object but is a separate rate with its own `amount`.
     Standard (non-One Rate) rates have an empty string here.
     """
     token: NotRequired[str]
@@ -43,9 +47,7 @@ class ServiceLevelWithParent(BaseModel):
     """
 
     terms: Optional[str] = None
-    r"""Further clarification of the service. For FedEx, a value of `ONERATE` indicates this
-    rate is a FedEx One Rate variant of the same service level — it shares the same
-    `token` as the standard-rate object but is a separate rate with its own `amount`.
+    r"""Further clarification of the service. For FedEx, a value of `ONERATE` indicates this rate is a FedEx One Rate variant of the same service level — it shares the same `token` as the standard-rate object but is a separate rate with its own `amount`.
     Standard (non-One Rate) rates have an empty string here.
     """
 
@@ -62,15 +64,22 @@ class ServiceLevelWithParent(BaseModel):
     parent_servicelevel: Optional[ServiceLevel] = None
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             ["name", "terms", "token", "extended_token", "parent_servicelevel"]
         )
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

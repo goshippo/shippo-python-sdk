@@ -4,14 +4,19 @@ from __future__ import annotations
 from .weightunitenum import WeightUnitEnum
 from datetime import datetime
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
+from shippo.types.basemodel import current_filtered_dump
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
 
 class LineItemTypedDict(TypedDict):
-    r"""Line Items, and their corresponding abstract Products and Variants, might be exposed as a separate resource
-    in the future. Currently it's a nested object within the order resource.
+    r"""Line Items, and their corresponding abstract Products and Variants, might be exposed as a separate resource in the future. Currently it's a nested object within the order resource.
 
     A line item is an individual object in an order. For example, if your order contains a t-shirt, shorts, and a jacket, each item is represented by a line item.
     """
@@ -26,10 +31,7 @@ class LineItemTypedDict(TypedDict):
     It will be displayed in the Shippo dashboard.
     """
     max_ship_time: NotRequired[datetime]
-    r"""The date and time this item needs to be fulfilled by, i.e. by when the shipping label needs to be
-    created and handed over to the carrier. This value is used by some platforms such as eBay to measure
-    a seller's handling time and performance. It will be displayed in the Shippo dashboard.
-    """
+    r"""The date and time this item needs to be fulfilled by, i.e. by when the shipping label needs to be created and handed over to the carrier. This value is used by some platforms such as eBay to measure a seller's handling time and performance. It will be displayed in the Shippo dashboard."""
     quantity: NotRequired[int]
     r"""The quantity of this item in this order."""
     sku: NotRequired[str]
@@ -44,9 +46,7 @@ class LineItemTypedDict(TypedDict):
     Currently the variant title is a free text field describing the variant.
     """
     weight: NotRequired[str]
-    r"""Total weight of this/these item(s). Instead of specifying the weight of all items,
-    you can also set the `total_weight` value of the order object.
-    """
+    r"""Total weight of this/these item(s). Instead of specifying the weight of all items, you can also set the `total_weight` value of the order object."""
     weight_unit: NotRequired[WeightUnitEnum]
     r"""The unit used for weight."""
     object_id: NotRequired[str]
@@ -54,8 +54,7 @@ class LineItemTypedDict(TypedDict):
 
 
 class LineItem(BaseModel):
-    r"""Line Items, and their corresponding abstract Products and Variants, might be exposed as a separate resource
-    in the future. Currently it's a nested object within the order resource.
+    r"""Line Items, and their corresponding abstract Products and Variants, might be exposed as a separate resource in the future. Currently it's a nested object within the order resource.
 
     A line item is an individual object in an order. For example, if your order contains a t-shirt, shorts, and a jacket, each item is represented by a line item.
     """
@@ -73,10 +72,7 @@ class LineItem(BaseModel):
     """
 
     max_ship_time: Optional[datetime] = None
-    r"""The date and time this item needs to be fulfilled by, i.e. by when the shipping label needs to be
-    created and handed over to the carrier. This value is used by some platforms such as eBay to measure
-    a seller's handling time and performance. It will be displayed in the Shippo dashboard.
-    """
+    r"""The date and time this item needs to be fulfilled by, i.e. by when the shipping label needs to be created and handed over to the carrier. This value is used by some platforms such as eBay to measure a seller's handling time and performance. It will be displayed in the Shippo dashboard."""
 
     quantity: Optional[int] = None
     r"""The quantity of this item in this order."""
@@ -97,9 +93,7 @@ class LineItem(BaseModel):
     """
 
     weight: Optional[str] = None
-    r"""Total weight of this/these item(s). Instead of specifying the weight of all items,
-    you can also set the `total_weight` value of the order object.
-    """
+    r"""Total weight of this/these item(s). Instead of specifying the weight of all items, you can also set the `total_weight` value of the order object."""
 
     weight_unit: Optional[WeightUnitEnum] = None
     r"""The unit used for weight."""
@@ -108,6 +102,9 @@ class LineItem(BaseModel):
     r"""Unique identifier of the line item object."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -125,11 +122,15 @@ class LineItem(BaseModel):
                 "object_id",
             ]
         )
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

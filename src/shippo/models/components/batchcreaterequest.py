@@ -7,7 +7,13 @@ from .batchshipmentcreaterequest import (
 )
 from .labelfiletypeenum import LabelFileTypeEnum
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
+from shippo.types.basemodel import current_filtered_dump
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -15,20 +21,16 @@ from typing_extensions import NotRequired, TypedDict
 class BatchCreateRequestTypedDict(TypedDict):
     default_carrier_account: str
     r"""ID of the Carrier Account object to use as the default for all shipments in this Batch.
-    The carrier account can be changed on a per-shipment basis by changing the carrier_account in the
-    corresponding BatchShipment object.
+    The carrier account can be changed on a per-shipment basis by changing the carrier_account in the corresponding BatchShipment object.
     """
     default_servicelevel_token: str
     r"""Token of the service level to use as the default for all shipments in this Batch.
-    The servicelevel can be changed on a per-shipment basis by changing the servicelevel_token in the
-    corresponding BatchShipment object. [Servicelevel tokens can be found here.](/shippoapi/public-api/service-levels)
+    The servicelevel can be changed on a per-shipment basis by changing the servicelevel_token in the corresponding BatchShipment object. [Servicelevel tokens can be found here.](/shippoapi/public-api/service-levels)
     """
     batch_shipments: List[BatchShipmentCreateRequestTypedDict]
     r"""Array of BatchShipment objects. The response keeps the same order as in the request array."""
     label_filetype: NotRequired[LabelFileTypeEnum]
-    r"""Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from
-    [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)
-    """
+    r"""Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)"""
     metadata: NotRequired[str]
     r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
 
@@ -36,35 +38,38 @@ class BatchCreateRequestTypedDict(TypedDict):
 class BatchCreateRequest(BaseModel):
     default_carrier_account: str
     r"""ID of the Carrier Account object to use as the default for all shipments in this Batch.
-    The carrier account can be changed on a per-shipment basis by changing the carrier_account in the
-    corresponding BatchShipment object.
+    The carrier account can be changed on a per-shipment basis by changing the carrier_account in the corresponding BatchShipment object.
     """
 
     default_servicelevel_token: str
     r"""Token of the service level to use as the default for all shipments in this Batch.
-    The servicelevel can be changed on a per-shipment basis by changing the servicelevel_token in the
-    corresponding BatchShipment object. [Servicelevel tokens can be found here.](/shippoapi/public-api/service-levels)
+    The servicelevel can be changed on a per-shipment basis by changing the servicelevel_token in the corresponding BatchShipment object. [Servicelevel tokens can be found here.](/shippoapi/public-api/service-levels)
     """
 
     batch_shipments: List[BatchShipmentCreateRequest]
     r"""Array of BatchShipment objects. The response keeps the same order as in the request array."""
 
     label_filetype: Optional[LabelFileTypeEnum] = None
-    r"""Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from
-    [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)
-    """
+    r"""Print format of the [label](https://docs.goshippo.com/docs/shipments/shippinglabelsizes/). If empty, will use the default format set from [the Shippo dashboard.](https://apps.goshippo.com/settings/labels)"""
 
     metadata: Optional[str] = None
     r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["label_filetype", "metadata"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

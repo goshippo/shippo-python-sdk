@@ -4,7 +4,13 @@ from __future__ import annotations
 from .addresscreaterequest import AddressCreateRequest, AddressCreateRequestTypedDict
 import pydantic
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
+from shippo.types.basemodel import current_filtered_dump
 from typing import List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -29,9 +35,7 @@ class ManifestCreateRequestTypedDict(TypedDict):
     """
     address_from: ManifestCreateRequestAddressFromTypedDict
     transactions: NotRequired[List[str]]
-    r"""IDs transactions to use. If you set this to null or not send this parameter,
-    Shippo will automatically assign all applicable transactions.
-    """
+    r"""IDs transactions to use. If you set this to null or not send this parameter, Shippo will automatically assign all applicable transactions."""
     async_: NotRequired[bool]
 
 
@@ -47,20 +51,25 @@ class ManifestCreateRequest(BaseModel):
     address_from: ManifestCreateRequestAddressFrom
 
     transactions: Optional[List[str]] = None
-    r"""IDs transactions to use. If you set this to null or not send this parameter,
-    Shippo will automatically assign all applicable transactions.
-    """
+    r"""IDs transactions to use. If you set this to null or not send this parameter, Shippo will automatically assign all applicable transactions."""
 
     async_: Annotated[Optional[bool], pydantic.Field(alias="async")] = None
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["transactions", "async"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

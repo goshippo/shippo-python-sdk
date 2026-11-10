@@ -30,7 +30,7 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 python:
-  version: 5.0.0-beta.2
+  version: 5.0.0-beta.3
   additionalDependencies:
     dev:
       httpretty: ==1.1.4
@@ -84,6 +84,7 @@ python:
   methodArguments: infer-optional-args
   methodTimeoutArgument: timeout-ms
   methodTimeoutUnits: milliseconds
+  modelSerializationMethods: false
   moduleName: ""
   multipartArrayFormat: legacy
   optionalDependencies: {}
@@ -91,6 +92,7 @@ python:
   packageManager: poetry
   packageName: shippo
   preApplyUnionDiscriminators: false
+  preserveUnknownFields: false
   projectUrls: {}
   pytestFilterWarnings: []
   pytestTimeout: 0

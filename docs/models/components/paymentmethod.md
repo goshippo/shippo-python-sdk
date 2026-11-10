@@ -1,7 +1,6 @@
 # PaymentMethod
 
-Secured funds include money orders, certified cheques and others (see 
-[UPS](https://www.ups.com/content/us/en/shipping/time/service/value_added/cod.html) for details). 
+Secured funds include money orders, certified cheques and others (see [UPS](https://www.ups.com/content/us/en/shipping/time/service/value_added/cod.html) for details).
 If no payment_method inputted the value defaults to "ANY".)
 
 ## Example Usage

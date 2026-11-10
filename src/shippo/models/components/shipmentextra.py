@@ -22,7 +22,13 @@ from .upsreferencefields import UPSReferenceFields, UPSReferenceFieldsTypedDict
 from enum import Enum
 import pydantic
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
+from shippo.types.basemodel import current_filtered_dump
 from typing import List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -80,9 +86,7 @@ r"""Request additional return option for return shipments (UPS and Lasership onl
 
 
 class SignatureConfirmation(str, Enum):
-    r"""Request standard or adult signature confirmation. You can alternatively request Certified Mail (USPS only)
-    or Indirect signature (FedEx only) or Carrier Confirmation (Deutsche Post only).
-    """
+    r"""Request standard or adult signature confirmation. You can alternatively request Certified Mail (USPS only) or Indirect signature (FedEx only) or Carrier Confirmation (Deutsche Post only)."""
 
     STANDARD = "STANDARD"
     ADULT = "ADULT"
@@ -101,10 +105,7 @@ class ShipmentExtraTypedDict(TypedDict):
     r"""Specify an ancillary service endorsement to provide the USPS with instructions on how to handle undeliverable-as-addressed pieces (DHL eCommerce only)."""
     appropriation_number: NotRequired[UPSReferenceFieldsTypedDict]
     authority_to_leave: NotRequired[bool]
-    r"""Request `true` to give carrier permission to leave the parcel in a safe place if no one answers the
-    door (where supported). When set to `false`, if no one is available to receive the item, the parcel
-    will not be left (*surcharges may be applicable).
-    """
+    r"""Request `true` to give carrier permission to leave the parcel in a safe place if no one answers the door (where supported). When set to `false`, if no one is available to receive the item, the parcel will not be left (*surcharges may be applicable)."""
     bill_of_lading_number: NotRequired[UPSReferenceFieldsTypedDict]
     billing: NotRequired[BillingTypedDict]
     r"""Specify billing details (UPS, FedEx, and DHL Germany only)."""
@@ -130,10 +131,7 @@ class ShipmentExtraTypedDict(TypedDict):
     customer_reference: NotRequired[CustomerReferenceTypedDict]
     r"""Specify the reference field on the label (FedEx and UPS only)."""
     dangerous_goods: NotRequired[DangerousGoodsObjectTypedDict]
-    r"""Container for specifying the presence of dangerous materials. This is specific to USPS, and if any contents
-    are provided, only certain USPS service levels will be eligible. For more information, see our
-    [guide on hazardous or dangerous materials shipping](https://docs.goshippo.com/docs/shipments/hazmat/).
-    """
+    r"""Container for specifying the presence of dangerous materials. This is specific to USPS, and if any contents are provided, only certain USPS service levels will be eligible. For more information, see our [guide on hazardous or dangerous materials shipping](https://docs.goshippo.com/docs/shipments/hazmat/)."""
     dangerous_goods_code: NotRequired[DangerousGoodsCode]
     r"""Dangerous Goods Code (DHL eCommerce only). See [Category Codes](https://api-legacy.dhlecs.com/docs/v2/appendix.html#dangerous-goods)"""
     dealer_order_number: NotRequired[UPSReferenceFieldsTypedDict]
@@ -147,8 +145,7 @@ class ShipmentExtraTypedDict(TypedDict):
     fulfillment_center: NotRequired[str]
     r"""The fulfilment center where the package originates from."""
     healthcare_handling: NotRequired[HealthcareHandlingTypedDict]
-    r"""Requests the carrier's healthcare handling program, where the carrier offers one. The rate returned keeps the carrier's
-    regular service level token.
+    r"""Requests the carrier's healthcare handling program, where the carrier offers one. The rate returned keeps the carrier's regular service level token.
 
     **Carrier-Specific Constraints:**
     | Carrier | Constraints |
@@ -156,12 +153,9 @@ class ShipmentExtraTypedDict(TypedDict):
     | Purolator | Maps to Health Care+. Domestic Express services only (Express, Express 9AM, Express 10:30AM, Express Evening). Available to Purolator-approved accounts only. |
     """
     insurance: NotRequired[InsuranceTypedDict]
-    r"""To add 3rd party insurance powered by [XCover](https://docs.goshippo.com/docs/shipments/shippinginsurance/),
-    specify `amount`, `content`, and `currency`. Alternatively, you can choose carrier provided insurance
-    by additionally specifying `provider` (UPS, FedEx and OnTrac only).
+    r"""To add 3rd party insurance powered by [XCover](https://docs.goshippo.com/docs/shipments/shippinginsurance/), specify `amount`, `content`, and `currency`. Alternatively, you can choose carrier provided insurance by additionally specifying `provider` (UPS, FedEx and OnTrac only).
 
-    If you do not want to add insurance
-    to your shipment, do not set these parameters.
+    If you do not want to add insurance to your shipment, do not set these parameters.
     """
     invoice_number: NotRequired[InvoiceNumberTypedDict]
     r"""Specify the invoice number field on the label (FedEx and UPS only)."""
@@ -229,9 +223,7 @@ class ShipmentExtraTypedDict(TypedDict):
     salesperson_number: NotRequired[UPSReferenceFieldsTypedDict]
     serial_number: NotRequired[UPSReferenceFieldsTypedDict]
     signature_confirmation: NotRequired[SignatureConfirmation]
-    r"""Request standard or adult signature confirmation. You can alternatively request Certified Mail (USPS only)
-    or Indirect signature (FedEx only) or Carrier Confirmation (Deutsche Post only).
-    """
+    r"""Request standard or adult signature confirmation. You can alternatively request Certified Mail (USPS only) or Indirect signature (FedEx only) or Carrier Confirmation (Deutsche Post only)."""
     store_number: NotRequired[UPSReferenceFieldsTypedDict]
     transaction_reference_number: NotRequired[UPSReferenceFieldsTypedDict]
     usmca_eligible: NotRequired[bool]
@@ -261,10 +253,7 @@ class ShipmentExtra(BaseModel):
     appropriation_number: Optional[UPSReferenceFields] = None
 
     authority_to_leave: Optional[bool] = None
-    r"""Request `true` to give carrier permission to leave the parcel in a safe place if no one answers the
-    door (where supported). When set to `false`, if no one is available to receive the item, the parcel
-    will not be left (*surcharges may be applicable).
-    """
+    r"""Request `true` to give carrier permission to leave the parcel in a safe place if no one answers the door (where supported). When set to `false`, if no one is available to receive the item, the parcel will not be left (*surcharges may be applicable)."""
 
     bill_of_lading_number: Optional[UPSReferenceFields] = None
 
@@ -303,10 +292,7 @@ class ShipmentExtra(BaseModel):
     r"""Specify the reference field on the label (FedEx and UPS only)."""
 
     dangerous_goods: Optional[DangerousGoodsObject] = None
-    r"""Container for specifying the presence of dangerous materials. This is specific to USPS, and if any contents
-    are provided, only certain USPS service levels will be eligible. For more information, see our
-    [guide on hazardous or dangerous materials shipping](https://docs.goshippo.com/docs/shipments/hazmat/).
-    """
+    r"""Container for specifying the presence of dangerous materials. This is specific to USPS, and if any contents are provided, only certain USPS service levels will be eligible. For more information, see our [guide on hazardous or dangerous materials shipping](https://docs.goshippo.com/docs/shipments/hazmat/)."""
 
     dangerous_goods_code: Optional[DangerousGoodsCode] = None
     r"""Dangerous Goods Code (DHL eCommerce only). See [Category Codes](https://api-legacy.dhlecs.com/docs/v2/appendix.html#dangerous-goods)"""
@@ -328,8 +314,7 @@ class ShipmentExtra(BaseModel):
     r"""The fulfilment center where the package originates from."""
 
     healthcare_handling: Optional[HealthcareHandling] = None
-    r"""Requests the carrier's healthcare handling program, where the carrier offers one. The rate returned keeps the carrier's
-    regular service level token.
+    r"""Requests the carrier's healthcare handling program, where the carrier offers one. The rate returned keeps the carrier's regular service level token.
 
     **Carrier-Specific Constraints:**
     | Carrier | Constraints |
@@ -338,12 +323,9 @@ class ShipmentExtra(BaseModel):
     """
 
     insurance: Optional[Insurance] = None
-    r"""To add 3rd party insurance powered by [XCover](https://docs.goshippo.com/docs/shipments/shippinginsurance/),
-    specify `amount`, `content`, and `currency`. Alternatively, you can choose carrier provided insurance
-    by additionally specifying `provider` (UPS, FedEx and OnTrac only).
+    r"""To add 3rd party insurance powered by [XCover](https://docs.goshippo.com/docs/shipments/shippinginsurance/), specify `amount`, `content`, and `currency`. Alternatively, you can choose carrier provided insurance by additionally specifying `provider` (UPS, FedEx and OnTrac only).
 
-    If you do not want to add insurance
-    to your shipment, do not set these parameters.
+    If you do not want to add insurance to your shipment, do not set these parameters.
     """
 
     invoice_number: Optional[InvoiceNumber] = None
@@ -435,9 +417,7 @@ class ShipmentExtra(BaseModel):
     serial_number: Optional[UPSReferenceFields] = None
 
     signature_confirmation: Optional[SignatureConfirmation] = None
-    r"""Request standard or adult signature confirmation. You can alternatively request Certified Mail (USPS only)
-    or Indirect signature (FedEx only) or Carrier Confirmation (Deutsche Post only).
-    """
+    r"""Request standard or adult signature confirmation. You can alternatively request Certified Mail (USPS only) or Indirect signature (FedEx only) or Carrier Confirmation (Deutsche Post only)."""
 
     store_number: Optional[UPSReferenceFields] = None
 
@@ -456,6 +436,9 @@ class ShipmentExtra(BaseModel):
     """
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -515,11 +498,15 @@ class ShipmentExtra(BaseModel):
                 "usmca_eligible",
             ]
         )
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

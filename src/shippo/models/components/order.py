@@ -7,7 +7,13 @@ from .ordershopappenum import OrderShopAppEnum
 from .orderstatusenum import OrderStatusEnum
 from .weightunitenum import WeightUnitEnum
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
+from shippo.types.basemodel import current_filtered_dump
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -35,9 +41,7 @@ class OrderTypedDict(TypedDict):
     order_number: NotRequired[str]
     r"""An alphanumeric identifier for the order used by the seller/buyer. This identifier doesn't need to be unique."""
     order_status: NotRequired[OrderStatusEnum]
-    r"""Current state of the order. See the [orders tutorial](https://docs.goshippo.com/docs/orders/orders/)
-    for the logic of how the status is handled.
-    """
+    r"""Current state of the order. See the [orders tutorial](https://docs.goshippo.com/docs/orders/orders/) for the logic of how the status is handled."""
     shipping_cost: NotRequired[str]
     r"""Amount paid by the buyer for shipping. This amount can be different from the price the seller will actually pay for shipping."""
     shipping_cost_currency: NotRequired[str]
@@ -98,9 +102,7 @@ class Order(BaseModel):
     r"""An alphanumeric identifier for the order used by the seller/buyer. This identifier doesn't need to be unique."""
 
     order_status: Optional[OrderStatusEnum] = None
-    r"""Current state of the order. See the [orders tutorial](https://docs.goshippo.com/docs/orders/orders/)
-    for the logic of how the status is handled.
-    """
+    r"""Current state of the order. See the [orders tutorial](https://docs.goshippo.com/docs/orders/orders/) for the logic of how the status is handled."""
 
     shipping_cost: Optional[str] = None
     r"""Amount paid by the buyer for shipping. This amount can be different from the price the seller will actually pay for shipping."""
@@ -155,6 +157,9 @@ class Order(BaseModel):
     """
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -178,11 +183,15 @@ class Order(BaseModel):
                 "transactions",
             ]
         )
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

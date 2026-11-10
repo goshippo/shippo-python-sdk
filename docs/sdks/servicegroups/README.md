@@ -2,7 +2,7 @@
 
 ## Overview
 
-A service group is a set of service levels grouped together. 
+A service group is a set of service levels grouped together.
 Rates at checkout uses services groups to present available shipping options to customers in their shopping basket.
 
 ### Available Operations
@@ -25,10 +25,11 @@ from shippo import Shippo
 
 with Shippo(
     shippo_api_version="2018-02-08",
+    shippo_account_id="<id>",
     api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
-    res = s_client.service_groups.list(request={})
+    res = s_client.service_groups.list()
 
     # Handle response
     print(res)
@@ -66,6 +67,7 @@ from shippo.models import components
 
 with Shippo(
     shippo_api_version="2018-02-08",
+    shippo_account_id="<id>",
     api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
@@ -117,6 +119,7 @@ from shippo.models import components
 
 with Shippo(
     shippo_api_version="2018-02-08",
+    shippo_account_id="<id>",
     api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
@@ -174,6 +177,7 @@ from shippo import Shippo
 
 with Shippo(
     shippo_api_version="2018-02-08",
+    shippo_account_id="<id>",
     api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 

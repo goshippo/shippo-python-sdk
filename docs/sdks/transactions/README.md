@@ -37,6 +37,7 @@ from shippo.models import components
 
 with Shippo(
     shippo_api_version="2018-02-08",
+    shippo_account_id="<id>",
     api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
@@ -83,6 +84,7 @@ from shippo.models import components
 
 with Shippo(
     shippo_api_version="2018-02-08",
+    shippo_account_id="<id>",
     api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
@@ -119,6 +121,7 @@ with Shippo(
 ## get
 
 Returns an existing transaction using an object ID.
+Each call returns a new `label_url` with a new expiration time. Use this endpoint to get a new `label_url` when the `Expires` value on the current `label_url` is in the past. Send one call for each transaction.
 
 ### Example Usage
 
@@ -129,6 +132,7 @@ from shippo import Shippo
 
 with Shippo(
     shippo_api_version="2018-02-08",
+    shippo_account_id="<id>",
     api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 

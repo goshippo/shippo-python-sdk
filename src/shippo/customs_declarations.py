@@ -10,9 +10,7 @@ from typing import Mapping, Optional, Union, cast
 
 
 class CustomsDeclarations(BaseSDK):
-    r"""Customs declarations are relevant information, including one or multiple customs items, you need to provide for
-    customs clearance for your international shipments.
-    """
+    r"""Customs declarations are relevant information, including one or multiple customs items, you need to provide for customs clearance for your international shipments."""
 
     def list(
         self,
@@ -64,6 +62,7 @@ class CustomsDeclarations(BaseSDK):
             http_headers=http_headers,
             _globals=operations.ListCustomsDeclarationsGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -189,6 +188,7 @@ class CustomsDeclarations(BaseSDK):
             http_headers=http_headers,
             _globals=operations.ListCustomsDeclarationsGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -316,6 +316,7 @@ class CustomsDeclarations(BaseSDK):
             http_headers=http_headers,
             _globals=operations.CreateCustomsDeclarationGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -448,6 +449,7 @@ class CustomsDeclarations(BaseSDK):
             http_headers=http_headers,
             _globals=operations.CreateCustomsDeclarationGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -578,6 +580,7 @@ class CustomsDeclarations(BaseSDK):
             http_headers=http_headers,
             _globals=operations.GetCustomsDeclarationGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -701,6 +704,7 @@ class CustomsDeclarations(BaseSDK):
             http_headers=http_headers,
             _globals=operations.GetCustomsDeclarationGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,

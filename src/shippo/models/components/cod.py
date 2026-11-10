@@ -3,14 +3,19 @@
 from __future__ import annotations
 from enum import Enum
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
+from shippo.types.basemodel import current_filtered_dump
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
 
 class PaymentMethod(str, Enum):
-    r"""Secured funds include money orders, certified cheques and others (see
-    [UPS](https://www.ups.com/content/us/en/shipping/time/service/value_added/cod.html) for details).
+    r"""Secured funds include money orders, certified cheques and others (see [UPS](https://www.ups.com/content/us/en/shipping/time/service/value_added/cod.html) for details).
     If no payment_method inputted the value defaults to \"ANY\".)
     """
 
@@ -27,8 +32,7 @@ class CodTypedDict(TypedDict):
     currency: NotRequired[str]
     r"""Currency for the amount to be collected. Currently only USD is supported for UPS."""
     payment_method: NotRequired[PaymentMethod]
-    r"""Secured funds include money orders, certified cheques and others (see
-    [UPS](https://www.ups.com/content/us/en/shipping/time/service/value_added/cod.html) for details).
+    r"""Secured funds include money orders, certified cheques and others (see [UPS](https://www.ups.com/content/us/en/shipping/time/service/value_added/cod.html) for details).
     If no payment_method inputted the value defaults to \"ANY\".)
     """
 
@@ -43,19 +47,25 @@ class Cod(BaseModel):
     r"""Currency for the amount to be collected. Currently only USD is supported for UPS."""
 
     payment_method: Optional[PaymentMethod] = None
-    r"""Secured funds include money orders, certified cheques and others (see
-    [UPS](https://www.ups.com/content/us/en/shipping/time/service/value_added/cod.html) for details).
+    r"""Secured funds include money orders, certified cheques and others (see [UPS](https://www.ups.com/content/us/en/shipping/time/service/value_added/cod.html) for details).
     If no payment_method inputted the value defaults to \"ANY\".)
     """
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["amount", "currency", "payment_method"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
