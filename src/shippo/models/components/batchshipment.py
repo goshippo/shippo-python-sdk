@@ -3,7 +3,13 @@
 from __future__ import annotations
 from enum import Enum
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
+from shippo.types.basemodel import current_filtered_dump
 from typing import Any, List, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -22,11 +28,9 @@ class BatchShipmentStatus(str, Enum):
 
 
 class BatchShipmentTypedDict(TypedDict):
-    r"""The batch shipment object is a wrapper around a shipment object, which include shipment-specific information
-    for batch processing.
+    r"""The batch shipment object is a wrapper around a shipment object, which include shipment-specific information for batch processing.
 
-    Note: batch shipments can only be created on the batch endpoint, either when creating a batch object or by through
-    the `/batches/{BATCH_OBJECT_ID}/add_shipments` endpoint
+    Note: batch shipments can only be created on the batch endpoint, either when creating a batch object or by through the `/batches/{BATCH_OBJECT_ID}/add_shipments` endpoint
     """
 
     object_id: str
@@ -42,13 +46,10 @@ class BatchShipmentTypedDict(TypedDict):
     carrier_account: NotRequired[str]
     r"""Object ID of the carrier account to be used for this shipment (will override batch default)"""
     metadata: NotRequired[str]
-    r"""A string of up to 100 characters that can be filled with any additional information you want
-    to attach to the object.
-    """
+    r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
     servicelevel_token: NotRequired[str]
     r"""A token that sets the shipping method for the batch, overriding the batch default.
-    Servicelevel tokens can be found [in this list](/shippoapi/public-api/service-levels)
-    or [at this endpoint](/shippoapi/public-api/carrier-accounts/listcarrieraccounts).
+    Servicelevel tokens can be found [in this list](/shippoapi/public-api/service-levels) or [at this endpoint](/shippoapi/public-api/carrier-accounts/listcarrieraccounts).
     """
     messages: NotRequired[List[Any]]
     r"""List of Shipment and Transaction error messages."""
@@ -57,11 +58,9 @@ class BatchShipmentTypedDict(TypedDict):
 
 
 class BatchShipment(BaseModel):
-    r"""The batch shipment object is a wrapper around a shipment object, which include shipment-specific information
-    for batch processing.
+    r"""The batch shipment object is a wrapper around a shipment object, which include shipment-specific information for batch processing.
 
-    Note: batch shipments can only be created on the batch endpoint, either when creating a batch object or by through
-    the `/batches/{BATCH_OBJECT_ID}/add_shipments` endpoint
+    Note: batch shipments can only be created on the batch endpoint, either when creating a batch object or by through the `/batches/{BATCH_OBJECT_ID}/add_shipments` endpoint
     """
 
     object_id: str
@@ -81,14 +80,11 @@ class BatchShipment(BaseModel):
     r"""Object ID of the carrier account to be used for this shipment (will override batch default)"""
 
     metadata: Optional[str] = None
-    r"""A string of up to 100 characters that can be filled with any additional information you want
-    to attach to the object.
-    """
+    r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
 
     servicelevel_token: Optional[str] = None
     r"""A token that sets the shipping method for the batch, overriding the batch default.
-    Servicelevel tokens can be found [in this list](/shippoapi/public-api/service-levels)
-    or [at this endpoint](/shippoapi/public-api/carrier-accounts/listcarrieraccounts).
+    Servicelevel tokens can be found [in this list](/shippoapi/public-api/service-levels) or [at this endpoint](/shippoapi/public-api/carrier-accounts/listcarrieraccounts).
     """
 
     messages: Optional[List[Any]] = None
@@ -98,6 +94,9 @@ class BatchShipment(BaseModel):
     r"""Object ID of the transaction object created for this batch shipment."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -108,11 +107,15 @@ class BatchShipment(BaseModel):
                 "transaction",
             ]
         )
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

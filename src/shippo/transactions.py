@@ -18,7 +18,7 @@ class Transactions(BaseSDK):
         request: Union[
             operations.ListTransactionsRequest,
             operations.ListTransactionsRequestTypedDict,
-        ],
+        ] = operations.ListTransactionsRequest(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -75,6 +75,7 @@ class Transactions(BaseSDK):
             http_headers=http_headers,
             _globals=operations.ListTransactionsGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -156,7 +157,7 @@ class Transactions(BaseSDK):
         request: Union[
             operations.ListTransactionsRequest,
             operations.ListTransactionsRequestTypedDict,
-        ],
+        ] = operations.ListTransactionsRequest(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -213,6 +214,7 @@ class Transactions(BaseSDK):
             http_headers=http_headers,
             _globals=operations.ListTransactionsGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -340,6 +342,7 @@ class Transactions(BaseSDK):
             http_headers=http_headers,
             _globals=operations.CreateTransactionGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -468,6 +471,7 @@ class Transactions(BaseSDK):
             http_headers=http_headers,
             _globals=operations.CreateTransactionGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -556,6 +560,7 @@ class Transactions(BaseSDK):
         r"""Retrieve a shipping label
 
         Returns an existing transaction using an object ID.
+        Each call returns a new `label_url` with a new expiration time. Use this endpoint to get a new `label_url` when the `Expires` value on the current `label_url` is in the past. Send one call for each transaction.
 
         :param transaction_id: Object ID of the transaction to update
         :param retries: Override the default retry configuration for this method
@@ -591,6 +596,7 @@ class Transactions(BaseSDK):
             http_headers=http_headers,
             _globals=operations.GetTransactionGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -676,6 +682,7 @@ class Transactions(BaseSDK):
         r"""Retrieve a shipping label
 
         Returns an existing transaction using an object ID.
+        Each call returns a new `label_url` with a new expiration time. Use this endpoint to get a new `label_url` when the `Expires` value on the current `label_url` is in the past. Send one call for each transaction.
 
         :param transaction_id: Object ID of the transaction to update
         :param retries: Override the default retry configuration for this method
@@ -711,6 +718,7 @@ class Transactions(BaseSDK):
             http_headers=http_headers,
             _globals=operations.GetTransactionGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,

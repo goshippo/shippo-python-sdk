@@ -5,7 +5,13 @@ from .objectstateenum import ObjectStateEnum
 from .weightunitenum import WeightUnitEnum
 from datetime import datetime
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
+from shippo.types.basemodel import current_filtered_dump
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -26,36 +32,19 @@ class CustomsItemTypedDict(TypedDict):
     value_amount: str
     r"""Total value of this item, i.e. quantity * value per item."""
     value_currency: str
-    r"""Currency used for value_amount. The [official ISO 4217](http://www.xe.com/iso4217.php)
-    currency codes are used, e.g.  `USD` or `EUR`.
-    """
+    r"""Currency used for value_amount. The [official ISO 4217](http://www.xe.com/iso4217.php) currency codes are used, e.g.  `USD` or `EUR`."""
     eccn_ear99: NotRequired[str]
     r"""Export Control Classification Number, required on some exports from the United States."""
     eu_exempt_category: NotRequired[bool]
-    r"""Marks the item as belonging to an EU-exempt product category. Exempt items do not need
-    product identifiers on shipments that meet the EU product identifier conditions
-    (EU destination, non-EU origin, MERCHANDISE contents, recipient not a business).
-    """
+    r"""Marks the item as belonging to an EU-exempt product category. Exempt items do not need product identifiers on shipments that meet the EU product identifier conditions (EU destination, non-EU origin, MERCHANDISE contents, recipient not a business)."""
     manufacturer_code: NotRequired[str]
-    r"""Product identifier assigned by the manufacturer. Up to 100 characters; some carriers
-    accept fewer and reject longer values at label purchase. Required together with
-    `sku_code` on every non-exempt item when the shipment meets the EU product
-    identifier conditions.
-    """
+    r"""Product identifier assigned by the manufacturer. Up to 100 characters; some carriers accept fewer and reject longer values at label purchase. Required together with `sku_code` on every non-exempt item when the shipment meets the EU product identifier conditions."""
     manufacturer_standard_code: NotRequired[str]
-    r"""Standardized product identifier such as a GTIN. Up to 100 characters. Never required,
-    but recommended for EU-bound shipments when one exists.
-    """
+    r"""Standardized product identifier such as a GTIN. Up to 100 characters. Never required, but recommended for EU-bound shipments when one exists."""
     metadata: NotRequired[str]
-    r"""A string of up to 100 characters that can be filled with any additional information you
-    want to attach to the object.
-    """
+    r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
     sku_code: NotRequired[str]
-    r"""SKU or merchant-assigned product code of the item. Up to 100 characters; some carriers
-    accept fewer and reject longer values at label purchase. Required together with
-    `manufacturer_code` on every non-exempt item when the shipment meets the EU product
-    identifier conditions; some carriers also use it outside the EU.
-    """
+    r"""SKU or merchant-assigned product code of the item. Up to 100 characters; some carriers accept fewer and reject longer values at label purchase. Required together with `manufacturer_code` on every non-exempt item when the shipment meets the EU product identifier conditions; some carriers also use it outside the EU."""
     hs_code: NotRequired[str]
     r"""HS code of the item, which is required by some carriers. If `tariff_number` is not provided, `hs_code` will be used.  If both `hs_code` and `tariff_number` are provided, `tariff_number` will be used. 50 character limit."""
     tariff_number: NotRequired[str]
@@ -96,42 +85,25 @@ class CustomsItem(BaseModel):
     r"""Total value of this item, i.e. quantity * value per item."""
 
     value_currency: str
-    r"""Currency used for value_amount. The [official ISO 4217](http://www.xe.com/iso4217.php)
-    currency codes are used, e.g.  `USD` or `EUR`.
-    """
+    r"""Currency used for value_amount. The [official ISO 4217](http://www.xe.com/iso4217.php) currency codes are used, e.g.  `USD` or `EUR`."""
 
     eccn_ear99: Optional[str] = None
     r"""Export Control Classification Number, required on some exports from the United States."""
 
     eu_exempt_category: Optional[bool] = False
-    r"""Marks the item as belonging to an EU-exempt product category. Exempt items do not need
-    product identifiers on shipments that meet the EU product identifier conditions
-    (EU destination, non-EU origin, MERCHANDISE contents, recipient not a business).
-    """
+    r"""Marks the item as belonging to an EU-exempt product category. Exempt items do not need product identifiers on shipments that meet the EU product identifier conditions (EU destination, non-EU origin, MERCHANDISE contents, recipient not a business)."""
 
     manufacturer_code: Optional[str] = None
-    r"""Product identifier assigned by the manufacturer. Up to 100 characters; some carriers
-    accept fewer and reject longer values at label purchase. Required together with
-    `sku_code` on every non-exempt item when the shipment meets the EU product
-    identifier conditions.
-    """
+    r"""Product identifier assigned by the manufacturer. Up to 100 characters; some carriers accept fewer and reject longer values at label purchase. Required together with `sku_code` on every non-exempt item when the shipment meets the EU product identifier conditions."""
 
     manufacturer_standard_code: Optional[str] = None
-    r"""Standardized product identifier such as a GTIN. Up to 100 characters. Never required,
-    but recommended for EU-bound shipments when one exists.
-    """
+    r"""Standardized product identifier such as a GTIN. Up to 100 characters. Never required, but recommended for EU-bound shipments when one exists."""
 
     metadata: Optional[str] = None
-    r"""A string of up to 100 characters that can be filled with any additional information you
-    want to attach to the object.
-    """
+    r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
 
     sku_code: Optional[str] = None
-    r"""SKU or merchant-assigned product code of the item. Up to 100 characters; some carriers
-    accept fewer and reject longer values at label purchase. Required together with
-    `manufacturer_code` on every non-exempt item when the shipment meets the EU product
-    identifier conditions; some carriers also use it outside the EU.
-    """
+    r"""SKU or merchant-assigned product code of the item. Up to 100 characters; some carriers accept fewer and reject longer values at label purchase. Required together with `manufacturer_code` on every non-exempt item when the shipment meets the EU product identifier conditions; some carriers also use it outside the EU."""
 
     hs_code: Optional[str] = None
     r"""HS code of the item, which is required by some carriers. If `tariff_number` is not provided, `hs_code` will be used.  If both `hs_code` and `tariff_number` are provided, `tariff_number` will be used. 50 character limit."""
@@ -158,6 +130,9 @@ class CustomsItem(BaseModel):
     r"""Indicates whether the object has been created in test mode."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -177,11 +152,15 @@ class CustomsItem(BaseModel):
                 "test",
             ]
         )
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

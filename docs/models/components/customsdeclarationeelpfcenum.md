@@ -1,7 +1,6 @@
 # CustomsDeclarationEelPfcEnum
 
-EEL / PFC type of the shipment. For most shipments from the US to CA, `NOEEI_30_36` is applicable; for most 
-other shipments from the US, `NOEEI_30_37_a` is applicable.
+EEL / PFC type of the shipment. For most shipments from the US to CA, `NOEEI_30_36` is applicable; for most other shipments from the US, `NOEEI_30_37_a` is applicable.
 Allowed values available [here](/shippoapi/public-api/customs-declaration-eelpfc)
 
 ## Example Usage

@@ -10,7 +10,13 @@ from .shipmentextra import ShipmentExtra, ShipmentExtraTypedDict
 from datetime import datetime
 from enum import Enum
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
+from shippo.types.basemodel import current_filtered_dump
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -39,8 +45,7 @@ class ShipmentTypedDict(TypedDict):
     r"""[Address](/shippoapi/public-api/addresses) object of the recipient / buyer. Will be returned expanded by default."""
     carrier_accounts: List[str]
     r"""An array of object_ids of the carrier account objects to be used for getting shipping rates for this shipment.
-    If no carrier account object_ids are set in this field, Shippo will attempt to generate rates using all the
-    carrier accounts that have the `active` field set.
+    If no carrier account object_ids are set in this field, Shippo will attempt to generate rates using all the carrier accounts that have the `active` field set.
     """
     messages: List[ResponseMessageTypedDict]
     object_created: datetime
@@ -54,10 +59,7 @@ class ShipmentTypedDict(TypedDict):
     parcels: List[ParcelTypedDict]
     r"""List of Parcel objects to be shipped."""
     rates: List[RateTypedDict]
-    r"""An array with all available rates. If `async` has been set to `false` in the request,
-    this will be populated with all available rates in the response. Otherwise rates will be created
-    asynchronously and this array will initially be empty.
-    """
+    r"""An array with all available rates. If `async` has been set to `false` in the request, this will be populated with all available rates in the response. Otherwise rates will be created asynchronously and this array will initially be empty."""
     status: ShipmentStatus
     r"""`Waiting` shipments have been successfully submitted but not yet been processed.
     `Queued` shipments are currently being processed.
@@ -68,8 +70,7 @@ class ShipmentTypedDict(TypedDict):
     r"""An object holding optional extra services to be requested."""
     shipment_date: NotRequired[str]
     r"""Date the shipment will be tendered to the carrier. Must be in the format `2014-01-18T00:35:03.463Z`.
-    Defaults to current date and time if no value is provided. Please note that some carriers require this value to
-    be in the future, on a working day, or similar.
+    Defaults to current date and time if no value is provided. Please note that some carriers require this value to be in the future, on a working day, or similar.
     """
     address_return: NotRequired[AddressTypedDict]
     r"""ID of the Address object where the shipment will be sent back to if it is not delivered (Only available for UPS, USPS, and Fedex shipments).
@@ -95,8 +96,7 @@ class Shipment(BaseModel):
 
     carrier_accounts: List[str]
     r"""An array of object_ids of the carrier account objects to be used for getting shipping rates for this shipment.
-    If no carrier account object_ids are set in this field, Shippo will attempt to generate rates using all the
-    carrier accounts that have the `active` field set.
+    If no carrier account object_ids are set in this field, Shippo will attempt to generate rates using all the carrier accounts that have the `active` field set.
     """
 
     messages: List[ResponseMessage]
@@ -117,10 +117,7 @@ class Shipment(BaseModel):
     r"""List of Parcel objects to be shipped."""
 
     rates: List[Rate]
-    r"""An array with all available rates. If `async` has been set to `false` in the request,
-    this will be populated with all available rates in the response. Otherwise rates will be created
-    asynchronously and this array will initially be empty.
-    """
+    r"""An array with all available rates. If `async` has been set to `false` in the request, this will be populated with all available rates in the response. Otherwise rates will be created asynchronously and this array will initially be empty."""
 
     status: ShipmentStatus
     r"""`Waiting` shipments have been successfully submitted but not yet been processed.
@@ -134,8 +131,7 @@ class Shipment(BaseModel):
 
     shipment_date: Optional[str] = None
     r"""Date the shipment will be tendered to the carrier. Must be in the format `2014-01-18T00:35:03.463Z`.
-    Defaults to current date and time if no value is provided. Please note that some carriers require this value to
-    be in the future, on a working day, or similar.
+    Defaults to current date and time if no value is provided. Please note that some carriers require this value to be in the future, on a working day, or similar.
     """
 
     address_return: Optional[Address] = None
@@ -150,15 +146,22 @@ class Shipment(BaseModel):
     r"""Indicates whether the object has been created in test mode."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             ["extra", "shipment_date", "address_return", "customs_declaration", "test"]
         )
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

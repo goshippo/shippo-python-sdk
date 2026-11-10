@@ -49,15 +49,11 @@ class Shippo(BaseSDK):
     carrier_accounts: "CarrierAccounts"
     r"""Carriers are the companies who deliver your package. Shippo uses Carrier account objects as credentials to retrieve shipping rates and purchase labels from shipping Carriers."""
     customs_declarations: "CustomsDeclarations"
-    r"""Customs declarations are relevant information, including one or multiple customs items, you need to provide for
-    customs clearance for your international shipments.
-    """
+    r"""Customs declarations are relevant information, including one or multiple customs items, you need to provide for customs clearance for your international shipments."""
     customs_items: "CustomsItems"
     r"""Customs declarations are relevant information, including one or multiple customs items, you need to provide for customs clearance for your international shipments."""
     embedded_authorization: "EmbeddedAuthorization"
-    r"""Mint short-lived JSON Web Tokens (JWTs) for client-side applications, so you never ship a
-    long-lived API token to the browser. Authenticate the request with a Shippo API token or an
-    OAuth bearer token, then pass the returned token as `Authorization: JWT <JWT_TOKEN>`.
+    r"""Mint short-lived JSON Web Tokens (JWTs) for client-side applications, so you never ship a long-lived API token to the browser. Authenticate the request with a Shippo API token or an OAuth bearer token, then pass the returned token as `Authorization: JWT <JWT_TOKEN>`.
     See our [Authentication using JWT guide](https://docs.goshippo.com/docs/guides_general/authentication_using_jwt/) for details.
     """
     rates_at_checkout: "RatesAtCheckout"
@@ -113,12 +109,9 @@ class Shippo(BaseSDK):
     transactions: "Transactions"
     r"""A transaction is the purchase of a shipping label from a shipping provider for a specific service. You can print purchased labels and used them to ship a parcel with a carrier, such as USPS or FedEx."""
     user_parcel_templates: "UserParcelTemplates"
-    r"""A user parcel template represents a package used for shipping that has preset dimensions and attributes defined
-    by you. They are useful for capturing attributes of parcel-types you frequently use for shipping, allowing
-    them to be defined once and then used for many shipments. These parcel templates can also be used for live rates.
+    r"""A user parcel template represents a package used for shipping that has preset dimensions and attributes defined by you. They are useful for capturing attributes of parcel-types you frequently use for shipping, allowing them to be defined once and then used for many shipments. These parcel templates can also be used for live rates.
 
-    User parcel templates can also be created using a carrier parcel template, where the dimensions will be copied from
-    the carrier presets, but the weight can be configured by you.
+    User parcel templates can also be created using a carrier parcel template, where the dimensions will be copied from the carrier presets, but the weight can be configured by you.
     """
     shippo_accounts: "ShippoAccounts"
     r"""Shippo Accounts are used by Shippo Platform Accounts to create and manage Managed Shippo Accounts.
@@ -166,6 +159,7 @@ class Shippo(BaseSDK):
             Union[Optional[str], Callable[[], Optional[str]]]
         ] = None,
         shippo_api_version: Optional[str] = None,
+        shippo_account_id: Optional[str] = None,
         server_idx: Optional[int] = None,
         url_params: Optional[Dict[str, str]] = None,
         server_url: Optional[str] = None,
@@ -179,6 +173,7 @@ class Shippo(BaseSDK):
 
         :param api_key_header: The api_key_header required for authentication
         :param shippo_api_version: Configures the shippo_api_version parameter for all supported operations
+        :param shippo_account_id: Configures the shippo_account_id parameter for all supported operations
         :param server_idx: The index of the server to use for all methods
         :param server_url: The server URL to use for all methods
         :param url_params: Parameters to optionally template the server URL with
@@ -224,6 +219,9 @@ class Shippo(BaseSDK):
         _globals = internal.Globals(
             shippo_api_version=utils.get_global_from_env(
                 shippo_api_version, "SHIPPO_API_VERSION", str
+            ),
+            shippo_account_id=utils.get_global_from_env(
+                shippo_account_id, "SHIPPO_ACCOUNT_ID", str
             ),
         )
 

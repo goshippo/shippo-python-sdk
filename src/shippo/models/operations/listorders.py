@@ -7,7 +7,13 @@ from shippo.models.components import (
     ordershopappenum as components_ordershopappenum,
     orderstatusenum as components_orderstatusenum,
 )
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
+from shippo.types.basemodel import current_filtered_dump
 from shippo.utils import FieldMetadata, HeaderMetadata, QueryParamMetadata
 from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
@@ -16,6 +22,8 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class ListOrdersGlobalsTypedDict(TypedDict):
     shippo_api_version: NotRequired[str]
     r"""Optional string used to pick a non-default API version to use. See our [API version](https://docs.goshippo.com/docs/api_concepts/apiversioning/) guide."""
+    shippo_account_id: NotRequired[str]
+    r"""Optional. The object ID of a Managed Shippo Account. Platform accounts set this to make the request on behalf of one of their managed accounts. See the [Platform accounts guide](https://docs.goshippo.com/platform-accounts/platform-using-accounts)."""
 
 
 class ListOrdersGlobals(BaseModel):
@@ -26,14 +34,28 @@ class ListOrdersGlobals(BaseModel):
     ] = "2018-02-08"
     r"""Optional string used to pick a non-default API version to use. See our [API version](https://docs.goshippo.com/docs/api_concepts/apiversioning/) guide."""
 
+    shippo_account_id: Annotated[
+        Optional[str],
+        pydantic.Field(alias="SHIPPO-ACCOUNT-ID"),
+        FieldMetadata(header=HeaderMetadata(style="simple", explode=False)),
+    ] = None
+    r"""Optional. The object ID of a Managed Shippo Account. Platform accounts set this to make the request on behalf of one of their managed accounts. See the [Platform accounts guide](https://docs.goshippo.com/platform-accounts/platform-using-accounts)."""
+
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
-        optional_fields = set(["SHIPPO-API-VERSION"])
+        optional_fields = set(["SHIPPO-API-VERSION", "SHIPPO-ACCOUNT-ID"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
@@ -53,13 +75,9 @@ class ListOrdersRequestTypedDict(TypedDict):
     shop_app: NotRequired[components_ordershopappenum.OrderShopAppEnum]
     r"""Filter orders by shop app"""
     start_date: NotRequired[str]
-    r"""Filter orders created after the input date and time (ISO 8601 UTC format).  This is based on the
-    `placed_at` field, meaning when the order has been placed, not when the order object was created.
-    """
+    r"""Filter orders created after the input date and time (ISO 8601 UTC format). This is based on the `placed_at` field, meaning when the order has been placed, not when the order object was created."""
     end_date: NotRequired[str]
-    r"""Filter orders created before the input date and time (ISO 8601 UTC format).  This is based on the
-    `placed_at` field, meaning when the order has been placed, not when the order object was created.
-    """
+    r"""Filter orders created before the input date and time (ISO 8601 UTC format). This is based on the `placed_at` field, meaning when the order has been placed, not when the order object was created."""
 
 
 class ListOrdersRequest(BaseModel):
@@ -92,28 +110,31 @@ class ListOrdersRequest(BaseModel):
         Optional[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Filter orders created after the input date and time (ISO 8601 UTC format).  This is based on the
-    `placed_at` field, meaning when the order has been placed, not when the order object was created.
-    """
+    r"""Filter orders created after the input date and time (ISO 8601 UTC format). This is based on the `placed_at` field, meaning when the order has been placed, not when the order object was created."""
 
     end_date: Annotated[
         Optional[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Filter orders created before the input date and time (ISO 8601 UTC format).  This is based on the
-    `placed_at` field, meaning when the order has been placed, not when the order object was created.
-    """
+    r"""Filter orders created before the input date and time (ISO 8601 UTC format). This is based on the `placed_at` field, meaning when the order has been placed, not when the order object was created."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             ["page", "results", "order_status[]", "shop_app", "start_date", "end_date"]
         )
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

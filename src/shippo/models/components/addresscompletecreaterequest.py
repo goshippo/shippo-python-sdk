@@ -3,7 +3,13 @@
 from __future__ import annotations
 import pydantic
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
+from shippo.types.basemodel import current_filtered_dump
 from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
@@ -35,8 +41,7 @@ class AddressCompleteCreateRequestTypedDict(TypedDict):
     r"""**required for purchase**
 
     Name of a city. When creating a Quote Address, sending a city is optional but will yield more accurate Rates.
-    Please bear in mind that city names may be ambiguous (there are 34 Springfields in the US). Pass in a state
-    or a ZIP code (see below), if known, it will yield more accurate results.
+    Please bear in mind that city names may be ambiguous (there are 34 Springfields in the US). Pass in a state or a ZIP code (see below), if known, to get more accurate results.
 
     **Carrier-Specific Constraints:**
     | Carrier | Constraints |
@@ -46,9 +51,7 @@ class AddressCompleteCreateRequestTypedDict(TypedDict):
     state: str
     r"""**required for purchase for some countries**
 
-    State/Province values are required for shipments from/to the US, AU, and CA. UPS requires province for some
-    countries (i.e Ireland). To receive more accurate quotes, passing this field is recommended. Most carriers
-    only accept two or three character state abbreviations.
+    State/Province values are required for shipments from/to the US, AU, and CA. UPS requires province for some countries (i.e. Ireland). To receive more accurate quotes, passing this field is recommended. Most carriers only accept two or three character state abbreviations.
 
     **Carrier-Specific Constraints:**
     | Carrier | Constraints |
@@ -58,8 +61,7 @@ class AddressCompleteCreateRequestTypedDict(TypedDict):
     zip: str
     r"""**required for purchase**
 
-    Postal code of an Address. When creating a Quote Addresses, sending a ZIP is optional but will yield more
-    accurate Rates.
+    Postal code of an Address. When creating a Quote Address, sending a ZIP is optional but will yield more accurate Rates.
 
     **Carrier-Specific Constraints:**
     | Carrier | Constraints |
@@ -102,8 +104,7 @@ class AddressCompleteCreateRequestTypedDict(TypedDict):
     This field can be included in street1 for all carriers except for DHL Germany.
     """
     phone: NotRequired[str]
-    r"""Addresses containing a phone number allow carriers to call the recipient when delivering the Parcel. This
-    increases the probability of delivery and helps to avoid accessorial charges after a Parcel has been shipped.
+    r"""Addresses containing a phone number allow carriers to call the recipient when delivering the Parcel. This increases the probability of delivery and helps to avoid accessorial charges after a Parcel has been shipped.
 
     **Carrier-Specific Constraints:**
     | Carrier | Constraints |
@@ -122,9 +123,7 @@ class AddressCompleteCreateRequestTypedDict(TypedDict):
     """
     is_residential: NotRequired[bool]
     metadata: NotRequired[str]
-    r"""A string of up to 100 characters that can be filled with any additional information you want
-    to attach to the object.
-    """
+    r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
     validate_: NotRequired[bool]
 
 
@@ -157,8 +156,7 @@ class AddressCompleteCreateRequest(BaseModel):
     r"""**required for purchase**
 
     Name of a city. When creating a Quote Address, sending a city is optional but will yield more accurate Rates.
-    Please bear in mind that city names may be ambiguous (there are 34 Springfields in the US). Pass in a state
-    or a ZIP code (see below), if known, it will yield more accurate results.
+    Please bear in mind that city names may be ambiguous (there are 34 Springfields in the US). Pass in a state or a ZIP code (see below), if known, to get more accurate results.
 
     **Carrier-Specific Constraints:**
     | Carrier | Constraints |
@@ -169,9 +167,7 @@ class AddressCompleteCreateRequest(BaseModel):
     state: str
     r"""**required for purchase for some countries**
 
-    State/Province values are required for shipments from/to the US, AU, and CA. UPS requires province for some
-    countries (i.e Ireland). To receive more accurate quotes, passing this field is recommended. Most carriers
-    only accept two or three character state abbreviations.
+    State/Province values are required for shipments from/to the US, AU, and CA. UPS requires province for some countries (i.e. Ireland). To receive more accurate quotes, passing this field is recommended. Most carriers only accept two or three character state abbreviations.
 
     **Carrier-Specific Constraints:**
     | Carrier | Constraints |
@@ -182,8 +178,7 @@ class AddressCompleteCreateRequest(BaseModel):
     zip: str
     r"""**required for purchase**
 
-    Postal code of an Address. When creating a Quote Addresses, sending a ZIP is optional but will yield more
-    accurate Rates.
+    Postal code of an Address. When creating a Quote Address, sending a ZIP is optional but will yield more accurate Rates.
 
     **Carrier-Specific Constraints:**
     | Carrier | Constraints |
@@ -232,8 +227,7 @@ class AddressCompleteCreateRequest(BaseModel):
     """
 
     phone: Optional[str] = None
-    r"""Addresses containing a phone number allow carriers to call the recipient when delivering the Parcel. This
-    increases the probability of delivery and helps to avoid accessorial charges after a Parcel has been shipped.
+    r"""Addresses containing a phone number allow carriers to call the recipient when delivering the Parcel. This increases the probability of delivery and helps to avoid accessorial charges after a Parcel has been shipped.
 
     **Carrier-Specific Constraints:**
     | Carrier | Constraints |
@@ -255,13 +249,14 @@ class AddressCompleteCreateRequest(BaseModel):
     is_residential: Optional[bool] = None
 
     metadata: Optional[str] = None
-    r"""A string of up to 100 characters that can be filled with any additional information you want
-    to attach to the object.
-    """
+    r"""A string of up to 100 characters that can be filled with any additional information you want to attach to the object."""
 
     validate_: Annotated[Optional[bool], pydantic.Field(alias="validate")] = None
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -276,11 +271,15 @@ class AddressCompleteCreateRequest(BaseModel):
                 "validate",
             ]
         )
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

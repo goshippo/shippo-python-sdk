@@ -540,6 +540,10 @@ if TYPE_CHECKING:
         UPSConnectExistingOwnAccountParameters,
         UPSConnectExistingOwnAccountParametersTypedDict,
     )
+    from .upsconnectexistingownaccountstreamlinedparameters import (
+        UPSConnectExistingOwnAccountStreamlinedParameters,
+        UPSConnectExistingOwnAccountStreamlinedParametersTypedDict,
+    )
     from .upsreferencefields import UPSReferenceFields, UPSReferenceFieldsTypedDict
     from .userparceltemplate import UserParcelTemplate, UserParcelTemplateTypedDict
     from .userparceltemplatecreaterequest import (
@@ -990,6 +994,8 @@ __all__ = [
     "TransactionTypedDict",
     "UPSConnectExistingOwnAccountParameters",
     "UPSConnectExistingOwnAccountParametersTypedDict",
+    "UPSConnectExistingOwnAccountStreamlinedParameters",
+    "UPSConnectExistingOwnAccountStreamlinedParametersTypedDict",
     "UPSReferenceFields",
     "UPSReferenceFieldsTypedDict",
     "UserParcelTemplate",
@@ -1437,6 +1443,8 @@ _dynamic_imports: dict[str, str] = {
     "TransactionStatusEnum": ".transactionstatusenum",
     "UPSConnectExistingOwnAccountParameters": ".upsconnectexistingownaccountparameters",
     "UPSConnectExistingOwnAccountParametersTypedDict": ".upsconnectexistingownaccountparameters",
+    "UPSConnectExistingOwnAccountStreamlinedParameters": ".upsconnectexistingownaccountstreamlinedparameters",
+    "UPSConnectExistingOwnAccountStreamlinedParametersTypedDict": ".upsconnectexistingownaccountstreamlinedparameters",
     "UPSReferenceFields": ".upsreferencefields",
     "UPSReferenceFieldsTypedDict": ".upsreferencefields",
     "UserParcelTemplate": ".userparceltemplate",

@@ -3,7 +3,13 @@
 from __future__ import annotations
 from enum import Enum
 from pydantic import model_serializer
-from shippo.types import BaseModel, UNSET_SENTINEL
+from shippo.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
+from shippo.types.basemodel import current_filtered_dump
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -17,12 +23,9 @@ class InsuranceProvider(str, Enum):
 
 
 class InsuranceTypedDict(TypedDict):
-    r"""To add 3rd party insurance powered by [XCover](https://docs.goshippo.com/docs/shipments/shippinginsurance/),
-    specify `amount`, `content`, and `currency`. Alternatively, you can choose carrier provided insurance
-    by additionally specifying `provider` (UPS, FedEx and OnTrac only).
+    r"""To add 3rd party insurance powered by [XCover](https://docs.goshippo.com/docs/shipments/shippinginsurance/), specify `amount`, `content`, and `currency`. Alternatively, you can choose carrier provided insurance by additionally specifying `provider` (UPS, FedEx and OnTrac only).
 
-    If you do not want to add insurance
-    to your shipment, do not set these parameters.
+    If you do not want to add insurance to your shipment, do not set these parameters.
     """
 
     amount: NotRequired[str]
@@ -38,12 +41,9 @@ class InsuranceTypedDict(TypedDict):
 
 
 class Insurance(BaseModel):
-    r"""To add 3rd party insurance powered by [XCover](https://docs.goshippo.com/docs/shipments/shippinginsurance/),
-    specify `amount`, `content`, and `currency`. Alternatively, you can choose carrier provided insurance
-    by additionally specifying `provider` (UPS, FedEx and OnTrac only).
+    r"""To add 3rd party insurance powered by [XCover](https://docs.goshippo.com/docs/shipments/shippinginsurance/), specify `amount`, `content`, and `currency`. Alternatively, you can choose carrier provided insurance by additionally specifying `provider` (UPS, FedEx and OnTrac only).
 
-    If you do not want to add insurance
-    to your shipment, do not set these parameters.
+    If you do not want to add insurance to your shipment, do not set these parameters.
     """
 
     amount: Optional[str] = None
@@ -61,13 +61,20 @@ class Insurance(BaseModel):
     r"""To have insurance cover provided by a carrier directly instead of Shippo's provider (XCover), set `provider` to `FEDEX`, `UPS`, or `ONTRAC`."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["amount", "content", "currency", "provider"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

@@ -10,12 +10,9 @@ from typing import Mapping, Optional, Union, cast
 
 
 class UserParcelTemplates(BaseSDK):
-    r"""A user parcel template represents a package used for shipping that has preset dimensions and attributes defined
-    by you. They are useful for capturing attributes of parcel-types you frequently use for shipping, allowing
-    them to be defined once and then used for many shipments. These parcel templates can also be used for live rates.
+    r"""A user parcel template represents a package used for shipping that has preset dimensions and attributes defined by you. They are useful for capturing attributes of parcel-types you frequently use for shipping, allowing them to be defined once and then used for many shipments. These parcel templates can also be used for live rates.
 
-    User parcel templates can also be created using a carrier parcel template, where the dimensions will be copied from
-    the carrier presets, but the weight can be configured by you.
+    User parcel templates can also be created using a carrier parcel template, where the dimensions will be copied from the carrier presets, but the weight can be configured by you.
     """
 
     def list(
@@ -24,7 +21,7 @@ class UserParcelTemplates(BaseSDK):
         request: Union[
             operations.ListUserParcelTemplatesRequest,
             operations.ListUserParcelTemplatesRequestTypedDict,
-        ],
+        ] = operations.ListUserParcelTemplatesRequest(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -70,6 +67,7 @@ class UserParcelTemplates(BaseSDK):
             http_headers=http_headers,
             _globals=operations.ListUserParcelTemplatesGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -149,7 +147,7 @@ class UserParcelTemplates(BaseSDK):
         request: Union[
             operations.ListUserParcelTemplatesRequest,
             operations.ListUserParcelTemplatesRequestTypedDict,
-        ],
+        ] = operations.ListUserParcelTemplatesRequest(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -195,6 +193,7 @@ class UserParcelTemplates(BaseSDK):
             http_headers=http_headers,
             _globals=operations.ListUserParcelTemplatesGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -284,13 +283,7 @@ class UserParcelTemplates(BaseSDK):
 
         Creates a new user parcel template.
 
-        You can choose to create a
-        parcel template using a preset carrier template as a starting point, or
-        you can create an entirely custom one. To use a preset carrier template,
-        pass in a unique template token from [this list](/shippoapi/public-api/parcel-templates)
-        plus the weight fields (**weight** and **weight_unit**). Otherwise, omit
-        the template field and pass the other fields, for the weight, length, height,
-        and depth, as well as their units.\"
+        You can choose to create a parcel template using a preset carrier template as a starting point, or you can create an entirely custom one. To use a preset carrier template, pass in a unique template token from [this list](/shippoapi/public-api/parcel-templates) plus the weight fields (**weight** and **weight_unit**). Otherwise, omit the template field and pass the other fields, for the weight, length, height, and depth, as well as their units.\"
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -328,6 +321,7 @@ class UserParcelTemplates(BaseSDK):
             http_headers=http_headers,
             _globals=operations.CreateUserParcelTemplateGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -424,13 +418,7 @@ class UserParcelTemplates(BaseSDK):
 
         Creates a new user parcel template.
 
-        You can choose to create a
-        parcel template using a preset carrier template as a starting point, or
-        you can create an entirely custom one. To use a preset carrier template,
-        pass in a unique template token from [this list](/shippoapi/public-api/parcel-templates)
-        plus the weight fields (**weight** and **weight_unit**). Otherwise, omit
-        the template field and pass the other fields, for the weight, length, height,
-        and depth, as well as their units.\"
+        You can choose to create a parcel template using a preset carrier template as a starting point, or you can create an entirely custom one. To use a preset carrier template, pass in a unique template token from [this list](/shippoapi/public-api/parcel-templates) plus the weight fields (**weight** and **weight_unit**). Otherwise, omit the template field and pass the other fields, for the weight, length, height, and depth, as well as their units.\"
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -468,6 +456,7 @@ class UserParcelTemplates(BaseSDK):
             http_headers=http_headers,
             _globals=operations.CreateUserParcelTemplateGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -595,6 +584,7 @@ class UserParcelTemplates(BaseSDK):
             http_headers=http_headers,
             _globals=operations.DeleteUserParcelTemplateGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -715,6 +705,7 @@ class UserParcelTemplates(BaseSDK):
             http_headers=http_headers,
             _globals=operations.DeleteUserParcelTemplateGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -799,8 +790,7 @@ class UserParcelTemplates(BaseSDK):
     ) -> components.UserParcelTemplate:
         r"""Retrieves a user parcel template
 
-        Returns the parcel template information for a specific user parcel
-        template, identified by the object ID.
+        Returns the parcel template information for a specific user parcel template, identified by the object ID.
 
         :param user_parcel_template_object_id: Object ID of the user parcel template
         :param retries: Override the default retry configuration for this method
@@ -836,6 +826,7 @@ class UserParcelTemplates(BaseSDK):
             http_headers=http_headers,
             _globals=operations.GetUserParcelTemplateGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -920,8 +911,7 @@ class UserParcelTemplates(BaseSDK):
     ) -> components.UserParcelTemplate:
         r"""Retrieves a user parcel template
 
-        Returns the parcel template information for a specific user parcel
-        template, identified by the object ID.
+        Returns the parcel template information for a specific user parcel template, identified by the object ID.
 
         :param user_parcel_template_object_id: Object ID of the user parcel template
         :param retries: Override the default retry configuration for this method
@@ -957,6 +947,7 @@ class UserParcelTemplates(BaseSDK):
             http_headers=http_headers,
             _globals=operations.GetUserParcelTemplateGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -1088,6 +1079,7 @@ class UserParcelTemplates(BaseSDK):
             http_headers=http_headers,
             _globals=operations.UpdateUserParcelTemplateGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -1228,6 +1220,7 @@ class UserParcelTemplates(BaseSDK):
             http_headers=http_headers,
             _globals=operations.UpdateUserParcelTemplateGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(

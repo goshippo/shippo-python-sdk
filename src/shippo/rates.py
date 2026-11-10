@@ -59,6 +59,7 @@ class Rates(BaseSDK):
             http_headers=http_headers,
             _globals=operations.GetRateGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -179,6 +180,7 @@ class Rates(BaseSDK):
             http_headers=http_headers,
             _globals=operations.GetRateGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -305,6 +307,7 @@ class Rates(BaseSDK):
             http_headers=http_headers,
             _globals=operations.ListShipmentRatesGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -431,6 +434,7 @@ class Rates(BaseSDK):
             http_headers=http_headers,
             _globals=operations.ListShipmentRatesGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -564,6 +568,7 @@ class Rates(BaseSDK):
             http_headers=http_headers,
             _globals=operations.ListShipmentRatesByCurrencyCodeGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -692,6 +697,7 @@ class Rates(BaseSDK):
             http_headers=http_headers,
             _globals=operations.ListShipmentRatesByCurrencyCodeGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,

@@ -23,6 +23,7 @@ from shippo import Shippo
 
 with Shippo(
     shippo_api_version="2018-02-08",
+    shippo_account_id="<id>",
     api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
@@ -65,6 +66,7 @@ from shippo.models import components
 
 with Shippo(
     shippo_api_version="2018-02-08",
+    shippo_account_id="<id>",
     api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 
@@ -118,6 +120,7 @@ from shippo import Shippo
 
 with Shippo(
     shippo_api_version="2018-02-08",
+    shippo_account_id="<id>",
     api_key_header="<YOUR_API_KEY_HERE>",
 ) as s_client:
 

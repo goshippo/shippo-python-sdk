@@ -61,6 +61,7 @@ class Refunds(BaseSDK):
             http_headers=http_headers,
             _globals=operations.CreateRefundGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -186,6 +187,7 @@ class Refunds(BaseSDK):
             http_headers=http_headers,
             _globals=operations.CreateRefundGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
@@ -267,7 +269,7 @@ class Refunds(BaseSDK):
         *,
         request: Union[
             operations.ListRefundsRequest, operations.ListRefundsRequestTypedDict
-        ],
+        ] = operations.ListRefundsRequest(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -311,6 +313,7 @@ class Refunds(BaseSDK):
             http_headers=http_headers,
             _globals=operations.ListRefundsGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -389,7 +392,7 @@ class Refunds(BaseSDK):
         *,
         request: Union[
             operations.ListRefundsRequest, operations.ListRefundsRequestTypedDict
-        ],
+        ] = operations.ListRefundsRequest(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -433,6 +436,7 @@ class Refunds(BaseSDK):
             http_headers=http_headers,
             _globals=operations.ListRefundsGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -553,6 +557,7 @@ class Refunds(BaseSDK):
             http_headers=http_headers,
             _globals=operations.GetRefundGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
@@ -673,6 +678,7 @@ class Refunds(BaseSDK):
             http_headers=http_headers,
             _globals=operations.GetRefundGlobals(
                 shippo_api_version=self.sdk_configuration.globals.shippo_api_version,
+                shippo_account_id=self.sdk_configuration.globals.shippo_account_id,
             ),
             security=self.sdk_configuration.security,
             allow_empty_value=None,
