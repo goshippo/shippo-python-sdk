@@ -14,7 +14,7 @@ Version 4.0.0 was never published. Upgrades go directly from 3.x to 5.0.
 - **Try the beta first.** Pre-releases are only installed when you ask for one explicitly:
 
   ```bash
-  pip install "shippo==5.0.0b1"
+  pip install "shippo==5.0.0b3"
   ```
 
   Pin the exact version rather than using `pip install --pre shippo`. `--pre` also allows
@@ -35,6 +35,23 @@ address = shippo_sdk.addresses.get(address_id="adr_123")
 shipment = shippo_sdk.shipments.create(request=shipment_request)
 addresses = shippo_sdk.addresses.list(page=1, results=25)
 ```
+
+### Check your `tracking_status.get` calls
+
+In 3.x the signature is `tracking_status.get(tracking_number, carrier)`. That is the reverse of the URL
+(`/tracks/{carrier}/{tracking_number}`) and of the legacy SDK (`shippo.Track.get_status(carrier, tracking_number)`).
+A 3.x positional call in carrier-first order sends the tracking number as the carrier, and the API returns
+a 400 error such as "Carrier with name <your tracking number> is not supported".
+
+```python
+# 3.x: wrong, the values are swapped
+shippo_sdk.tracking_status.get("usps", "9205590164917312751089")
+
+# 3.x and 5.0: correct
+shippo_sdk.tracking_status.get(tracking_number="9205590164917312751089", carrier="usps")
+```
+
+If you are still on 3.x, use keyword arguments now. The keyword form works in both versions.
 
 ## 2. Request bodies can be models or plain dicts
 
