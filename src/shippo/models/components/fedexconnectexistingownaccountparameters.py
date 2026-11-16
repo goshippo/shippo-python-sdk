@@ -32,7 +32,7 @@ class FedExConnectExistingOwnAccountParametersTypedDict(TypedDict):
     r"""In the case of masked fields, they should be handled carefully.
 
     Fields also must consider:
-    - Not providing a *fields* in parameters will not result in a change to any configured value
+    - Not providing a *field* in parameters will not result in a change to any configured value
     - Providing a value in a *masked field* with ****** (exactly 6 asterisks) will not change the configured value
     - Providing *field* with null will clear the configured value
     - Providing *field* with any other value will change the configured value and may affect the behavior of the account.
@@ -75,7 +75,7 @@ class FedExConnectExistingOwnAccountParameters(BaseModel):
     r"""In the case of masked fields, they should be handled carefully.
 
     Fields also must consider:
-    - Not providing a *fields* in parameters will not result in a change to any configured value
+    - Not providing a *field* in parameters will not result in a change to any configured value
     - Providing a value in a *masked field* with ****** (exactly 6 asterisks) will not change the configured value
     - Providing *field* with null will clear the configured value
     - Providing *field* with any other value will change the configured value and may affect the behavior of the account.

@@ -47,7 +47,7 @@ class ManifestTypedDict(TypedDict):
     status: ManifestStatus
     r"""Indicates the status of the manifest."""
     transactions: NotRequired[List[str]]
-    r"""IDs transactions to use. If you set this to null or not send this parameter, Shippo will automatically assign all applicable transactions."""
+    r"""IDs of the transactions to use. If you set this to null or don't send this parameter, Shippo will automatically assign all applicable transactions."""
     errors: NotRequired[List[str]]
     r"""An array of codes and messages describing the error that occurred if any."""
 
@@ -85,7 +85,7 @@ class Manifest(BaseModel):
     r"""Indicates the status of the manifest."""
 
     transactions: Optional[List[str]] = None
-    r"""IDs transactions to use. If you set this to null or not send this parameter, Shippo will automatically assign all applicable transactions."""
+    r"""IDs of the transactions to use. If you set this to null or don't send this parameter, Shippo will automatically assign all applicable transactions."""
 
     errors: Optional[List[str]] = None
     r"""An array of codes and messages describing the error that occurred if any."""

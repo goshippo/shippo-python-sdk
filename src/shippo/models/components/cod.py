@@ -16,7 +16,7 @@ from typing_extensions import NotRequired, TypedDict
 
 class PaymentMethod(str, Enum):
     r"""Secured funds include money orders, certified cheques and others (see [UPS](https://www.ups.com/content/us/en/shipping/time/service/value_added/cod.html) for details).
-    If no payment_method inputted the value defaults to \"ANY\".)
+    If no `payment_method` is provided, the value defaults to \"ANY\".
     """
 
     SECURED_FUNDS = "SECURED_FUNDS"
@@ -33,7 +33,7 @@ class CodTypedDict(TypedDict):
     r"""Currency for the amount to be collected. Currently only USD is supported for UPS."""
     payment_method: NotRequired[PaymentMethod]
     r"""Secured funds include money orders, certified cheques and others (see [UPS](https://www.ups.com/content/us/en/shipping/time/service/value_added/cod.html) for details).
-    If no payment_method inputted the value defaults to \"ANY\".)
+    If no `payment_method` is provided, the value defaults to \"ANY\".
     """
 
 
@@ -48,7 +48,7 @@ class Cod(BaseModel):
 
     payment_method: Optional[PaymentMethod] = None
     r"""Secured funds include money orders, certified cheques and others (see [UPS](https://www.ups.com/content/us/en/shipping/time/service/value_added/cod.html) for details).
-    If no payment_method inputted the value defaults to \"ANY\".)
+    If no `payment_method` is provided, the value defaults to \"ANY\".
     """
 
     @model_serializer(mode="wrap")

@@ -28,11 +28,11 @@ class CustomsItemTypedDict(TypedDict):
     All accepted values can be found on the [Official ISO Website](http://www.iso.org/).
     """
     quantity: int
-    r"""Quantity of this item in the shipment you send.  Must be greater than 0."""
+    r"""Quantity of this item in the shipment you send. Must be greater than 0."""
     value_amount: str
     r"""Total value of this item, i.e. quantity * value per item."""
     value_currency: str
-    r"""Currency used for value_amount. The [official ISO 4217](http://www.xe.com/iso4217.php) currency codes are used, e.g.  `USD` or `EUR`."""
+    r"""Currency used for value_amount. The [official ISO 4217](http://www.xe.com/iso4217.php) currency codes are used, e.g. `USD` or `EUR`."""
     eccn_ear99: NotRequired[str]
     r"""Export Control Classification Number, required on some exports from the United States."""
     eu_exempt_category: NotRequired[bool]
@@ -46,7 +46,7 @@ class CustomsItemTypedDict(TypedDict):
     sku_code: NotRequired[str]
     r"""SKU or merchant-assigned product code of the item. Up to 100 characters; some carriers accept fewer and reject longer values at label purchase. Required together with `manufacturer_code` on every non-exempt item when the shipment meets the EU product identifier conditions; some carriers also use it outside the EU."""
     hs_code: NotRequired[str]
-    r"""HS code of the item, which is required by some carriers. If `tariff_number` is not provided, `hs_code` will be used.  If both `hs_code` and `tariff_number` are provided, `tariff_number` will be used. 50 character limit."""
+    r"""HS code of the item, which is required by some carriers. If `tariff_number` is not provided, `hs_code` will be used. If both `hs_code` and `tariff_number` are provided, `tariff_number` will be used. 50 character limit."""
     tariff_number: NotRequired[str]
     r"""The tariff number of the item. If `tariff_number` is not provided, `hs_code` will be used. If both `hs_code` and `tariff_number` are provided, `tariff_number` will be used. 12 character limit."""
     object_created: NotRequired[datetime]
@@ -79,13 +79,13 @@ class CustomsItem(BaseModel):
     """
 
     quantity: int
-    r"""Quantity of this item in the shipment you send.  Must be greater than 0."""
+    r"""Quantity of this item in the shipment you send. Must be greater than 0."""
 
     value_amount: str
     r"""Total value of this item, i.e. quantity * value per item."""
 
     value_currency: str
-    r"""Currency used for value_amount. The [official ISO 4217](http://www.xe.com/iso4217.php) currency codes are used, e.g.  `USD` or `EUR`."""
+    r"""Currency used for value_amount. The [official ISO 4217](http://www.xe.com/iso4217.php) currency codes are used, e.g. `USD` or `EUR`."""
 
     eccn_ear99: Optional[str] = None
     r"""Export Control Classification Number, required on some exports from the United States."""
@@ -106,7 +106,7 @@ class CustomsItem(BaseModel):
     r"""SKU or merchant-assigned product code of the item. Up to 100 characters; some carriers accept fewer and reject longer values at label purchase. Required together with `manufacturer_code` on every non-exempt item when the shipment meets the EU product identifier conditions; some carriers also use it outside the EU."""
 
     hs_code: Optional[str] = None
-    r"""HS code of the item, which is required by some carriers. If `tariff_number` is not provided, `hs_code` will be used.  If both `hs_code` and `tariff_number` are provided, `tariff_number` will be used. 50 character limit."""
+    r"""HS code of the item, which is required by some carriers. If `tariff_number` is not provided, `hs_code` will be used. If both `hs_code` and `tariff_number` are provided, `tariff_number` will be used. 50 character limit."""
 
     tariff_number: Optional[str] = None
     r"""The tariff number of the item. If `tariff_number` is not provided, `hs_code` will be used. If both `hs_code` and `tariff_number` are provided, `tariff_number` will be used. 12 character limit."""

@@ -37,7 +37,7 @@ class AddressImporterTypedDict(TypedDict):
     state: NotRequired[str]
     r"""**required for purchase for some countries**
 
-    State/Province values are required for shipments from/to the US, AU, and CA. UPS requires province for some countries (i.e Ireland). To receive more accurate quotes, passing this field is recommended. Most carriers only accept two or three character state abbreviations.
+    State/Province values are required for shipments from/to the US, AU, and CA. UPS requires province for some countries (i.e. Ireland). To receive more accurate quotes, passing this field is recommended. Most carriers only accept two or three character state abbreviations.
     """
     zip: NotRequired[str]
     r"""Postal code of an Address."""
@@ -84,7 +84,7 @@ class AddressImporter(BaseModel):
     state: Optional[str] = None
     r"""**required for purchase for some countries**
 
-    State/Province values are required for shipments from/to the US, AU, and CA. UPS requires province for some countries (i.e Ireland). To receive more accurate quotes, passing this field is recommended. Most carriers only accept two or three character state abbreviations.
+    State/Province values are required for shipments from/to the US, AU, and CA. UPS requires province for some countries (i.e. Ireland). To receive more accurate quotes, passing this field is recommended. Most carriers only accept two or three character state abbreviations.
     """
 
     zip: Optional[str] = None
