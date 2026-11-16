@@ -28,9 +28,9 @@ class BatchShipmentStatus(str, Enum):
 
 
 class BatchShipmentTypedDict(TypedDict):
-    r"""The batch shipment object is a wrapper around a shipment object, which include shipment-specific information for batch processing.
+    r"""The batch shipment object is a wrapper around a shipment object, which includes shipment-specific information for batch processing.
 
-    Note: batch shipments can only be created on the batch endpoint, either when creating a batch object or by through the `/batches/{BATCH_OBJECT_ID}/add_shipments` endpoint
+    Note: batch shipments can only be created on the batch endpoint, either when creating a batch object or through the `/batches/{BATCH_OBJECT_ID}/add_shipments` endpoint.
     """
 
     object_id: str
@@ -58,9 +58,9 @@ class BatchShipmentTypedDict(TypedDict):
 
 
 class BatchShipment(BaseModel):
-    r"""The batch shipment object is a wrapper around a shipment object, which include shipment-specific information for batch processing.
+    r"""The batch shipment object is a wrapper around a shipment object, which includes shipment-specific information for batch processing.
 
-    Note: batch shipments can only be created on the batch endpoint, either when creating a batch object or by through the `/batches/{BATCH_OBJECT_ID}/add_shipments` endpoint
+    Note: batch shipments can only be created on the batch endpoint, either when creating a batch object or through the `/batches/{BATCH_OBJECT_ID}/add_shipments` endpoint.
     """
 
     object_id: str

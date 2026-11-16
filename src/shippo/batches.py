@@ -10,7 +10,7 @@ from typing import Iterable, List, Mapping, Optional, Union, cast
 
 
 class Batches(BaseSDK):
-    r"""A batch is a technique for creating multiple labels at once. Use the  batch object to create and purchase many shipments in two API calls. After creating the batch, retrieve the batch to verify that all shipments are valid. You can add and remove shipments after you have created the batch. When all shipments are valid you can purchase the batch and retrieve all the shipping labels."""
+    r"""A batch is a technique for creating multiple labels at once. Use the batch object to create and purchase many shipments in two API calls. After creating the batch, retrieve the batch to verify that all shipments are valid. You can add and remove shipments after you have created the batch. When all shipments are valid you can purchase the batch and retrieve all the shipping labels."""
 
     def create(
         self,
@@ -811,7 +811,7 @@ class Batches(BaseSDK):
 
         Purchases an existing batch with a status of `VALID`.
         Once you send a POST request to the purchase endpoint the batch status will change to `PURCHASING`.
-        When all the shipments are purchased, the status will change to `PURCHASED` and you will receive a `batch_purchased` webhook indicating that the batch has been purchased
+        When all the shipments are purchased, the status will change to `PURCHASED` and you will receive a `batch_purchased` webhook indicating that the batch has been purchased.
 
         :param batch_id: Object ID of the batch
         :param retries: Override the default retry configuration for this method
@@ -934,7 +934,7 @@ class Batches(BaseSDK):
 
         Purchases an existing batch with a status of `VALID`.
         Once you send a POST request to the purchase endpoint the batch status will change to `PURCHASING`.
-        When all the shipments are purchased, the status will change to `PURCHASED` and you will receive a `batch_purchased` webhook indicating that the batch has been purchased
+        When all the shipments are purchased, the status will change to `PURCHASED` and you will receive a `batch_purchased` webhook indicating that the batch has been purchased.
 
         :param batch_id: Object ID of the batch
         :param retries: Override the default retry configuration for this method

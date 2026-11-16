@@ -45,7 +45,7 @@ class Shippo(BaseSDK):
     addresses: "Addresses"
     r"""Addresses are the locations a parcel is being shipped **from** and **to**. They represent company and residential places. Among other things, you can use address objects to create shipments, calculate shipping rates, and purchase shipping labels."""
     batches: "Batches"
-    r"""A batch is a technique for creating multiple labels at once. Use the  batch object to create and purchase many shipments in two API calls. After creating the batch, retrieve the batch to verify that all shipments are valid. You can add and remove shipments after you have created the batch. When all shipments are valid you can purchase the batch and retrieve all the shipping labels."""
+    r"""A batch is a technique for creating multiple labels at once. Use the batch object to create and purchase many shipments in two API calls. After creating the batch, retrieve the batch to verify that all shipments are valid. You can add and remove shipments after you have created the batch. When all shipments are valid you can purchase the batch and retrieve all the shipping labels."""
     carrier_accounts: "CarrierAccounts"
     r"""Carriers are the companies who deliver your package. Shippo uses Carrier account objects as credentials to retrieve shipping rates and purchase labels from shipping Carriers."""
     customs_declarations: "CustomsDeclarations"
@@ -68,7 +68,7 @@ class Shippo(BaseSDK):
     """
     manifests: "Manifests"
     r"""A manifest is a single-page document with a barcode that carriers can scan to accept all packages into transit without the need to scan each item individually.
-    They are close-outs of shipping labels of a certain day. Some carriers require manifests to  process the shipments.
+    They are close-outs of shipping labels of a certain day. Some carriers require manifests to process the shipments.
     """
     orders: "Orders"
     r"""An order is a request from a customer to purchase goods from a merchant.
@@ -99,7 +99,7 @@ class Shippo(BaseSDK):
     If you purchased your shipping label through Shippo, you can also get all the tracking details of your Shipment
     from the [Transaction](/shippoapi/public-api/transactions) object.
     <br><br></p>
-    A tracking status of a package is an indication of current location of a package in the supply chain. For example,  sorting, warehousing, or out for delivery. Use the tracking status object to track the location of your shipments.
+    A tracking status of a package is an indication of current location of a package in the supply chain. For example, sorting, warehousing, or out for delivery. Use the tracking status object to track the location of your shipments.
 
     When using your [Test](https://docs.goshippo.com/docs/guides_general/authentication/) token for tracking, you need to use Shippo's
     predefined tokens for testing different tracking statuses. You can find more information in our

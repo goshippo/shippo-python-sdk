@@ -183,7 +183,7 @@ class CarrierAccountWithExtraInfoTypedDict(TypedDict):
     To protect account information, this field will be masked in any API response.
     """
     carrier: str
-    r"""Carrier token, see [Carriers](/shippoapi/public-api/carriers)
+    r"""Carrier token, see [Carriers](/shippoapi/public-api/carriers).
     Please check the [carrier accounts tutorial](https://docs.goshippo.com/docs/carriers/carrieraccounts/) page for all supported carriers.
     """
     active: NotRequired[bool]
@@ -211,7 +211,7 @@ class CarrierAccountWithExtraInfo(BaseModel):
     """
 
     carrier: str
-    r"""Carrier token, see [Carriers](/shippoapi/public-api/carriers)
+    r"""Carrier token, see [Carriers](/shippoapi/public-api/carriers).
     Please check the [carrier accounts tutorial](https://docs.goshippo.com/docs/carriers/carrieraccounts/) page for all supported carriers.
     """
 

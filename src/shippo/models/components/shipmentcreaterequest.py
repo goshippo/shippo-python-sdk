@@ -100,7 +100,7 @@ class ShipmentCreateRequestTypedDict(TypedDict):
     customs_declaration: NotRequired[CustomsDeclarationUnionTypedDict]
     async_: NotRequired[bool]
     carrier_accounts: NotRequired[List[str]]
-    r"""List of [Carrier Accounts](/shippoapi/public-api/carrier-accounts) `object_id`s used to filter the returned rates.  If set, only rates from these carriers will be returned."""
+    r"""List of [Carrier Accounts](/shippoapi/public-api/carrier-accounts) `object_id`s used to filter the returned rates. If set, only rates from these carriers will be returned."""
 
 
 class ShipmentCreateRequest(BaseModel):
@@ -135,7 +135,7 @@ class ShipmentCreateRequest(BaseModel):
     async_: Annotated[Optional[bool], pydantic.Field(alias="async")] = None
 
     carrier_accounts: Optional[List[str]] = None
-    r"""List of [Carrier Accounts](/shippoapi/public-api/carrier-accounts) `object_id`s used to filter the returned rates.  If set, only rates from these carriers will be returned."""
+    r"""List of [Carrier Accounts](/shippoapi/public-api/carrier-accounts) `object_id`s used to filter the returned rates. If set, only rates from these carriers will be returned."""
 
     @model_serializer(mode="wrap")
     def _serialize_model_with_info(self, handler, info):

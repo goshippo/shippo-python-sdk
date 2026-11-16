@@ -35,7 +35,7 @@ class ManifestCreateRequestTypedDict(TypedDict):
     """
     address_from: ManifestCreateRequestAddressFromTypedDict
     transactions: NotRequired[List[str]]
-    r"""IDs transactions to use. If you set this to null or not send this parameter, Shippo will automatically assign all applicable transactions."""
+    r"""IDs of the transactions to use. If you set this to null or don't send this parameter, Shippo will automatically assign all applicable transactions."""
     async_: NotRequired[bool]
 
 
@@ -51,7 +51,7 @@ class ManifestCreateRequest(BaseModel):
     address_from: ManifestCreateRequestAddressFrom
 
     transactions: Optional[List[str]] = None
-    r"""IDs transactions to use. If you set this to null or not send this parameter, Shippo will automatically assign all applicable transactions."""
+    r"""IDs of the transactions to use. If you set this to null or don't send this parameter, Shippo will automatically assign all applicable transactions."""
 
     async_: Annotated[Optional[bool], pydantic.Field(alias="async")] = None
 

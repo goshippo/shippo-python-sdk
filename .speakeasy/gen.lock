@@ -1,24 +1,24 @@
 lockVersion: 2.0.0
 id: 986026b6-d725-4b86-9c4d-67f6e6904a30
 management:
-  docChecksum: a9e3f7c79f0ff38c1356c0bdbe180e96
+  docChecksum: 91a9b6c5ca772ec50742bbf53b9a51bd
   docVersion: "2018-02-08"
-  speakeasyVersion: 1.808.1
-  generationVersion: 2.960.8
-  releaseVersion: 5.0.0-beta.3
-  configChecksum: 856865716c4d602e4151bf0a8ddc68d7
+  speakeasyVersion: 1.809.0
+  generationVersion: 2.961.1
+  releaseVersion: 5.0.0-beta.4
+  configChecksum: 60ecf8f82c4c78d81c760f7d6af1c93f
   repoURL: https://github.com/goshippo/shippo-python-sdk.git
   installationURL: https://github.com/goshippo/shippo-python-sdk.git
   published: true
 persistentEdits:
-  generation_id: a9253b74-8370-4f1c-ae23-b58af6628cc7
-  pristine_commit_hash: 92584d9e9706cf33eb822663be61ee15abd858b5
-  pristine_tree_hash: 4d469a42e495df5d2b0f9e66d7832bfb161cd7b2
+  generation_id: aa2c7a30-8c85-45f1-89dc-d85068b9bc07
+  pristine_commit_hash: 506d9917c5624042635d91caa69613b03fd97599
+  pristine_tree_hash: 5f2d531cb2e6d8c90dc257e0764edd771cae3764
 features:
   python:
     additionalDependencies: 1.1.0
     constsAndDefaults: 1.0.8
-    core: 6.1.14
+    core: 6.1.15
     decimal: 1.0.0
     defaultEnabledRetries: 0.2.0
     enumUnions: 0.1.1
@@ -67,8 +67,8 @@ trackedFiles:
     pristine_git_object: aa40c17486de9700039d0492c353c2bceb70c5bb
   docs/models/components/addressimporter.md:
     id: db1b3ee1399d
-    last_write_checksum: sha1:5295e6cfff0a27a07a67dfc9862fc61210740628
-    pristine_git_object: 918d687ced1b14f6f2b9c9dd06fd4f5e427b749b
+    last_write_checksum: sha1:1aa2d08d6bd61d6999a31aba21f10e7f63b26f34
+    pristine_git_object: f16fa6ffd9732a1758aa7828eb030d261f119a60
   docs/models/components/addresspaginatedlist.md:
     id: a173613ecbaf
     last_write_checksum: sha1:8371ec0083d9d8993c899e6489d1df6a2925c005
@@ -119,8 +119,8 @@ trackedFiles:
     pristine_git_object: e8bbe01c09cf87091206d08fa1f23509e68f0e76
   docs/models/components/batchshipment.md:
     id: 0d6eefd7d078
-    last_write_checksum: sha1:a4613af11abc656bc15525af89d87a54080486b1
-    pristine_git_object: 86318dec343613a6d640db75bf31304671156287
+    last_write_checksum: sha1:c56bee343086386b04b66323bb8ef948cf646473
+    pristine_git_object: a864f6eb1e3f1ce05c22cf8e5847d59df48d79d1
   docs/models/components/batchshipmentcreaterequest.md:
     id: 0a768639ed18
     last_write_checksum: sha1:d004a2c8d557a9dbe48d71e0256f51a59a1b88a5
@@ -155,12 +155,12 @@ trackedFiles:
     pristine_git_object: e96596242504d282c6935c80769e55fb6d6a7c5d
   docs/models/components/carrieraccount.md:
     id: 15c3f9f9348b
-    last_write_checksum: sha1:d6c3a12902984586da603d0c38c7f7a38dad20eb
-    pristine_git_object: 7298775b6b9db92fadb93a3947f3a40a9a40a700
+    last_write_checksum: sha1:80456e5dcf976211d9d46287a74521c07ebaba55
+    pristine_git_object: 37e9f6d40a3bdb78a50a35a39b5c71bb2bae6538
   docs/models/components/carrieraccountbase.md:
     id: 20658b3fec9b
-    last_write_checksum: sha1:5bd3d36df57568a0bf9ba57dd0f54ecb753a5f1f
-    pristine_git_object: 30c9fe2d393b5152896f7355525204a8b1732f97
+    last_write_checksum: sha1:fbdb153f2cf48a5f531046d7d7d9c194b35dfed9
+    pristine_git_object: 6b59ee8bec6284c9a159403d0b62a25dccaa71a3
   docs/models/components/carrieraccountbaseparameters.md:
     id: dcb6fe5756e4
     last_write_checksum: sha1:0b470560149988d1326230e23c29f55c9b906ea7
@@ -311,8 +311,8 @@ trackedFiles:
     pristine_git_object: 392e69209f970edf36dc8f70421036ff4fb58a85
   docs/models/components/carrieraccountwithextrainfo.md:
     id: 0b5945e54319
-    last_write_checksum: sha1:fb67bb202284765a5c9648bb9aa8da3d530f14c0
-    pristine_git_object: c9af7b4d35917ef5850b457bd6a523df9fe7b25e
+    last_write_checksum: sha1:4691839be386f7c6dd496a73f79ef4dea126f2d9
+    pristine_git_object: 6d1a348620500167f91b2146381a01a370ef0359
   docs/models/components/carrieraccountwithextrainfoparameters.md:
     id: 19c3bae6cc17
     last_write_checksum: sha1:94d44f7041afaa8758a122e39eccff8ebd4c27d2
@@ -339,8 +339,8 @@ trackedFiles:
     pristine_git_object: ba2c436f46a267936b5d57e5f0f55ab819a968d6
   docs/models/components/cod.md:
     id: 90681657f5ba
-    last_write_checksum: sha1:d8378df1b57dd0e98d9fffdec6e592fbbd7cb72a
-    pristine_git_object: 510b398eba7f943ed24f90d9eacc8524acdf5757
+    last_write_checksum: sha1:b96be4bc9bf5840b24cd715a42855af15fb6c5bb
+    pristine_git_object: 89295e3c867f5635e93cba6e3c32dd4e96e86373
   docs/models/components/connectexistingownaccountrequest.md:
     id: fd0d6bedfa49
     last_write_checksum: sha1:56b1bf9fa0f11836be8f5ab0c0de52da7ff74cd6
@@ -351,8 +351,8 @@ trackedFiles:
     pristine_git_object: 9f0544625889d9c8d34529ecb285151989ffe737
   docs/models/components/corerate.md:
     id: f6fe48943943
-    last_write_checksum: sha1:fb81c5e00341c72045e2f643af8b0a4c8b86101e
-    pristine_git_object: 2e6dab71b6537985e2acf4a48e3579323904796c
+    last_write_checksum: sha1:b47532e7fb944100a77f8b61cf6d7352fbda5535
+    pristine_git_object: b9c3f5a27a0aa95e87aa3b865925146a4627ea54
   docs/models/components/createdby.md:
     id: de1dc57eaf53
     last_write_checksum: sha1:cfb68a8490bb5ae2e2223b985e3030a616079ee0
@@ -431,12 +431,12 @@ trackedFiles:
     pristine_git_object: 0738de28707240b8c4bee9e7125223e4ce20ffaa
   docs/models/components/customsitem.md:
     id: 2abf9302db65
-    last_write_checksum: sha1:de623358ba64b75ec198e25fc0e799dcf0813451
-    pristine_git_object: 37cd8142a0d64ff7149d9e85209e0d8cf24d1337
+    last_write_checksum: sha1:f62daec23174beccd3e5ec19c73d329f8c50b008
+    pristine_git_object: 00fc802a2b56a31fce74cc479668aebc4a59100a
   docs/models/components/customsitemcreaterequest.md:
     id: 67c137d6c607
-    last_write_checksum: sha1:0ec7e52ebbf08a54367779e2cd2ac9c87b90f10c
-    pristine_git_object: 9e82154152617f8757a344a2cf4d1d3af9524233
+    last_write_checksum: sha1:996e89941a1cc940bd314442a8fbb55b7bc1184e
+    pristine_git_object: 98a28dcae3ae079f7c22ccb0933abfd3ca884a11
   docs/models/components/customsitempaginatedlist.md:
     id: 75319e271697
     last_write_checksum: sha1:4072a63a9715443ba9c711c95c8b0957fd31d893
@@ -495,8 +495,8 @@ trackedFiles:
     pristine_git_object: ddfb8a66f6c52618833019508164778aefa1e632
   docs/models/components/fedexconnectexistingownaccountparameters.md:
     id: 9121ff311085
-    last_write_checksum: sha1:e7de9ea3d8b5eec5635138850490a569eb6cfd00
-    pristine_git_object: b376103da8462de72f3c26cfbaba5c10bb0aae10
+    last_write_checksum: sha1:8d98fea0f9e19d360cf631309014f81efb88b434
+    pristine_git_object: a7c4f862032df553822da473c98e55c247ff4490
   docs/models/components/healthcarehandling.md:
     id: 359d4e86dc81
     last_write_checksum: sha1:9c4f6cdbe01720f99a522150a93ba6af784810a6
@@ -571,12 +571,12 @@ trackedFiles:
     pristine_git_object: 051eca204da8b77501f2a3b67c9dec9494a6ce68
   docs/models/components/manifest.md:
     id: ab82543dfdb2
-    last_write_checksum: sha1:c735b85fae3c8d79f9f5c711ac0871681faf9e2b
-    pristine_git_object: da41f0701da582194e58e78e7c76c8a1465e4dc6
+    last_write_checksum: sha1:808d97aa7de734a2896b7621ff9dbf01c4c31881
+    pristine_git_object: ecdba491b0c62d04e956597c090f2a5fcee79adf
   docs/models/components/manifestcreaterequest.md:
     id: 6a64df639306
-    last_write_checksum: sha1:55c11e214cd03ff9e62c9fd7b724a397a1d1567b
-    pristine_git_object: 484f5119ae79a2cf43ee9422c9480767cf555483
+    last_write_checksum: sha1:b6d8120b21460347dbebd17e5657e6aaeffe1c1d
+    pristine_git_object: 323c0b083fb4f79cb580ca8aed4668e9fe80aa6a
   docs/models/components/manifestcreaterequestaddressfrom.md:
     id: 3789e66c1c03
     last_write_checksum: sha1:78f0ff4204f35514261297746d833a6b1c13d79e
@@ -687,8 +687,8 @@ trackedFiles:
     pristine_git_object: 186d0e4bd759fdc2b36d91ac5a02f9392bb0a1d4
   docs/models/components/paymentmethod.md:
     id: 722f86eed889
-    last_write_checksum: sha1:4da2f9a74a0c5250fab4f3f0954ba9aef80bf0ac
-    pristine_git_object: 0111546cebe84ce712c270431dc23b98d237b0bf
+    last_write_checksum: sha1:3b7fa84447806f6e6fea7a249b7caaecd37ba97e
+    pristine_git_object: 7b2876052e9bfc15d2a5f0f01ff03194b3703baf
   docs/models/components/pickup.md:
     id: 982ef529fc21
     last_write_checksum: sha1:21f85b4a46c7783156ac851bff432f54d36afbc4
@@ -947,8 +947,8 @@ trackedFiles:
     pristine_git_object: 8156183a33f57fe1886a1b8d04c1341056fd80d3
   docs/models/components/shipmentcreaterequest.md:
     id: 4760e6e5f647
-    last_write_checksum: sha1:41d1dc1efb51a63e0913b3d16e044069bb44eaa2
-    pristine_git_object: 3ca0cfd157528414d7b327c0d6785fea1bf3ae63
+    last_write_checksum: sha1:350cde8be99870c55951cde312338360dfbfb3ce
+    pristine_git_object: 4df4ed84d84bc921ead469afea0877eabe57d35b
   docs/models/components/shipmentcreaterequestaddressfrom.md:
     id: d1afd984d42d
     last_write_checksum: sha1:a65bba68484693630b469645ad4c174b5e7872c8
@@ -1043,12 +1043,12 @@ trackedFiles:
     pristine_git_object: dc2d59998bb71e7f5bad43dd74b0db8169de42b1
   docs/models/components/upsconnectexistingownaccountparameters.md:
     id: fed2bc5d9219
-    last_write_checksum: sha1:c246fd84cac102c807417600240c2f82f1f4b3f5
-    pristine_git_object: 0311e58d2a86eb11229ede13f985a8cc4773ea9f
+    last_write_checksum: sha1:3c0a39aa0117e8e6f10787c045b1a1eb35a01f03
+    pristine_git_object: d7143ffa6e9fd8bd321def17522181d19a4d1e0a
   docs/models/components/upsconnectexistingownaccountstreamlinedparameters.md:
     id: f4701ffb771c
-    last_write_checksum: sha1:ba590e395108e465e3e04f308d077448ebb2170f
-    pristine_git_object: 4ce407b915e98906c33aa1645c45a5819db90de5
+    last_write_checksum: sha1:bcc3ad04d3a045ffc075e2bbf6291f2614ac2bc2
+    pristine_git_object: df838c4aaeb73da21272903a435de25b3514f3e8
   docs/models/components/upsreferencefields.md:
     id: 2a08d1040b64
     last_write_checksum: sha1:c47f2bf15de6ea579ea189140686975b84ea47eb
@@ -1635,8 +1635,8 @@ trackedFiles:
     pristine_git_object: 8b4da054ebc7363c7f1fd2f246a0ba6475d277e1
   docs/sdks/batches/README.md:
     id: affccbddb9a8
-    last_write_checksum: sha1:059e7f12c79f113be3036e0bdaeb4d864dcc16d6
-    pristine_git_object: 2fdeedc516fa73a247cd403eb54b0e5c38f2d713
+    last_write_checksum: sha1:276f58a1a7144cceaed3d2856c91a5081c57a102
+    pristine_git_object: e726bfc8f19819bde5d93688c3d5fef952040597
   docs/sdks/carrieraccounts/README.md:
     id: 86ff0a6311c9
     last_write_checksum: sha1:65a397c162c4623f006d56f60d46044a32f7d7c3
@@ -1659,8 +1659,8 @@ trackedFiles:
     pristine_git_object: 2ed17ae5b7649172940fa26c899d7a0611a51463
   docs/sdks/manifests/README.md:
     id: 67507e6342c9
-    last_write_checksum: sha1:84a695393ac61cb9cb2c69b0084fa18b50f357e3
-    pristine_git_object: 2b03d170d20fcf7b0feedde3ca12540a1a9ea6a8
+    last_write_checksum: sha1:d02623282e83e3eb972ab42504108e50e282e010
+    pristine_git_object: 97046e56105ad5e07db413fad53e6ccec463bf7d
   docs/sdks/orders/README.md:
     id: fc5b2caf3cb2
     last_write_checksum: sha1:e5df91677f981245122dbd0baeb26fd89dd569da
@@ -1699,16 +1699,16 @@ trackedFiles:
     pristine_git_object: 3ec4721d33bdd98a4e5e5901bfe6d266f164bb03
   docs/sdks/trackingstatus/README.md:
     id: 0f18c61cead0
-    last_write_checksum: sha1:78a006a5b5380e97fb274d3638101f7b53a94324
-    pristine_git_object: 2f74df4a92f42f17d9a1656919fb7784f6d315df
+    last_write_checksum: sha1:7977338df9aea938d5c2ce95dce04617c2a55b45
+    pristine_git_object: 65bfd9977ad3dcb667a706ae665c6c555860f9b9
   docs/sdks/transactions/README.md:
     id: 85592abe3c6b
     last_write_checksum: sha1:71caa65c43006361ac899e2564bc9571ab2ddaa4
     pristine_git_object: 5d4228ebb7182661406fed1d810f91f8f725f8cb
   docs/sdks/userparceltemplates/README.md:
     id: d4e35d65825a
-    last_write_checksum: sha1:ce8acba247fa660dbea96314e3901b2da6f21056
-    pristine_git_object: 368dc68af79fddf6e3b476018e040c092c61b545
+    last_write_checksum: sha1:4f5ea74aa67c99b5ec20540227153b2628d196b7
+    pristine_git_object: 88124705a632614e7003892c5e190b3a356990ff
   docs/sdks/webhooks/README.md:
     id: e21b32d786a4
     last_write_checksum: sha1:bde035c8a14d187d571a64de005932030af52aea
@@ -1727,8 +1727,8 @@ trackedFiles:
     pristine_git_object: 18f8c357a2206431626265d3943f66c4c1aa663f
   pyproject.toml:
     id: 5d07e7d72637
-    last_write_checksum: sha1:7b52712292210d4d25cc38bd052454d6ab294c11
-    pristine_git_object: e30d880021faf746ff667655cf29fa686c1a4147
+    last_write_checksum: sha1:854ff2c41335223c4b3867a59bd14ad364a59126
+    pristine_git_object: 5ef431d10a51679c7150536bb8122bb90981a2df
   scripts/prepare_readme.py:
     id: e0c5957a6035
     last_write_checksum: sha1:e00374f5f50ebf41cd4fd2e5f3b4e54cc63e354f
@@ -1759,8 +1759,8 @@ trackedFiles:
     pristine_git_object: edfd54a972c6e606a65e31f921020b039c8df698
   src/shippo/_version.py:
     id: b71c1af6ca9d
-    last_write_checksum: sha1:ce91b7812d7a3565e6fa8b978a02262b267f2873
-    pristine_git_object: c323224b1d27aaf58a143e7c9f0bfcb1b6ac6ef6
+    last_write_checksum: sha1:39d1d2443fc6f4548fd313af552b1b1d1e7db7bd
+    pristine_git_object: dacec9e2a881a04e252cd00a779282ef483436cf
   src/shippo/addresses.py:
     id: c011488252c1
     last_write_checksum: sha1:886d8b0f3edd0f69000b1c4c7835d6cad5296588
@@ -1771,8 +1771,8 @@ trackedFiles:
     pristine_git_object: ec67adb7f78411e1921e2d9eb4b6887d552d494c
   src/shippo/batches.py:
     id: 55578039dc0e
-    last_write_checksum: sha1:ec14e93703158bf35147cdfd7d4d27e8bcda898a
-    pristine_git_object: 24a77e55fbe867c36b0479c75dbf63521adc0654
+    last_write_checksum: sha1:390cf031f14c96231dd6855bb24b9c9cbe40b731
+    pristine_git_object: 9ef0b7668879206065aaf17872ecbc8fe61c2f73
   src/shippo/carrier_accounts.py:
     id: 7dc7c62a9fcd
     last_write_checksum: sha1:d5b31811cce97047290034099e324debebdd963e
@@ -1799,8 +1799,8 @@ trackedFiles:
     pristine_git_object: 89560b566073785535643e694c112bedbd3db13d
   src/shippo/manifests.py:
     id: 1896b9dce97a
-    last_write_checksum: sha1:a20cdb7e719fe42300e58bb108eebeb6620672da
-    pristine_git_object: 686b13162d4f6d93eb8f3b65bedc2f479533eb08
+    last_write_checksum: sha1:f00f23d2c4c93616e2e1dfd1df9a842409f2ecdd
+    pristine_git_object: 89431ff562384a54bcc96dcca5fc33245ee50317
   src/shippo/models/__init__.py:
     id: bef9e693dcb1
     last_write_checksum: sha1:8ae2707dad0f981513e522abcbde16dab78939af
@@ -1823,8 +1823,8 @@ trackedFiles:
     pristine_git_object: c64c4acbcd537ce1573231a42b9722994b96d513
   src/shippo/models/components/addressimporter.py:
     id: ddb17610012c
-    last_write_checksum: sha1:fa42239ecb7843a108014b7c33fef28c2eda87cc
-    pristine_git_object: 7c18bb944c905e11b07f232e1eefaca3775c989d
+    last_write_checksum: sha1:3f39cf3ff3f57bbd03f08d24077e1e7ca3f2de82
+    pristine_git_object: 48ba1517dfecea9fcc5d817833486214e997605c
   src/shippo/models/components/addresspaginatedlist.py:
     id: 9ceadbcde42c
     last_write_checksum: sha1:a10f90fee47de49118d39f2e2b57e06d0ce8e918
@@ -1859,8 +1859,8 @@ trackedFiles:
     pristine_git_object: 03974977613b39d7235712b9242f938f12267b30
   src/shippo/models/components/batchshipment.py:
     id: 87d403b0b769
-    last_write_checksum: sha1:ab5fee22a8846ee7f7dd7aa0fbafcd42c070e06d
-    pristine_git_object: 10bc703e7f2f9a8892cf2a4c2250d85608c64a7c
+    last_write_checksum: sha1:b23dfe33e8b0334612716ceeb90785add7d02f4a
+    pristine_git_object: 9b1f00448bd42c00a0c6be5087c29930520b500f
   src/shippo/models/components/batchshipmentcreaterequest.py:
     id: 0fa2ef983c17
     last_write_checksum: sha1:2f39a7ee175012b5e9da87e488ec3cb600fbc37b
@@ -1875,12 +1875,12 @@ trackedFiles:
     pristine_git_object: 143dc91a24202d4a412deb677eb9b3e064b5c715
   src/shippo/models/components/carrieraccount.py:
     id: 8c0eda21dedc
-    last_write_checksum: sha1:ddf763f100aefed4c71aef70fdef410110975582
-    pristine_git_object: 380781d836c3b93f2d1b62fcde6e5f3c9fb0e0f1
+    last_write_checksum: sha1:78512caf0edb213353fc2c10166ca7bfbc04c6f5
+    pristine_git_object: 1df7d9b5f948c146ff2c9b765be6505cda1586ca
   src/shippo/models/components/carrieraccountbase.py:
     id: fa3fe479fab8
-    last_write_checksum: sha1:e4b9f93901b60db6cdb9124e9ee7df00d79da750
-    pristine_git_object: 36650a22a7f9a7e7da2da77254381b552f39f3fd
+    last_write_checksum: sha1:9eca334b3222e81de924af19c95ffe815946c6a7
+    pristine_git_object: 5471f7335069d4aa9ca5b0b666704ef582b91552
   src/shippo/models/components/carrieraccountcanadapostcreateparameters.py:
     id: 31370d381941
     last_write_checksum: sha1:246fe46edc65e667b6de234e77e452677c8b2534
@@ -1979,8 +1979,8 @@ trackedFiles:
     pristine_git_object: 4d7fca9a2c7f06006a185ca1e32daf789b33e624
   src/shippo/models/components/carrieraccountwithextrainfo.py:
     id: 4151e93af507
-    last_write_checksum: sha1:59a25d18f6e83c669b99407eedf6fbed309ef020
-    pristine_git_object: 3dd62faf49df8a0072e72cdae367bbf47624afda
+    last_write_checksum: sha1:c3a6d9adff9313b9a4b69abadcb1d290227c2859
+    pristine_git_object: 0ec5a403baad61385c968d9a40d2e4a1351a8b26
   src/shippo/models/components/carrierparceltemplate.py:
     id: 87c022ef28ca
     last_write_checksum: sha1:4f18f3d0d3bed342516bdf8633aa9286dc19c8df
@@ -1995,16 +1995,16 @@ trackedFiles:
     pristine_git_object: 6b7d7c20f6ce3089feee106e1e96910808153e23
   src/shippo/models/components/cod.py:
     id: 8de38f4bf475
-    last_write_checksum: sha1:541346c7a4bb040a6ce836cec4009d0211e90875
-    pristine_git_object: 282e8033fb1b46cadf1f9832be490431da58825d
+    last_write_checksum: sha1:3f7d79152ed33430a770acb2ca7024b5a3f56457
+    pristine_git_object: 0317913596522b05a706cf293aacd1823c655d8f
   src/shippo/models/components/connectexistingownaccountrequest.py:
     id: 8249dfed9cd0
     last_write_checksum: sha1:aa610744295c45a2ec0fbfbbcef0e2140e2c8278
     pristine_git_object: ae2b7602ffd2731f8d345f883ac4a6aff9c4501d
   src/shippo/models/components/corerate.py:
     id: d26a1ff395ea
-    last_write_checksum: sha1:bad0a4ed1d80fd1ae63bd3e09e04c4f735423fc1
-    pristine_git_object: 96f85c7c228fee50e9ffe0a448ed72faaee85215
+    last_write_checksum: sha1:4572d48da27de3dd7c9a912ad157d8740b7d74b8
+    pristine_git_object: 4550335fb427e8223c4216c260f1077992940904
   src/shippo/models/components/customerreference.py:
     id: ba731393b4cd
     last_write_checksum: sha1:7c1ef05580c25eb28aca6d8703e807641b36098d
@@ -2051,12 +2051,12 @@ trackedFiles:
     pristine_git_object: 59f9d9f7ee0591d1d5e922c86fbcc735149e78bd
   src/shippo/models/components/customsitem.py:
     id: 5c44d597eaa0
-    last_write_checksum: sha1:c9cdf308f22c920994cad8a01a755f07660b0374
-    pristine_git_object: eb98ae05ae8b9e221e92127ff8cc1cd26a889c2d
+    last_write_checksum: sha1:948bbc7426ec2ff7aafd1f3046adebd9f751ebfb
+    pristine_git_object: 73ee7b13985fd4636a6c678c5f53f7b13d2fba4a
   src/shippo/models/components/customsitemcreaterequest.py:
     id: 4afe1cd1fba8
-    last_write_checksum: sha1:29780c58159e5c5e28552ac31241fc4ae71b365d
-    pristine_git_object: 6e15e2b13c3157b8a787a7094e37450f3745e5de
+    last_write_checksum: sha1:53e98d078e092b3aa54c16d85274549a34f3212e
+    pristine_git_object: 08e38362a12167e5d9595b9ac2e5d55c9e5039ed
   src/shippo/models/components/customsitempaginatedlist.py:
     id: c26b47d41b7f
     last_write_checksum: sha1:382bae95ea3dc0d23e1f60784ed1e9ba31db1420
@@ -2107,8 +2107,8 @@ trackedFiles:
     pristine_git_object: ab75b1a6abfcb8f0b5929899ce475a4757973380
   src/shippo/models/components/fedexconnectexistingownaccountparameters.py:
     id: 0af30fd3b0d8
-    last_write_checksum: sha1:161817fcbf21d689f3804891e4b358edccf01c3a
-    pristine_git_object: 0eed3181b5f3ab26c06cc34ffccae02f0ca5e5c6
+    last_write_checksum: sha1:665fbc37c3ba4d20c5fa5a427d8d0bad7a122a7c
+    pristine_git_object: 7bb700e352f3dcde0145a4f1584a48f9140de028
   src/shippo/models/components/healthcarehandling.py:
     id: 42fdd6feca59
     last_write_checksum: sha1:4cf0a2cb1e1f985dd9dd39f07b914beb4355036f
@@ -2155,12 +2155,12 @@ trackedFiles:
     pristine_git_object: e43c908a6dbf09b08a200fa4a5081ac5b05419fb
   src/shippo/models/components/manifest.py:
     id: 4aee54f6794b
-    last_write_checksum: sha1:0545dccb462be25b73a75ea33a9331d5123ffce0
-    pristine_git_object: ed8c5dd3473a93527d2fd86ec0b4645afe5a9be6
+    last_write_checksum: sha1:13cedf96c28e3428e2c28e24735885ddc55093c5
+    pristine_git_object: 0551ff879fa5f67500a4c8fed3e1ed5fbbd4cee3
   src/shippo/models/components/manifestcreaterequest.py:
     id: 6dca7c7ce9fa
-    last_write_checksum: sha1:0de02db7b37fbbe932ee9a8570100e9e8c0f14ef
-    pristine_git_object: cea02ba42b835b39ae8328142d0d49238285747f
+    last_write_checksum: sha1:71d6dd1efb70feefc02f5c89f5f355b1191761d3
+    pristine_git_object: 7d4d75b77d3494de5f2e4d9033b38f9a969cc290
   src/shippo/models/components/manifestpaginatedlist.py:
     id: de3d7e93e547
     last_write_checksum: sha1:de11bc7ddfe91625be54f528aa8d090fbf1a9380
@@ -2471,8 +2471,8 @@ trackedFiles:
     pristine_git_object: 3446db735615cf110ce9296b81978c10cfd0dd0d
   src/shippo/models/components/shipmentcreaterequest.py:
     id: fc1ae3e13d3e
-    last_write_checksum: sha1:c3a0566d04b84d0f5429795e26907519c0060d3f
-    pristine_git_object: 9e41ea66de35568c0f9ee9695fce0ef29fb6c384
+    last_write_checksum: sha1:cfd15bf802a55540f602033cc39e2230790f07ba
+    pristine_git_object: c7582cbbb8265ad5d0e57a70ef03c5453aaf0c79
   src/shippo/models/components/shipmentextra.py:
     id: 93b556f33c4f
     last_write_checksum: sha1:621c45079ab4fc3f10a1bd8995d73e8da690e569
@@ -2547,12 +2547,12 @@ trackedFiles:
     pristine_git_object: 2ca085a23d01f2e9836db3242a4b6505cafd6cde
   src/shippo/models/components/upsconnectexistingownaccountparameters.py:
     id: 9de4c5d6e390
-    last_write_checksum: sha1:93497bc2155f6dc84f8d013fbc86f996c032c5cc
-    pristine_git_object: f4baab560e63c2e1b39f8e7972ff4752f5b47850
+    last_write_checksum: sha1:5ea919dc087edb62729e4e16e5ab63c4ddddc00d
+    pristine_git_object: 7cde2aeb6c951beb5ee7dc5e5b1b8ccfbd2344ed
   src/shippo/models/components/upsconnectexistingownaccountstreamlinedparameters.py:
     id: 10bd13000f82
-    last_write_checksum: sha1:a8b57ad6f69e62b2488fb039b6489ac7f3819bcd
-    pristine_git_object: d54c35fdbbfc2ad9c4fa1070c2bdb0171f7e780d
+    last_write_checksum: sha1:f87e19d41502b6130576abf31fde61f9199ed54b
+    pristine_git_object: d2000337865fe68699d232dfc95325181524a078
   src/shippo/models/components/upsreferencefields.py:
     id: 9d385e2fd629
     last_write_checksum: sha1:f84e55d47a49c09e82477ff4d7d6fa2edc9bee88
@@ -2959,8 +2959,8 @@ trackedFiles:
     pristine_git_object: 9d4cbd675d421376652b08855cedbdef3a1ccb9d
   src/shippo/sdk.py:
     id: 5c4bf69e3b5d
-    last_write_checksum: sha1:437f19fd72a66ade9d6e0dcdee6d5a365350391d
-    pristine_git_object: 5327da9da1ad346e73a62e386250ae9146e22875
+    last_write_checksum: sha1:733f8a0962370992dd2973ee33545c2e2271bc7a
+    pristine_git_object: 3e8acea66b5d5930538ff75cae1fbd2869a64156
   src/shippo/sdkconfiguration.py:
     id: cf3823ec37ed
     last_write_checksum: sha1:6ce8cd49981cf5091015e7fd186d806d19caa0fc
@@ -2979,8 +2979,8 @@ trackedFiles:
     pristine_git_object: 4edbb0a5f54e85a30e00342d76179c8d786904fa
   src/shippo/tracking_status.py:
     id: a7f5706669f9
-    last_write_checksum: sha1:4abff42af72e0c2b569e4153cb0008e850297440
-    pristine_git_object: 6b917bf2ad714ab3837d011bd5720fd30bf8cf5f
+    last_write_checksum: sha1:2b88ff0f349191ba049decfb1fe62a3be51d9144
+    pristine_git_object: 0520fda6dc829af8a7e352957fc106950c803eec
   src/shippo/transactions.py:
     id: 772f5e30ab7c
     last_write_checksum: sha1:d9f24d48ef112ffbb708e464c0b88700fd58b564
@@ -2991,16 +2991,16 @@ trackedFiles:
     pristine_git_object: 3a43a78ab719ec504ec95c050c984c843407d366
   src/shippo/types/base64fileinput.py:
     id: f731d1108296
-    last_write_checksum: sha1:1522687ae3398374c35710cad993a6e82b5ab99d
-    pristine_git_object: 862566fe2b1db830276b390e136e65090e5963d2
+    last_write_checksum: sha1:94a99b9b1b7ab6d3fd8fb2e52385a50b4a2ff333
+    pristine_git_object: de42346d429a62ce8d39b04be6ee568c9d37e619
   src/shippo/types/basemodel.py:
     id: 5c67db658da0
     last_write_checksum: sha1:99c644208e340c4974b94bbe6d52019c80fedb97
     pristine_git_object: 5ca5fdd558ea6d8d8d39cb9ff7877984fd7d63da
   src/shippo/user_parcel_templates.py:
     id: 8008b384080a
-    last_write_checksum: sha1:22863536c20fcae232a8badb7b682723b5464992
-    pristine_git_object: a3657512c863d9ce89f8fff0915d833ffee713b8
+    last_write_checksum: sha1:2d8654d083b7f7864f732896de37c970c7927683
+    pristine_git_object: b07ed00baeeac4387a9cb05b8f179c4d2bb3c9aa
   src/shippo/utils/__init__.py:
     id: 93a2b103d18b
     last_write_checksum: sha1:370ec05f8793eddc69ee21a4df8fb1b08d11561d
@@ -3803,7 +3803,6 @@ examples:
           webhookId: "<id>"
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: "## Python SDK Changes:\n* `shippo.embedded_authorization.create()`:  `request` **Changed** (Breaking ⚠️)\n* `shippo.carrier_accounts.create()`: \n  *  `request.parameters.union(UPSConnectExistingOwnAccountStreamlinedParameters)` **Added**\n"
 generatedFiles:
   - .gitattributes
   - .python-version

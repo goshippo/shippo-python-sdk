@@ -11,7 +11,7 @@ from typing import Mapping, Optional, Union, cast
 
 class Manifests(BaseSDK):
     r"""A manifest is a single-page document with a barcode that carriers can scan to accept all packages into transit without the need to scan each item individually.
-    They are close-outs of shipping labels of a certain day. Some carriers require manifests to  process the shipments.
+    They are close-outs of shipping labels of a certain day. Some carriers require manifests to process the shipments.
     """
 
     def list(

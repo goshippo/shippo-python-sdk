@@ -34,7 +34,7 @@ class CoreRateTypedDict(TypedDict):
     r"""Object ID of the carrier account that has been used to retrieve the rate."""
     servicelevel_name: NotRequired[str]
     r"""Service level name, e.g. `Priority Mail` or `FedEx Ground®`.
-    A service level commonly defines the transit time of a Shipment (e.g., Express vs. Standard), along with other properties.  These names vary depending on the provider.
+    A service level commonly defines the transit time of a Shipment (e.g., Express vs. Standard), along with other properties. These names vary depending on the provider.
     See [Service Levels](/shippoapi/public-api/service-levels).
     """
     servicelevel_token: NotRequired[str]
@@ -71,7 +71,7 @@ class CoreRate(BaseModel):
 
     servicelevel_name: Optional[str] = None
     r"""Service level name, e.g. `Priority Mail` or `FedEx Ground®`.
-    A service level commonly defines the transit time of a Shipment (e.g., Express vs. Standard), along with other properties.  These names vary depending on the provider.
+    A service level commonly defines the transit time of a Shipment (e.g., Express vs. Standard), along with other properties. These names vary depending on the provider.
     See [Service Levels](/shippoapi/public-api/service-levels).
     """
 
